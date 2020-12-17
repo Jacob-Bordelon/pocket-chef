@@ -6,7 +6,7 @@
 ## _Usage_
 
 ## _Features_
-- [ ] The client can record thier items in their pantry
+- [ ] The client can record their items in their pantry
 - [ ] The app will suggest recipes based on their pantry
 - [ ] The app will recognize items with the camera and add the item to the pantry
 - [ ] The app will have a grocery list option
@@ -26,7 +26,7 @@
 - Ricardo Aranaga
 - Kyle Rouselle
 - Linh Nguyen
-- Jhamon Philips
+- Jhamon Phillips
 
 ## _Copyright_
 
