@@ -1,6 +1,5 @@
 var express = require('express');
 var mysql = require('mysql');
-var bodyParser = require('body-parser');
 
 var sqlCon = mysql.createConnection({
     host:'localhost',
@@ -11,8 +10,8 @@ var sqlCon = mysql.createConnection({
 
 var app = express();
 app.use("/", express.static("../public"));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 app.get("/recipes",(req,res,next)=>{
     
@@ -31,14 +30,13 @@ app.get("/recipes",(req,res,next)=>{
     });
 });
 
-app.get("/search",(req,res,next)=>{
+app.post("/search",(req,res,next)=>{
     var post_data = req.body;
     var recipe_search = post_data.search;
-    console.log(recipe_search);
 
-    var query = "select * from RECIPE where RName = '"+recipe_search+"'";
+    var query = "select * from RECIPE where RName = ?";
 
-    sqlCon.query(query,function(error,result,fields){
+    sqlCon.query(query,[recipe_search],function(error,result,fields){
         sqlCon.on('error',function(err){
             console.log('[MYSQL]ERROR',err);
         });
