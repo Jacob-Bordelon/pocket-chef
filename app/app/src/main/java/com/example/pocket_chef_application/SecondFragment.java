@@ -48,19 +48,22 @@ public class SecondFragment extends Fragment {
 
         textView = view.findViewById(R.id.recipe_view);
 
+        // ToDo: change to a safe credentials check
         OkHttpClient okHttpClient = UnSafeOkHttpClient.getUnsafeOkHttpClient();
-
+        // Retrofit Client. Connects to AWS EC2 Server through port 3000
+        // ToDo: check if neccesary to verify connection with UDP call. Fast as it is 
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://54.144.65.217:3000/")
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
+                .client(okHttpClient) // Checks certification
+                .addConverterFactory(GsonConverterFactory.create()) // JSON converter
+                .build(); // Build retrofit
+        // Initialize interface with retrofit client
         ISearchRecipeAPI jsonPlaceHolderApi = retrofit.create(ISearchRecipeAPI.class);
 
         // Get all recipes
         Call<List<Recipe>> allRecipesList = jsonPlaceHolderApi.getRecipeList();
         getAllRecipes(allRecipesList);
 
+        // Set action listener to search for a recipe with EditText input
         view.findViewById(R.id.recipe_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

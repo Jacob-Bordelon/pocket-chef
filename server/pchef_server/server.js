@@ -9,10 +9,11 @@ const { Console } = require('console');
 var privateKey = fs.readFileSync( '../../../privatekey.pem' );
 var certificate = fs.readFileSync( '../../../server.crt' );
 
+// Switch to default password 
 var sqlCon = mysql.createConnection({
     host:'localhost',
     user:'root',
-    password:'12345',
+    password:'12345', //not real password
     database:'DB_Recipe_Remote'
 });
 
