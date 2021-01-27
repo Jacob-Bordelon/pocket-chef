@@ -42,7 +42,7 @@ app.post("/search",(req,res,next)=>{
     var post_data = req.body;
     var recipe_search = post_data.search;
 
-    var query = "select * from RECIPE where RName = ?";
+    var query = "SELECT r.RName AS 'Recipe',r.Instructions, ri.Amount AS 'Amount', mu.Measure AS 'Measure', i.FName AS 'Ingredient' FROM RECIPE r JOIN REC_INGREDIENT ri on r.id = ri.RIID JOIN FOOD i on i.FID = ri.Food_ID LEFT OUTER JOIN MEASURE mu on mu.MID = Measure_ID where r.RName = ?";
 
     sqlCon.query(query,[recipe_search],function(error,result,fields){
         sqlCon.on('error',function(err){
