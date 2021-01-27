@@ -1,5 +1,13 @@
 var express = require('express');
 var mysql = require('mysql');
+var http = require('http');
+var https = require('https');
+const tls = require('tls');
+const fs = require('fs');
+const { Console } = require('console');
+
+var privateKey = fs.readFileSync( '../../../privatekey.pem' );
+var certificate = fs.readFileSync( '../../../server.crt' );
 
 var sqlCon = mysql.createConnection({
     host:'localhost',
@@ -15,7 +23,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.get("/recipes",(req,res,next)=>{
     
-    var query = "SELECT r.RName AS 'Recipe',r.Instructions, ri.Amount AS 'Amount', mu.Measure AS 'Unit of Measure', i.FName AS 'Ingredient' FROM RECIPE r JOIN REC_INGREDIENT ri on r.id = ri.RIID JOIN FOOD i on i.FID = ri.Food_ID LEFT OUTER JOIN MEASURE mu on mu.MID = Measure_ID";
+    var query = "SELECT r.RName AS 'Recipe',r.Instructions, ri.Amount AS 'Amount', mu.Measure AS 'Measure', i.FName AS 'Ingredient' FROM RECIPE r JOIN REC_INGREDIENT ri on r.id = ri.RIID JOIN FOOD i on i.FID = ri.Food_ID LEFT OUTER JOIN MEASURE mu on mu.MID = Measure_ID";
 
     sqlCon.query(query,function(error,result,fields){
         sqlCon.on('error',function(err){
@@ -51,6 +59,9 @@ app.post("/search",(req,res,next)=>{
 
 
 
-app.listen(3000,()=>{
-    console.log("Running REST API on port 3000")
-})
+https.createServer({
+    key: privateKey,
+    cert: certificate
+}, app).listen(3000,'0.0.0.0');
+
+console.log("Server Listening on Port 3000");
