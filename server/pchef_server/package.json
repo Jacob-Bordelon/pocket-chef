@@ -10,7 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^3.2.0",
+    "compare-lists": "^1.0.10",
     "express": "^4.17.1",
+    "json-diff": "^0.5.4",
     "mysql": "^2.18.1"
   }
 }
