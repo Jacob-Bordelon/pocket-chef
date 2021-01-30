@@ -17,6 +17,10 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.pocket_chef_application.API.ISearchRecipeAPI;
 import com.example.pocket_chef_application.Model.Recipe;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -52,7 +56,7 @@ public class SecondFragment extends Fragment {
         OkHttpClient okHttpClient = UnSafeOkHttpClient.getUnsafeOkHttpClient();
         // Retrofit Client. Connects to AWS EC2 Server through port 3000
         // ToDo: check if neccesary to verify connection with UDP call. Fast as it is 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://54.144.65.217:3000/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://10.0.2.2:3000/")
                 .client(okHttpClient) // Checks certification
                 .addConverterFactory(GsonConverterFactory.create()) // JSON converter
                 .build(); // Build retrofit
@@ -67,22 +71,76 @@ public class SecondFragment extends Fragment {
         view.findViewById(R.id.recipe_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 String recipeName = editText.getText().toString();
                 // Search for a recipe by name
                 Call<List<Recipe>> singleRecipeList = jsonPlaceHolderApi.searchRecipe(recipeName);
-                searchRecipe(singleRecipeList);
+                searchRecipe(singleRecipeList);*/
+                JSONObject item1 = new JSONObject();
+                JSONObject item2 = new JSONObject();
+                try {
+                    item1.put("Ingredient","sugar");
+                    item2.put("Ingredient","egg");
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                JSONArray ingredients = new JSONArray();
+
+                ingredients.put(item1);
+                ingredients.put(item2);
+
+                // Search for a recipe by name
+                Call<List<Recipe>> possibleRecipeList = jsonPlaceHolderApi.possibleRecipe(ingredients.toString());
+                possibleRecipe(possibleRecipeList);
             }
         });
 
     }
 
-    private void searchRecipe(Call<List<Recipe>> allRecipes) {
+    private void searchRecipe(Call<List<Recipe>> singleRecipes) {
 
-        allRecipes.enqueue(new Callback<List<Recipe>>() {
+        singleRecipes.enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
 
                 textView.setText("");
+                if (!response.isSuccessful()) {
+                    textView.setText("Code " + response.code());
+                    return;
+                }
+
+                List<Recipe> posts = response.body();
+
+                for (Recipe post : posts) {
+                    String content = "";
+                    content += "Name: " + post.getRecipe() + "\n";
+                    content += "Instructions: " + post.getInstructions() + "\n";
+                    content += "Amount: " + post.getAmount() + "\n";
+                    content += "Measure: " + post.getMeasure() + "\n";
+                    content += "Ingredient: " + post.getIngredient() + "\n";
+
+                    textView.append(content);
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+                textView.setText(t.getMessage());
+            }
+        });
+    }
+
+    private void possibleRecipe(Call<List<Recipe>> possibleRecipes) {
+
+        textView.setText("");
+        possibleRecipes.enqueue(new Callback<List<Recipe>>() {
+            @Override
+            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+
                 if (!response.isSuccessful()) {
                     textView.setText("Code " + response.code());
                     return;

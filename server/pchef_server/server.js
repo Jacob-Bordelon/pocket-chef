@@ -24,7 +24,7 @@ app.use(express.urlencoded({extended: true}));
 app.get("/recipes",(req,res,next)=>{
     
     var query = "SELECT r.RName AS 'Recipe',r.Instructions, ri.Amount AS 'Amount', mu.Measure AS 'Measure', i.FName AS 'Ingredient' FROM RECIPE r JOIN REC_INGREDIENT ri on r.id = ri.RIID JOIN FOOD i on i.FID = ri.Food_ID LEFT OUTER JOIN MEASURE mu on mu.MID = Measure_ID";
-
+    console.log("GET recipes requested");
     sqlCon.query(query,function(error,result,fields){
         sqlCon.on('error',function(err){
             console.log('[MYSQL]ERROR',err);
@@ -39,6 +39,7 @@ app.get("/recipes",(req,res,next)=>{
 });
 
 app.post("/search",(req,res,next)=>{
+    console.log("GET search requested");
     var post_data = req.body;
     var recipe_search = post_data.search;
 
@@ -58,21 +59,18 @@ app.post("/search",(req,res,next)=>{
 });
 
 app.post("/possible",(req,res,next)=>{
+    console.log("GET possible requested");
     var post_data = req.body;
-    var data = post_data.search;
-    
-});
-
-
-//////////////////////////////////////////////////////////////////////////////////////////
-
-function test(data) {
+    var data = post_data.possible;
     var myItemsJSON = JSON.parse(data);
     var query = "select * from RECIPE;";        
     var possibleRecipes = [];
     var rowsCounter = 1;
+    
     sqlCon.query(query,function(error,rows,fields){
-        if (error) throw err;
+        sqlCon.on('error',function(err){
+            console.log('[MYSQL]ERROR',err);
+        });
 
         async.each(rows, function (row, callback) {
             var ingredientQuery = "SELECT ri.Amount AS 'Amount', mu.Measure AS 'Measure', i.FName AS 'Ingredient' FROM RECIPE r JOIN REC_INGREDIENT ri on r.id = ri.RIID JOIN FOOD i on i.FID = ri.Food_ID LEFT OUTER JOIN MEASURE mu on mu.MID = Measure_ID where r.id = ?";
@@ -103,26 +101,23 @@ function test(data) {
                     }
 
                     if(rowsCounter == rows.length) {
-                        console.log(JSON.stringify(possibleRecipes));
-                        // res.end(JSON.stringify(possibleRecipes));
+                        res.end(JSON.stringify(possibleRecipes));
                     }
                     rowsCounter++;
                      
                 }
                 else {
                     console.log('no recipes available');
+                    res.end(JSON.stringify('no recipes available'));
                 }
 
                 callback();
             });
 
         });
-        sqlCon.end();
-    });    
-}
-
-
-test('[{"Ingredient":"sugar"},{"Ingredient":"egg"}]');  
+        //sqlCon.end();
+    });
+});
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
