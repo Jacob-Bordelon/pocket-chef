@@ -63,9 +63,9 @@ public class SecondFragment extends Fragment {
         // Initialize interface with retrofit client
         ISearchRecipeAPI jsonPlaceHolderApi = retrofit.create(ISearchRecipeAPI.class);
 
-        // Get all recipes
+        /* Get all recipes
         Call<List<Recipe>> allRecipesList = jsonPlaceHolderApi.getRecipeList();
-        getAllRecipes(allRecipesList);
+        getAllRecipes(allRecipesList);*/
 
         // Set action listener to search for a recipe with EditText input
         view.findViewById(R.id.recipe_button).setOnClickListener(new View.OnClickListener() {
@@ -78,9 +78,13 @@ public class SecondFragment extends Fragment {
                 searchRecipe(singleRecipeList);*/
                 JSONObject item1 = new JSONObject();
                 JSONObject item2 = new JSONObject();
+                JSONObject item3 = new JSONObject();
+                JSONObject item4 = new JSONObject();
                 try {
                     item1.put("Ingredient","sugar");
                     item2.put("Ingredient","egg");
+                    item3.put("Ingredient","chocolate");
+                    item4.put("Ingredient","salt");
                 }
                 catch (JSONException e) {
                     e.printStackTrace();
@@ -90,6 +94,8 @@ public class SecondFragment extends Fragment {
 
                 ingredients.put(item1);
                 ingredients.put(item2);
+                ingredients.put(item3);
+                ingredients.put(item4);
 
                 // Search for a recipe by name
                 Call<List<Recipe>> possibleRecipeList = jsonPlaceHolderApi.possibleRecipe(ingredients.toString());
@@ -120,6 +126,7 @@ public class SecondFragment extends Fragment {
                     content += "Amount: " + post.getAmount() + "\n";
                     content += "Measure: " + post.getMeasure() + "\n";
                     content += "Ingredient: " + post.getIngredient() + "\n";
+                    content += "#############################" + "\n";
 
                     textView.append(content);
 
@@ -136,7 +143,7 @@ public class SecondFragment extends Fragment {
 
     private void possibleRecipe(Call<List<Recipe>> possibleRecipes) {
 
-        textView.setText("");
+        //textView.setText("");
         possibleRecipes.enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
@@ -155,6 +162,7 @@ public class SecondFragment extends Fragment {
                     content += "Amount: " + post.getAmount() + "\n";
                     content += "Measure: " + post.getMeasure() + "\n";
                     content += "Ingredient: " + post.getIngredient() + "\n";
+                    content += "#############################" + "\n";
 
                     textView.append(content);
 

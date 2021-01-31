@@ -1,14 +1,14 @@
 package com.example.pocket_chef_application.Model;
 
 public class Recipe {
-    private String Recipe;
+    private String RName;
     private String Instructions;
     private int Amount;
     private String Measure;
     private String Ingredient;
 
     public String getRecipe() {
-        return Recipe;
+        return RName;
     }
 
     public String getInstructions() {

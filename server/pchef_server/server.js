@@ -8,7 +8,7 @@ var async = require('async');
 var privateKey = fs.readFileSync( '../../../privatekey.pem' );
 var certificate = fs.readFileSync( '../../../server.crt' );
 
-// Switch to default password 
+// ToDo: switch to default password 
 var sqlCon = mysql.createConnection({
     host:'localhost',
     user:'root',
@@ -23,7 +23,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.get("/recipes",(req,res,next)=>{
     
-    var query = "SELECT r.RName AS 'Recipe',r.Instructions, ri.Amount AS 'Amount', mu.Measure AS 'Measure', i.FName AS 'Ingredient' FROM RECIPE r JOIN REC_INGREDIENT ri on r.id = ri.RIID JOIN FOOD i on i.FID = ri.Food_ID LEFT OUTER JOIN MEASURE mu on mu.MID = Measure_ID";
+    var query = "SELECT r.RName,r.Instructions, ri.Amount AS 'Amount', mu.Measure AS 'Measure', i.FName AS 'Ingredient' FROM RECIPE r JOIN REC_INGREDIENT ri on r.id = ri.RIID JOIN FOOD i on i.FID = ri.Food_ID LEFT OUTER JOIN MEASURE mu on mu.MID = Measure_ID";
     console.log("GET recipes requested");
     sqlCon.query(query,function(error,result,fields){
         sqlCon.on('error',function(err){
@@ -43,7 +43,7 @@ app.post("/search",(req,res,next)=>{
     var post_data = req.body;
     var recipe_search = post_data.search;
 
-    var query = "SELECT r.RName AS 'Recipe',r.Instructions, ri.Amount AS 'Amount', mu.Measure AS 'Measure', i.FName AS 'Ingredient' FROM RECIPE r JOIN REC_INGREDIENT ri on r.id = ri.RIID JOIN FOOD i on i.FID = ri.Food_ID LEFT OUTER JOIN MEASURE mu on mu.MID = Measure_ID where r.RName = ?";
+    var query = "SELECT r.RName,r.Instructions, ri.Amount AS 'Amount', mu.Measure AS 'Measure', i.FName AS 'Ingredient' FROM RECIPE r JOIN REC_INGREDIENT ri on r.id = ri.RIID JOIN FOOD i on i.FID = ri.Food_ID LEFT OUTER JOIN MEASURE mu on mu.MID = Measure_ID where r.RName = ?";
 
     sqlCon.query(query,[recipe_search],function(error,result,fields){
         sqlCon.on('error',function(err){
@@ -63,6 +63,7 @@ app.post("/possible",(req,res,next)=>{
     var post_data = req.body;
     var data = post_data.possible;
     var myItemsJSON = JSON.parse(data);
+    //console.log(myItemsJSON);
     var query = "select * from RECIPE;";        
     var possibleRecipes = [];
     var rowsCounter = 1;
@@ -88,7 +89,6 @@ app.post("/possible",(req,res,next)=>{
                     temp.sort((a,b) => (a.Ingredient > b.Ingredient) ? 1 : ((b.Ingredient > a.Ingredient) ? -1 : 0))
                     DBList = JSON.parse(JSON.stringify(temp));
                     myItemsJSON.sort((a,b) => (a.Ingredient > b.Ingredient) ? 1 : ((b.Ingredient > a.Ingredient) ? -1 : 0))
-
                     var diff = jsonDiff.diffString(DBList,myItemsJSON);
                     //console.log(diff);
                     if(diff.includes("-")) {
@@ -101,6 +101,7 @@ app.post("/possible",(req,res,next)=>{
                     }
 
                     if(rowsCounter == rows.length) {
+                        //console.log(JSON.stringify(possibleRecipes));
                         res.end(JSON.stringify(possibleRecipes));
                     }
                     rowsCounter++;
