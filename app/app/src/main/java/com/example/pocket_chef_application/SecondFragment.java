@@ -56,7 +56,7 @@ public class SecondFragment extends Fragment {
         OkHttpClient okHttpClient = UnSafeOkHttpClient.getUnsafeOkHttpClient();
         // Retrofit Client. Connects to AWS EC2 Server through port 3000
         // ToDo: check if neccesary to verify connection with UDP call. Fast as it is 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://10.0.2.2:3000/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://54.144.65.217:3000/")
                 .client(okHttpClient) // Checks certification
                 .addConverterFactory(GsonConverterFactory.create()) // JSON converter
                 .build(); // Build retrofit
