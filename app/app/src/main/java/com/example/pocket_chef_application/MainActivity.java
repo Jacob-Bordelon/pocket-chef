@@ -1,9 +1,9 @@
 package com.example.pocket_chef_application;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,34 +12,68 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.TextView;
-import android.util.Log;
-
-import org.w3c.dom.Text;
-
-import java.io.Console;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    protected void handlePopup(FrameLayout layout){
+        if(layout.getVisibility() != View.VISIBLE){
+            layout.setVisibility(View.VISIBLE);
+        }else{
+            layout.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        FrameLayout layout = findViewById(R.id.TestFrame);
+        layout.setVisibility(View.GONE);
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "This is an alert action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+        // Lambda handler of fab
+        fab.setOnClickListener(v -> handlePopup(layout));
+
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+
+
+
+        ImageButton button1 = findViewById(R.id.imageButton1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                CharSequence text = "Button 1 has been pressed";
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
             }
         });
+
+        ImageButton button2 = findViewById(R.id.imageButton2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                CharSequence text = "Button 2 has been pressed";
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+        });
+
+        ImageButton button3 = findViewById(R.id.imageButton3);
+        button3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                CharSequence text = "Button 3 has been pressed";
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+        });
+
 
 
 
