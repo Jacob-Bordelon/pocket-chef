@@ -1,3 +1,4 @@
+// Required Libraries
 var express = require('express');
 var mysql = require('mysql');
 var https = require('https');
@@ -5,45 +6,55 @@ const fs = require('fs');
 var jsonDiff = require('json-diff');
 var async = require('async');
 const dgram = require("dgram");
-
+// Certification for https
 var privateKey = fs.readFileSync( '../../../privatekey.pem' );
 var certificate = fs.readFileSync( '../../../server.crt' );
+// Debugging purposes
+var DEBUG = false;
 
-// ToDo: switch to default password 
+// ToDo: switch to default password
+// Create mysql connection with parameters 
 var sqlCon = mysql.createConnection({
     host:'localhost',
     user:'root',
     password:'12345', //not real password
     database:'DB_Recipe_Remote'
 });
-
+// Initialize express TCP server with REST API 
 var app = express();
 app.use("/", express.static("../public"));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+////////////////////////////////// GET commands ///////////////////////////////////////////
+
+/* GET request: /possible: recieves JSON Array of ingredients from phone and returns a 
+JSON Array of possible recipes that can be prepared based on the remote DB */ 
 app.post("/possible",(req,res,next)=>{
-    console.log("GET possible requested");
-    var post_data = req.body;
-    var data = post_data.possible;
-    var myItemsJSON = JSON.parse(data);
-    //console.log(myItemsJSON);
-    var query = "select * from RECIPE;";        
-    var possibleRecipes = [];
-    var rowsCounter = 1;
-    
+    console.log("GET possible requested"); // -> LOG for connection 
+    var post_data = req.body; // -> get the payload 
+    var data = post_data.possible; // -> filters for the possible GET
+    var myItemsJSON = JSON.parse(data); // -> parses data into a JSON object array
+    if(DEBUG) console.log(myItemsJSON); // -> Debugging 
+    var query = "select * from RECIPE;"; // -> initial query to get all recipes from database       
+    var possibleRecipes = []; // -> initialize an array for storing recipes 
+    var rowsCounter = 1; // -> this keeps track the ID of the recipe
+    // Inner mysql query for each row (recipe) in the database
     sqlCon.query(query,function(error,rows,fields){
         sqlCon.on('error',function(err){
             console.log('[MYSQL]ERROR',err);
         });
-
+        // async operation to traverse the database
         async.each(rows, function (row, callback) {
-            var ingredientQuery = "SELECT ri.Amount AS 'Amount', mu.Measure AS 'Measure', i.FName AS 'Ingredient' FROM RECIPE r JOIN REC_INGREDIENT ri on r.id = ri.RIID JOIN FOOD i on i.FID = ri.Food_ID LEFT OUTER JOIN MEASURE mu on mu.MID = Measure_ID where r.id = ?";
-
+            // query to get ingredients with amounts and measures
+            var ingredientQuery = "SELECT ri.Amount AS 'Amount', mu.Measure AS 'Measure', i.FName AS 'Ingredient' "
+              +"FROM RECIPE r JOIN REC_INGREDIENT ri on r.id = ri.RIID JOIN FOOD i on i.FID = ri.Food_ID "
+              +"LEFT OUTER JOIN MEASURE mu on mu.MID = Measure_ID where r.id = ?";
             sqlCon.query(ingredientQuery, row.id,function(food_err, ingredients, ingredient_fields) {
                 if (food_err) callback(food_err);
 
                 if(ingredients && ingredients.length) {
+                    // parsing the results to just get the ingredients for comparison purposes
                     var temp = [];
                     async.forEach(ingredients, function (ing) {
                         temp.push({"Ingredient":ing.Ingredient});
@@ -51,29 +62,31 @@ app.post("/possible",(req,res,next)=>{
                     
                     // sorting arrays for comparison
                     temp.sort((a,b) => (a.Ingredient > b.Ingredient) ? 1 : ((b.Ingredient > a.Ingredient) ? -1 : 0))
-                    DBList = JSON.parse(JSON.stringify(temp));
                     myItemsJSON.sort((a,b) => (a.Ingredient > b.Ingredient) ? 1 : ((b.Ingredient > a.Ingredient) ? -1 : 0))
+                    // this is the sorted ingredients from our database 
+                    DBList = JSON.parse(JSON.stringify(temp));
+                    // using JASON DIFF to compare ingredients
                     var diff = jsonDiff.diffString(DBList,myItemsJSON);
-                    //console.log(diff);
+                    if(DEBUG) console.log(diff); // -> Debugging purposes
                     if(diff.includes("-")) {
                         //ToDo: by the amount of '-', we can suggest to buy certain items to be able to cook the recipes
                     }
-                    else {
-                        var suggestedRecipe = JSON.parse(JSON.stringify(row));
-                        suggestedRecipe["Ingredients"] = JSON.parse(JSON.stringify(ingredients));
-                        possibleRecipes.push(suggestedRecipe);
+                    else { // We found a recipe we can prepare with our ingredients
+                        var suggestedRecipe = JSON.parse(JSON.stringify(row)); // -> get suggested recipe
+                        suggestedRecipe["Ingredients"] = JSON.parse(JSON.stringify(ingredients)); // -> add the ingredients
+                        possibleRecipes.push(suggestedRecipe); // -> added to our array of possible recipes 
                     }
-
+                    // If we are at the end of the recipe database, we send the results to the phone
                     if(rowsCounter == rows.length) {
-                        console.log(JSON.stringify(possibleRecipes));
-                        res.end(JSON.stringify(possibleRecipes));
+                        if(DEBUG) console.log(JSON.stringify(possibleRecipes)); // -> Debugging purposes
+                        res.end(JSON.stringify(possibleRecipes)); // -> positive response to the phone
                     }
-                    rowsCounter++;
+                    rowsCounter++; // increase row count
                      
                 }
                 else {
-                    console.log('no recipes available');
-                    res.end(JSON.stringify('no recipes available'));
+                    if(DEBUG) console.log('no recipes available'); // -> Debugging purposes 
+                    res.end(JSON.stringify('no recipes available')); // -> negative response to the phone
                 }
 
                 callback();
@@ -84,17 +97,17 @@ app.post("/possible",(req,res,next)=>{
     });
 });
 
-/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////// UDP Server ///////////////////////////////////////////
 
-// udp server
+// The idea is to have fast check to see if server is alive to notify the phone
 const UDPserver = dgram.createSocket(
     {
       type: "udp4",
-      reuseAddr: true // let reuse port
+      reuseAddr: true // reuse port 3000
     },
     (buffer, sender) => {
       const message = buffer.toString();
-      console.log({
+      console.log({ // -> log connection
         kind: "UDP_MESSAGE",
         message,
         sender
@@ -105,7 +118,7 @@ const UDPserver = dgram.createSocket(
         if (error) {
           console.error(error);
         } else {
-          console.log({
+          console.log({ // -> log response
             kind: "RESPOND",
             message: message.toUpperCase(),
             sender
@@ -115,12 +128,13 @@ const UDPserver = dgram.createSocket(
     }
   );
 
+UDPserver.bind(3000); // -> Binds socket to port
+console.log("UDP Server Listening on Port 3000"); // -> log listening message
 
-//////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////// TCP Server ///////////////////////////////////////////
+// Starts https server with certificates
 https.createServer({
     key: privateKey,
     cert: certificate
-}, app).listen(3000,'0.0.0.0');
-console.log("TCP Server Listening on Port 3000");
-UDPserver.bind(3000);
-console.log("UDP Server Listening on Port 3000");
+}, app).listen(3000,'0.0.0.0'); // -> listens to localhost 
+console.log("TCP Server Listening on Port 3000"); // -> log listening message

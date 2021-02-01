@@ -26,15 +26,16 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SecondFragment extends Fragment {
-
-    TextView textView;
-    TextView statusBar;
+    // Textview variables
+    TextView textView; // -> for displaying the recipes
+    TextView statusBar; // -> for displaying connection status
 
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
+        // Initializes the view and the status bar on create for non null refereance 
         View view = inflater.inflate(R.layout.fragment_second, container, false);
         statusBar = (TextView) view.findViewById(R.id.status_field);
 
@@ -44,13 +45,14 @@ public class SecondFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        // Gets the specific textview from layout 
         textView = view.findViewById(R.id.recipe_view);
 
+        // Check connection with server with UDP. It has to be a thread. Uses the statusBar for updating
+        new Thread(new UDPClient(statusBar,3000,"54.144.65.217")).start();
         // ToDo: change to a safe credentials check
         OkHttpClient okHttpClient = UnSafeOkHttpClient.getUnsafeOkHttpClient();
-        // Retrofit Client. Connects to AWS EC2 Server through port 3000
-        // ToDo: check if neccesary to verify connection with UDP call. Fast as it is
+        // Retrofit Client. Creates connection parameters to AWS EC2 Server through port 3000
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://54.144.65.217:3000/")
                 .client(okHttpClient) // Checks certification
                 .addConverterFactory(GsonConverterFactory.create()) // JSON converter
@@ -58,14 +60,11 @@ public class SecondFragment extends Fragment {
         // Initialize interface with retrofit client
         ISearchRecipeAPI jsonPlaceHolderApi = retrofit.create(ISearchRecipeAPI.class);
 
-        // Check connection with server with UDP
-        new Thread(new UDPClient(statusBar)).start();
-
-        // Set action listener to search for a recipe with EditText input
+        // Set action listener for generate button
         view.findViewById(R.id.recipe_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                // Creates a dummy JSON array of obejects to simulate ingredients
                 JSONObject item1 = new JSONObject();
                 JSONObject item2 = new JSONObject();
                 JSONObject item3 = new JSONObject();
@@ -87,27 +86,27 @@ public class SecondFragment extends Fragment {
                 ingredients.put(item3);
                 ingredients.put(item4);
 
-                // Search for a recipe by name
+                // Search for recipes based on the ingredients we have
                 Call<List<Recipe>> possibleRecipeList = jsonPlaceHolderApi.possibleRecipe(ingredients.toString());
                 possibleRecipe(possibleRecipeList);
             }
         });
     }
 
+    // Method that gets fired when we do a REST request for getting the possible recipes 
     private void possibleRecipe(Call<List<Recipe>> possibleRecipes) {
-
-        textView.setText("");
-        possibleRecipes.enqueue(new Callback<List<Recipe>>() {
+        textView.setText(""); // -> resets the content of the textview
+        // send the request and notify callback of its response or if an error occurred talking to the server,
+        possibleRecipes.enqueue(new Callback<List<Recipe>>() { 
             @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-
-                if (!response.isSuccessful()) {
-                    textView.setText("Code " + response.code());
+            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) { // -> on response from server
+                if (!response.isSuccessful()) { // -> not successful warns user  
+                    textView.setText("Code " + response.code()); 
                     return;
                 }
-
+                // Parses the payload based on the model: Recipe
                 List<Recipe> posts = response.body();
-
+                // traverses through the posts and adds recipe info to the view
                 for (Recipe post : posts) {
                     String content = "";
                     content += "Name: " + post.getRecipe() + "\n";
@@ -116,13 +115,11 @@ public class SecondFragment extends Fragment {
                     content += "#############################" + "\n";
 
                     textView.append(content);
-
                 }
-
             }
 
             @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+            public void onFailure(Call<List<Recipe>> call, Throwable t) { // -> if failure, sets message 
                 textView.setText(t.getMessage());
             }
         });
