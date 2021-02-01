@@ -4,7 +4,6 @@ public class Recipe {
     private String RName;
     private String Instructions;
     private String Description;
-    private String Ingredient;
 
     public String getRecipe() {
         return RName;
@@ -16,9 +15,5 @@ public class Recipe {
 
     public String getDescription() {
         return Description;
-    }
-
-    public String getIngredient() {
-        return Ingredient;
     }
 }

@@ -1,18 +1,13 @@
 package com.example.pocket_chef_application;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.pocket_chef_application.API.ISearchRecipeAPI;
 import com.example.pocket_chef_application.Model.Recipe;
@@ -21,13 +16,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -62,8 +50,8 @@ public class SecondFragment extends Fragment {
         // ToDo: change to a safe credentials check
         OkHttpClient okHttpClient = UnSafeOkHttpClient.getUnsafeOkHttpClient();
         // Retrofit Client. Connects to AWS EC2 Server through port 3000
-        // ToDo: check if necessary to verify connection with UDP call. Fast as it is
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://192.168.0.6:3000/")
+        // ToDo: check if neccesary to verify connection with UDP call. Fast as it is
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://54.144.65.217:3000/")
                 .client(okHttpClient) // Checks certification
                 .addConverterFactory(GsonConverterFactory.create()) // JSON converter
                 .build(); // Build retrofit
@@ -77,8 +65,7 @@ public class SecondFragment extends Fragment {
         view.findViewById(R.id.recipe_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Create a dummy list array for fetching possible recipes
-                // Building the JSON Objects
+
                 JSONObject item1 = new JSONObject();
                 JSONObject item2 = new JSONObject();
                 JSONObject item3 = new JSONObject();
@@ -94,23 +81,21 @@ public class SecondFragment extends Fragment {
                 }
 
                 JSONArray ingredients = new JSONArray();
-                // Building the JSON array
+
                 ingredients.put(item1);
                 ingredients.put(item2);
                 ingredients.put(item3);
                 ingredients.put(item4);
 
-                // Search for possible recipes based on pantry list (dummy: ingredients)
+                // Search for a recipe by name
                 Call<List<Recipe>> possibleRecipeList = jsonPlaceHolderApi.possibleRecipe(ingredients.toString());
                 possibleRecipe(possibleRecipeList);
             }
         });
-
     }
 
     private void possibleRecipe(Call<List<Recipe>> possibleRecipes) {
 
-        // clear text to erase previously generated output
         textView.setText("");
         possibleRecipes.enqueue(new Callback<List<Recipe>>() {
             @Override
@@ -133,6 +118,7 @@ public class SecondFragment extends Fragment {
                     textView.append(content);
 
                 }
+
             }
 
             @Override
