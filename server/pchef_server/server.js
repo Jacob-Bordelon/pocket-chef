@@ -4,6 +4,7 @@ var https = require('https');
 const fs = require('fs');
 var jsonDiff = require('json-diff');
 var async = require('async');
+const dgram = require("dgram");
 
 var privateKey = fs.readFileSync( '../../../privatekey.pem' );
 var certificate = fs.readFileSync( '../../../server.crt' );
@@ -20,43 +21,6 @@ var app = express();
 app.use("/", express.static("../public"));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-
-app.get("/recipes",(req,res,next)=>{
-    
-    var query = "SELECT r.RName,r.Instructions, ri.Amount AS 'Amount', mu.Measure AS 'Measure', i.FName AS 'Ingredient' FROM RECIPE r JOIN REC_INGREDIENT ri on r.id = ri.RIID JOIN FOOD i on i.FID = ri.Food_ID LEFT OUTER JOIN MEASURE mu on mu.MID = Measure_ID";
-    console.log("GET recipes requested");
-    sqlCon.query(query,function(error,result,fields){
-        sqlCon.on('error',function(err){
-            console.log('[MYSQL]ERROR',err);
-        });
-        if(result && result.length) {
-            res.end(JSON.stringify(result));
-        }
-        else {
-            res.end(JSON.stringify('no recipes available'));
-        }
-    });
-});
-
-app.post("/search",(req,res,next)=>{
-    console.log("GET search requested");
-    var post_data = req.body;
-    var recipe_search = post_data.search;
-
-    var query = "SELECT r.RName,r.Instructions, ri.Amount AS 'Amount', mu.Measure AS 'Measure', i.FName AS 'Ingredient' FROM RECIPE r JOIN REC_INGREDIENT ri on r.id = ri.RIID JOIN FOOD i on i.FID = ri.Food_ID LEFT OUTER JOIN MEASURE mu on mu.MID = Measure_ID where r.RName = ?";
-
-    sqlCon.query(query,[recipe_search],function(error,result,fields){
-        sqlCon.on('error',function(err){
-            console.log('[MYSQL]ERROR',err);
-        });
-        if(result && result.length) {
-            res.end(JSON.stringify(result));
-        }
-        else {
-            res.end(JSON.stringify('no recipes available'));
-        }
-    });
-});
 
 app.post("/possible",(req,res,next)=>{
     console.log("GET possible requested");
@@ -101,7 +65,7 @@ app.post("/possible",(req,res,next)=>{
                     }
 
                     if(rowsCounter == rows.length) {
-                        //console.log(JSON.stringify(possibleRecipes));
+                        console.log(JSON.stringify(possibleRecipes));
                         res.end(JSON.stringify(possibleRecipes));
                     }
                     rowsCounter++;
@@ -122,9 +86,41 @@ app.post("/possible",(req,res,next)=>{
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+// udp server
+const UDPserver = dgram.createSocket(
+    {
+      type: "udp4",
+      reuseAddr: true // let reuse port
+    },
+    (buffer, sender) => {
+      const message = buffer.toString();
+      console.log({
+        kind: "UDP_MESSAGE",
+        message,
+        sender
+      });
+  
+      // respond to sender
+      UDPserver.send(message.toUpperCase(), sender.port, sender.address, error => {
+        if (error) {
+          console.error(error);
+        } else {
+          console.log({
+            kind: "RESPOND",
+            message: message.toUpperCase(),
+            sender
+          });
+        }
+      });
+    }
+  );
+
+
+//////////////////////////////////////////////////////////////////////////////////////////
 https.createServer({
     key: privateKey,
     cert: certificate
 }, app).listen(3000,'0.0.0.0');
-
-console.log("Server Listening on Port 3000");
+console.log("TCP Server Listening on Port 3000");
+UDPserver.bind(3000);
+console.log("UDP Server Listening on Port 3000");

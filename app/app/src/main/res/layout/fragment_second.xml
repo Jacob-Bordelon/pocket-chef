@@ -6,25 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".SecondFragment">
 
-    <EditText
-        android:id="@+id/search_field"
-        android:padding="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autofillHints=""
-        android:inputType="text" />
-
     <Button
         android:id="@+id/recipe_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/search_field"
-        android:text="search" />
+        android:text="generate" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_below="@+id/recipe_button"
-        android:layout_height="match_parent">
+        android:layout_above="@id/status_field"
+        android:id="@+id/recipe_view_nest"
+        android:layout_height="wrap_content">
+
 
         <TextView
             android:id="@+id/recipe_view"
@@ -33,5 +27,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/status_field"
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="Status"
+        android:background="#D3D3D3"
+        android:layout_gravity="bottom" android:layout_alignParentBottom="true"/>
+        android:inputType="text" />
 
 </RelativeLayout>
