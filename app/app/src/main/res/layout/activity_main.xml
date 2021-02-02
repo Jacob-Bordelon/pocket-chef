@@ -31,7 +31,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:contentDescription="@string/desc"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:maxImageSize="50dp"
+        app:srcCompat="@android:drawable/ic_menu_add" />
 
     <FrameLayout
         android:id="@+id/TestFrame"
@@ -40,6 +41,10 @@
         android:layout_gravity="end|center_vertical"
         android:background="#75000000"
         android:fadingEdge="vertical"
+        android:isScrollContainer="false"
+        android:keepScreenOn="false"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
         app:layout_anchorGravity="right|center_vertical"
         app:layout_insetEdge="end">
 
