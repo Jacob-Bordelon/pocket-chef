@@ -47,11 +47,14 @@ public class UDPClient implements Runnable { // Thread implementation
             String text = new String(message, 0, packet.getLength()); // -> string with packet size  
             Log.d("Received text", text); // -> log
             parentView.setTextColor(Color.parseColor("#1D800E")); // set positive text color
+
             parentView.setText("Connected"); // -> signal the user
 
+            Log.d("Test","Testing connection");
             // close the connection
             // ToDo: loop forever to constantly check the connection (maybe)
             udpSocket.close();
+
         } catch (SocketTimeoutException e) {
             // handling a timeout
             Log.e("Timeout Exception", "UDP Connection:", e); // -> log

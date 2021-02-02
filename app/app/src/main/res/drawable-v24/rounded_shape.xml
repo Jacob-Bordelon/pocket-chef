@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <solid android:color="#CCCCCC"/>
+    android:shape="rectangle">
 
-    <stroke android:width="2dp"
-        android:color="#999999"/>
+    <solid android:color="@color/popout_bg"/>
 
-    <padding android:left="2dp"
-        android:top="2dp"
-        android:right="2dp"
-        android:bottom="2dp"/>
-
-    <corners android:radius="8dp" />
-
+    <stroke android:width="5dp" android:color="#B1BCBE" />
+    <corners android:radius="70dp"/>
+    <padding android:left="0dp" android:top="0dp" android:right="0dp" android:bottom="0dp" />
 </shape>

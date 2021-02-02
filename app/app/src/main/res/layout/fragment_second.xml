@@ -9,8 +9,9 @@
     <Button
         android:id="@+id/recipe_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="generate" />
+        android:layout_height="75dp"
+        android:text="generate"
+        app:backgroundTint="@color/button_bg" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

@@ -7,6 +7,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.View;
 
@@ -19,28 +24,34 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    protected void handlePopup(FrameLayout layout){
-        if(layout.getVisibility() != View.VISIBLE){
-            layout.setVisibility(View.VISIBLE);
-        }else{
-            layout.setVisibility(View.GONE);
-        }
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        FrameLayout layout = findViewById(R.id.TestFrame);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FrameLayout layout = findViewById(R.id.TestFrame);
+        // Set default value for toolbar and layout
+        toolbar.setVisibility(View.GONE);
         layout.setVisibility(View.GONE);
-        FloatingActionButton fab = findViewById(R.id.fab);
 
-        // Lambda handler of fab
-        fab.setOnClickListener(v -> handlePopup(layout));
+
+        // Lambda handler of fab.
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if(layout.getVisibility() != View.VISIBLE){
+                    layout.setVisibility(View.VISIBLE);
+                    //toolbar.setVisibility(View.VISIBLE);
+                }else{
+                    layout.setVisibility(View.GONE);
+                    //toolbar.setVisibility(View.GONE);
+                }
+            }
+        });
 
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
@@ -50,18 +61,24 @@ public class MainActivity extends AppCompatActivity {
         ImageButton button1 = findViewById(R.id.imageButton1);
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                CharSequence text = "Button 1 has been pressed";
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                Fragment fragment = FirstFragment.newInstance(null);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment_container,fragment, "FirstFragment");
+                transaction.addToBackStack(null);
+                transaction.commit();
+
             }
         });
+
 
         ImageButton button2 = findViewById(R.id.imageButton2);
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                CharSequence text = "Button 2 has been pressed";
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                Fragment fragment = SecondFragment.newInstance(null);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment_container,fragment, "SecondFragment");
+                //transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 
@@ -77,6 +94,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void openFragment(){
+        FirstFragment fragment = FirstFragment.newInstance("Hello");
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setCustomAnimations(R.anim.fragment_fade_enter,R.anim.fragment_fade_exit);
+        transaction.addToBackStack(null);
+        transaction.add(R.id.nav_host_fragment,fragment,"BLANK_FRAGMENT").commit();
     }
 
     @Override
