@@ -1,5 +1,6 @@
 package com.example.pocket_chef_application;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -65,6 +66,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void launchUpload(View v){
+        //launch a new activity for uploading
+
+        Intent i = new Intent(v.getContext(), UploadActivity.class);
+        startActivity(i);
     }
 
 
