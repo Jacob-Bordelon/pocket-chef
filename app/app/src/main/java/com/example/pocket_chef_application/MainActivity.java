@@ -1,5 +1,6 @@
 package com.example.pocket_chef_application;
 
+import android.content.Intent;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         int duration = Toast.LENGTH_SHORT;
 
 
+    }
 
         ImageButton button1 = findViewById(R.id.imageButton1);
         button1.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +100,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+    public void launchUpload(View v){
+        //launch a new activity for uploading
+
+        Intent i = new Intent(v.getContext(), UploadActivity.class);
+        startActivity(i);
+    }
 
 
 }

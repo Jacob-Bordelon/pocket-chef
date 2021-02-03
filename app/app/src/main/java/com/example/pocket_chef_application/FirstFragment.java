@@ -1,5 +1,6 @@
 package com.example.pocket_chef_application;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,5 +48,14 @@ public class FirstFragment extends Fragment {
 
 
 
+        view.findViewById(R.id.changeButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.d(TAG,"Change TextView: "+clickCount);
+                clickCount++;
+            }
+
+        });
     }
 }
