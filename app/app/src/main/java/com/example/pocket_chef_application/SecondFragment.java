@@ -1,6 +1,7 @@
 package com.example.pocket_chef_application;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,15 @@ public class SecondFragment extends Fragment {
     // Textview variables
     TextView textView; // -> for displaying the recipes
     TextView statusBar; // -> for displaying connection status
+    private static final String TEXT = "text";
+
+    public static SecondFragment newInstance(String text){
+        SecondFragment fragment = new SecondFragment();
+        Bundle args = new Bundle();
+        args.putString(TEXT,text);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(
@@ -119,7 +129,8 @@ public class SecondFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) { // -> if failure, sets message 
+            public void onFailure(Call<List<Recipe>> call, Throwable t) { // -> if failure, sets message
+                Log.e("ConnectionFailure", t.getMessage());
                 textView.setText(t.getMessage());
             }
         });

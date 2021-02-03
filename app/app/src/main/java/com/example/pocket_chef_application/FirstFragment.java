@@ -5,46 +5,47 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class FirstFragment extends Fragment {
     private static final String TAG = FirstFragment.class.getSimpleName();
+    private static final String TEXT = "text";
+
+
     int clickCount;
-    @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
-        clickCount=0;
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_first, container, false);
+
+    private String mText;
+
+    public static FirstFragment newInstance(String text){
+        FirstFragment fragment = new FirstFragment();
+        Bundle args = new Bundle();
+        args.putString(TEXT,text);
+        fragment.setArguments(args);
+        return fragment;
     }
 
 
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        clickCount=0;
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_first, container, false);
+
+        return view;
+    }
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-            }
-        });
 
-        view.findViewById(R.id.changeButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Log.d(TAG,"Change TextView: "+clickCount);
-                clickCount++;
-            }
-        });
     }
 }
