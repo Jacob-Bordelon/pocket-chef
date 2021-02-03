@@ -16,4 +16,70 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
+
+
+    <FrameLayout
+        android:id="@+id/Sidebar"
+        android:layout_width="126dp"
+        android:layout_height="298dp"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginStart="200dp"
+        android:layout_marginLeft="200dp"
+        android:background="@drawable/rounded_shape"
+        android:fadingEdge="vertical"
+        android:isScrollContainer="false"
+        android:keepScreenOn="false"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        app:layout_anchorGravity="right|center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.71"
+        app:layout_constraintStart_toStartOf="@+id/nav_host_fragment"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_insetEdge="end">
+
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="10dp"
+            android:adjustViewBounds="false"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/desc"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/generate_recipes_removebg_preview" />
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:adjustViewBounds="false"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/desc"
+            android:layerType="none"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/grocery_list_management_removebg_preview" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center|center_horizontal"
+            android:adjustViewBounds="false"
+            android:background="#00FFFFFF"
+            android:contentDescription="@string/desc"
+            android:cropToPadding="false"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/inventory_icon_removebg_preview" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
 </androidx.constraintlayout.widget.ConstraintLayout>

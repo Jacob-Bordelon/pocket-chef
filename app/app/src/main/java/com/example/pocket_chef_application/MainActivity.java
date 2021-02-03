@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -30,12 +31,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FrameLayout layout = findViewById(R.id.TestFrame);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        // Set default value for toolbar and layout
-        toolbar.setVisibility(View.GONE);
+        FrameLayout layout = findViewById(R.id.Sidebar);
         layout.setVisibility(View.GONE);
 
 
@@ -61,12 +58,12 @@ public class MainActivity extends AppCompatActivity {
         ImageButton button1 = findViewById(R.id.imageButton1);
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Fragment fragment = FirstFragment.newInstance(null);
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment_container,fragment, "FirstFragment");
-                transaction.addToBackStack(null);
-                transaction.commit();
-
+                SecondFragment fragment = new SecondFragment();
+                FragmentManager manager = getSupportFragmentManager();
+                manager.beginTransaction()
+                        .replace(R.id.nav_host_fragment,fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
@@ -74,58 +71,33 @@ public class MainActivity extends AppCompatActivity {
         ImageButton button2 = findViewById(R.id.imageButton2);
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Fragment fragment = SecondFragment.newInstance(null);
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment_container,fragment, "SecondFragment");
-                //transaction.addToBackStack(null);
-                transaction.commit();
+                FirstFragment fragment = new FirstFragment();
+                FragmentManager manager = getSupportFragmentManager();
+                manager.beginTransaction()
+                        .replace(R.id.nav_host_fragment,fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
         ImageButton button3 = findViewById(R.id.imageButton3);
         button3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                CharSequence text = "Button 3 has been pressed";
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                ThirdFragment fragment = new ThirdFragment();
+                FragmentManager manager = getSupportFragmentManager();
+                manager.beginTransaction()
+                        .replace(R.id.nav_host_fragment,fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
 
-
-
     }
 
-    public void openFragment(){
-        FirstFragment fragment = FirstFragment.newInstance("Hello");
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setCustomAnimations(R.anim.fragment_fade_enter,R.anim.fragment_fade_exit);
-        transaction.addToBackStack(null);
-        transaction.add(R.id.nav_host_fragment,fragment,"BLANK_FRAGMENT").commit();
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 
 }

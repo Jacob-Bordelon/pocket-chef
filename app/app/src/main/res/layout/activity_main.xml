@@ -1,27 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Theme.Pocket_Chef_Application.AppBarOverlay">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:background="@color/popout_bg"
-            android:visibility="visible"
-            app:popupTheme="@style/Theme.Pocket_Chef_Application.PopupOverlay"
-            app:titleTextAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <include
         android:id="@+id/include"
@@ -36,60 +20,5 @@
         android:contentDescription="@string/desc"
         app:maxImageSize="50dp"
         app:srcCompat="@android:drawable/ic_menu_add" />
-
-    <FrameLayout
-        android:id="@+id/TestFrame"
-        android:layout_width="88dp"
-        android:layout_height="282dp"
-        android:layout_gravity="end|center_vertical"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/rounded_shape"
-        android:fadingEdge="vertical"
-        android:isScrollContainer="false"
-        android:keepScreenOn="false"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        app:layout_anchorGravity="right|center_vertical"
-        app:layout_insetEdge="end">
-
-        <ImageButton
-            android:id="@+id/imageButton1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center|top"
-            android:layout_marginTop="10dp"
-            android:adjustViewBounds="false"
-            android:background="#00FFFFFF"
-            android:contentDescription="@string/desc"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/generate_recipes_removebg_preview" />
-
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="10dp"
-            android:adjustViewBounds="false"
-            android:background="#00FFFFFF"
-            android:contentDescription="@string/desc"
-            android:layerType="none"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/grocery_list_management_removebg_preview" />
-
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center|center_horizontal"
-            android:adjustViewBounds="false"
-            android:background="#00FFFFFF"
-            android:contentDescription="@string/desc"
-            android:cropToPadding="false"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/inventory_icon_removebg_preview" />
-    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
