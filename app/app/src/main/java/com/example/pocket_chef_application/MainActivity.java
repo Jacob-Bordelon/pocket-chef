@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         int duration = Toast.LENGTH_SHORT;
 
 
-    }
+
 
         ImageButton button1 = findViewById(R.id.imageButton1);
         button1.setOnClickListener(new View.OnClickListener() {
