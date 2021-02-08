@@ -28,8 +28,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SecondFragment extends Fragment {
     // Textview variables
-    TextView textView; // -> for displaying the recipes
-    TextView statusBar; // -> for displaying connection status
+    private TextView textView; // -> for displaying the recipes
+    private TextView statusBar; // -> for displaying connection status
+    private String server_ip = "10.0.2.2";//"10.0.2.2" "54.144.65.217"
     private static final String TEXT = "text";
 
     public static SecondFragment newInstance(String text){
@@ -45,7 +46,7 @@ public class SecondFragment extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        // Initializes the view and the status bar on create for non null refereance 
+        // Initializes the view and the status bar on create for non null reference
         View view = inflater.inflate(R.layout.fragment_second, container, false);
         statusBar = (TextView) view.findViewById(R.id.status_field);
 
@@ -59,11 +60,11 @@ public class SecondFragment extends Fragment {
         textView = view.findViewById(R.id.recipe_view);
 
         // Check connection with server with UDP. It has to be a thread. Uses the statusBar for updating
-        new Thread(new UDPClient(statusBar,3000,"54.144.65.217")).start();
+        new Thread(new UDPClient(statusBar,3000,server_ip)).start();
         // ToDo: change to a safe credentials check
         OkHttpClient okHttpClient = UnSafeOkHttpClient.getUnsafeOkHttpClient();
         // Retrofit Client. Creates connection parameters to AWS EC2 Server through port 3000
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://54.144.65.217:3000/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://"+server_ip+":3000/")
                 .client(okHttpClient) // Checks certification
                 .addConverterFactory(GsonConverterFactory.create()) // JSON converter
                 .build(); // Build retrofit
