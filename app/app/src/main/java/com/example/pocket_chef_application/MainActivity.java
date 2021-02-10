@@ -15,26 +15,35 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static LinearLayout layout;
+    private static FragmentManager manager;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        FrameLayout layout = findViewById(R.id.Sidebar);
+        Log.d(TAG,"One 1 Instance");
+        layout = findViewById(R.id.Sidebar);
         layout.setVisibility(View.GONE);
+
+        manager = getSupportFragmentManager();
+
+
 
 
         // Lambda handler of fab.
@@ -43,63 +52,59 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(layout.getVisibility() != View.VISIBLE){
                     layout.setVisibility(View.VISIBLE);
-                    //toolbar.setVisibility(View.VISIBLE);
+
                 }else{
                     layout.setVisibility(View.GONE);
-                    //toolbar.setVisibility(View.GONE);
+
                 }
             }
         });
 
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-
-
-
-
         ImageButton button1 = findViewById(R.id.imageButton1);
-        button1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                SecondFragment fragment = new SecondFragment();
-                FragmentManager manager = getSupportFragmentManager();
-                manager.beginTransaction()
-                        .replace(R.id.nav_host_fragment,fragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-
-
         ImageButton button2 = findViewById(R.id.imageButton2);
-        button2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                FirstFragment fragment = new FirstFragment();
-                FragmentManager manager = getSupportFragmentManager();
-                manager.beginTransaction()
-                        .replace(R.id.nav_host_fragment,fragment)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-
         ImageButton button3 = findViewById(R.id.imageButton3);
-        button3.setOnClickListener(new View.OnClickListener() {
+
+
+
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-                ThirdFragment fragment = new ThirdFragment();
-                FragmentManager manager = getSupportFragmentManager();
-                manager.beginTransaction()
-                        .replace(R.id.nav_host_fragment,fragment)
-                        .addToBackStack(null)
-                        .commit();
+                switch_fragment(new SecondFragment());
+                button1.setVisibility(View.GONE);
+                button2.setVisibility(View.VISIBLE);
+                button3.setVisibility(View.VISIBLE);
             }
         });
 
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch_fragment(new FirstFragment());
+                button2.setVisibility(View.GONE);
+                button1.setVisibility(View.VISIBLE);
+                button3.setVisibility(View.VISIBLE);
+            }
+        });
+
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch_fragment(new ThirdFragment());
+                button3.setVisibility(View.GONE);
+                button2.setVisibility(View.VISIBLE);
+                button1.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
 
-
-
-
+    private void switch_fragment(Fragment fragment){
+        manager.beginTransaction()
+                .replace(R.id.nav_host_fragment,fragment)
+                .addToBackStack(null)
+                .commit();
+        layout.setVisibility(View.GONE);
+    }
 
     public void launchUpload(View v){
         //launch a new activity for uploading

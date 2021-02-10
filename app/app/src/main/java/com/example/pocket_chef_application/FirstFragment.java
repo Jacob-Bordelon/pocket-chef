@@ -48,12 +48,11 @@ public class FirstFragment extends Fragment {
 
 
 
-        view.findViewById(R.id.changeButton).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.uploadButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Log.d(TAG,"Change TextView: "+clickCount);
-                clickCount++;
+
             }
 
         });
