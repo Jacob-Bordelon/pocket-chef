@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         FrameLayout layout = findViewById(R.id.Sidebar);
-        layout.setVisibility(View.GONE);
+        layout.setVis(View.GONE)
 
 
         // Lambda handler of fab.
