@@ -40,7 +40,8 @@ public class UDPClient implements Runnable { // Thread implementation
             byte[] message = new byte[8000]; // -> buffer rcvd
             packet = new DatagramPacket(message, message.length); // -> creates packet with buffer size
             Log.i("UDP client: ", "about to wait to receive"); // -> log
-            udpSocket.setSoTimeout(5000); // -> times out at 5 seconds. Error catch if timeout
+            // ToDo: check if thread still running
+            udpSocket.setSoTimeout(500); // -> times out at .5 seconds. Error catch if timeout
             udpSocket.receive(packet); // -> start listenning for response from server
             
             // parsing recieved payload

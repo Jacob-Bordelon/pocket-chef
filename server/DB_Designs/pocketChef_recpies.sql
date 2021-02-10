@@ -36,7 +36,7 @@ INSERT INTO REC_INGREDIENT (RIID, Food_ID, Measure_ID, Amount)  VALUES (2, 3, 1,
 
 INSERT INTO REC_INGREDIENT (RIID, Food_ID, Measure_ID, Amount)  VALUES (2, 4, 1, 1);
 
-SELECT r.name AS 'Recipe', r.instructions, ri.amount AS 'Amount', mu.name AS 'Unit of Measure', i.name AS 'Ingredient' 
+SELECT r.name AS 'Recipe', r.instructions, ri.amount AS 'Amount', mu.name AS 'Unit of Measure', i.IName AS 'Ingredient' 
 FROM Recipe r 
 JOIN RecipeIngredient ri on r.id = ri.recipe_id 
 JOIN Ingredient i on i.id = ri.ingredient_id 
