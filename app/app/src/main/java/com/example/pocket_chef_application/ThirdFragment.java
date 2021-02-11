@@ -132,6 +132,8 @@ public class ThirdFragment extends Fragment {
         itemNameView.setText(null);
         itemEXPView.setText(null);
         itemAmountView.setText(null);
+
+        getAllItems();
     }
 
     private void deleteAllItems() {

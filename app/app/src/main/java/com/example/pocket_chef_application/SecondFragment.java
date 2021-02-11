@@ -19,6 +19,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -106,6 +108,23 @@ public class SecondFragment extends Fragment {
                     content += "Name: " + post.getRecipe() + "\n";
                     content += "Description: " + post.getDescription() + "\n";
                     content += "Instructions: " + post.getInstructions() + "\n";
+                    content += "Ingredients:\n";
+                    ArrayList<String> ingredients = post.getIngredients();
+                    JSONArray jsonArray = null;
+                    JSONObject jsonObject = null;
+
+                    try {
+                        jsonArray = new JSONArray(post.getIngredients().toString());
+                        for(int i=0;i<jsonArray.length();i++) {
+                            jsonObject = (JSONObject) jsonArray.get(i);
+                            content += jsonObject.getString("Ingredient") +" "+ jsonObject.getString("Amount")+" "+ jsonObject.getString("Measure") + "\n";
+                        }
+                    }
+                    catch(org.json.JSONException err) {}
+
+
+
+
                     content += "#############################" + "\n";
 
                     textView.append(content);
