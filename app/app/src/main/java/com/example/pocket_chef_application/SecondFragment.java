@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pocket_chef_application.API.ISearchRecipeAPI;
 import com.example.pocket_chef_application.Model.Recipe;
+import com.example.pocket_chef_application.data.Item;
+import com.example.pocket_chef_application.data.LocalDB;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,26 +78,7 @@ public class SecondFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // Creates a dummy JSON array of obejects to simulate ingredients
-                JSONObject item1 = new JSONObject();
-                JSONObject item2 = new JSONObject();
-                JSONObject item3 = new JSONObject();
-                JSONObject item4 = new JSONObject();
-                try {
-                    item1.put("Ingredient","sugar");
-                    item2.put("Ingredient","egg");
-                    item3.put("Ingredient","chocolate");
-                    item4.put("Ingredient","salt");
-                }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                JSONArray ingredients = new JSONArray();
-
-                ingredients.put(item1);
-                ingredients.put(item2);
-                ingredients.put(item3);
-                ingredients.put(item4);
+                JSONArray ingredients = getPantryJSONArray();
 
                 // Search for recipes based on the ingredients we have
                 Call<List<Recipe>> possibleRecipeList = jsonPlaceHolderApi.possibleRecipe(ingredients.toString());
@@ -135,5 +118,20 @@ public class SecondFragment extends Fragment {
                 textView.setText(t.getMessage());
             }
         });
+    }
+
+    public JSONArray getPantryJSONArray() {
+        LocalDB db = LocalDB.getDBInstance(this.getContext());
+        List<Item> items = db.itemDAO().getAllItems();
+        JSONArray jsArray = new JSONArray();
+
+        for (Item item : items) {
+            JSONObject jsonObject = new JSONObject();
+            try { jsonObject.put("Ingredient",item.item_Name);}
+            catch (org.json.JSONException jerr) {}
+            jsArray.put(jsonObject);
+        }
+
+        return jsArray;
     }
 }

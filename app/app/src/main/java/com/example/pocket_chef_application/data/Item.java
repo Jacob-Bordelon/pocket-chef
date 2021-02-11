@@ -1,15 +1,14 @@
 package com.example.pocket_chef_application.data;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class Item {
-    @PrimaryKey(autoGenerate = true)
-    public int iid;
-
-    @ColumnInfo(name = "item_name")
+    @PrimaryKey @ColumnInfo(name = "item_name")
+    @NonNull
     public String item_Name;
 
     @ColumnInfo(name = "exp_date")

@@ -1,22 +1,20 @@
 package com.example.pocket_chef_application;
 
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.pocket_chef_application.Model.Recipe;
 import com.example.pocket_chef_application.data.Item;
 import com.example.pocket_chef_application.data.LocalDB;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -83,6 +81,8 @@ public class ThirdFragment extends Fragment {
         itemEXPView = (EditText) view.findViewById(R.id.item_exp);
         itemsView = (TextView) view.findViewById(R.id.items_view);
 
+        getAllItems();
+
         return view;
     }
 
@@ -98,13 +98,13 @@ public class ThirdFragment extends Fragment {
                 }
                 catch (NumberFormatException nfe) { System.out.println("Could not parse "+nfe);}
 
-                getAllItems();
             }
         });
     }
     private void getAllItems() {
         LocalDB db = LocalDB.getDBInstance(this.getContext());
         List<Item> items = db.itemDAO().getAllItems();
+        itemsView.setText(null);
 
         for (Item item : items) {
             String content = "";
@@ -120,10 +120,18 @@ public class ThirdFragment extends Fragment {
     private void addNewItems(String name, String expDate, int amount) {
         LocalDB db = LocalDB.getDBInstance(this.getContext());
         Item item = new Item();
-        item.item_Name = name;
+        item.item_Name = name.toLowerCase();
         item.amount = amount;
-        item.exp_date = expDate;
-        db.itemDAO().insertItem(item);
+        item.exp_date = expDate.toLowerCase();
+        // add the item to the pantry. If duplicate, catch and handle
+        try { db.itemDAO().insertItem(item); }
+        catch (SQLiteConstraintException e) {
+            Toast.makeText(this.getContext(), "Item already in Pantry", Toast.LENGTH_LONG).show();
+            // ToDo: We can update the pantry if there is a conflict
+        }
+        itemNameView.setText(null);
+        itemEXPView.setText(null);
+        itemAmountView.setText(null);
     }
 
     private void deleteAllItems() {
