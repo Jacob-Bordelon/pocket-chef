@@ -21,11 +21,11 @@ on:
         default: 'This workflow run is triggered by workflow dispatch event'
 
 
-#on: [workflow_dispatch]
-#jobs:
-#  say_hello:
-#    runs-on: ubuntu-latest
-#    steps:
-#    - run: |
-#        echo "Hello World!"
-#        echo "- in Home!"
+
+jobs:
+  say_hello:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo "Hello World!"
+        echo "- in Home!"
