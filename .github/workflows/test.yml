@@ -19,13 +19,11 @@ on:
       msg:
         description: "message to show"
         default: 'This workflow run is triggered by workflow dispatch event'
-
-
-
 jobs:
   say_hello:
     runs-on: ubuntu-latest
     steps:
-    - run: |
-        echo "Hello World!"
-        echo "- in Home!"
+      - name: Check Run
+        run: echo "Hello World"
+      
+
