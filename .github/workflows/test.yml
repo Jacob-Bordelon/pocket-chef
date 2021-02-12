@@ -7,13 +7,15 @@ on:
   push:
     branches: [ test ]
 
-defaults:
-  run:
-    working-directory: ./app
+
 
 jobs:
   job1:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
+
     steps:
-    - run: ls -a
+    - run: cat build.gradle
 
