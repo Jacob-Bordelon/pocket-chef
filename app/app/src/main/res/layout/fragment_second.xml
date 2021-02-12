@@ -39,6 +39,5 @@
         android:autofillHints="Status"
         android:background="#D3D3D3"
         android:padding="8dp" />
-    android:inputType="text" />
 
 </RelativeLayout>

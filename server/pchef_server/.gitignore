@@ -1,0 +1,5 @@
+server.crt
+node_modules
+privatekey.pem
+certificate.pem
+key.pem
