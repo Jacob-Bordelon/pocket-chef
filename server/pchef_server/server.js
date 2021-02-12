@@ -7,12 +7,11 @@ var jsonDiff = require('json-diff');
 var async = require('async');
 const dgram = require("dgram");
 // Certification for https
-var privateKey = fs.readFileSync( '../../../privatekey.pem' );
-var certificate = fs.readFileSync( '../../../server.crt' );
+var privateKey = fs.readFileSync( 'privatekey.pem' );
+var certificate = fs.readFileSync( 'server.crt' );
 // Debugging purposes
 var DEBUG = false;
 
-// ToDo: switch to default password
 // Create mysql connection with parameters 
 var sqlCon = mysql.createConnection({
     host:'localhost',
@@ -30,71 +29,67 @@ app.use(express.urlencoded({extended: true}));
 
 /* GET request: /possible: recieves JSON Array of ingredients from phone and returns a 
 JSON Array of possible recipes that can be prepared based on the remote DB */ 
-app.post("/possible",(req,res,next)=>{
-    console.log("GET possible requested"); // -> LOG for connection 
-    var post_data = req.body; // -> get the payload 
-    var data = post_data.possible; // -> filters for the possible GET
-    var myItemsJSON = JSON.parse(data); // -> parses data into a JSON object array
-    if(DEBUG) console.log(myItemsJSON); // -> Debugging 
-    var query = "select * from RECIPE;"; // -> initial query to get all recipes from database       
-    var possibleRecipes = []; // -> initialize an array for storing recipes 
-    var rowsCounter = 1; // -> this keeps track the ID of the recipe
-    // Inner mysql query for each row (recipe) in the database
-    sqlCon.query(query,function(error,rows,fields){
-        sqlCon.on('error',function(err){
-            console.log('[MYSQL]ERROR',err);
-        });
-        // async operation to traverse the database
-        async.each(rows, function (row, callback) {
-            // query to get ingredients with amounts and measures
-            var ingredientQuery = "SELECT ri.Amount AS 'Amount', mu.Measure AS 'Measure', i.FName AS 'Ingredient' "
-              +"FROM RECIPE r JOIN REC_INGREDIENT ri on r.id = ri.RIID JOIN FOOD i on i.FID = ri.Food_ID "
-              +"LEFT OUTER JOIN MEASURE mu on mu.MID = Measure_ID where r.id = ?";
-            sqlCon.query(ingredientQuery, row.id,function(food_err, ingredients, ingredient_fields) {
-                if (food_err) callback(food_err);
+app.post("/possible", (req, res) => {
+  try { var myItemsJSON = JSON.parse(req.body.possible); } catch(e) { var myItemsJSON = req.body; }
+  var query = "select * from RECIPE;"; // -> initial query to get all recipes from database       
+  var possibleRecipes = []; // -> initialize an array for storing recipes 
+  var rowsCounter = 1; // -> this keeps track the ID of the recipe
+  // Inner mysql query for each row (recipe) in the database
+  sqlCon.query(query,function(error,rows,fields){
+      sqlCon.on('error',function(err){
+          console.log('[MYSQL]ERROR',err);
+      });
+      // async operation to traverse the database
+      async.each(rows, function (row, callback) {
+          // query to get ingredients with amounts and measures
+          var ingredientQuery = "SELECT ri.Amount AS 'Amount', mu.Measure AS 'Measure', i.FName AS 'Ingredient' "
+            +"FROM RECIPE r JOIN REC_INGREDIENT ri on r.id = ri.RIID JOIN FOOD i on i.FID = ri.Food_ID "
+            +"LEFT OUTER JOIN MEASURE mu on mu.MID = Measure_ID where r.id = ?";
+          sqlCon.query(ingredientQuery, row.id,function(food_err, ingredients, ingredient_fields) {
+              if (food_err) callback(food_err);
 
-                if(ingredients && ingredients.length) {
-                    // parsing the results to just get the ingredients for comparison purposes
-                    var temp = [];
-                    async.forEach(ingredients, function (ing) {
-                        temp.push({"Ingredient":ing.Ingredient});
-                    });
+              if(ingredients && ingredients.length) {
+                  // parsing the results to just get the ingredients for comparison purposes
+                  var temp = [];
+                  async.forEach(ingredients, function (ing) {
+                      temp.push({"Ingredient":ing.Ingredient});
+                  });
+                  
+                  // sorting arrays for comparison
+                  temp.sort((a,b) => (a.Ingredient > b.Ingredient) ? 1 : ((b.Ingredient > a.Ingredient) ? -1 : 0))
+                  myItemsJSON.sort((a,b) => (a.Ingredient > b.Ingredient) ? 1 : ((b.Ingredient > a.Ingredient) ? -1 : 0))
+                  // this is the sorted ingredients from our database 
+                  DBList = JSON.parse(JSON.stringify(temp));
+                  // using JASON DIFF to compare ingredients
+                  var diff = jsonDiff.diffString(DBList,myItemsJSON);
+                  if(DEBUG) console.log(diff); // -> Debugging purposes
+                  if(diff.includes("-")) {
+                      //ToDo: by the amount of '-', we can suggest to buy certain items to be able to cook the recipes
+                  }
+                  else { // We found a recipe we can prepare with our ingredients
+                      var suggestedRecipe = JSON.parse(JSON.stringify(row)); // -> get suggested recipe
+                      suggestedRecipe["Ingredients"] = JSON.parse(JSON.stringify(ingredients)); // -> add the ingredients
+                      possibleRecipes.push(suggestedRecipe); // -> added to our array of possible recipes 
+                  }
+                  // If we are at the end of the recipe database, we send the results to the phone
+                  if(rowsCounter == rows.length) {
+                      if(DEBUG) console.log(JSON.stringify(possibleRecipes)); // -> Debugging purposes
+                      res.end(JSON.stringify(possibleRecipes)); // -> positive response to the phone
+                  }
+                  rowsCounter++; // increase row count
                     
-                    // sorting arrays for comparison
-                    temp.sort((a,b) => (a.Ingredient > b.Ingredient) ? 1 : ((b.Ingredient > a.Ingredient) ? -1 : 0))
-                    myItemsJSON.sort((a,b) => (a.Ingredient > b.Ingredient) ? 1 : ((b.Ingredient > a.Ingredient) ? -1 : 0))
-                    // this is the sorted ingredients from our database 
-                    DBList = JSON.parse(JSON.stringify(temp));
-                    // using JASON DIFF to compare ingredients
-                    var diff = jsonDiff.diffString(DBList,myItemsJSON);
-                    if(DEBUG) console.log(diff); // -> Debugging purposes
-                    if(diff.includes("-")) {
-                        //ToDo: by the amount of '-', we can suggest to buy certain items to be able to cook the recipes
-                    }
-                    else { // We found a recipe we can prepare with our ingredients
-                        var suggestedRecipe = JSON.parse(JSON.stringify(row)); // -> get suggested recipe
-                        suggestedRecipe["Ingredients"] = JSON.parse(JSON.stringify(ingredients)); // -> add the ingredients
-                        possibleRecipes.push(suggestedRecipe); // -> added to our array of possible recipes 
-                    }
-                    // If we are at the end of the recipe database, we send the results to the phone
-                    if(rowsCounter == rows.length) {
-                        if(DEBUG) console.log(JSON.stringify(possibleRecipes)); // -> Debugging purposes
-                        res.end(JSON.stringify(possibleRecipes)); // -> positive response to the phone
-                    }
-                    rowsCounter++; // increase row count
-                     
-                }
-                else {
-                    if(DEBUG) console.log('no recipes available'); // -> Debugging purposes 
-                    res.end(JSON.stringify('no recipes available')); // -> negative response to the phone
-                }
+              }
+              else {
+                  if(DEBUG) console.log('no recipes available'); // -> Debugging purposes 
+                  res.end(JSON.stringify('no recipes available')); // -> negative response to the phone
+              }
 
-                callback();
-            });
+              callback();
+          });
 
-        });
-        //sqlCon.end();
-    });
+      });
+      //sqlCon.end();
+  });
 });
 
 ////////////////////////////////// UDP Server ///////////////////////////////////////////
@@ -138,3 +133,5 @@ https.createServer({
     cert: certificate
 }, app).listen(3000,'0.0.0.0'); // -> listens to localhost 
 console.log("TCP Server Listening on Port 3000"); // -> log listening message
+
+module.exports = app;
