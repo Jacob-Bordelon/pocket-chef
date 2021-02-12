@@ -13,18 +13,18 @@
 
 
 name: Manually triggered workflow
-  on:
-    workflow_dispatch:
-      branches: [ test ]
-      inputs:
-        name:
-          description: 'Person to greet'
-          required: true
-          default: 'Mona the Octocat'
-        home:
-          description: 'location'
-          required: false
-          default: 'The Octoverse'
+on:
+  workflow_dispatch:
+    branches: [ test ]
+    inputs:
+      name:
+        description: 'Person to greet'
+        required: true
+        default: 'Mona the Octocat'
+      home:
+        description: 'location'
+        required: false
+        default: 'The Octoverse'
 
 jobs:
   say_hello:
