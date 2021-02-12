@@ -17,5 +17,9 @@ jobs:
         working-directory: ./app
 
     steps:
+<<<<<<< HEAD
     - run: cat build.gradle
+=======
+    - run: echo "$GITHUB_REF"
+>>>>>>> ff240a5ccf954a32f6dbd32a9b35e193df284600
 
