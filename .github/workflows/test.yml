@@ -3,21 +3,17 @@
 # Code origionally written by https://www.coletiv.com/blog/android-github-actions-setup/
 #name: Basic Test
 
-#on:
-#  push:
-#    branches: [ test ]
+on:
+  push:
+    branches: [ test ]
 
-#defaults:
-#  run:
-#    working-directory: ./app
+defaults:
+  run:
+    working-directory: ./app
 
-
-name: Manually triggered workflow
-on: [workflow_dispatch]
 jobs:
-  say_hello:
+  job1:
     runs-on: ubuntu-latest
     steps:
-    - run: |
-        echo "Hello World!"
-        echo "- in Home!"
+    - run: pwd
+
