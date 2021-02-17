@@ -30,6 +30,12 @@ app.use(express.urlencoded({extended: true}));
 /* GET request: /possible: recieves JSON Array of ingredients from phone and returns a 
 JSON Array of possible recipes that can be prepared based on the remote DB */ 
 app.post("/possible", (req, res) => {
+
+});
+
+/* GET request: /possible: recieves JSON Array of ingredients from phone and returns a 
+JSON Array of possible recipes that can be prepared based on the remote DB */ 
+app.post("/possible", (req, res) => {
   try { var myItemsJSON = JSON.parse(req.body.possible); } catch(e) { var myItemsJSON = req.body; }
   var query = "select * from RECIPE;"; // -> initial query to get all recipes from database       
   var possibleRecipes = []; // -> initialize an array for storing recipes 
@@ -74,14 +80,20 @@ app.post("/possible", (req, res) => {
                   // If we are at the end of the recipe database, we send the results to the phone
                   if(rowsCounter == rows.length) {
                       if(DEBUG) console.log(JSON.stringify(possibleRecipes)); // -> Debugging purposes
-                      res.end(JSON.stringify(possibleRecipes)); // -> positive response to the phone
+                      
+                      if(possibleRecipes.length == 0) {
+                        res.status(500).send({ error: "no recipes available" }); // -> negative response
+                      }
+                      else {
+                        res.end(JSON.stringify(possibleRecipes)); // -> positive response to the phone
+                      }  
                   }
                   rowsCounter++; // increase row count
                     
               }
               else {
                   if(DEBUG) console.log('no recipes available'); // -> Debugging purposes 
-                  res.end(JSON.stringify('no recipes available')); // -> negative response to the phone
+                  rres.status(500).send({ error: "no recipes available" }); // -> negative response
               }
 
               callback();

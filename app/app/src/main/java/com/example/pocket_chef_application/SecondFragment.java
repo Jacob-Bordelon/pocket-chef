@@ -97,7 +97,12 @@ public class SecondFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) { // -> on response from server
                 if (!response.isSuccessful()) { // -> not successful warns user  
-                    textView.setText("Code " + response.code()); 
+                    if (response.code() == 500) {
+                        textView.setText("No recipes for you");
+                    }
+                    else {
+                        textView.setText("Code " + response.code());
+                    }
                     return;
                 }
                 // Parses the payload based on the model: Recipe
@@ -121,6 +126,7 @@ public class SecondFragment extends Fragment {
                         }
                     }
                     catch(org.json.JSONException err) {}
+                    catch(NullPointerException err) {}
 
 
 
