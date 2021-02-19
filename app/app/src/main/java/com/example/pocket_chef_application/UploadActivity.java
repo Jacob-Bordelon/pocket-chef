@@ -2,6 +2,7 @@ package com.example.pocket_chef_application;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -57,28 +58,34 @@ public class UploadActivity extends AppCompatActivity {
                 EditText a = findViewById(R.id.recipeName);
                 EditText b = findViewById(R.id.ingredientsList);
                 EditText c = findViewById(R.id.instructions);
+                EditText d = findViewById(R.id.prepTime);
+                EditText e = findViewById(R.id.cookTime);
 
                 String recipeName = a.getText().toString();
                 String ingredientsList = b.getText().toString();
                 String instructions = c.getText().toString();
+                String prepTime = d.getText().toString();
+                String cookTime = e.getText().toString();
                 Log.d("Success Save", recipeName);
                 Toast.makeText(context, "Recipe Saved", Toast.LENGTH_LONG).show();
                 // ....
                 // create query to the remote database
-                // Creates a dummy JSON array of obejects to simulate ingredients
+                // Creates a dummy JSON array of objects to simulate ingredients
 
-                // JSONArray ingredients = getPantryJSONArray();
+                JSONArray ingredients = getUploadJSONArray();
 
                 // Search for recipes based on the ingredients we have
-                // jsonPlaceHolderApi.uploadRecipe(ingredients.toString()); // => sending the recipe
-                // jsonPlaceHolderApi.uploadRecipe(ingredients.toString()); // => sending the ingredient 1
-                // jsonPlaceHolderApi.uploadRecipe(ingredients.toString());
+                jsonPlaceHolderApi.uploadRecipe(recipeName); // => sending the recipe
+                jsonPlaceHolderApi.uploadRecipe(ingredientsList); // => sending the ingredient 1
+                jsonPlaceHolderApi.uploadRecipe(instructions);
+                jsonPlaceHolderApi.uploadRecipe(prepTime);
+                jsonPlaceHolderApi.uploadRecipe(cookTime);
             }
         });
     }
 /*
     public JSONArray getUploadJSONArray() {
-      List<Item> items =
+      List<Item> items = ingredientsList
         JSONArray jsArray = new JSONArray();
 
         for (Item item : items) {
@@ -90,6 +97,6 @@ public class UploadActivity extends AppCompatActivity {
 
         return jsArray;
     }
+*/
 
- */
 }
