@@ -119,7 +119,7 @@
         <item>Quart</item>
         <item>Gallon</item>
         <item>Fluid Ounce</item>
-        <item>-</item>
+        <item>None</item>
     </string-array>
 
 </resources>

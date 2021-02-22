@@ -2,7 +2,6 @@ package com.example.pocket_chef_application;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pocket_chef_application.API.ISearchRecipeAPI;
@@ -37,7 +35,7 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
     private String server_ip = "10.0.2.2";//"10.0.2.2" "54.144.65.217"
     private List ingredientsList = new ArrayList();
     private String record;
-    private String checkinput;
+    private Integer numberOfIngredients = 0;
 
 
     @Override
@@ -69,7 +67,7 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
         Button addButton = findViewById(R.id.add);
         addButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                if (record=="-"){
+                if (record=="None"){
                     Toast.makeText(context, "Measurement can't be blank", Toast.LENGTH_SHORT).show();
                 }
                 else {
@@ -83,6 +81,7 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
                     String full = ingredient+" "+amount+" "+record;
                     ingredientsList.add(full);
                     Toast.makeText(context, full, Toast.LENGTH_SHORT).show();
+                    numberOfIngredients++;
                     measurement.setSelection(11);
                 }
             }
@@ -94,16 +93,14 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
             public void onClick(View v) {
                 // grab all of the info from every components
                 EditText a = findViewById(R.id.recipeName);
-                EditText b = findViewById(R.id.ingredient);
-                EditText c = findViewById(R.id.instructions);
-                EditText d = findViewById(R.id.prepTime);
-                EditText e = findViewById(R.id.cookTime);
+                EditText b = findViewById(R.id.instructions);
+                EditText c = findViewById(R.id.prepTime);
+                EditText d = findViewById(R.id.cookTime);
 
                 String recipeName = a.getText().toString();
-                String ingredientsList = b.getText().toString();
-                String instructions = c.getText().toString();
-                String prepTime = d.getText().toString();
-                String cookTime = e.getText().toString();
+                String instructions = b.getText().toString();
+                String prepTime = c.getText().toString();
+                String cookTime = d.getText().toString();
                 Log.d("Success Save", recipeName);
                 Toast.makeText(context, "Recipe Saved", Toast.LENGTH_LONG).show();
 
@@ -115,7 +112,9 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
 */
                 // Search for recipes based on the ingredients we have
                 jsonPlaceHolderApi.uploadRecipe(recipeName); // => sending the recipe
-                jsonPlaceHolderApi.uploadRecipe(ingredientsList); // => sending the ingredient 1
+                for (int i=0;i<=numberOfIngredients;i++){
+                    jsonPlaceHolderApi.uploadRecipe(ingredientsList.get(i).toString());
+                }
                 jsonPlaceHolderApi.uploadRecipe(instructions);
                 jsonPlaceHolderApi.uploadRecipe(prepTime);
                 jsonPlaceHolderApi.uploadRecipe(cookTime);
@@ -160,15 +159,13 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
                 record = "Fluid Ounce";
                 break;
             case 11:
-                record = "-";
+                record = "None";
                 break;
         }
-
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        checkinput = "Blank";
     }}
 /*
     public JSONArray getUploadJSONArray() {
@@ -184,7 +181,5 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
 
         return jsArray;
     }
-
-
 }
 */
