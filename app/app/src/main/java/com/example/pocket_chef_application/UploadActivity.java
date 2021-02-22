@@ -66,77 +66,57 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
         ISearchRecipeAPI jsonPlaceHolderApi = retrofit.create(ISearchRecipeAPI.class);
 
         Button addButton = findViewById(R.id.add);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v){
-                if (record=="None"){
-                    Toast.makeText(context, "Measurement can't be blank", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    JSONObject ingredientObj = new JSONObject();
-                    EditText ingredientName = findViewById(R.id.ingredient);
-                    EditText amount = findViewById(R.id.amount);
+        addButton.setOnClickListener(v -> {
+            if (record=="None"){
+                Toast.makeText(context, "Measurement can't be blank", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                JSONObject ingredientObj = new JSONObject();
+                EditText ingredientName = findViewById(R.id.ingredient);
+                EditText amount = findViewById(R.id.amount);
 
-                    try {
-                        ingredientObj.put("Name", ingredientName.getText().toString());
-                        ingredientObj.put("Amount", amount.getText().toString());
-                        ingredientObj.put("Unit", record);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    ingredientName.getText().clear();
-                    amount.getText().clear();
-
-                    //adding new ingredients to the list
-                    ingredientsList.put(ingredientObj);
-                    //
-                    Toast.makeText(context, ingredientObj.toString(), Toast.LENGTH_SHORT).show();
-                    measurement.setSelection(11);
+                try {
+                    ingredientObj.put("Name", ingredientName.getText().toString());
+                    ingredientObj.put("Amount", amount.getText().toString());
+                    ingredientObj.put("Unit", record);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+                ingredientName.getText().clear();
+                amount.getText().clear();
+
+                //adding new ingredients to the list
+                ingredientsList.put(ingredientObj);
+                //
+                Toast.makeText(context, ingredientObj.toString(), Toast.LENGTH_SHORT).show();
+                measurement.setSelection(11);
             }
         });
 
         // Lambda handler of fab.
         Button saveButton = findViewById(R.id.save);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // grab all of the info from every components
-                EditText recipeName = findViewById(R.id.recipeName);
-                EditText instructions = findViewById(R.id.instructions);
-                EditText prepTime = findViewById(R.id.prepTime);
-                EditText cookTime = findViewById(R.id.cookTime);
+        saveButton.setOnClickListener(v -> {
+            // grab all of the info from every components
+            EditText recipeName = findViewById(R.id.recipeName);
+            EditText instructions = findViewById(R.id.instructions);
+            EditText prepTime = findViewById(R.id.prepTime);
+            EditText cookTime = findViewById(R.id.cookTime);
 
-                try{
-                    fullRecipe.put("RecipeName", recipeName.getText().toString());
-                    fullRecipe.put("Ingredients", ingredientsList);
-                    fullRecipe.put("PrepTime", instructions.getText().toString());
-                    fullRecipe.put("CookTime", prepTime.getText().toString());
-                    fullRecipe.put("Instructions", cookTime.getText().toString());
-                }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                Toast.makeText(context, "Recipe Saved", Toast.LENGTH_LONG).show();
-                Log.i("Full Recipe",fullRecipe.toString());
-
-                // ....
-                // create query to the remote database
-                // Creates a dummy JSON array of objects to simulate ingredients
-/*
-                JSONArray ingredients = getUploadJSONArray();
-
-                // Search for recipes based on the ingredients we have
-                jsonPlaceHolderApi.uploadRecipe(recipeName); // => sending the recipe
-                //
-                jsonPlaceHolderApi.uploadRecipe(ingredientsList.toString());
-                //
-                jsonPlaceHolderApi.uploadRecipe(instructions);
-                jsonPlaceHolderApi.uploadRecipe(prepTime);
-                jsonPlaceHolderApi.uploadRecipe(cookTime);
-
- */
-                jsonPlaceHolderApi.uploadRecipe(fullRecipe.toString());
+            try{
+                fullRecipe.put("RecipeName", recipeName.getText().toString());
+                fullRecipe.put("Ingredients", ingredientsList);
+                fullRecipe.put("PrepTime", prepTime.getText().toString());
+                fullRecipe.put("CookTime", cookTime.getText().toString());
+                fullRecipe.put("Instructions", instructions.getText().toString());
             }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Toast.makeText(context, "Recipe Saved", Toast.LENGTH_LONG).show();
+            Log.i("Full Recipe",fullRecipe.toString());
+
+            jsonPlaceHolderApi.uploadRecipe(fullRecipe.toString());
         });
     }
 
@@ -185,22 +165,3 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }}
-
-    /*
- //can improvise
-    public JSONArray getUploadJSONArray() {
-        JSONArray fullRecipe = new JSONArray();
-        JSONObject recipeNameObj = new JSONObject();
-        JSONObject prepTimeObj = new JSONObject();
-        JSONObject cookTimeObj = new JSONObject();
-        JSONObject instructionsObj = new JSONObject();
-
-        try{
-            recipeNameObj.put("RecipeName",this.recipeName);
-
-        }
-
-        return jsArray;
-    }
-}
-*/
