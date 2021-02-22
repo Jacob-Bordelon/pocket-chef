@@ -79,7 +79,7 @@ public class SecondFragment extends Fragment {
         view.findViewById(R.id.recipe_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Creates a dummy JSON array of obejects to simulate ingredients
+                // Creates a dummy JSON array of obejcts to simulate ingredients
                 JSONArray ingredients = getPantryJSONArray();
 
                 // Search for recipes based on the ingredients we have

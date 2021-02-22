@@ -35,6 +35,7 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
 
     private String server_ip = "10.0.2.2";//"10.0.2.2" "54.144.65.217"
     private JSONArray ingredientsList = new JSONArray();
+    private JSONObject fullRecipe = new JSONObject();
     private String record;
 
 
@@ -110,8 +111,19 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
                 String instructions = b.getText().toString();
                 String prepTime = c.getText().toString();
                 String cookTime = d.getText().toString();
+                try{
+                    fullRecipe.put("RecipeName",recipeName);
+                    fullRecipe.put("Ingredients",ingredientsList);
+                    fullRecipe.put("PrepTime",prepTime);
+                    fullRecipe.put("CookTime",cookTime);
+                    fullRecipe.put("Instructions",instructions);
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Log.d("Success Save", recipeName);
                 Toast.makeText(context, "Recipe Saved", Toast.LENGTH_LONG).show();
+                Log.i("Full Recipe",fullRecipe.toString());
 
                 // ....
                 // create query to the remote database
@@ -177,16 +189,18 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
     public void onNothingSelected(AdapterView<?> parent) {
     }}
 
-/* //can improvise
+    /*
+ //can improvise
     public JSONArray getUploadJSONArray() {
-      List<Item> items = ingredientsList
-        JSONArray jsArray = new JSONArray();
+        JSONArray fullRecipe = new JSONArray();
+        JSONObject recipeNameObj = new JSONObject();
+        JSONObject prepTimeObj = new JSONObject();
+        JSONObject cookTimeObj = new JSONObject();
+        JSONObject instructionsObj = new JSONObject();
 
-        for (Item item : items) {
-            JSONObject jsonObject = new JSONObject();
-            try { jsonObject.put("Ingredient",item.item_Name);}
-            catch (org.json.JSONException jerr) {}
-            jsArray.put(jsonObject);
+        try{
+            recipeNameObj.put("RecipeName",this.recipeName);
+
         }
 
         return jsArray;
