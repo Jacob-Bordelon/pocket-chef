@@ -98,26 +98,37 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
         saveButton.setOnClickListener(v -> {
             // grab all of the info from every components
             EditText recipeName = findViewById(R.id.recipeName);
+            EditText descriptions = findViewById(R.id.description);
             EditText instructions = findViewById(R.id.instructions);
             EditText prepTime = findViewById(R.id.prepTime);
             EditText cookTime = findViewById(R.id.cookTime);
 
-            try{
-                fullRecipe.put("RecipeName", recipeName.getText().toString());
-                fullRecipe.put("Ingredients", ingredientsList);
-                fullRecipe.put("PrepTime", prepTime.getText().toString());
-                fullRecipe.put("CookTime", cookTime.getText().toString());
-                fullRecipe.put("Instructions", instructions.getText().toString());
+            if (recipeName.getText().toString().equals("")){
+                Toast.makeText(context, "Missing Recipe Name", Toast.LENGTH_SHORT).show();
             }
-            catch (JSONException e) {
-                e.printStackTrace();
+            else if (ingredientsList.length()==0){
+                Toast.makeText(context, "Missing Ingredients", Toast.LENGTH_SHORT).show();
             }
+            else if (instructions.getText().toString().equals("")){
+                Toast.makeText(context, "Missing Instructions", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                try {
+                    fullRecipe.put("RecipeName", recipeName.getText().toString());
+                    fullRecipe.put("Description", descriptions.getText().toString());
+                    fullRecipe.put("Ingredients", ingredientsList);
+                    fullRecipe.put("PrepTime", prepTime.getText().toString());
+                    fullRecipe.put("CookTime", cookTime.getText().toString());
+                    fullRecipe.put("Instructions", instructions.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-            Toast.makeText(context, "Recipe Saved", Toast.LENGTH_LONG).show();
-            Log.i("Full Recipe",fullRecipe.toString());
+                Toast.makeText(context, "Recipe Saved", Toast.LENGTH_LONG).show();
+                Log.i("Full Recipe", fullRecipe.toString());
 
-            jsonPlaceHolderApi.uploadRecipe(fullRecipe.toString());
-        });
+                jsonPlaceHolderApi.uploadRecipe(fullRecipe.toString());
+            }});
     }
 
     @Override
