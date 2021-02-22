@@ -17,7 +17,7 @@ import com.example.pocket_chef_application.API.ISearchRecipeAPI;
 import com.example.pocket_chef_application.Model.Recipe;
 import com.example.pocket_chef_application.data.Item;
 import com.example.pocket_chef_application.data.LocalDB;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,21 +73,19 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
                 }
                 else {
                     JSONObject ingredientObj = new JSONObject();
-                    EditText a = findViewById(R.id.ingredient);
-                    EditText b = findViewById(R.id.amount);
+                    EditText ingredientName = findViewById(R.id.ingredient);
+                    EditText amount = findViewById(R.id.amount);
 
-                    String ingredientName = a.getText().toString();
-                    String amount = b.getText().toString();
                     try {
-                        ingredientObj.put("Name", ingredientName);
-                        ingredientObj.put("Amount", amount);
+                        ingredientObj.put("Name", ingredientName.getText().toString());
+                        ingredientObj.put("Amount", amount.getText().toString());
                         ingredientObj.put("Unit", record);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    a.getText().clear();
-                    b.getText().clear();
-                    String full = ingredientName+" "+amount+" "+record;
+                    ingredientName.getText().clear();
+                    amount.getText().clear();
+
                     //adding new ingredients to the list
                     ingredientsList.put(ingredientObj);
                     //
@@ -102,26 +100,22 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // grab all of the info from every components
-                EditText a = findViewById(R.id.recipeName);
-                EditText b = findViewById(R.id.instructions);
-                EditText c = findViewById(R.id.prepTime);
-                EditText d = findViewById(R.id.cookTime);
+                EditText recipeName = findViewById(R.id.recipeName);
+                EditText instructions = findViewById(R.id.instructions);
+                EditText prepTime = findViewById(R.id.prepTime);
+                EditText cookTime = findViewById(R.id.cookTime);
 
-                String recipeName = a.getText().toString();
-                String instructions = b.getText().toString();
-                String prepTime = c.getText().toString();
-                String cookTime = d.getText().toString();
                 try{
-                    fullRecipe.put("RecipeName",recipeName);
-                    fullRecipe.put("Ingredients",ingredientsList);
-                    fullRecipe.put("PrepTime",prepTime);
-                    fullRecipe.put("CookTime",cookTime);
-                    fullRecipe.put("Instructions",instructions);
+                    fullRecipe.put("RecipeName", recipeName.getText().toString());
+                    fullRecipe.put("Ingredients", ingredientsList);
+                    fullRecipe.put("PrepTime", instructions.getText().toString());
+                    fullRecipe.put("CookTime", prepTime.getText().toString());
+                    fullRecipe.put("Instructions", cookTime.getText().toString());
                 }
                 catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.d("Success Save", recipeName);
+
                 Toast.makeText(context, "Recipe Saved", Toast.LENGTH_LONG).show();
                 Log.i("Full Recipe",fullRecipe.toString());
 
@@ -130,7 +124,7 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
                 // Creates a dummy JSON array of objects to simulate ingredients
 /*
                 JSONArray ingredients = getUploadJSONArray();
-*/
+
                 // Search for recipes based on the ingredients we have
                 jsonPlaceHolderApi.uploadRecipe(recipeName); // => sending the recipe
                 //
@@ -139,6 +133,9 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
                 jsonPlaceHolderApi.uploadRecipe(instructions);
                 jsonPlaceHolderApi.uploadRecipe(prepTime);
                 jsonPlaceHolderApi.uploadRecipe(cookTime);
+
+ */
+                jsonPlaceHolderApi.uploadRecipe(fullRecipe.toString());
             }
         });
     }
