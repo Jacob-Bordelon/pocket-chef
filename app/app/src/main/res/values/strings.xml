@@ -107,4 +107,19 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="generate">generate</string>
+    <string-array name="measurement">
+        <item>Tablespoon</item>
+        <item>Cup</item>
+        <item>Teaspoon</item>
+        <item>Liter</item>
+        <item>Gram</item>
+        <item>Ounce</item>
+        <item>Pound</item>
+        <item>Pint</item>
+        <item>Quart</item>
+        <item>Gallon</item>
+        <item>Fluid Ounce</item>
+        <item>None</item>
+    </string-array>
+
 </resources>

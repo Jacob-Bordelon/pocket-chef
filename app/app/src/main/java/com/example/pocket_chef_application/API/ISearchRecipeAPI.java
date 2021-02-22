@@ -21,4 +21,8 @@ public interface ISearchRecipeAPI {
     @POST("possible")
     @FormUrlEncoded
     Call<List<Recipe>> possibleRecipe(@Field("possible") String searchQuery);
+
+    @POST("upload")
+    @FormUrlEncoded
+    Call<List<Recipe>> uploadRecipe(@Field("upload") String uploadQuery);
 }
