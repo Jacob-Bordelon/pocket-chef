@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".UploadActivity">
 
+
     <EditText
         android:id="@+id/cookTime"
         android:layout_width="178dp"
         android:layout_height="50dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="208dp"
         android:hint="Cook Time"
         app:layout_constraintEnd_toStartOf="@+id/prepTime"
         app:layout_constraintHorizontal_bias="0.0"
@@ -21,20 +22,19 @@
         android:id="@+id/recipeName"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:hint="Recipe Name"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.149"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <EditText
-        android:id="@+id/ingredientsList"
-        android:layout_width="178dp"
+        android:id="@+id/ingredient"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="72dp"
         android:autofillHints=""
@@ -49,15 +49,16 @@
 
     <EditText
         android:id="@+id/instructions"
-        android:layout_width="378dp"
+        android:layout_width="match_parent"
         android:layout_height="265dp"
-        android:layout_marginTop="216dp"
+        android:layout_marginTop="276dp"
         android:autofillHints=""
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/input_step_by_step_instructions"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,46 +66,52 @@
         android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="548dp"
         android:layout_marginEnd="160dp"
         android:layout_marginRight="160dp"
         android:text="@string/save"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/instructions" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="141dp"
+        android:id="@+id/measure"
+        android:layout_width="149dp"
         android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginEnd="128dp"
+        android:layout_marginRight="128dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.052"
-        app:layout_constraintStart_toEndOf="@+id/ingredientsList"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/prepTime"
         android:layout_width="178dp"
         android:layout_height="50dp"
-        android:layout_marginTop="128dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginTop="208dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
         android:hint="Prep Time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="50dp"
+    <EditText
+        android:id="@+id/amount"
+        android:layout_width="111dp"
         android:layout_height="50dp"
-        android:layout_marginTop="72dp"
-        android:clickable="true"
+        android:layout_marginTop="140dp"
+        android:hint="Amount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Add"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/spinner"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
