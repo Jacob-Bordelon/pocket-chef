@@ -20,6 +20,7 @@ import com.example.pocket_chef_application.data.LocalDB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -33,9 +34,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UploadActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private String server_ip = "10.0.2.2";//"10.0.2.2" "54.144.65.217"
-    private List ingredientsList = new ArrayList();
+    private JSONArray ingredientsList = new JSONArray();
     private String record;
-    private Integer numberOfIngredients = 0;
 
 
     @Override
@@ -71,17 +71,26 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
                     Toast.makeText(context, "Measurement can't be blank", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    JSONObject ingredientObj = new JSONObject();
                     EditText a = findViewById(R.id.ingredient);
                     EditText b = findViewById(R.id.amount);
 
-                    String ingredient = a.getText().toString();
-                    a.getText().clear();
+                    String ingredientName = a.getText().toString();
                     String amount = b.getText().toString();
+                    try {
+                        ingredientObj.put("Name", ingredientName);
+                        ingredientObj.put("Amount", amount);
+                        ingredientObj.put("Unit", record);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    a.getText().clear();
                     b.getText().clear();
-                    String full = ingredient+" "+amount+" "+record;
-                    ingredientsList.add(full);
-                    Toast.makeText(context, full, Toast.LENGTH_SHORT).show();
-                    numberOfIngredients++;
+                    String full = ingredientName+" "+amount+" "+record;
+                    //adding new ingredients to the list
+                    ingredientsList.put(ingredientObj);
+                    //
+                    Toast.makeText(context, ingredientObj.toString(), Toast.LENGTH_SHORT).show();
                     measurement.setSelection(11);
                 }
             }
@@ -112,9 +121,9 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
 */
                 // Search for recipes based on the ingredients we have
                 jsonPlaceHolderApi.uploadRecipe(recipeName); // => sending the recipe
-                for (int i=0;i<=numberOfIngredients;i++){
-                    jsonPlaceHolderApi.uploadRecipe(ingredientsList.get(i).toString());
-                }
+                //
+                jsonPlaceHolderApi.uploadRecipe(ingredientsList.toString());
+                //
                 jsonPlaceHolderApi.uploadRecipe(instructions);
                 jsonPlaceHolderApi.uploadRecipe(prepTime);
                 jsonPlaceHolderApi.uploadRecipe(cookTime);
@@ -167,7 +176,8 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }}
-/*
+
+/* //can improvise
     public JSONArray getUploadJSONArray() {
       List<Item> items = ingredientsList
         JSONArray jsArray = new JSONArray();
