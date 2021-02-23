@@ -1,4 +1,4 @@
-package com.example.pocket_chef_application.API;
+    package com.example.pocket_chef_application.API;
 
 import com.example.pocket_chef_application.Model.Recipe;
 
@@ -21,4 +21,8 @@ public interface ISearchRecipeAPI {
     @POST("possible")
     @FormUrlEncoded
     Call<List<Recipe>> possibleRecipe(@Field("possible") String searchQuery);
+
+    @POST("upload")
+    @FormUrlEncoded
+    Call<List<Recipe>> uploadRecipe(@Field("upload") String uploadQuery);
 }

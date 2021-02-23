@@ -12,11 +12,15 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pocket_chef_application.API.ISearchRecipeAPI;
 import com.example.pocket_chef_application.Model.Recipe;
+import com.example.pocket_chef_application.data.Item;
+import com.example.pocket_chef_application.data.LocalDB;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -28,8 +32,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SecondFragment extends Fragment {
     // Textview variables
-    TextView textView; // -> for displaying the recipes
-    TextView statusBar; // -> for displaying connection status
+    private TextView textView; // -> for displaying the recipes
+    private TextView statusBar; // -> for displaying connection status
+    private String server_ip = "10.0.2.2";//"10.0.2.2" "54.144.65.217"
     private static final String TEXT = "text";
 
     public static SecondFragment newInstance(String text){
@@ -45,7 +50,7 @@ public class SecondFragment extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        // Initializes the view and the status bar on create for non null refereance 
+        // Initializes the view and the status bar on create for non null reference
         View view = inflater.inflate(R.layout.fragment_second, container, false);
         statusBar = (TextView) view.findViewById(R.id.status_field);
 
@@ -59,11 +64,11 @@ public class SecondFragment extends Fragment {
         textView = view.findViewById(R.id.recipe_view);
 
         // Check connection with server with UDP. It has to be a thread. Uses the statusBar for updating
-        new Thread(new UDPClient(statusBar,3000,"54.144.65.217")).start();
+        new Thread(new UDPClient(statusBar,3000,server_ip)).start();
         // ToDo: change to a safe credentials check
         OkHttpClient okHttpClient = UnSafeOkHttpClient.getUnsafeOkHttpClient();
         // Retrofit Client. Creates connection parameters to AWS EC2 Server through port 3000
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://54.144.65.217:3000/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://"+server_ip+":3000/")
                 .client(okHttpClient) // Checks certification
                 .addConverterFactory(GsonConverterFactory.create()) // JSON converter
                 .build(); // Build retrofit
@@ -74,27 +79,8 @@ public class SecondFragment extends Fragment {
         view.findViewById(R.id.recipe_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Creates a dummy JSON array of obejects to simulate ingredients
-                JSONObject item1 = new JSONObject();
-                JSONObject item2 = new JSONObject();
-                JSONObject item3 = new JSONObject();
-                JSONObject item4 = new JSONObject();
-                try {
-                    item1.put("Ingredient","sugar");
-                    item2.put("Ingredient","egg");
-                    item3.put("Ingredient","chocolate");
-                    item4.put("Ingredient","salt");
-                }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                JSONArray ingredients = new JSONArray();
-
-                ingredients.put(item1);
-                ingredients.put(item2);
-                ingredients.put(item3);
-                ingredients.put(item4);
+                // Creates a dummy JSON array of obejcts to simulate ingredients
+                JSONArray ingredients = getPantryJSONArray();
 
                 // Search for recipes based on the ingredients we have
                 Call<List<Recipe>> possibleRecipeList = jsonPlaceHolderApi.possibleRecipe(ingredients.toString());
@@ -111,7 +97,12 @@ public class SecondFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) { // -> on response from server
                 if (!response.isSuccessful()) { // -> not successful warns user  
-                    textView.setText("Code " + response.code()); 
+                    if (response.code() == 500) {
+                        textView.setText("No recipes for you");
+                    }
+                    else {
+                        textView.setText("Code " + response.code());
+                    }
                     return;
                 }
                 // Parses the payload based on the model: Recipe
@@ -122,6 +113,24 @@ public class SecondFragment extends Fragment {
                     content += "Name: " + post.getRecipe() + "\n";
                     content += "Description: " + post.getDescription() + "\n";
                     content += "Instructions: " + post.getInstructions() + "\n";
+                    content += "Ingredients:\n";
+                    ArrayList<String> ingredients = post.getIngredients();
+                    JSONArray jsonArray = null;
+                    JSONObject jsonObject = null;
+
+                    try {
+                        jsonArray = new JSONArray(post.getIngredients().toString());
+                        for(int i=0;i<jsonArray.length();i++) {
+                            jsonObject = (JSONObject) jsonArray.get(i);
+                            content += jsonObject.getString("Ingredient") +" "+ jsonObject.getString("Amount")+" "+ jsonObject.getString("Measure") + "\n";
+                        }
+                    }
+                    catch(org.json.JSONException err) {}
+                    catch(NullPointerException err) {}
+
+
+
+
                     content += "#############################" + "\n";
 
                     textView.append(content);
@@ -134,5 +143,20 @@ public class SecondFragment extends Fragment {
                 textView.setText(t.getMessage());
             }
         });
+    }
+
+    public JSONArray getPantryJSONArray() {
+        LocalDB db = LocalDB.getDBInstance(this.getContext());
+        List<Item> items = db.itemDAO().getAllItems();
+        JSONArray jsArray = new JSONArray();
+
+        for (Item item : items) {
+            JSONObject jsonObject = new JSONObject();
+            try { jsonObject.put("Ingredient",item.item_Name);}
+            catch (org.json.JSONException jerr) {}
+            jsArray.put(jsonObject);
+        }
+
+        return jsArray;
     }
 }

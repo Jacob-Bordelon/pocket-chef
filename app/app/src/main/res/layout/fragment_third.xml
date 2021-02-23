@@ -1,22 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/thirdFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ThirdFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
+
+
+    <EditText
+        android:id="@+id/item_name"
+        android:layout_width="match_parent"
+        android:hint="name"
+        android:layout_height="40dp"/>
+
+    <EditText
+        android:id="@+id/item_amount"
+        android:layout_width="match_parent"
+        android:layout_below="@id/item_name"
+        android:hint="amount"
+        android:layout_height="40dp"/>
+
+    <EditText
+        android:id="@+id/item_exp"
+        android:layout_width="match_parent"
+        android:layout_below="@id/item_amount"
+        android:hint="expiration date"
+        android:layout_height="40dp"/>
+
+    <Button
+        android:id="@+id/item_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_exp"
+        android:text="add item"/>
+
     <TextView
+        android:id="@+id/items_view"
+        android:layout_below="@id/item_button"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#4CAF50"
-        android:text="Grocery List Addon will go here" />
+        android:layout_height="match_parent"/>
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="match_parent"
-        android:layout_height="178dp" />
-
-</FrameLayout>
+</RelativeLayout>

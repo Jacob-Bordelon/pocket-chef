@@ -12,12 +12,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 public class FirstFragment extends Fragment {
     private static final String TAG = FirstFragment.class.getSimpleName();
     private static final String TEXT = "text";
+    private ArrayList<Item> items = new ArrayList<>();
 
 
     int clickCount;
@@ -45,6 +50,28 @@ public class FirstFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(new Adapter(items,view.getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        items.add(new Item(R.drawable.eggs,"Eggs","they are whiter than a sharpee"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+
+
+
+
 
     }
 }
