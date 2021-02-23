@@ -57,8 +57,18 @@ public class FirstFragment extends Fragment {
         recyclerView.setAdapter(new Adapter(items,view.getContext()));
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        items.add(new Item(R.drawable.grocery_list_management,"Eggs","they are whiter than a sharpee"));
-        items.add(new Item(R.drawable.grocery_list_management,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.eggs,"Eggs","they are whiter than a sharpee"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
+
 
 
 

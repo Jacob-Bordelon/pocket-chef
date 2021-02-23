@@ -19,70 +19,81 @@
         app:navGraph="@navigation/nav_graph" />
 
 
-
-
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/Sidebar"
-        android:layout_width="120dp"
-        android:layout_height="384dp"
-        android:layout_gravity="end|center_vertical"
-        android:layout_marginStart="200dp"
-        android:layout_marginLeft="200dp"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/rounded_shape"
-        android:fadingEdge="vertical"
-        android:isScrollContainer="false"
-        android:keepScreenOn="false"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        app:layout_anchorGravity="right|center_vertical"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.71"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/nav_host_fragment"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_insetEdge="end">
+        app:layout_constraintVertical_bias="0.58000004">
 
+        <!-- Generate -->
         <ImageButton
             android:id="@+id/imageButton1"
+            android:visibility="visible"
+            android:src="@drawable/gen_icon2"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_gravity="center|top"
-            android:layout_marginTop="10dp"
-            android:adjustViewBounds="false"
-            android:background="#00FFFFFF"
+            android:background="@drawable/circle_background"
             android:contentDescription="@string/desc"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/generate_recipes_removebg_preview" />
+            android:layout_marginBottom="5dp"/>
 
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="10dp"
-            android:adjustViewBounds="false"
-            android:background="#00FFFFFF"
-            android:contentDescription="@string/desc"
-            android:layerType="none"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/grocery_list_management_removebg_preview" />
-
+        <!-- HomePage -->
         <ImageButton
             android:id="@+id/imageButton2"
+            android:visibility="gone"
+            android:src="@drawable/homepage_icon2"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_gravity="center|center_horizontal"
-            android:adjustViewBounds="false"
-            android:background="#00FFFFFF"
+            android:background="@drawable/circle_background"
             android:contentDescription="@string/desc"
-            android:cropToPadding="false"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/inventory_icon_removebg_preview" />
-    </FrameLayout>
+            android:layout_marginBottom="5dp"/>
+
+        <!-- Pantry -->
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:visibility="visible"
+            android:src="@drawable/pantry_icon2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/circle_background"
+            android:contentDescription="@string/desc"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="5dp"/>
+
+
+        <!-- Upload -->
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:visibility="visible"
+            android:src="@drawable/up_icon2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/circle_background"
+            android:contentDescription="@string/desc"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="5dp"/>
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
