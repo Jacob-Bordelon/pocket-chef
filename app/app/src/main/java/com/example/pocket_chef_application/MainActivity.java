@@ -52,10 +52,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(layout.getVisibility() != View.VISIBLE){
                     layout.setVisibility(View.VISIBLE);
-
                 }else{
                     layout.setVisibility(View.GONE);
-
                 }
             }
         });
@@ -63,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton button1 = findViewById(R.id.imageButton1);
         ImageButton button2 = findViewById(R.id.imageButton2);
         ImageButton button3 = findViewById(R.id.imageButton3);
+        ImageButton button4 = findViewById(R.id.imageButton4);
 
 
 
@@ -73,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 button1.setVisibility(View.GONE);
                 button2.setVisibility(View.VISIBLE);
                 button3.setVisibility(View.VISIBLE);
+                button4.setVisibility(View.VISIBLE);
+
             }
         });
 
@@ -80,9 +81,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 switch_fragment(new FirstFragment());
-                button2.setVisibility(View.GONE);
                 button1.setVisibility(View.VISIBLE);
+                button2.setVisibility(View.GONE);
                 button3.setVisibility(View.VISIBLE);
+                button4.setVisibility(View.VISIBLE);
+
             }
         });
 
@@ -90,9 +93,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 switch_fragment(new ThirdFragment());
-                button3.setVisibility(View.GONE);
-                button2.setVisibility(View.VISIBLE);
                 button1.setVisibility(View.VISIBLE);
+                button2.setVisibility(View.VISIBLE);
+                button3.setVisibility(View.GONE);
+                button4.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchUpload(v);
             }
         });
 

@@ -21,7 +21,7 @@
     <LinearLayout
         android:id="@+id/Sidebar"
         android:layout_width="100dp"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/rounded_shape"
@@ -37,36 +37,53 @@
         <!-- Generate -->
         <ImageButton
             android:id="@+id/imageButton1"
+            android:visibility="visible"
+            android:src="@drawable/gen_icon2"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="#00FFFFFF"
+            android:background="@drawable/circle_background"
             android:contentDescription="@string/desc"
             android:scaleType="centerCrop"
-            android:visibility="visible"
-            app:srcCompat="@drawable/generate_recipes_removebg_preview" />
+            android:layout_marginBottom="5dp"/>
+
+        <!-- HomePage -->
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:visibility="gone"
+            android:src="@drawable/homepage_icon2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/circle_background"
+            android:contentDescription="@string/desc"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="5dp"/>
 
         <!-- Pantry -->
         <ImageButton
             android:id="@+id/imageButton3"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
             android:visibility="visible"
-            android:background="#00FFFFFF"
-            android:contentDescription="@string/desc"
-            android:layerType="none"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/grocery_list_management_removebg_preview" />
-
-        <!-- Splash Page -->
-        <ImageButton
-            android:id="@+id/imageButton2"
+            android:src="@drawable/pantry_icon2"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="#00FFFFFF"
+            android:background="@drawable/circle_background"
             android:contentDescription="@string/desc"
             android:scaleType="centerCrop"
-            android:visibility="gone"
-            app:srcCompat="@drawable/inventory_icon_removebg_preview" />
+            android:layout_marginBottom="5dp"/>
+
+
+        <!-- Upload -->
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:visibility="visible"
+            android:src="@drawable/up_icon2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/circle_background"
+            android:contentDescription="@string/desc"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="5dp"/>
+
+
     </LinearLayout>
 
     <LinearLayout
