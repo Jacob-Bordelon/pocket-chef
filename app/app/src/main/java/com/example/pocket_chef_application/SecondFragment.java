@@ -34,7 +34,7 @@ public class SecondFragment extends Fragment {
     // Textview variables
     private TextView textView; // -> for displaying the recipes
     private TextView statusBar; // -> for displaying connection status
-    private String server_ip = "10.0.2.2";//"10.0.2.2" "54.144.65.217"
+    private String server_ip = "54.144.65.217";//"10.0.2.2" "54.144.65.217"
     private static final String TEXT = "text";
 
     public static SecondFragment newInstance(String text){

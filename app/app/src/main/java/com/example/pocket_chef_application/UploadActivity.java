@@ -35,7 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UploadActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
-    private String server_ip = "10.0.2.2";//"10.0.2.2" "54.144.65.217"
+    private String server_ip = "54.144.65.217";//"10.0.2.2" "54.144.65.217"
     private JSONArray ingredientsList = new JSONArray();
     private JSONObject fullRecipe = new JSONObject();
     private String record;
