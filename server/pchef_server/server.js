@@ -11,6 +11,7 @@ var privateKey = fs.readFileSync( 'privatekey.pem' );
 var certificate = fs.readFileSync( 'server.crt' );
 // Debugging purposes
 var DEBUG = false;
+var LOGS = false;
 
 
 // Create mysql connection with parameters 
@@ -28,18 +29,20 @@ app.use(express.urlencoded({extended: true}));
 
 ////////////////////////////////// POST commands ///////////////////////////////////////////
 
+/* POST request: /upload: recieves JSON Array of new recipe from phone and returns a 
+status code for confirmation */
 app.post("/upload", (req, res) => {
   try { var myItemsJSON = JSON.parse(req.body.upload); } catch(e) { var myItemsJSON = req.body; }
-  var query = "select * from RECIPE;";
-  console.log("------------------UPLOAD------------------")
-  console.log(myItemsJSON)
+  var query = "INSERT INTO RECIPE (RName, Description, Instructions) VALUES('"+myItemsJSON.RecipeName+"', '"+myItemsJSON.Description+"', '"+myItemsJSON.Instructions+"');";
+  if(LOGS) console.log("------------------UPLOAD------------------")
+  if(LOGS) console.log(myItemsJSON)
   sqlCon.query(query,function(error,rows,fields){
     sqlCon.on('error',function(err){
         console.log('[MYSQL]ERROR',err);
     });
 
     if(rows && rows.length) {
-      res.status(500).send({ error: "no recipes available" }); // -> negative response
+      res.sendStatus(200); // -> positive response
     }
 
   });
@@ -49,8 +52,8 @@ app.post("/upload", (req, res) => {
 JSON Array of possible recipes that can be prepared based on the remote DB */ 
 app.post("/possible", (req, res) => {
   try { var myItemsJSON = JSON.parse(req.body.possible); } catch(e) { var myItemsJSON = req.body; }
-  console.log("------------------GENERATE------------------")
-  console.log(myItemsJSON)
+  if(LOGS) console.log("------------------GENERATE------------------")
+  if(LOGS) console.log(myItemsJSON)
   var query = "select * from RECIPE;"; // -> initial query to get all recipes from database       
   var possibleRecipes = []; // -> initialize an array for storing recipes 
   var rowsCounter = 1; // -> this keeps track the ID of the recipe
