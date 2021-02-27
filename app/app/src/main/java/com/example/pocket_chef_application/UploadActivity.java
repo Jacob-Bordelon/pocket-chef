@@ -28,12 +28,14 @@ import java.util.List;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UploadActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
-    private String server_ip = "10.0.2.2";//"10.0.2.2" "54.144.65.217"
+    private String server_ip = "54.144.65.217";//"10.0.2.2" "54.144.65.217"
     private JSONArray ingredientsList = new JSONArray();
     private JSONObject fullRecipe = new JSONObject();
     private String record;
@@ -127,8 +129,34 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
                 Toast.makeText(context, "Recipe Saved", Toast.LENGTH_LONG).show();
                 Log.i("Full Recipe", fullRecipe.toString());
 
-                jsonPlaceHolderApi.uploadRecipe(fullRecipe.toString());
+                Call<List<Recipe>> uploadedRecipeList = jsonPlaceHolderApi.uploadRecipe(fullRecipe.toString());
+                uploadRecipe(uploadedRecipeList);
             }});
+    }
+
+    private void uploadRecipe(Call<List<Recipe>> uploadedRecipe) {
+        // send the request and notify callback of its response or if an error occurred talking to the server,
+        uploadedRecipe.enqueue(new Callback<List<Recipe>>() {
+            @Override
+            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) { // -> on response from server
+                if (!response.isSuccessful()) { // -> not successful warns user
+                    if (response.code() == 500) {
+                        Log.i("Full Recipe", "Good Response");
+                    }
+                    else {
+                        Log.i("Full Recipe", "Code " + response.code());
+                    }
+                    return;
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Recipe>> call, Throwable t) { // -> if failure, sets message
+                Log.i("Full Recipe", t.getMessage());
+            }
+        });
     }
 
     @Override
