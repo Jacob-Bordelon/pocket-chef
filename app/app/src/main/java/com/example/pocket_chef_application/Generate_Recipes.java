@@ -16,10 +16,8 @@ import com.example.pocket_chef_application.data.Item;
 import com.example.pocket_chef_application.data.LocalDB;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,15 +28,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SecondFragment extends Fragment {
+public class Generate_Recipes extends Fragment {
     // Textview variables
     private TextView textView; // -> for displaying the recipes
     private TextView statusBar; // -> for displaying connection status
     private String server_ip = "54.144.65.217";//"10.0.2.2" "54.144.65.217"
     private static final String TEXT = "text";
 
-    public static SecondFragment newInstance(String text){
-        SecondFragment fragment = new SecondFragment();
+    public static Generate_Recipes newInstance(String text){
+        Generate_Recipes fragment = new Generate_Recipes();
         Bundle args = new Bundle();
         args.putString(TEXT,text);
         fragment.setArguments(args);
@@ -51,7 +49,7 @@ public class SecondFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         // Initializes the view and the status bar on create for non null reference
-        View view = inflater.inflate(R.layout.fragment_second, container, false);
+        View view = inflater.inflate(R.layout.generate_recipes, container, false);
         statusBar = (TextView) view.findViewById(R.id.status_field);
 
         return view;

@@ -1,33 +1,19 @@
 package com.example.pocket_chef_application;
 
 import android.content.Intent;
-import android.content.Context;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
 
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -73,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch_fragment(new SecondFragment());
+                switch_fragment(new Generate_Recipes());
                 button1.setVisibility(View.GONE);
                 button2.setVisibility(View.VISIBLE);
                 button3.setVisibility(View.VISIBLE);
@@ -85,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch_fragment(new FirstFragment());
+                switch_fragment(new Homepage());
                 button1.setVisibility(View.VISIBLE);
                 button2.setVisibility(View.GONE);
                 button3.setVisibility(View.VISIBLE);
@@ -97,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch_fragment(new ThirdFragment());
+                switch_fragment(new Pantry());
                 button1.setVisibility(View.VISIBLE);
                 button2.setVisibility(View.VISIBLE);
                 button3.setVisibility(View.GONE);
@@ -106,12 +92,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchUpload(v);
-            }
-        });
+        button4.setOnClickListener(this::launchUpload);
 
 
     }
