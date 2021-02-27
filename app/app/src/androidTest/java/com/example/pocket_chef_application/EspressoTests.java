@@ -48,6 +48,14 @@ public class EspressoTests {
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
     }
 
+    // test upload fragment is displayed
+    @Test
+    public void test_goto_upload(){
+        onView(withId(R.id.fab)).perform(click());
+        onView(withId(R.id.imageButton4)).perform(click());
+        onView(withId(R.id.upload_fragment)).check(matches(isDisplayed()));
+    }
+
     // test splashpage fragment is displayed
     @Test
     public void test_goto_splashpage(){
