@@ -34,3 +34,6 @@ join (select f.FID,f.FName from FOOD f) y on x.Food_ID = y.FID)
 
 /* Number of recipes */
 select COUNT(*) from RECIPE;
+
+/* Remove a recipe by id */
+delete from RECIPE where id = ?;

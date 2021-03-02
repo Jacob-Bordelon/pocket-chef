@@ -20,10 +20,10 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ThirdFragment#newInstance} factory method to
+ * Use the {@link Pantry#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ThirdFragment extends Fragment {
+public class Pantry extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,7 +38,7 @@ public class ThirdFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ThirdFragment() {
+    public Pantry() {
         // Required empty public constructor
     }
 
@@ -51,8 +51,8 @@ public class ThirdFragment extends Fragment {
      * @return A new instance of fragment ThirdFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ThirdFragment newInstance(String param1, String param2) {
-        ThirdFragment fragment = new ThirdFragment();
+    public static Pantry newInstance(String param1, String param2) {
+        Pantry fragment = new Pantry();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -75,7 +75,7 @@ public class ThirdFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_third, container, false);
+        View view = inflater.inflate(R.layout.pantry, container, false);
         itemNameView = (EditText) view.findViewById(R.id.item_name);
         itemAmountView = (EditText) view.findViewById(R.id.item_amount);
         itemEXPView = (EditText) view.findViewById(R.id.item_exp);

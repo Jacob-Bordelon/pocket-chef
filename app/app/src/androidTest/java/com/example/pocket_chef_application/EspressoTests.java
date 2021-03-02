@@ -35,7 +35,7 @@ public class EspressoTests {
     public void test_goto_generate(){
         onView(withId(R.id.fab)).perform(click());
         onView(withId(R.id.imageButton1)).perform(click());
-        onView(withId(R.id.secondFragment)).check(matches(isDisplayed()));
+        onView(withId(R.id.generateFragment)).check(matches(isDisplayed()));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
     }
 
@@ -44,8 +44,16 @@ public class EspressoTests {
     public void test_goto_pantry(){
         onView(withId(R.id.fab)).perform(click());
         onView(withId(R.id.imageButton3)).perform(click());
-        onView(withId(R.id.thirdFragment)).check(matches(isDisplayed()));
+        onView(withId(R.id.pantryFragment)).check(matches(isDisplayed()));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
+    }
+
+    // test upload fragment is displayed
+    @Test
+    public void test_goto_upload(){
+        onView(withId(R.id.fab)).perform(click());
+        onView(withId(R.id.imageButton4)).perform(click());
+        onView(withId(R.id.upload_fragment)).check(matches(isDisplayed()));
     }
 
     // test splashpage fragment is displayed
@@ -56,7 +64,7 @@ public class EspressoTests {
         onView(withId(R.id.fab)).perform(click());
         onView(withId(R.id.imageButton2)).perform(click());
 
-        onView(withId(R.id.firstFragment)).check(matches(isDisplayed()));
+        onView(withId(R.id.homepageFragment)).check(matches(isDisplayed()));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
     }
 }
