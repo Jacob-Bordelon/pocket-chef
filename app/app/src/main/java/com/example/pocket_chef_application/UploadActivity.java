@@ -198,6 +198,9 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
             case 11:
                 record = "None";
                 break;
+            case 12:
+                record = "NNNN";
+                break;
         }
     }
 
