@@ -37,10 +37,18 @@
         android:layout_below="@id/item_exp"
         android:text="add item"/>
 
-    <TextView
-        android:id="@+id/items_view"
-        android:layout_below="@id/item_button"
+    <LinearLayout
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/item_button">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/pantry_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"/>
+    </LinearLayout>
 
 </RelativeLayout>

@@ -16,11 +16,7 @@ public class Homepage extends Fragment {
     private static final String TAG = Homepage.class.getSimpleName();
     private static final String TEXT = "text";
     private ArrayList<Item> items = new ArrayList<>();
-
-
     int clickCount;
-
-    private String mText;
 
     public static Homepage newInstance(String text){
         Homepage fragment = new Homepage();
@@ -35,9 +31,7 @@ public class Homepage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         clickCount=0;
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.homepage, container, false);
-
         return view;
     }
 

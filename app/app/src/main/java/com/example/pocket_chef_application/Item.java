@@ -7,9 +7,6 @@ public class Item {
     private String desc;
     private boolean isShrink = true;
 
-    public Item() {
-    }
-
     public Item(int imageResourse, String title, String desc) {
         this.imageResourse = imageResourse;
         this.title = title;

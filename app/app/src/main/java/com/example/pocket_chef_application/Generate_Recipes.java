@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.pocket_chef_application.API.ISearchRecipeAPI;
 import com.example.pocket_chef_application.Model.Recipe;
-import com.example.pocket_chef_application.data.Item;
+import com.example.pocket_chef_application.data.DBItem;
 import com.example.pocket_chef_application.data.LocalDB;
 
 import org.json.JSONArray;
@@ -145,10 +145,10 @@ public class Generate_Recipes extends Fragment {
 
     public JSONArray getPantryJSONArray() {
         LocalDB db = LocalDB.getDBInstance(this.getContext());
-        List<Item> items = db.itemDAO().getAllItems();
+        List<DBItem> items = db.itemDAO().getAllItems();
         JSONArray jsArray = new JSONArray();
 
-        for (Item item : items) {
+        for (DBItem item : items) {
             JSONObject jsonObject = new JSONObject();
             try { jsonObject.put("Ingredient",item.item_Name);}
             catch (org.json.JSONException jerr) {}

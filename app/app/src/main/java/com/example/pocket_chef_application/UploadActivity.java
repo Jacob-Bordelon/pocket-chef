@@ -15,15 +15,12 @@ import android.widget.Toast;
 
 import com.example.pocket_chef_application.API.ISearchRecipeAPI;
 import com.example.pocket_chef_application.Model.Recipe;
-import com.example.pocket_chef_application.data.Item;
-import com.example.pocket_chef_application.data.LocalDB;
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
