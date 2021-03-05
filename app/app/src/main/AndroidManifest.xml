@@ -14,13 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pocket_Chef_Application"
         android:usesCleartextTraffic="true">
-        <activity android:name=".UploadActivity"></activity>
+        <activity android:name=".PantryItem_Activity"
+            android:theme="@style/AppTheme.Popup"></activity>
+        <activity android:name=".UploadActivity" />
         <activity
             android:name=".MainActivity"
-
             android:theme="@style/Theme.Pocket_Chef_Application.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

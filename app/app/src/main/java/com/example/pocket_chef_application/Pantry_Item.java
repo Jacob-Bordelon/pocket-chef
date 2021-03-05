@@ -1,42 +1,60 @@
 package com.example.pocket_chef_application;
 
-import android.util.Log;
+import android.media.Image;
 
 import com.example.pocket_chef_application.data.DBItem;
 
-import java.util.ArrayList;
-
 public class Pantry_Item {
+    private DBItem item;
     private String title;
-    private DBItem dbItem;
-    private boolean isShrink = true;
+    private String exp_date;
+    private int amount;
+    private int image;
 
-    public Pantry_Item(DBItem dbItem){
-        this.dbItem = dbItem;
-        this.title = dbItem.item_Name;
-
+    public Pantry_Item(DBItem item) {
+        this.item = item;
+        this.title = item.item_Name;
+        this.exp_date = item.exp_date;
+        this.amount = item.amount;
     }
 
-    @Override
-    public String toString() {
-        return "Pantry_Item{" +
-                "title='" + title + '\'';
+    public int getImage() {
+        return image;
     }
 
-    public boolean equals(Object o){
-        return true;
+    public void setImage(int image) {
+        this.image = image;
     }
 
-    public String getTitle() {return title;}
-    public void setTitle(String title){this.title = title;}
-
-    public DBItem getDbItem(){return dbItem;}
-    public void setDbItem(DBItem item){this.dbItem = item;}
-
-    public boolean isShrink() {
-        return isShrink;
+    public DBItem getItem() {
+        return item;
     }
-    public void setShrink(boolean shrink) {
-        isShrink = shrink;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getExp_date() {
+        return exp_date;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setItem(DBItem item) {
+        this.item = item;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setExp_date(String exp_date) {
+        this.exp_date = exp_date;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }
