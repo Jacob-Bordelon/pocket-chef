@@ -14,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pocket_Chef_Application"
         android:usesCleartextTraffic="true">
-        <activity android:name=".UploadActivity"></activity>
         <activity
             android:name=".MainActivity"
 

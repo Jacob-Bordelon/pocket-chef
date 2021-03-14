@@ -3,6 +3,7 @@ package com.example.pocket_chef_application;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.pocket_chef_application.Model.Upload;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +18,7 @@ import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static LinearLayout layout;
+    private LinearLayout layout;
     private static FragmentManager manager;
 
 
@@ -92,7 +93,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        button4.setOnClickListener(this::launchUpload);
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch_fragment(new Upload());
+                button1.setVisibility(View.VISIBLE);
+                button2.setVisibility(View.VISIBLE);
+                button3.setVisibility(View.VISIBLE);
+                button4.setVisibility(View.GONE);
+            }
+        });
 
 
     }
@@ -105,12 +115,6 @@ public class MainActivity extends AppCompatActivity {
         layout.setVisibility(View.GONE);
     }
 
-    public void launchUpload(View v){
-        //launch a new activity for uploading
-
-        Intent i = new Intent(v.getContext(), UploadActivity.class);
-        startActivity(i);
-    }
 
 
 }
