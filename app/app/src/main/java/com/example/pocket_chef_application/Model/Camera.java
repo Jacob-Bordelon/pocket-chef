@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.pocket_chef_application.Generate_Recipes;
 import com.example.pocket_chef_application.R;
 
 /**
@@ -29,6 +30,13 @@ public class Camera extends Fragment {
     private Button btnCapture;
     private ImageView imgCapture;
     private static final int Image_Capture_Code = 1;
+
+    public static Camera newInstance(String text){
+        Camera fragment = new Camera();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Nullable
     @Override

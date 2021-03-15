@@ -20,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.pocket_chef_application.API.ISearchRecipeAPI;
+import com.example.pocket_chef_application.MainActivity;
 import com.example.pocket_chef_application.R;
 import com.example.pocket_chef_application.UnSafeOkHttpClient;
 
@@ -42,7 +43,6 @@ public class Upload extends Fragment implements AdapterView.OnItemSelectedListen
     private String server_ip = "54.144.65.217";//"10.0.2.2" "54.144.65.217"
     private JSONArray ingredientsList = new JSONArray();
     private JSONObject fullRecipe = new JSONObject();
-    private static ConstraintLayout layout;
     private static FragmentManager manager;
     private String record;
 
@@ -50,6 +50,8 @@ public class Upload extends Fragment implements AdapterView.OnItemSelectedListen
         super.onViewCreated(view, savedInstanceState);
         setContentView(R.layout.fragment_upload);
         Context context = getContext();
+        manager = getParentFragmentManager();
+
 
         Spinner measurement = view.findViewById(R.id.measure);
         ArrayAdapter<CharSequence> measurementAdapter = ArrayAdapter.createFromResource(getContext(), R.array.measurement, android.R.layout.simple_spinner_item);
@@ -72,8 +74,7 @@ public class Upload extends Fragment implements AdapterView.OnItemSelectedListen
         ISearchRecipeAPI jsonPlaceHolderApi = retrofit.create(ISearchRecipeAPI.class);
 
         Button cameraButton = view.findViewById(R.id.cameraButton);
-        cameraButton.setOnClickListener(v -> {
-        });
+        cameraButton.setOnClickListener(v -> switch_fragment(new Camera()));
 
         Button addButton = view.findViewById(R.id.add);
         addButton.setOnClickListener(v -> {
@@ -225,4 +226,15 @@ public class Upload extends Fragment implements AdapterView.OnItemSelectedListen
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-    }}
+    }
+
+    private void switch_fragment(Fragment fragment){
+        manager.beginTransaction()
+                .replace(R.id.nav_host_fragment,fragment)
+                .addToBackStack(null)
+                .commit();
+
+    }
+
+
+}
