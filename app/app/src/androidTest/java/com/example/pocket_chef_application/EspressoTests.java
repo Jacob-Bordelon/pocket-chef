@@ -67,4 +67,13 @@ public class EspressoTests {
         onView(withId(R.id.homepageFragment)).check(matches(isDisplayed()));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
     }
+
+    // test camera
+    @Test
+    public void test_camera_fragment(){
+        onView(withId(R.id.fab)).perform(click());
+        onView(withId(R.id.imageButton4)).perform(click());
+        onView(withId(R.id.cameraButton)).perform(click());
+        onView(withId(R.id.camera_fragment)).check(matches(isDisplayed()));
+    }
 }
