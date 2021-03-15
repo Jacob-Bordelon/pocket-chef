@@ -1,6 +1,7 @@
 package com.example.pocket_chef_application.data;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -16,4 +17,10 @@ public interface ItemDAO {
 
     @Query("DELETE FROM DBItem")
     public void nukeTable();
+
+    @Delete
+    public void delete(DBItem item);
+
+    @Query("SELECT COUNT(item_name) FROM DBItem")
+    int getCount();
 }

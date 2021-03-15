@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,21 +14,28 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.pocket_chef_application.data.DBItem;
 import com.example.pocket_chef_application.data.LocalDB;
+import com.example.pocket_chef_application.util.PantryItemTouchHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Pantry extends Fragment {
     private EditText itemNameView;
     private EditText itemAmountView;
     private EditText itemEXPView;
-    List<Pantry_Item> pantry_items;
+
+    private RecyclerView mRecyclerview;
+    private Pantry_Adapter Padapter;
+    private List<Pantry_Item> pantry_items;
 
 
     public static Pantry newInstance(String param1, String param2) {
@@ -42,81 +50,66 @@ public class Pantry extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.pantry, container, false);
+
         itemNameView = (EditText) view.findViewById(R.id.item_name);
         itemAmountView = (EditText) view.findViewById(R.id.item_amount);
         itemEXPView = (EditText) view.findViewById(R.id.item_exp);
-        pantry_items = new ArrayList<>();
-        refresh();
+        LocalDB db = LocalDB.getDBInstance(this.getContext());
+        List<DBItem> dbitems = db.itemDAO().getAllItems();
+        pantry_items = dbitems.stream()
+                                .map(s -> new Pantry_Item(s))
+                                .collect(Collectors.toList());
 
+        insertDummyItems();
+
+        initRecyclerView(view);
 
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    private void insertDummyItems(){
+        List<String> names = Arrays.asList("pears", "peaches", "cucumbers","tomatoes","milk","cheese","ground beef");
 
-        RecyclerView recyclerView = view.findViewById(R.id.pantry_recyclerView);
-        Pantry_Adapter adapter = new Pantry_Adapter(pantry_items,view.getContext());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),3));
-        recyclerView.setAdapter(adapter);
-
-
-
-        view.findViewById(R.id.item_button).setOnClickListener(v -> refresh());
-
-
+        for(String n : names){
+            DBItem item = new DBItem();
+            item.item_Name = n;
+            item.exp_date = "12/12/2021";
+            item.amount = 4;
+            pantry_items.add(new Pantry_Item(item));
+        }
     }
 
-    private void AddItem(){
-        String title = itemNameView.getText().toString();
-        Integer amount = Integer.parseInt(itemAmountView.getText().toString());
-        String exp_date = itemEXPView.getText().toString();
+    private void initRecyclerView(View view){
+        mRecyclerview = view.findViewById(R.id.pantry_recyclerView);
+        Padapter = new Pantry_Adapter(pantry_items,view.getContext());
+        mRecyclerview.setHasFixedSize(true);
+        mRecyclerview.setLayoutManager(new GridLayoutManager(view.getContext(),3));
+
+
+        mRecyclerview.setAdapter(Padapter);
+    }
+
+    private void AddItem(String name, int amount, String exp_date){
         LocalDB db = LocalDB.getDBInstance(this.getContext());
+        int position;
 
         try {
-
-
             DBItem item = new DBItem();
-            item.item_Name = title.toLowerCase();
+            item.item_Name = name.toLowerCase();
             item.exp_date = exp_date.toLowerCase();
             item.amount = amount;
             db.itemDAO().insertItem(item);
-            pantry_items.add(new Pantry_Item(item));
-
+            position = pantry_items.size();
+            pantry_items.add(position,new Pantry_Item(item));
+            Padapter.notifyItemInserted(position);
 
         }
         catch (SQLiteConstraintException e) {
             Toast.makeText(this.getContext(), "Item already in Pantry", Toast.LENGTH_LONG).show();
         }
-
-        itemNameView.setText(null);
-        itemEXPView.setText(null);
-        itemAmountView.setText(null);
-
-    }
-
-    private void refresh(){
-        LocalDB db = LocalDB.getDBInstance(this.getContext());
-        List<DBItem> dbitems = db.itemDAO().getAllItems();
-        boolean found;
-        for(DBItem item : dbitems){
-            found = pantry_items.stream().anyMatch(o -> o.getItem().item_Name.equals(item.item_Name));
-            if(!found){
-                pantry_items.add(new Pantry_Item(item));
-            }
-
-        }
     }
 
 
 
 
-
-
-    private void deleteAllItems() {
-        LocalDB db = LocalDB.getDBInstance(this.getContext());
-        db.itemDAO().nukeTable();
-    }
 }
