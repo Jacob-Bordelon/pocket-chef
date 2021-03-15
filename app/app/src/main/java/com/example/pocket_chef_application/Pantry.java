@@ -32,6 +32,7 @@ public class Pantry extends Fragment {
     private EditText itemNameView;
     private EditText itemAmountView;
     private EditText itemEXPView;
+    private Button addItem;
 
     private RecyclerView mRecyclerview;
     private Pantry_Adapter Padapter;
@@ -54,15 +55,16 @@ public class Pantry extends Fragment {
         itemNameView = (EditText) view.findViewById(R.id.item_name);
         itemAmountView = (EditText) view.findViewById(R.id.item_amount);
         itemEXPView = (EditText) view.findViewById(R.id.item_exp);
+        addItem = (Button) view.findViewById(R.id.item_button);
+
         LocalDB db = LocalDB.getDBInstance(this.getContext());
         List<DBItem> dbitems = db.itemDAO().getAllItems();
         pantry_items = dbitems.stream()
                                 .map(s -> new Pantry_Item(s))
                                 .collect(Collectors.toList());
-
-        insertDummyItems();
-
         initRecyclerView(view);
+        insertDummyItems();
+        addItem.setOnClickListener(v -> NewItem());
 
         return view;
     }
@@ -87,6 +89,26 @@ public class Pantry extends Fragment {
 
 
         mRecyclerview.setAdapter(Padapter);
+    }
+
+    private void NewItem(){
+        System.out.println(LocalDB.getDBInstance(this.getContext()).itemDAO().getCount());
+
+        if(     !(itemNameView.getText().toString().matches("")   |
+                itemAmountView.getText().toString().matches("") |
+                itemEXPView.getText().toString().matches("")))
+        {
+            AddItem(
+                    itemNameView.getText().toString(),
+                    Integer.parseInt(itemAmountView.getText().toString()),
+                    itemEXPView.getText().toString()
+            );
+        }else{
+            Toast.makeText(this.getContext(),"Values missing from input",Toast.LENGTH_LONG).show();
+        }
+        itemNameView.setText(null);
+        itemAmountView.setText(null);
+        itemEXPView.setText(null);
     }
 
     private void AddItem(String name, int amount, String exp_date){

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:id="@+id/pantryFragment"
     tools:context=".Pantry">
 
@@ -13,24 +14,22 @@
     <EditText
         android:id="@+id/item_name"
         android:layout_width="match_parent"
-        android:hint="name"
+        android:hint="Name"
         android:inputType="textAutoComplete"
         android:layout_height="40dp"/>
 
     <EditText
         android:id="@+id/item_amount"
         android:inputType="number"
+        android:hint="Amount"
         android:layout_width="match_parent"
-        android:layout_below="@id/item_name"
-        android:hint="amount"
         android:layout_height="40dp"/>
 
     <EditText
         android:id="@+id/item_exp"
         android:inputType="date"
         android:layout_width="match_parent"
-        android:layout_below="@id/item_amount"
-        android:hint="expiration date"
+        android:hint="Expiration date"
         android:layout_height="40dp"/>
 
     <Button
@@ -55,4 +54,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

@@ -1,17 +1,21 @@
 package com.example.pocket_chef_application;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +24,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pocket_chef_application.data.LocalDB;
 import com.example.pocket_chef_application.util.ItemTouchHelperAdapter;
 
 import java.util.ArrayList;
@@ -31,11 +36,6 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
     private Dialog mDialog;
     private List<Pantry_Item> list;
     private Context context;
-    ExpandableListView expandableListView;
-    List<String> listGroup;
-    HashMap<String, List<String>> listItem;
-
-
 
 
     public Pantry_Adapter(List<Pantry_Item> list, Context context) {
@@ -50,6 +50,7 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         View view = inflater.inflate(R.layout.pantry_item,parent, false);
         mDialog = new Dialog(view.getContext());
 
+
         return new PantryViewHolder(view);
     }
 
@@ -60,8 +61,9 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
     }
 
     public void ShowPopup(Pantry_Item i){
-        TextView closebtn, optionsbtn, name, exp_date, amount;
+        TextView closebtn, name, exp_date, amount;
         ImageView img;
+        ImageButton  optionsbtn, deletebtn;
 
 
         mDialog.setContentView(R.layout.dialog_pantry_item_details);
@@ -76,12 +78,14 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
 
 
         closebtn = (TextView) mDialog.findViewById(R.id.closebtn);
-        optionsbtn = (TextView) mDialog.findViewById(R.id.optionsbtn);
+        optionsbtn = (ImageButton) mDialog.findViewById(R.id.optionsbtn);
+        deletebtn = (ImageButton) mDialog.findViewById(R.id.deletebtn);
 
 
         closebtn.setOnClickListener(v -> mDialog.dismiss());
+        optionsbtn.setOnClickListener(v -> EditOperation(i));
+        deletebtn.setOnClickListener(v -> RemoveItem(i));
 
-        //editButton.setOnClickListener(n -> EditOperation(i));
 
         mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mDialog.show();
@@ -102,7 +106,6 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
 
         cancel.setOnClickListener(n-> mDialog.onBackPressed());
 
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,6 +124,15 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         });
 
 
+    }
+
+    private void RemoveItem(Pantry_Item i){
+        int pos = list.indexOf(i);
+        list.remove(i);
+        LocalDB db = LocalDB.getDBInstance(this.context);
+        db.itemDAO().delete(i.getItem());
+        mDialog.dismiss();
+        this.notifyItemRemoved(pos);
     }
 
     @Override

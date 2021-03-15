@@ -52,6 +52,7 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
         measurement.setOnItemSelectedListener(this);
 
 
+
         // ToDo: change to a safe credentials check
         OkHttpClient okHttpClient = UnSafeOkHttpClient.getUnsafeOkHttpClient();
 
