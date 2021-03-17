@@ -1,30 +1,32 @@
-package com.example.pocket_chef_application;
+package com.example.pocket_chef_application.Pantry;
 
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.pocket_chef_application.Pantry.Pantry_Adapter;
+import com.example.pocket_chef_application.Pantry.Pantry_Item;
+import com.example.pocket_chef_application.R;
 import com.example.pocket_chef_application.data.DBItem;
 import com.example.pocket_chef_application.data.LocalDB;
-import com.example.pocket_chef_application.util.PantryItemTouchHelper;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +34,7 @@ public class Pantry extends Fragment {
     private EditText itemNameView;
     private EditText itemAmountView;
     private EditText itemEXPView;
-    private Button addItem;
+    private android.widget.Button addItem, clearInput;
 
     private RecyclerView mRecyclerview;
     private Pantry_Adapter Padapter;
@@ -51,23 +53,44 @@ public class Pantry extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.pantry, container, false);
-
-        itemNameView = (EditText) view.findViewById(R.id.item_name);
-        itemAmountView = (EditText) view.findViewById(R.id.item_amount);
-        itemEXPView = (EditText) view.findViewById(R.id.item_exp);
-        addItem = (Button) view.findViewById(R.id.item_button);
+        getViews(view);
 
         LocalDB db = LocalDB.getDBInstance(this.getContext());
         List<DBItem> dbitems = db.itemDAO().getAllItems();
-        pantry_items = dbitems.stream()
-                                .map(s -> new Pantry_Item(s))
-                                .collect(Collectors.toList());
+        pantry_items = dbitems.stream().map(Pantry_Item::new).collect(Collectors.toList());
         initRecyclerView(view);
-        insertDummyItems();
-        addItem.setOnClickListener(v -> NewItem());
+        //insertDummyItems();
+
+        setOnClickListeners();
 
         return view;
     }
+
+    private void getViews(View view){
+        itemNameView = (EditText) view.findViewById(R.id.item_name);
+        itemAmountView = (EditText) view.findViewById(R.id.item_amount);
+        itemEXPView = (EditText) view.findViewById(R.id.item_exp);
+        addItem = (android.widget.Button) view.findViewById(R.id.item_button);
+        clearInput = (android.widget.Button) view.findViewById(R.id.clear);
+
+    }
+
+    private void setOnClickListeners(){
+        addItem.setOnClickListener(v -> NewItem());
+        clearInput.setOnClickListener(v -> clearInputs());
+
+
+        PantryTextWatcher tw = new PantryTextWatcher(itemEXPView);
+        itemEXPView.addTextChangedListener(tw);
+    }
+
+    private void clearInputs(){
+        itemNameView.setText(null);
+        itemAmountView.setText(null);
+        itemEXPView.setText(null);
+    }
+
+
 
     private void insertDummyItems(){
         List<String> names = Arrays.asList("pears", "peaches", "cucumbers","tomatoes","milk","cheese","ground beef");
@@ -86,8 +109,6 @@ public class Pantry extends Fragment {
         Padapter = new Pantry_Adapter(pantry_items,view.getContext());
         mRecyclerview.setHasFixedSize(true);
         mRecyclerview.setLayoutManager(new GridLayoutManager(view.getContext(),3));
-
-
         mRecyclerview.setAdapter(Padapter);
     }
 

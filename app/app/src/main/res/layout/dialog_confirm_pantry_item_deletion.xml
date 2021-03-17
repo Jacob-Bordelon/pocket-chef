@@ -6,7 +6,7 @@
     android:layout_height="475dp"
     android:orientation="vertical"
     android:background="@color/colorPrimaryDark"
-    tools:context=".PantryItem_Activity"
+    tools:context=".Pantry.PantryItem_Activity"
     android:padding="5dp"
     android:layout_gravity="center">
 

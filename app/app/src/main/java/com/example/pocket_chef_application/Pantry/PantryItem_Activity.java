@@ -1,4 +1,4 @@
-package com.example.pocket_chef_application;
+package com.example.pocket_chef_application.Pantry;
 
 import androidx.appcompat.app.AppCompatActivity;
 

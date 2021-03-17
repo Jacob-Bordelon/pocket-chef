@@ -8,7 +8,7 @@
     android:background="@color/colorPrimaryDark"
     android:padding="5dp"
     android:layout_gravity="center"
-    tools:context=".PantryItem_Activity">
+    tools:context=".Pantry.PantryItem_Activity">
 
 
     <RelativeLayout
