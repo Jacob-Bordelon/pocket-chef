@@ -6,8 +6,9 @@
 ## _Usage_
 
 ## _Features_
-- [x] The client can record their items in their pantry
-- [x] The app will suggest recipes based on their pantry
+
+- [X] The client can record their items in their pantry
+- [X] The app will suggest recipes based on their pantry
 - [ ] The app will recognize items with the camera and add the item to the pantry
 - [ ] The app will have a grocery list option
 - [ ] The app will record the most common items

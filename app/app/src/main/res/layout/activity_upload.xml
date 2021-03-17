@@ -13,7 +13,7 @@
         android:layout_width="178dp"
         android:layout_height="50dp"
         android:layout_marginTop="316dp"
-        android:hint="Cook Time"
+        android:hint="@string/cook_time"
         app:layout_constraintEnd_toStartOf="@+id/prepTime"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="4dp"
         android:ems="10"
-        android:hint="Recipe Name"
+        android:hint="@string/recipe_name"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
         android:autofillHints=""
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Ingredient name"
+        android:hint="@string/ingredient_name"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -92,7 +92,7 @@
         android:layout_marginTop="316dp"
         android:layout_marginEnd="36dp"
         android:layout_marginRight="36dp"
-        android:hint="Prep Time"
+        android:hint="@string/prep_time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -101,9 +101,10 @@
         android:layout_width="111dp"
         android:layout_height="50dp"
         android:layout_marginTop="240dp"
-        android:hint="Amount"
+        android:hint="@string/amount"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <Button
         android:id="@+id/add"
@@ -112,7 +113,7 @@
         android:layout_marginTop="240dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="Add"
+        android:text="@string/add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -121,8 +122,18 @@
         android:layout_width="match_parent"
         android:layout_height="87dp"
         android:layout_marginTop="68dp"
-        android:hint="Add a description for the recipe"
+        android:hint="@string/add_a_description_for_the_recipe"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/cameraButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:text="Image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

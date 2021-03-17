@@ -107,6 +107,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="generate">generate</string>
+    <string name="ingredient_name">Ingredient name</string>
+    <string name="add_a_description_for_the_recipe">Add a description for the recipe</string>
+    <string name="cook_time">Cook Time</string>
+    <string name="prep_time">Prep Time</string>
+    <string name="amount">Amount</string>
+    <string name="add">Add</string>
+    <string name="todo">TODO</string>
+    <string name="take_picture">Take Picture</string>
     <string-array name="measurement">
         <item>Tablespoon</item>
         <item>Cup</item>
