@@ -3,6 +3,7 @@ package com.example.pocket_chef_application;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.pocket_chef_application.Model.Camera;
 import com.example.pocket_chef_application.Model.Upload;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -13,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton button2 = findViewById(R.id.imageButton2);
         ImageButton button3 = findViewById(R.id.imageButton3);
         ImageButton button4 = findViewById(R.id.imageButton4);
+
 
 
 
@@ -103,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 button4.setVisibility(View.GONE);
             }
         });
+
 
 
     }

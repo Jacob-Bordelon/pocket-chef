@@ -231,7 +231,7 @@ public class Upload extends Fragment implements AdapterView.OnItemSelectedListen
     private void switch_fragment(Fragment fragment){
         manager.beginTransaction()
                 .replace(R.id.nav_host_fragment,fragment)
-                .addToBackStack(null)
+                .addToBackStack("CameraFrag")
                 .commit();
 
     }

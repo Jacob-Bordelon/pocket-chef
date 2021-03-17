@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -28,8 +29,10 @@ public class Camera extends Fragment {
     private static final int RESULT_OK = 0;
     private static final int RESULT_CANCELED = 1;
     private Button btnCapture;
+    private Button btnCancel;
     private ImageView imgCapture;
     private static final int Image_Capture_Code = 1;
+    private static FragmentManager manager;
 
     public static Camera newInstance(String text){
         Camera fragment = new Camera();
@@ -44,6 +47,15 @@ public class Camera extends Fragment {
         View view = inflater.inflate(R.layout.fragment_camera, container, false);
         btnCapture =(Button) view.findViewById(R.id.btnTakePicture);
         imgCapture = (ImageView) view.findViewById(R.id.capturedImage);
+        btnCancel = (Button) view.findViewById(R.id.CancelCam);
+        manager = getParentFragmentManager();
+
+
+        btnCancel.setOnClickListener(v -> {
+            manager.popBackStack("CameraFrag", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+        });
+
         btnCapture.setOnClickListener(v -> {
             Intent cInt = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(cInt,Image_Capture_Code);
@@ -62,4 +74,13 @@ public class Camera extends Fragment {
                 Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_LONG).show();
             }
         }
-    }}
+    }
+
+    private void switch_fragment(Fragment fragment){
+        manager.beginTransaction()
+                .replace(R.id.nav_host_fragment,fragment)
+                .addToBackStack(null)
+                .commit();
+
+    }
+}
