@@ -1,46 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:id="@+id/pantryFragment"
-    tools:context=".Pantry">
+    tools:context=".Pantry.Pantry">
 
-    <!-- TODO: Update blank fragment layout -->
-
-
-
-    <EditText
-        android:id="@+id/item_name"
-        android:layout_width="match_parent"
-        android:hint="name"
-        android:layout_height="40dp"/>
-
-    <EditText
-        android:id="@+id/item_amount"
-        android:layout_width="match_parent"
-        android:layout_below="@id/item_name"
-        android:hint="amount"
-        android:layout_height="40dp"/>
-
-    <EditText
-        android:id="@+id/item_exp"
-        android:layout_width="match_parent"
-        android:layout_below="@id/item_amount"
-        android:hint="expiration date"
-        android:layout_height="40dp"/>
-
-    <Button
-        android:id="@+id/item_button"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/item_exp"
-        android:text="add item"/>
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
 
-    <TextView
-        android:id="@+id/items_view"
-        android:layout_below="@id/item_button"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:layout_weight="2">
+
+
+            <EditText
+                android:id="@+id/item_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:background="@drawable/input_bar"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"/>
+
+            <EditText
+                android:id="@+id/item_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Amount"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:background="@drawable/input_bar"
+                android:layout_marginBottom="5dp"/>
+
+            <EditText
+                android:id="@+id/item_exp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="MM/DD/YYYY"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:background="@drawable/input_bar"
+                android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_marginRight="5dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <android.widget.Button
+                android:id="@+id/camerabtn"
+                android:layout_width="80dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                tools:ignore="NestedWeights"
+                android:clickable="true"
+                android:background="@drawable/ic_menu_camera"/>
+
+            <android.widget.Button
+                android:clickable="true"
+                android:id="@+id/item_button"
+                android:layout_width="80dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                tools:ignore="NestedWeights"
+                android:background="@drawable/ic_baseline_add_24"/>
+
+            <android.widget.Button
+                android:id="@+id/clear"
+                android:clickable="true"
+                android:layout_width="80dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                tools:ignore="NestedWeights"
+                android:text="Clear"
+                android:background="@drawable/deletebtn_style"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
 
-</RelativeLayout>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/item_button">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/pantry_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"/>
+
+    </LinearLayout>
+
+</LinearLayout>

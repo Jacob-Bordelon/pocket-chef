@@ -3,6 +3,7 @@ package com.example.pocket_chef_application;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.pocket_chef_application.Pantry.Pantry;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;

@@ -1,6 +1,9 @@
 package com.example.pocket_chef_application;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,20 +13,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.pocket_chef_application.API.ISearchRecipeAPI;
+import com.example.pocket_chef_application.Model.Camera;
 import com.example.pocket_chef_application.Model.Recipe;
-import com.example.pocket_chef_application.data.Item;
-import com.example.pocket_chef_application.data.LocalDB;
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -39,6 +41,8 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
     private String server_domain = "https://pocketchef.xyz/";
     private JSONArray ingredientsList = new JSONArray();
     private JSONObject fullRecipe = new JSONObject();
+    private static ConstraintLayout layout;
+    private static FragmentManager manager;
     private String record;
 
 
@@ -47,6 +51,7 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
         Context context = getApplicationContext();
+        layout = findViewById(R.id.upload_fragment);
 
         Spinner measurement = findViewById(R.id.measure);
         ArrayAdapter<CharSequence> measurementAdapter = ArrayAdapter.createFromResource(this, R.array.measurement, android.R.layout.simple_spinner_item);
@@ -68,9 +73,13 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
         // Initialize interface with retrofit client
         ISearchRecipeAPI jsonPlaceHolderApi = retrofit.create(ISearchRecipeAPI.class);
 
+        Button cameraButton = findViewById(R.id.cameraButton);
+        cameraButton.setOnClickListener(v -> {
+        });
+
         Button addButton = findViewById(R.id.add);
         addButton.setOnClickListener(v -> {
-            if (record=="None"){
+            if (record.equals("None")){
                 Toast.makeText(context, "Measurement can't be blank", Toast.LENGTH_SHORT).show();
             }
             else {
@@ -147,7 +156,6 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
                     else {
                         Log.i("Full Recipe", "Code " + response.code());
                     }
-                    return;
                 }
 
 
@@ -205,3 +213,5 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }}
+
+//adding comments for testing

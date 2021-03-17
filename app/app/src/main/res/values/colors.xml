@@ -9,4 +9,14 @@
     <color name="white">#FFFFFFFF</color>
     <color name="popout_bg">#D2FFFFFF</color>
     <color name="button_bg">#D8673AB7</color>
+    <color name="bluelight">#49acd5</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#2f333f</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="green">#45bc62</color>
+    <color name="orange">#eaad43</color>
+    <color name="darkred">#D0312D</color>
+    <color name="transparent">#00000000</color>
+
+
 </resources>
