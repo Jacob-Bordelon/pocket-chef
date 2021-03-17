@@ -32,7 +32,8 @@ public class Generate_Recipes extends Fragment {
     // Textview variables
     private TextView textView; // -> for displaying the recipes
     private TextView statusBar; // -> for displaying connection status
-    private String server_ip = "54.144.65.217";//"10.0.2.2" "54.144.65.217"
+    private String server_ip = "192.168.0.10";//"10.0.2.2" "54.144.65.217"
+    private String server_domain = "https://pocketchef.xyz/";
     private static final String TEXT = "text";
 
     public static Generate_Recipes newInstance(String text){
@@ -58,16 +59,16 @@ public class Generate_Recipes extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Gets the specific textview from layout 
+        // Gets the specific TextView from layout
         textView = view.findViewById(R.id.recipe_view);
 
         // Check connection with server with UDP. It has to be a thread. Uses the statusBar for updating
         new Thread(new UDPClient(statusBar,3000,server_ip)).start();
-        // ToDo: change to a safe credentials check
+        // For local testing purposes
         OkHttpClient okHttpClient = UnSafeOkHttpClient.getUnsafeOkHttpClient();
         // Retrofit Client. Creates connection parameters to AWS EC2 Server through port 3000
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://"+server_ip+":3000/")
-                .client(okHttpClient) // Checks certification
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://"+server_ip+":3000/")  //"https://"+server_ip+":3000/"
+                .client(okHttpClient) // Checks certification   // okHttpClient  //new OkHttpClient()
                 .addConverterFactory(GsonConverterFactory.create()) // JSON converter
                 .build(); // Build retrofit
         // Initialize interface with retrofit client
@@ -77,7 +78,7 @@ public class Generate_Recipes extends Fragment {
         view.findViewById(R.id.recipe_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Creates a dummy JSON array of obejcts to simulate ingredients
+                // Creates a dummy JSON array of objects to simulate ingredients
                 JSONArray ingredients = getPantryJSONArray();
 
                 // Search for recipes based on the ingredients we have

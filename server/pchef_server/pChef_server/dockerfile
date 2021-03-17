@@ -1,0 +1,7 @@
+FROM node:12
+WORKDIR /home/node/server
+COPY server /home/node/server
+RUN npm install
+CMD npm start
+
+EXPOSE 3000

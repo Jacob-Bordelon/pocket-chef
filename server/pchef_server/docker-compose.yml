@@ -1,0 +1,67 @@
+version: '3'
+services:
+  pchef-server-1:
+    build: ./pChef_server
+    restart: unless-stopped
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+    volumes:
+      - ./pChef_server/server.js:/app/server.js
+    expose:
+      - 3000
+    networks:
+      - pocket-net
+  pchef-server-2:
+    build: ./pChef_server
+    restart: unless-stopped
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8001
+    volumes:
+      - ./pChef_server/server.js:/app/server.js:ro
+    expose:
+      - 3000
+    networks:
+      - pocket-net
+  pchef-server-3:
+    build: ./pChef_server
+    restart: unless-stopped
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8002
+    volumes:
+      - ./pChef_server/server.js:/app/server.js:ro
+    expose:
+      - 3000
+    networks:
+      - pocket-net
+  pchef-server-4:
+    build: ./pChef_server
+    restart: unless-stopped
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8003
+    volumes:
+      - ./pChef_server/server.js:/app/server.js:ro
+    expose:
+      - 3000
+    networks:
+      - pocket-net
+  nginx:
+    image: haproxy
+    restart: unless-stopped
+    links:
+      - pchef-server-1
+      - pchef-server-2
+      - pchef-server-3
+      - pchef-server-4
+    volumes:
+      - ./haproxy:/usr/local/etc/haproxy:ro
+    ports:
+      - 7000:7000
+    networks:
+      - pocket-net
+networks:
+  pocket-net:
+    driver: bridge
