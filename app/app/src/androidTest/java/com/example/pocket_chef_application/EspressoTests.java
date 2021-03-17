@@ -1,5 +1,4 @@
 package com.example.pocket_chef_application;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +9,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -34,7 +32,7 @@ public class EspressoTests {
     @Test
     public void test_goto_generate(){
         onView(withId(R.id.fab)).perform(click());
-        onView(withId(R.id.imageButton1)).perform(click());
+        onView(withId(R.id.fab_generate_recipes_btn)).perform(click());
         onView(withId(R.id.generateFragment)).check(matches(isDisplayed()));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
     }
@@ -43,7 +41,7 @@ public class EspressoTests {
     @Test
     public void test_goto_pantry(){
         onView(withId(R.id.fab)).perform(click());
-        onView(withId(R.id.imageButton3)).perform(click());
+        onView(withId(R.id.fab_pantry_btn)).perform(click());
         onView(withId(R.id.pantryFragment)).check(matches(isDisplayed()));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
     }
@@ -52,7 +50,7 @@ public class EspressoTests {
     @Test
     public void test_goto_upload(){
         onView(withId(R.id.fab)).perform(click());
-        onView(withId(R.id.imageButton4)).perform(click());
+        onView(withId(R.id.fab_upload_recipe_btn)).perform(click());
         onView(withId(R.id.upload_fragment)).check(matches(isDisplayed()));
     }
 
@@ -60,11 +58,13 @@ public class EspressoTests {
     @Test
     public void test_goto_splashpage(){
         onView(withId(R.id.fab)).perform(click());
-        onView(withId(R.id.imageButton3)).perform(click());
+        onView(withId(R.id.fab_pantry_btn)).perform(click());
         onView(withId(R.id.fab)).perform(click());
-        onView(withId(R.id.imageButton2)).perform(click());
+        onView(withId(R.id.fab_homepage_btn)).perform(click());
 
         onView(withId(R.id.homepageFragment)).check(matches(isDisplayed()));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
     }
+
+
 }
