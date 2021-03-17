@@ -6,9 +6,11 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Item {
-    @PrimaryKey @ColumnInfo(name = "item_name")
+public class DBItem {
+
+    @PrimaryKey
     @NonNull
+    @ColumnInfo(name = "item_name")
     public String item_Name;
 
     @ColumnInfo(name = "exp_date")
@@ -16,4 +18,7 @@ public class Item {
 
     @ColumnInfo(name = "amount")
     public int amount;
+
+
+
 }

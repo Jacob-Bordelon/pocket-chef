@@ -9,12 +9,18 @@ import java.util.List;
 
 @Dao
 public interface ItemDAO {
-    @Query("SELECT * FROM item")
-    List<Item> getAllItems();
+    @Query("SELECT * FROM DBItem")
+    List<DBItem> getAllItems();
 
     @Insert
-    void insertItem(Item... items);
+    void insertItem(DBItem... items);
 
-    @Query("DELETE FROM item")
+    @Query("DELETE FROM DBItem")
     public void nukeTable();
+
+    @Delete
+    public void delete(DBItem item);
+
+    @Query("SELECT COUNT(item_name) FROM DBItem")
+    int getCount();
 }
