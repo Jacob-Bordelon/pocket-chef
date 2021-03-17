@@ -38,22 +38,18 @@ public class PantryTextWatcher implements TextWatcher {
 
             if (clean.length() < 8){
                 clean = clean + ddmmyyyy.substring(clean.length());
-            }else{
-                //This part makes sure that when we finish entering numbers
-                //the date is correct, fixing it otherwise
+            }
+            else{
                 int day  = Integer.parseInt(clean.substring(2,4));
                 int mon  = Integer.parseInt(clean.substring(0,2));
                 int year = Integer.parseInt(clean.substring(4,8));
 
-                mon = mon < 1 ? 1 : mon > 12 ? 12 : mon;
+                mon = mon < 1 ? 1 : Math.min(mon, 12);
                 cal.set(Calendar.MONTH, mon-1);
-                year = (year<1900)?1900:(year>2100)?2100:year;
+                year = (year<1900)?1900: Math.min(year, 2100);
                 cal.set(Calendar.YEAR, year);
-                // ^ first set year for the line below to work correctly
-                //with leap years - otherwise, date e.g. 29/02/2012
-                //would be automatically corrected to 28/02/2012
 
-                day = (day > cal.getActualMaximum(Calendar.DATE))? cal.getActualMaximum(Calendar.DATE):day;
+                day = Math.min(day, cal.getActualMaximum(Calendar.DATE));
                 clean = String.format("%02d%02d%02d", mon, day, year);
             }
 
@@ -64,7 +60,7 @@ public class PantryTextWatcher implements TextWatcher {
             sel = sel < 0 ? 0 : sel;
             current = clean;
             this.date.setText(current);
-            this.date.setSelection(sel < current.length() ? sel : current.length());
+            this.date.setSelection(Math.min(sel, current.length()));
         }
     }
 

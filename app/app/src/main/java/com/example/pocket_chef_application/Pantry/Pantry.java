@@ -35,6 +35,7 @@ public class Pantry extends Fragment {
     private EditText itemAmountView;
     private EditText itemEXPView;
     private android.widget.Button addItem, clearInput;
+    PantryTextWatcher tw;
 
     private RecyclerView mRecyclerview;
     private Pantry_Adapter Padapter;
@@ -80,7 +81,7 @@ public class Pantry extends Fragment {
         clearInput.setOnClickListener(v -> clearInputs());
 
 
-        PantryTextWatcher tw = new PantryTextWatcher(itemEXPView);
+        tw = new PantryTextWatcher(itemEXPView);
         itemEXPView.addTextChangedListener(tw);
     }
 
@@ -127,9 +128,9 @@ public class Pantry extends Fragment {
         }else{
             Toast.makeText(this.getContext(),"Values missing from input",Toast.LENGTH_LONG).show();
         }
-        itemNameView.setText(null);
-        itemAmountView.setText(null);
-        itemEXPView.setText(null);
+        itemEXPView.removeTextChangedListener(tw);
+        clearInputs();
+        itemEXPView.addTextChangedListener(tw);
     }
 
     private void AddItem(String name, int amount, String exp_date){
