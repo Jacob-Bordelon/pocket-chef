@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.util.Log;
 import android.view.View;
 
 import android.widget.ImageButton;
@@ -29,11 +28,12 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d(TAG,"One 1 Instance");
+
         layout = findViewById(R.id.Sidebar);
         layout.setVisibility(View.GONE);
 
         manager = getSupportFragmentManager();
+        switch_fragment(new Pantry());
 
 
 
@@ -50,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton button1 = findViewById(R.id.imageButton1);
-        ImageButton button2 = findViewById(R.id.imageButton2);
-        ImageButton button3 = findViewById(R.id.imageButton3);
-        ImageButton button4 = findViewById(R.id.imageButton4);
+        ImageButton button1 = findViewById(R.id.fab_generate_recipes_btn);
+        ImageButton button2 = findViewById(R.id.fab_homepage_btn);
+        ImageButton button3 = findViewById(R.id.fab_pantry_btn);
+        ImageButton button4 = findViewById(R.id.fab_upload_recipe_btn);
 
 
 
