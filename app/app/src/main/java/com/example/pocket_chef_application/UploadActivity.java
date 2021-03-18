@@ -66,7 +66,7 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
 
         // ToDo: create a retrofit client class
         // Retrofit Client. Creates connection parameters to AWS EC2 Server through port 3000
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(server_domain)  //"https://"+server_ip+":3000/"
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(server_domain)  //"https://"+server_ip+":3000/"  //server_domain
                 .client(okHttpClient) // Checks certification    // new OkHttpClient()  //okHttpClient
                 .addConverterFactory(GsonConverterFactory.create()) // JSON converter
                 .build(); // Build retrofit

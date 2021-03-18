@@ -63,11 +63,11 @@ public class Generate_Recipes extends Fragment {
         textView = view.findViewById(R.id.recipe_view);
 
         // Check connection with server with UDP. It has to be a thread. Uses the statusBar for updating
-        new Thread(new UDPClient(statusBar,3000,server_ip)).start();
+        new Thread(new UDPClient(statusBar,3001,server_ip)).start();
         // For local testing purposes
         OkHttpClient okHttpClient = UnSafeOkHttpClient.getUnsafeOkHttpClient();
         // Retrofit Client. Creates connection parameters to AWS EC2 Server through port 3000
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://"+server_ip+":3000/")  //"https://"+server_ip+":3000/"
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://"+server_ip+":3000/")  //"https://"+server_ip+":3000/"  //server_domain
                 .client(okHttpClient) // Checks certification   // okHttpClient  //new OkHttpClient()
                 .addConverterFactory(GsonConverterFactory.create()) // JSON converter
                 .build(); // Build retrofit

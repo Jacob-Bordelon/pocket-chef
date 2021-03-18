@@ -1,6 +1,6 @@
 // Required Libraries
-const appid = process.env.APPID;
-const appport = process.env.PORT;
+const PORT = String(process.env.PORT);
+//const HOST = String(process.env.HOST);
 var express = require('express');
 var mysql = require('mysql');
 var https = require('https');
@@ -13,7 +13,7 @@ var privateKey = fs.readFileSync( 'privatekey.pem' );
 var certificate = fs.readFileSync( 'server.crt' );
 // Debugging purposes
 var DEBUG = false;
-var LOGS = false;
+var LOGS = true;
 
 
 // Create mysql connection with parameters 
@@ -30,7 +30,7 @@ app.use(express.urlencoded({extended: true}));
 
 ///
 app.get("/get", (req, res) => {
-  res.send(`appid: ${appid} server says hello through port: ${appport} !`);
+  res.send("server on port:"+ PORT + "says hello !");
   console.log("Get requested");
 });
 ////////////////////////////////// POST commands ///////////////////////////////////////////
@@ -132,7 +132,7 @@ app.post("/possible", (req, res) => {
 // The idea is to have fast check to see if server is alive to notify the phone
 const UDPserver = dgram.createSocket(
     {
-      type: "udp4",
+      type: "udp4",//
       reuseAddr: true // reuse port 3000
     },
     (buffer, sender) => {
@@ -158,15 +158,15 @@ const UDPserver = dgram.createSocket(
     }
   );
 
-UDPserver.bind(3000); // -> Binds socket to port
-console.log("UDP Server Listening on Port 3000"); // -> log listening message
+UDPserver.bind(PORT); // -> Binds socket to port
+console.log("UDP Server Listening on Port 3001"); // -> log listening message
 
 ////////////////////////////////// TCP Server ///////////////////////////////////////////
 // Starts https server with certificates
 https.createServer({
     key: privateKey,
     cert: certificate
-}, app).listen(3000,'0.0.0.0'); // -> listens to localhost 
+}, app).listen(PORT,'0.0.0.0'); // -> listens to localhost 
 console.log("TCP Server Listening on Port 3000"); // -> log listening message
 
 module.exports = app;
