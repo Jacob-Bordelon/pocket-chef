@@ -8,35 +8,49 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
-    private ArrayList<Item> items;
+    private RecyclerView flagrecyclerView;
+    private ArrayList<IngredientFlag> ingflags = new ArrayList<>();
+    private ArrayList<RecipeCard> recipeCards;
     private Context context;
 
-    public Adapter(ArrayList<Item> items, Context context) {
-        this.items = items;
+    public Adapter(ArrayList<RecipeCard> recipeCards, Context context) {
+        this.recipeCards = recipeCards;
         this.context = context;
     }
 
     @NonNull
     @Override
     public Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_card,
                 parent,false);
+
+        flagrecyclerView = view.findViewById(R.id.flag_recyclerView);
+        flagrecyclerView.setHasFixedSize(true);
+        flagrecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        flagrecyclerView.setAdapter(new IngredientAdapter(ingflags, view.getContext()));
+
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, final int position) {
 
-        final Item item = items.get(position);
-        holder.imageView.setImageResource(item.getImageResourse());
-        holder.titleTextView.setText(item.getTitle());
-        holder.ingredientsTextView.setText(item.getDesc());
+        final RecipeCard recipeCard = recipeCards.get(position);
+        holder.imageView.setImageResource(recipeCard.getImageResourse());
+        holder.titleTextView.setText(recipeCard.getTitle());
+        holder.ingredientsTextView.setText(recipeCard.getDesc());
+
+        for(String ing : recipeCard.getIngredients()){
+            ingflags.add(new IngredientFlag(ing));
+            if(ingflags.size() > 3) break;
+        }
 
 
 
@@ -44,7 +58,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return recipeCards.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -55,9 +69,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.imageView);
+            //imageView = itemView.findViewById(R.id.imageView);
             titleTextView = itemView.findViewById(R.id.titleTextView);
-            ingredientsTextView = itemView.findViewById(R.id.IngredientsTextView);
+            //ingredientsTextView = itemView.findViewById(R.id.IngredientsTextView);
         }
     }
 }

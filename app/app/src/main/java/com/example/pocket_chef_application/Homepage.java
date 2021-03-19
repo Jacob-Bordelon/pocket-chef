@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Homepage extends Fragment {
     private static final String TAG = Homepage.class.getSimpleName();
     private static final String TEXT = "text";
-    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<RecipeCard> recipeCards = new ArrayList<>();
     int clickCount;
 
     public static Homepage newInstance(String text){
@@ -39,24 +39,8 @@ public class Homepage extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(new Adapter(items,view.getContext()));
+        recyclerView.setAdapter(new Adapter(recipeCards,view.getContext()));
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
-        items.add(new Item(R.drawable.eggs,"Eggs","they are whiter than a sharpee"));
-        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
-        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
-        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
-        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
-        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
-        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
-        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
-        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
-        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
-        items.add(new Item(R.drawable.bacon,"Bacon","Its Crackling Soap"));
-
-
-
-
 
     }
 }
