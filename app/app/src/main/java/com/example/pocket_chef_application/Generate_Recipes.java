@@ -32,7 +32,7 @@ public class Generate_Recipes extends Fragment {
     // Textview variables
     private TextView textView; // -> for displaying the recipes
     private TextView statusBar; // -> for displaying connection status
-    private String server_ip = "192.168.0.10";//"10.0.2.2" "54.144.65.217"
+    private String server_ip = "172.28.78.246";//"10.0.2.2" "54.144.65.217"
     private String server_domain = "https://pocketchef.xyz/";
     private static final String TEXT = "text";
 

@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.view.View;
 
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -94,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         button4.setOnClickListener(this::launchUpload);
+
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 
     }
