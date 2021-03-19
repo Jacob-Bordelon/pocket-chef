@@ -1,0 +1,7 @@
+FROM node:12
+WORKDIR /home/node/server
+COPY server /home/node/server
+ARG PORT="8000"
+RUN echo "ARGS is ${PORT}"
+RUN npm install
+CMD npm start

@@ -37,7 +37,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UploadActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
-    private String server_ip = "54.144.65.217";//"10.0.2.2" "54.144.65.217"
+    private String server_ip = "192.168.0.10";//"10.0.2.2" "54.144.65.217"
+    private String server_domain = "https://pocketchef.xyz/";
     private JSONArray ingredientsList = new JSONArray();
     private JSONObject fullRecipe = new JSONObject();
     private static ConstraintLayout layout;
@@ -60,14 +61,13 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
         measurement.setOnItemSelectedListener(this);
 
 
-
-        // ToDo: change to a safe credentials check
+        // Only for local testing purposes
         OkHttpClient okHttpClient = UnSafeOkHttpClient.getUnsafeOkHttpClient();
 
         // ToDo: create a retrofit client class
         // Retrofit Client. Creates connection parameters to AWS EC2 Server through port 3000
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://"+server_ip+":3000/")
-                .client(okHttpClient) // Checks certification
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(server_domain)  //"https://"+server_ip+":3000/"  //server_domain
+                .client(okHttpClient) // Checks certification    // new OkHttpClient()  //okHttpClient
                 .addConverterFactory(GsonConverterFactory.create()) // JSON converter
                 .build(); // Build retrofit
         // Initialize interface with retrofit client
