@@ -12,6 +12,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -35,6 +36,16 @@ public class EspressoTests {
         onView(withId(R.id.fab_generate_recipes_btn)).perform(click());
         onView(withId(R.id.generateFragment)).check(matches(isDisplayed()));
         onView(withId(R.id.fab)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void test_generate_recipe(){
+        onView(withId(R.id.fab)).perform(click());
+        onView(withId(R.id.fab_generate_recipes_btn)).perform(click());
+        onView(withId(R.id.generateFragment)).check(matches(isDisplayed()));
+        onView(withId(R.id.recipe_button)).perform(click());
+        onView(withId(R.id.status_field)).check(matches(withText("Connected")));
+
     }
 
     // test pantry fragment is displayed

@@ -144,5 +144,9 @@
         <item>December</item>
     </string-array>
 
+    <string name="ip_emulator">10.0.2.2</string>
+    <string name="ip_phone">172.28.69.46</string>
+    <string name="ip_remote">http://pocketchef.xyz</string>
+
 
 </resources>

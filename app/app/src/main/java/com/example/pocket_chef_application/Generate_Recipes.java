@@ -35,9 +35,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Generate_Recipes extends Fragment {
     // Textview variables
-    private TextView textView; // -> for displaying the recipes
     private TextView statusBar; // -> for displaying connection status
-    private String server_ip = "172.28.72.167";//"10.0.2.2" "54.144.65.217"
+    private String server_ip;//"10.0.2.2" "54.144.65.217"
     private static final String TEXT = "text";
     private Button recipe_button;
     private ArrayList<RecipeCard> recipeCards = new ArrayList<>();
@@ -46,6 +45,7 @@ public class Generate_Recipes extends Fragment {
     private RecyclerView flagrecyclerView;
 
     public static Generate_Recipes newInstance(String text){
+        Log.d("GEN_REC", "New Instance");
         Generate_Recipes fragment = new Generate_Recipes();
         Bundle args = new Bundle();
         args.putString(TEXT,text);
@@ -60,6 +60,9 @@ public class Generate_Recipes extends Fragment {
         statusBar = (TextView) view.findViewById(R.id.status_field);
         recipe_button = (Button) view.findViewById(R.id.recipe_button);
 
+
+        server_ip = "10.0.2.2";//getResources().getString(R.string.ip_emulator);
+
         return view;
     }
 
@@ -73,16 +76,17 @@ public class Generate_Recipes extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(new Adapter(recipeCards, view.getContext()));
 
-
         // Check connection with server with UDP. It has to be a thread. Uses the statusBar for updating
         new Thread(new UDPClient(statusBar,3000,server_ip)).start();
 
         OkHttpClient okHttpClient = UnSafeOkHttpClient.getUnsafeOkHttpClient();
+
         // Retrofit Client. Creates connection parameters to AWS EC2 Server through port 3000
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://"+server_ip+":3000/")
                 .client(okHttpClient) // Checks certification
                 .addConverterFactory(GsonConverterFactory.create()) // JSON converter
                 .build(); // Build retrofit
+
         // Initialize interface with retrofit client
         ISearchRecipeAPI jsonPlaceHolderApi = retrofit.create(ISearchRecipeAPI.class);
 
@@ -144,14 +148,14 @@ public class Generate_Recipes extends Fragment {
 
                     content += "#############################" + "\n";
 
-                    textView.append(content);
+                    //textView.append(content);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Recipe>> call, Throwable t) { // -> if failure, sets message
-                Log.e("ConnectionFailure", t.getMessage());
-                textView.setText(t.getMessage());
+                Log.e("GEN_REC",t.getMessage());
+                statusBar.setText("Failed to connect");
             }
         });
     }
