@@ -1,5 +1,6 @@
 package com.example.pocket_chef_application.Pantry;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 
@@ -7,26 +8,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.pocket_chef_application.Pantry.Pantry_Adapter;
-import com.example.pocket_chef_application.Pantry.Pantry_Item;
+import com.example.pocket_chef_application.ImageRecog;
+import com.example.pocket_chef_application.ObjectDetection.CameraXLivePreviewActivity;
 import com.example.pocket_chef_application.R;
 import com.example.pocket_chef_application.data.DBItem;
 import com.example.pocket_chef_application.data.LocalDB;
 
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +28,7 @@ public class Pantry extends Fragment {
     private EditText itemNameView;
     private EditText itemAmountView;
     private EditText itemEXPView;
-    private android.widget.Button addItem, clearInput;
+    private android.widget.Button addItem, clearInput, cameraBtn;
     PantryTextWatcher tw;
 
     private RecyclerView mRecyclerview;
@@ -73,12 +67,19 @@ public class Pantry extends Fragment {
         itemEXPView = (EditText) view.findViewById(R.id.item_exp);
         addItem = (android.widget.Button) view.findViewById(R.id.item_button);
         clearInput = (android.widget.Button) view.findViewById(R.id.clear);
+        cameraBtn = (android.widget.Button) view.findViewById(R.id.camerabtn);
 
     }
 
     private void setOnClickListeners(){
         addItem.setOnClickListener(v -> NewItem());
         clearInput.setOnClickListener(v -> clearInputs());
+        cameraBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ImageRecog.class));
+            }
+        });
 
 
         tw = new PantryTextWatcher(itemEXPView);
