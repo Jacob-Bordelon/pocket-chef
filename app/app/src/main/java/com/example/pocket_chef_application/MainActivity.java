@@ -5,11 +5,13 @@ import android.os.Bundle;
 
 import com.example.pocket_chef_application.Pantry.Pantry;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.View;
 
 import android.view.WindowManager;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static LinearLayout layout;
     private static FragmentManager manager;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
 
 
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
         manager = getSupportFragmentManager();
         switch_fragment(new Pantry());
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
 
 
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton button2 = findViewById(R.id.fab_homepage_btn);
         ImageButton button3 = findViewById(R.id.fab_pantry_btn);
         ImageButton button4 = findViewById(R.id.fab_upload_recipe_btn);
+        ImageButton button5 = findViewById(R.id.fab_firebase);
 
 
 
@@ -95,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         button4.setOnClickListener(this::launchUpload);
+
+        button5.setOnClickListener(v -> switch_fragment(new firebase_fragment()));
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 

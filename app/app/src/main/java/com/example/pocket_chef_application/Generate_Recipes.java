@@ -14,6 +14,7 @@ import com.example.pocket_chef_application.API.ISearchRecipeAPI;
 import com.example.pocket_chef_application.Model.Recipe;
 import com.example.pocket_chef_application.data.DBItem;
 import com.example.pocket_chef_application.data.LocalDB;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,6 +35,7 @@ public class Generate_Recipes extends Fragment {
     private TextView statusBar; // -> for displaying connection status
     private String server_ip = "172.28.78.246";//"10.0.2.2" "54.144.65.217"
     private String server_domain = "https://pocketchef.xyz/";
+    private FirebaseAnalytics analytics;
     private static final String TEXT = "text";
 
     public static Generate_Recipes newInstance(String text){
@@ -45,13 +47,11 @@ public class Generate_Recipes extends Fragment {
     }
 
     @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    ) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Initializes the view and the status bar on create for non null reference
         View view = inflater.inflate(R.layout.generate_recipes, container, false);
         statusBar = (TextView) view.findViewById(R.id.status_field);
+        analytics = FirebaseAnalytics.getInstance(view.getContext());
 
         return view;
     }
@@ -78,12 +78,7 @@ public class Generate_Recipes extends Fragment {
         view.findViewById(R.id.recipe_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Creates a dummy JSON array of objects to simulate ingredients
-                JSONArray ingredients = getPantryJSONArray();
 
-                // Search for recipes based on the ingredients we have
-                Call<List<Recipe>> possibleRecipeList = jsonPlaceHolderApi.possibleRecipe(ingredients.toString());
-                possibleRecipe(possibleRecipeList);
             }
         });
     }
