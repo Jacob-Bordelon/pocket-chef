@@ -1,5 +1,6 @@
 package com.example.pocket_chef_application.Pantry;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 
@@ -19,9 +20,11 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.pocket_chef_application.Item_Recognition_Activity;
 import com.example.pocket_chef_application.Pantry.Pantry_Adapter;
 import com.example.pocket_chef_application.Pantry.Pantry_Item;
 import com.example.pocket_chef_application.R;
+import com.example.pocket_chef_application.UploadActivity;
 import com.example.pocket_chef_application.data.DBItem;
 import com.example.pocket_chef_application.data.LocalDB;
 
@@ -34,7 +37,7 @@ public class Pantry extends Fragment {
     private EditText itemNameView;
     private EditText itemAmountView;
     private EditText itemEXPView;
-    private android.widget.Button addItem, clearInput;
+    private android.widget.Button addItem, clearInput, camerabtn;
     PantryTextWatcher tw;
 
     private RecyclerView mRecyclerview;
@@ -73,16 +76,24 @@ public class Pantry extends Fragment {
         itemEXPView = (EditText) view.findViewById(R.id.item_exp);
         addItem = (android.widget.Button) view.findViewById(R.id.item_button);
         clearInput = (android.widget.Button) view.findViewById(R.id.clear);
+        camerabtn = (android.widget.Button) view.findViewById(R.id.camerabtn);
 
     }
 
     private void setOnClickListeners(){
         addItem.setOnClickListener(v -> NewItem());
         clearInput.setOnClickListener(v -> clearInputs());
+        camerabtn.setOnClickListener(v -> barcode_scanner());
 
 
         tw = new PantryTextWatcher(itemEXPView);
         itemEXPView.addTextChangedListener(tw);
+    }
+
+
+    private void barcode_scanner(){
+        Intent i = new Intent(this.getContext(), Item_Recognition_Activity.class);
+        startActivity(i);
     }
 
     private void clearInputs(){
@@ -90,8 +101,6 @@ public class Pantry extends Fragment {
         itemAmountView.setText(null);
         itemEXPView.setText(null);
     }
-
-
 
     private void insertDummyItems(){
         List<String> names = Arrays.asList("pears", "peaches", "cucumbers","tomatoes","milk","cheese","ground beef");

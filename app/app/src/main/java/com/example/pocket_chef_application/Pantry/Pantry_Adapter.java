@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocket_chef_application.R;
 import com.example.pocket_chef_application.data.LocalDB;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
@@ -27,6 +33,7 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
     private Dialog mDialog;
     private List<Pantry_Item> list;
     private Context context;
+    FirebaseFirestore firebase_db;
 
 
     public Pantry_Adapter(List<Pantry_Item> list, Context context) {
@@ -40,6 +47,7 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.pantry_item,parent, false);
         mDialog = new Dialog(view.getContext());
+        firebase_db = FirebaseFirestore.getInstance();
 
 
         return new PantryViewHolder(view);
@@ -66,6 +74,22 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         name.setText(i.getTitle());
         exp_date.setText(i.getExp_date());
         amount.setText(Integer.toString(i.getAmount()));
+        firebase_db.collection("food_warehouse")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("Pantry ", document.getId() + " => " + document.getData().get("image"));
+
+                            }
+                        } else {
+                            Log.w("Pantry ", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+
 
 
         closebtn = (TextView) mDialog.findViewById(R.id.closebtn);

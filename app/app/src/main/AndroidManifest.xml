@@ -5,6 +5,11 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera.any" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -15,19 +20,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pocket_Chef_Application.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Item_Recognition_Activity"></activity>
+
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="barcode" />
 
         <activity
             android:name=".Pantry.PantryItem_Activity"
-            android:theme="@style/AppTheme.Popup"/>
-
-        <activity
-            android:name=".UploadActivity" />
-
+            android:theme="@style/AppTheme.Popup" />
+        <activity android:name=".UploadActivity" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.Pocket_Chef_Application.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
