@@ -164,7 +164,6 @@ public class Pantry extends Fragment {
 
     private void AddItem(String name, int amount, String exp_date){
         LocalDB db = LocalDB.getDBInstance(this.getContext());
-        final int[] position = new int[1];
 
         try {
             DBItem item = new DBItem();
@@ -172,7 +171,7 @@ public class Pantry extends Fragment {
             item.item_Name = name.toLowerCase();
             item.exp_date = exp_date.toLowerCase();
             item.amount = amount;
-            final Pantry_Item[] pItem = new Pantry_Item[1];
+
 
                     //TODO -- add image url column to local database so the firebase ImageUrl can be saved in the app.
             firebase_db.collection("food_warehouse")
@@ -194,11 +193,11 @@ public class Pantry extends Fragment {
 
                             }
                             db.itemDAO().insertItem(item);
-                            pItem[0] = new Pantry_Item(item);
-                            pItem[0].setImageUrl(item.image_url);
-                            position[0] = pantry_items.size();
-                            pantry_items.add(position[0], pItem[0]);
-                            Padapter.notifyItemInserted(position[0]);
+                            Pantry_Item pItem = new Pantry_Item(item);
+                            pItem.setImageUrl(item.image_url);
+                            int position = pantry_items.size();
+                            pantry_items.add(position, pItem);
+                            Padapter.notifyItemInserted(position);
                         }
                     });
             /* TODO -- decided whether we want the app to work offline (ie. generate images for offline use). Would result in fewer calls to firebase but would take up memory of the device.

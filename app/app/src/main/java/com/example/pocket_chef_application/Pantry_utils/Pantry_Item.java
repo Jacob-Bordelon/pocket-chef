@@ -14,6 +14,7 @@ public class Pantry_Item {
         this.title = item.item_Name;
         this.exp_date = item.exp_date;
         this.amount = item.amount;
+        this.imageUrl = item.image_url;
     }
 
     public String getImageUrl() {
