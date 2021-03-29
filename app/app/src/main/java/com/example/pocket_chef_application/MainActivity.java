@@ -3,7 +3,6 @@ package com.example.pocket_chef_application;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.pocket_chef_application.Pantry.Pantry;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -11,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.util.Log;
 import android.view.View;
 
 import android.view.WindowManager;

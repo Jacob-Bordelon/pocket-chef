@@ -1,7 +1,10 @@
-package com.example.pocket_chef_application.Pantry;
+package com.example.pocket_chef_application.Pantry_utils;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
@@ -22,10 +25,16 @@ import com.example.pocket_chef_application.R;
 import com.example.pocket_chef_application.data.LocalDB;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryViewHolder> {
@@ -33,7 +42,9 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
     private Dialog mDialog;
     private List<Pantry_Item> list;
     private Context context;
-    FirebaseFirestore firebase_db;
+    private final String TAG = "PANTRY_ADAPTER";
+    private FirebaseStorage firebase_storage;
+    private FirebaseFirestore firebase_db;
 
 
     public Pantry_Adapter(List<Pantry_Item> list, Context context) {
@@ -48,6 +59,8 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         View view = inflater.inflate(R.layout.pantry_item,parent, false);
         mDialog = new Dialog(view.getContext());
         firebase_db = FirebaseFirestore.getInstance();
+        firebase_storage = FirebaseStorage.getInstance();
+
 
 
         return new PantryViewHolder(view);
@@ -59,52 +72,80 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         holder.itemImageView.setImageResource(list.get(position).getImage());
     }
 
+    @SuppressLint("SetTextI18n")
     public void ShowPopup(Pantry_Item i){
         TextView closebtn, name, exp_date, amount;
         ImageView img;
         ImageButton  optionsbtn, deletebtn;
 
-
+        // Grab views from .xml
         mDialog.setContentView(R.layout.dialog_pantry_item_details);
         name = mDialog.findViewById(R.id.item_name);
         exp_date = mDialog.findViewById(R.id.item_exp);
         amount = mDialog.findViewById(R.id.item_amount);
-        img = mDialog.findViewById(R.id.item_image);
+        img = (ImageView ) mDialog.findViewById(R.id.item_image);
+        closebtn = (TextView) mDialog.findViewById(R.id.closebtn);
+        optionsbtn = (ImageButton) mDialog.findViewById(R.id.optionsbtn);
+        deletebtn = (ImageButton) mDialog.findViewById(R.id.deletebtn);
 
+        getFirebaseData(i.getTitle(), img);
+
+
+        // set values and listeners in views
         name.setText(i.getTitle());
         exp_date.setText(i.getExp_date());
         amount.setText(Integer.toString(i.getAmount()));
+
+        closebtn.setOnClickListener(v -> mDialog.dismiss());
+        optionsbtn.setOnClickListener(v -> EditOperation(i));
+        deletebtn.setOnClickListener(v -> RemoveItem(i));
+
+        // display window
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mDialog.show();
+    }
+
+    private void getFirebaseData(String name, ImageView imageView){
         firebase_db.collection("food_warehouse")
+                .whereEqualTo("name",name)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("Pantry ", document.getId() + " => " + document.getData().get("image"));
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                URL url = null;
+                                try {
+                                    url = new URL(document.getData().get("image").toString());
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                }
+
+                                Bitmap bmp = null;
+                                try {
+                                    bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                try{
+                                    imageView.setImageBitmap(bmp);
+                                }catch (NullPointerException e){
+                                    e.printStackTrace();
+                                }
+
+
 
                             }
                         } else {
-                            Log.w("Pantry ", "Error getting documents.", task.getException());
+                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
-
-
-
-        closebtn = (TextView) mDialog.findViewById(R.id.closebtn);
-        optionsbtn = (ImageButton) mDialog.findViewById(R.id.optionsbtn);
-        deletebtn = (ImageButton) mDialog.findViewById(R.id.deletebtn);
-
-
-        closebtn.setOnClickListener(v -> mDialog.dismiss());
-        optionsbtn.setOnClickListener(v -> EditOperation(i));
-        deletebtn.setOnClickListener(v -> RemoveItem(i));
-
-
-        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        mDialog.show();
     }
+
+
 
     private void EditOperation(Pantry_Item i){
         mDialog.setContentView(R.layout.dialog_edit_pantry_item_details);

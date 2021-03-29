@@ -1,4 +1,4 @@
-package com.example.pocket_chef_application.Pantry;
+package com.example.pocket_chef_application.Pantry_utils;
 
 import android.text.Editable;
 import android.text.TextWatcher;
