@@ -164,7 +164,7 @@ public class Pantry extends Fragment {
 
     private void AddItem(String name, int amount, String exp_date){
         LocalDB db = LocalDB.getDBInstance(this.getContext());
-        int position;
+        final int[] position = new int[1];
 
         try {
             DBItem item = new DBItem();
@@ -172,12 +172,9 @@ public class Pantry extends Fragment {
             item.item_Name = name.toLowerCase();
             item.exp_date = exp_date.toLowerCase();
             item.amount = amount;
+            final Pantry_Item[] pItem = new Pantry_Item[1];
 
-            db.itemDAO().insertItem(item);
-            position = pantry_items.size();
-            Pantry_Item pItem = new Pantry_Item(item);
-
-            //TODO -- add image url column to local database so the firebase ImageUrl can be saved in the app.
+                    //TODO -- add image url column to local database so the firebase ImageUrl can be saved in the app.
             firebase_db.collection("food_warehouse")
                     .whereEqualTo("name", item.item_Name)
                     .get()
@@ -185,26 +182,27 @@ public class Pantry extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+
                                 if(task.isSuccessful()){
 
-                                    pItem.setImageUrl(Objects.requireNonNull(document.getData().get("image")).toString());
-                                    Log.d(TAG, "task completed - successful: "+pItem.getImageUrl());
+                                    item.image_url = Objects.requireNonNull(document.getData().get("image")).toString();
+                                    Log.d(TAG, "task completed - successful: "+item.image_url);
                                 }else{
                                     Log.d(TAG, "task completed - unsuccessful");
+
                                 }
 
                             }
-
+                            db.itemDAO().insertItem(item);
+                            pItem[0] = new Pantry_Item(item);
+                            pItem[0].setImageUrl(item.image_url);
+                            position[0] = pantry_items.size();
+                            pantry_items.add(position[0], pItem[0]);
+                            Padapter.notifyItemInserted(position[0]);
                         }
                     });
             /* TODO -- decided whether we want the app to work offline (ie. generate images for offline use). Would result in fewer calls to firebase but would take up memory of the device.
            */
-
-
-
-
-            pantry_items.add(position,pItem);
-            Padapter.notifyItemInserted(position);
 
         }
         catch (SQLiteConstraintException e) {

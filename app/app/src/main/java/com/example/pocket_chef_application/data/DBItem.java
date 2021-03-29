@@ -19,4 +19,6 @@ public class DBItem {
     @ColumnInfo(name = "amount")
     public int amount;
 
+    @ColumnInfo(name = "image_url")
+    public String image_url;
 }
