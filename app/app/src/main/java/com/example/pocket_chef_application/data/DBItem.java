@@ -19,7 +19,4 @@ public class DBItem {
     @ColumnInfo(name = "amount")
     public int amount;
 
-
-
-
 }

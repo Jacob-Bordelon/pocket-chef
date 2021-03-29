@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,8 @@ import com.example.pocket_chef_application.Pantry_utils.Pantry_Item;
 import com.example.pocket_chef_application.data.DBItem;
 import com.example.pocket_chef_application.data.LocalDB;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,12 +35,14 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Pantry extends Fragment {
@@ -157,39 +162,6 @@ public class Pantry extends Fragment {
         itemEXPView.addTextChangedListener(tw);
     }
 
-    private void getFirebaseData(ImageView imageView){
-        firebase_db.collection("food_warehouse")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                URL url = null;
-                                try {
-                                    url = new URL(document.getData().get("image").toString());
-                                } catch (MalformedURLException e) {
-                                    e.printStackTrace();
-                                }
-                                Bitmap bmp = null;
-                                try {
-                                    bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-
-                                imageView.setImageBitmap(bmp);
-
-
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-    }
-
     private void AddItem(String name, int amount, String exp_date){
         LocalDB db = LocalDB.getDBInstance(this.getContext());
         int position;
@@ -201,10 +173,37 @@ public class Pantry extends Fragment {
             item.exp_date = exp_date.toLowerCase();
             item.amount = amount;
 
-
             db.itemDAO().insertItem(item);
             position = pantry_items.size();
-            pantry_items.add(position,new Pantry_Item(item));
+            Pantry_Item pItem = new Pantry_Item(item);
+
+            //TODO -- add image url column to local database so the firebase ImageUrl can be saved in the app.
+            firebase_db.collection("food_warehouse")
+                    .whereEqualTo("name", item.item_Name)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if(task.isSuccessful()){
+
+                                    pItem.setImageUrl(Objects.requireNonNull(document.getData().get("image")).toString());
+                                    Log.d(TAG, "task completed - successful: "+pItem.getImageUrl());
+                                }else{
+                                    Log.d(TAG, "task completed - unsuccessful");
+                                }
+
+                            }
+
+                        }
+                    });
+            /* TODO -- decided whether we want the app to work offline (ie. generate images for offline use). Would result in fewer calls to firebase but would take up memory of the device.
+           */
+
+
+
+
+            pantry_items.add(position,pItem);
             Padapter.notifyItemInserted(position);
 
         }

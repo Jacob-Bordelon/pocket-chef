@@ -7,7 +7,7 @@ public class Pantry_Item {
     private String title;
     private String exp_date;
     private int amount;
-    private int image;
+    private String imageUrl;
 
     public Pantry_Item(DBItem item) {
         this.item = item;
@@ -16,12 +16,12 @@ public class Pantry_Item {
         this.amount = item.amount;
     }
 
-    public int getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public DBItem getItem() {

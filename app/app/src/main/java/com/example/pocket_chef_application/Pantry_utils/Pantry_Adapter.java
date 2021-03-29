@@ -3,10 +3,9 @@ package com.example.pocket_chef_application.Pantry_utils;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,17 +23,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pocket_chef_application.R;
 import com.example.pocket_chef_application.data.LocalDB;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryViewHolder> {
@@ -69,7 +67,18 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
     @Override
     public void onBindViewHolder(@NonNull PantryViewHolder holder, int position) {
         holder.titleTextView.setText(list.get(position).getTitle());
-        holder.itemImageView.setImageResource(list.get(position).getImage());
+
+        if(list.get(position).getImageUrl() != null){
+            Log.d(TAG, "onBindViewHolder: Load image into adapter");
+            Picasso.get()
+                    .load(list.get(position).getImageUrl())
+                    .fit()
+                    .centerCrop()
+                    .into(holder.itemImageView);
+        }else{
+            holder.itemImageView.setImageResource(R.drawable.no_image_found);
+        }
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -88,13 +97,22 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         optionsbtn = (ImageButton) mDialog.findViewById(R.id.optionsbtn);
         deletebtn = (ImageButton) mDialog.findViewById(R.id.deletebtn);
 
-        getFirebaseData(i.getTitle(), img);
-
-
         // set values and listeners in views
         name.setText(i.getTitle());
         exp_date.setText(i.getExp_date());
         amount.setText(Integer.toString(i.getAmount()));
+
+        if(i.getImageUrl() != null){
+            Log.d(TAG, "Popup: Load image into adapter");
+
+            Picasso.get()
+                    .load(i.getImageUrl())
+                    .fit()
+                    .centerCrop()
+                    .into(img);
+        }else{
+           img.setImageResource(R.drawable.no_image_found);
+        }
 
         closebtn.setOnClickListener(v -> mDialog.dismiss());
         optionsbtn.setOnClickListener(v -> EditOperation(i));
@@ -105,52 +123,18 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         mDialog.show();
     }
 
-    private void getFirebaseData(String name, ImageView imageView){
-        firebase_db.collection("food_warehouse")
-                .whereEqualTo("name",name)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                URL url = null;
-                                try {
-                                    url = new URL(document.getData().get("image").toString());
-                                } catch (MalformedURLException e) {
-                                    e.printStackTrace();
-                                }
-
-                                Bitmap bmp = null;
-                                try {
-                                    bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-
-                                try{
-                                    imageView.setImageBitmap(bmp);
-                                }catch (NullPointerException e){
-                                    e.printStackTrace();
-                                }
-
-
-
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-    }
-
-
 
     private void EditOperation(Pantry_Item i){
         mDialog.setContentView(R.layout.dialog_edit_pantry_item_details);
         TextView name = mDialog.findViewById(R.id.item_name);
         name.setText(i.getTitle());
+
+        ImageView img = mDialog.findViewById(R.id.item_image);
+        Picasso.get()
+                .load(i.getImageUrl())
+                .fit()
+                .centerCrop()
+                .into(img);
 
         EditText amount = mDialog.findViewById(R.id.edititem_amount);
         amount.setHint(Integer.toString(i.getAmount()));
