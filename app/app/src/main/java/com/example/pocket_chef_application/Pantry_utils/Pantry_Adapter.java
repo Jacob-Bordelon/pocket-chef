@@ -5,6 +5,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.RotateDrawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +22,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocket_chef_application.R;
@@ -64,25 +70,6 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         return new PantryViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull PantryViewHolder holder, int position) {
-        holder.titleTextView.setText(list.get(position).getTitle());
-
-        if(list.get(position).getImageUrl() != null){
-            Log.d(TAG, "onBindViewHolder: Load image into adapter");
-            Picasso.get()
-                    .load(list.get(position).getImageUrl())
-                    .fit()
-                    .centerCrop()
-                    .into(holder.itemImageView);
-        }else{
-            Log.d(TAG, "onBindViewHolder: No image found: "+list.get(position).getImageUrl());
-
-            holder.itemImageView.setImageResource(R.drawable.no_image_found);
-        }
-
-    }
-
     @SuppressLint("SetTextI18n")
     public void ShowPopup(Pantry_Item i){
         TextView closebtn, name, exp_date, amount;
@@ -125,7 +112,6 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mDialog.show();
     }
-
 
     private void EditOperation(Pantry_Item i){
         mDialog.setContentView(R.layout.dialog_edit_pantry_item_details);
@@ -178,9 +164,39 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         this.notifyItemRemoved(pos);
     }
 
+    private int setExpFlag(Pantry_Item item){
+
+        
+        return 0;
+    }
+
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull PantryViewHolder holder, int position) {
+        holder.titleTextView.setText(list.get(position).getTitle());
+
+        if(list.get(position).getImageUrl() != null){
+            Log.d(TAG, "onBindViewHolder: Load image into adapter");
+            Picasso.get()
+                    .load(list.get(position).getImageUrl())
+                    .fit()
+                    .centerCrop()
+                    .into(holder.itemImageView);
+        }
+        else{
+            Log.d(TAG, "onBindViewHolder: No image found: "+list.get(position).getImageUrl());
+
+            holder.itemImageView.setImageResource(R.drawable.no_image_found);
+        }
+
+        LayerDrawable layers = (LayerDrawable) holder.expShape.getBackground();
+        RotateDrawable rotate = (RotateDrawable) layers.findDrawableByLayerId(R.id.corner_mark);
+        GradientDrawable shape = (GradientDrawable) rotate.getDrawable();
+        shape.setColor(context.getColor(R.color.good));
     }
 
 
@@ -190,6 +206,7 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
     {
 
         TextView titleTextView;
+        TextView expShape;
         ImageView itemImageView;
         CardView cardView;
 
@@ -199,6 +216,8 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
 
             titleTextView = (TextView) itemView.findViewById(R.id.titleTextView);
             itemImageView = (ImageView) itemView.findViewById(R.id.itemImageView);
+            expShape = (TextView) itemView.findViewById(R.id.item_exp);
+
             cardView = (CardView) itemView.findViewById(R.id.pantry_item_cardview);
 
 
