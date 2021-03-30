@@ -9,11 +9,13 @@ public class Pantry_Item {
     private int amount;
     private String imageUrl;
 
+
     public Pantry_Item(DBItem item) {
         this.item = item;
         this.title = item.item_Name;
         this.exp_date = item.exp_date;
         this.amount = item.amount;
+        this.imageUrl = item.image_url;
     }
 
     public String getImageUrl() {

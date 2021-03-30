@@ -36,7 +36,10 @@
                 android:textColor="@color/black"
                 android:background="@drawable/input_bar"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="5dp"
+                android:imeOptions="actionNext"
+                android:imeActionId="666"
+                android:imeActionLabel="Some Label"/>
 
             <EditText
                 android:id="@+id/item_amount"
@@ -47,7 +50,10 @@
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:background="@drawable/input_bar"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="5dp"
+                android:imeOptions="actionNext"
+                android:imeActionId="666"
+                android:imeActionLabel="Some Label"/>
 
             <EditText
                 android:id="@+id/item_exp"
@@ -58,7 +64,10 @@
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:background="@drawable/input_bar"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="5dp"
+                android:imeOptions="actionDone"
+                android:imeActionId="666"
+                android:imeActionLabel="Some Label"/>
 
         </LinearLayout>
 

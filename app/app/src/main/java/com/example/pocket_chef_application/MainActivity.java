@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         switch_fragment(new Pantry());
 
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
 
 
 

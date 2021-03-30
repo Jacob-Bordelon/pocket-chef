@@ -76,6 +76,8 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
                     .centerCrop()
                     .into(holder.itemImageView);
         }else{
+            Log.d(TAG, "onBindViewHolder: No image found: "+list.get(position).getImageUrl());
+
             holder.itemImageView.setImageResource(R.drawable.no_image_found);
         }
 
@@ -111,6 +113,7 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
                     .centerCrop()
                     .into(img);
         }else{
+            Log.d(TAG, "Popup: No image loaded");
            img.setImageResource(R.drawable.no_image_found);
         }
 
