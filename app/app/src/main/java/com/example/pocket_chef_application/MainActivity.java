@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         ImageButton button1 = panel_switch.findViewById(R.id.fab_generate_recipes_btn);
-        ImageButton button2 = panel_switch.findViewById(R.id.fab_homepage_btn);
         ImageButton button3 = panel_switch.findViewById(R.id.fab_pantry_btn);
         ImageButton button4 = panel_switch.findViewById(R.id.fab_upload_recipe_btn);
         ImageButton button5 = panel_switch.findViewById(R.id.fab_firebase);
@@ -66,16 +65,6 @@ public class MainActivity extends AppCompatActivity {
         button1.setOnClickListener(v -> {
             switch_fragment(new Generate_Recipes());
             button1.setVisibility(View.GONE);
-            button2.setVisibility(View.VISIBLE);
-            button3.setVisibility(View.VISIBLE);
-            button4.setVisibility(View.VISIBLE);
-
-        });
-
-        button2.setOnClickListener(v -> {
-            switch_fragment(new Homepage());
-            button1.setVisibility(View.VISIBLE);
-            button2.setVisibility(View.GONE);
             button3.setVisibility(View.VISIBLE);
             button4.setVisibility(View.VISIBLE);
 
@@ -84,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         button3.setOnClickListener(v -> {
             switch_fragment(new Pantry());
             button1.setVisibility(View.VISIBLE);
-            button2.setVisibility(View.VISIBLE);
             button3.setVisibility(View.GONE);
             button4.setVisibility(View.VISIBLE);
 

@@ -37,20 +37,6 @@
             android:src="@drawable/gen_icon2"
             android:visibility="visible" />
 
-        <!-- HomePage -->
-        <ImageButton
-            android:id="@+id/fab_homepage_btn"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/circle_background"
-            android:clickable="true"
-            android:contentDescription="@string/desc"
-            android:focusable="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/homepage_icon2"
-            android:visibility="visible" />
-
         <!-- Pantry -->
         <ImageButton
             android:id="@+id/fab_pantry_btn"

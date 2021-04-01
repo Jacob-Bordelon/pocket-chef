@@ -25,8 +25,7 @@ import com.example.pocket_chef_application.Pantry_utils.Searchbar_Adapter;
 import com.example.pocket_chef_application.Pantry_utils.Suggested_Item;
 import com.example.pocket_chef_application.data.DBItem;
 import com.example.pocket_chef_application.data.LocalDB;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +40,6 @@ public class Pantry extends Fragment {
 
     private List<Pantry_Item> pantry_items;
     private List<Suggested_Item> suggestion_items;
-    private FirebaseFirestore firebase_db;
     private LinearLayout exanded_menu;
     private View rootView;
     private RecyclerView mRecyclerview;
@@ -89,7 +87,6 @@ public class Pantry extends Fragment {
     // --------------------------- Functionality ---------------------
     private void getViews(View view){
         camerabtn = view.findViewById(R.id.camerabtn);
-        firebase_db = FirebaseFirestore.getInstance();
         searchView = view.findViewById(R.id.searchView);
         expand_menu_btn = view.findViewById(R.id.expand_menu_btn);
         exanded_menu = view.findViewById(R.id.expanded_menu);
@@ -223,22 +220,6 @@ public class Pantry extends Fragment {
             item.amount = amount;
             int position = pantry_items.size();
 
-            firebase_db.collection("food_warehouse")
-                    .whereEqualTo("name",item.item_Name)
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if(task.isSuccessful()){
-
-
-                            for(DocumentSnapshot doc : task.getResult()){
-                                item.image_url = doc.getString("image");
-                            }
-                            db.itemDAO().insertItem(item);
-                            pantry_items.add(position, new Pantry_Item(item));
-                            Padapter.notifyItemInserted(position);
-
-                        }
-                    });
 
 
 

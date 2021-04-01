@@ -24,8 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocket_chef_application.R;
 import com.example.pocket_chef_application.data.LocalDB;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
+
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
