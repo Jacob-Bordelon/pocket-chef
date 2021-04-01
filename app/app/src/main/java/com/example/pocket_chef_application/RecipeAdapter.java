@@ -19,6 +19,7 @@ import java.util.List;
 public class RecipeAdapter {
     private Context context;
     private Adapter recipeAdapter;
+
     public void setConfig(RecyclerView recyclerView, Context context, List<Recipe> recipes, List<String> keys){
         this.context = context;
         recipeAdapter = new Adapter(recipes, keys);

@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         ImageButton button1 = panel_switch.findViewById(R.id.fab_generate_recipes_btn);
         ImageButton button3 = panel_switch.findViewById(R.id.fab_pantry_btn);
         ImageButton button4 = panel_switch.findViewById(R.id.fab_upload_recipe_btn);
-        ImageButton button5 = panel_switch.findViewById(R.id.fab_firebase);
 
 
 
@@ -80,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
         button4.setOnClickListener(this::launchUpload);
 
-        button5.setOnClickListener(v -> switch_fragment(new firebase_fragment()));
 
         Log.d(TAG, "onCreate: Setup Buttons");
 
