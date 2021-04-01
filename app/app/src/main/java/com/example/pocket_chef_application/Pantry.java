@@ -21,11 +21,14 @@ import android.widget.Toast;
 
 import com.example.pocket_chef_application.Pantry_utils.Pantry_Adapter;
 import com.example.pocket_chef_application.Pantry_utils.Pantry_Item;
+import com.example.pocket_chef_application.Pantry_utils.Searchbar_Adapter;
+import com.example.pocket_chef_application.Pantry_utils.Suggested_Item;
 import com.example.pocket_chef_application.data.DBItem;
 import com.example.pocket_chef_application.data.LocalDB;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,11 +37,16 @@ public class Pantry extends Fragment {
     private SearchView searchView;
 
     private Pantry_Adapter Padapter;
+    private Searchbar_Adapter Sadapter;
+
     private List<Pantry_Item> pantry_items;
+    private List<Suggested_Item> suggestion_items;
     private FirebaseFirestore firebase_db;
     private LinearLayout exanded_menu;
     private View rootView;
     private RecyclerView mRecyclerview;
+    private ListView mListview;
+
 
 
     private final String TAG = "PANTRY";
@@ -63,9 +71,19 @@ public class Pantry extends Fragment {
         LocalDB db = LocalDB.getDBInstance(this.getContext());
         List<DBItem> dbitems = db.itemDAO().getAllItems();
         pantry_items = dbitems.stream().map(Pantry_Item::new).collect(Collectors.toList());
+        suggestion_items = new ArrayList<Suggested_Item>();
+        suggestion_items.add(new Suggested_Item("apples"));
+        suggestion_items.add(new Suggested_Item("cherries"));
+        suggestion_items.add(new Suggested_Item("bananas"));
+
         initRecyclerView(view);
+        initSearchView(view);
         setOnClickListeners();
         return view;
+    }
+
+    private void initSearchView(View view) {
+
     }
 
     // --------------------------- Functionality ---------------------
@@ -76,6 +94,7 @@ public class Pantry extends Fragment {
         expand_menu_btn = view.findViewById(R.id.expand_menu_btn);
         exanded_menu = view.findViewById(R.id.expanded_menu);
         rootView = view.findViewById(R.id.root_layout);
+        mListview = view.findViewById(R.id.pantry_listview);
 
     }
 
@@ -100,11 +119,38 @@ public class Pantry extends Fragment {
                 exanded_menu.setVisibility(View.VISIBLE);
                 expand_menu_btn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
                 camerabtn.setVisibility(View.VISIBLE);
+                mListview.setVisibility(View.VISIBLE);
+
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        return false;
+                    }
+                });
 
             }else {
                 exanded_menu.setVisibility(View.GONE);
                 expand_menu_btn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
                 camerabtn.setVisibility(View.GONE);
+                mListview.setVisibility(View.GONE);
+
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        Padapter.filter(newText);
+                        return false;
+                    }
+                });
 
 
             }

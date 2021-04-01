@@ -95,13 +95,23 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/recView_linearlayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/manual_input_layout">
+
+        <ListView
+            android:id="@+id/pantry_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_gravity="start|top"
+            android:background="#CC434141"
+            android:elevation="2dp"
+            android:visibility="gone"/>
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -110,6 +120,6 @@
             android:layout_height="match_parent"
             android:overScrollMode="never" />
 
-    </LinearLayout>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

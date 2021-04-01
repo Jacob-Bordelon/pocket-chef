@@ -62,6 +62,8 @@ public class Generate_Recipes extends Fragment {
         // Gets the specific TextView from layout
         textView = view.findViewById(R.id.recipe_view);
 
+
+        /*
         // Check connection with server with UDP. It has to be a thread. Uses the statusBar for updating
         new Thread(new UDPClient(statusBar,3001,server_ip)).start();
         // For local testing purposes
@@ -80,14 +82,16 @@ public class Generate_Recipes extends Fragment {
             public void onClick(View view) {
 
             }
-        });
+        });*/
     }
 
     // Method that gets fired when we do a REST request for getting the possible recipes 
     private void possibleRecipe(Call<List<Recipe>> possibleRecipes) {
         textView.setText(""); // -> resets the content of the textview
         // send the request and notify callback of its response or if an error occurred talking to the server,
-        possibleRecipes.enqueue(new Callback<List<Recipe>>() { 
+
+        
+        /*possibleRecipes.enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) { // -> on response from server
                 if (!response.isSuccessful()) { // -> not successful warns user  
@@ -136,7 +140,7 @@ public class Generate_Recipes extends Fragment {
                 Log.e("ConnectionFailure", t.getMessage());
                 textView.setText(t.getMessage());
             }
-        });
+        });*/
     }
 
     public JSONArray getPantryJSONArray() {
