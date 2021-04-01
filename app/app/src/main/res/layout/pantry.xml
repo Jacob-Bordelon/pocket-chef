@@ -1,135 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/pantryFragment"
-    tools:context=".Pantry">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
+    android:focusableInTouchMode="true">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/manual_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginTop="5dp"
+        android:elevation="4dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:id="@+id/expanded_menu"
+            android:visibility="gone"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:gravity="center"
-            android:layout_weight="2">
+            android:orientation="horizontal"
+            android:background="@color/transparent"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-
-            <EditText
-                android:id="@+id/item_name"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/filtersbtn"
+                android:clickable="true"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Name"
-                android:inputType="text"
-                android:textSize="20sp"
-                android:textColor="@color/black"
+                android:text="Add Filters +"
                 android:background="@drawable/input_bar"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:imeOptions="actionNext"
-                android:imeActionId="666"
-                android:imeActionLabel="Some Label"/>
-
-            <EditText
-                android:id="@+id/item_amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Amount"
-                android:inputType="number"
-                android:textSize="20sp"
-                android:textColor="@color/black"
-                android:background="@drawable/input_bar"
-                android:layout_marginBottom="5dp"
-                android:imeOptions="actionNext"
-                android:imeActionId="666"
-                android:imeActionLabel="Some Label"/>
-
-            <EditText
-                android:id="@+id/item_exp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:hint="MM/DD/YYYY"
-                android:textSize="20sp"
-                android:textColor="@color/black"
-                android:background="@drawable/input_bar"
-                android:layout_marginBottom="5dp"
-                android:imeOptions="actionDone"
-                android:imeActionId="666"
-                android:imeActionLabel="Some Label"/>
-
+                android:textSize="18sp"
+                android:focusable="true" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_marginRight="5dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_weight="1">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/menu_options"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/expanded_menu">
 
-            <android.widget.Button
+            <SearchView
+                android:id="@+id/searchView"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                app:layout_constraintEnd_toStartOf="@+id/camerabtn"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/input_bar"
+                tools:ignore="MissingConstraints"
+                android:iconifiedByDefault="false"
+                android:focusable="true"
+                android:focusableInTouchMode="true"/>
+
+
+            <ImageButton
                 android:id="@+id/camerabtn"
-                android:layout_width="80dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                tools:ignore="NestedWeights"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_menu_camera"
                 android:clickable="true"
-                android:background="@drawable/ic_menu_camera"/>
+                android:focusable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/expand_menu_btn"
+                app:layout_constraintStart_toEndOf="@+id/searchView"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <android.widget.Button
-                android:clickable="true"
-                android:id="@+id/item_button"
-                android:layout_width="80dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                tools:ignore="NestedWeights"
-                android:background="@drawable/ic_baseline_add_24"/>
 
-            <android.widget.Button
-                android:id="@+id/clear"
-                android:clickable="true"
-                android:layout_width="80dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                tools:ignore="NestedWeights"
-                android:text="Clear"
-                android:background="@drawable/deletebtn_style"/>
+            <ImageButton
+                android:id="@+id/expand_menu_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
 
-    </LinearLayout>
 
-    <View
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
-
+        android:id="@+id/recView_linearlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_below="@+id/item_button">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/manual_input_layout">
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/pantry_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"/>
+            android:overScrollMode="never" />
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

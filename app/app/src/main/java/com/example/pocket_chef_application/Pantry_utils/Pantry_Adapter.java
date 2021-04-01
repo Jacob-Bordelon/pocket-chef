@@ -5,11 +5,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.RotateDrawable;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,38 +20,38 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocket_chef_application.R;
 import com.example.pocket_chef_application.data.LocalDB;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static java.util.concurrent.TimeUnit.DAYS;
 
 public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryViewHolder> {
 
     private Dialog mDialog;
     private List<Pantry_Item> list;
+    private ArrayList<Pantry_Item> arrayList;
     private Context context;
     private final String TAG = "PANTRY_ADAPTER";
-    private FirebaseStorage firebase_storage;
-    private FirebaseFirestore firebase_db;
 
 
     public Pantry_Adapter(List<Pantry_Item> list, Context context) {
         this.list = list;
         this.context = context;
+        this.arrayList = new ArrayList<>();
+        this.arrayList.addAll(list);
     }
 
     @NonNull
@@ -62,11 +60,6 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.pantry_item,parent, false);
         mDialog = new Dialog(view.getContext());
-        firebase_db = FirebaseFirestore.getInstance();
-        firebase_storage = FirebaseStorage.getInstance();
-
-
-
         return new PantryViewHolder(view);
     }
 
@@ -92,15 +85,15 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         amount.setText(Integer.toString(i.getAmount()));
 
         if(i.getImageUrl() != null){
-            Log.d(TAG, "Popup: Load image into adapter");
-
             Picasso.get()
                     .load(i.getImageUrl())
                     .fit()
                     .centerCrop()
                     .into(img);
-        }else{
-            Log.d(TAG, "Popup: No image loaded");
+            Log.i(TAG, "Popup: Image loaded into dialog for-"+i.getTitle());
+        }
+        else{
+            Log.i(TAG, "Popup: No image loaded for-"+i.getTitle());
            img.setImageResource(R.drawable.no_image_found);
         }
 
@@ -164,11 +157,6 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         this.notifyItemRemoved(pos);
     }
 
-    private int setExpFlag(Pantry_Item item){
-
-        
-        return 0;
-    }
 
     @Override
     public int getItemCount() {
@@ -180,30 +168,28 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         holder.titleTextView.setText(list.get(position).getTitle());
 
         if(list.get(position).getImageUrl() != null){
-            Log.d(TAG, "onBindViewHolder: Load image into adapter");
+
             Picasso.get()
                     .load(list.get(position).getImageUrl())
                     .fit()
                     .centerCrop()
                     .into(holder.itemImageView);
+            Log.i(TAG, "onBindViewHolder: Load image into adapter for- "+list.get(position).getTitle());
         }
         else{
-            Log.d(TAG, "onBindViewHolder: No image found: "+list.get(position).getImageUrl());
-
+            Log.i(TAG, "onBindViewHolder: No image found for: "+list.get(position).getTitle());
             holder.itemImageView.setImageResource(R.drawable.no_image_found);
         }
 
         LayerDrawable layers = (LayerDrawable) holder.expShape.getBackground();
         RotateDrawable rotate = (RotateDrawable) layers.findDrawableByLayerId(R.id.corner_mark);
         GradientDrawable shape = (GradientDrawable) rotate.getDrawable();
+        setExpFlag(list.get(position));
         shape.setColor(context.getColor(R.color.good));
     }
 
 
-    public class PantryViewHolder
-            extends RecyclerView.ViewHolder
-            implements View.OnClickListener
-    {
+    public class PantryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView titleTextView;
         TextView expShape;
@@ -231,5 +217,48 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
             ShowPopup(list.get(getAdapterPosition()));
 
         }
+    }
+
+    public void filter(String item){
+        item = item.toLowerCase();
+        list.clear();
+
+        if(item.length() == 0){
+            list.addAll(arrayList);
+        }else{
+            for(Pantry_Item i: arrayList){
+                if(i.getTitle().toLowerCase().contains(item)){
+                    list.add(i);
+                }
+            }
+        }
+        notifyDataSetChanged();
+
+    }
+
+    private int setExpFlag(Pantry_Item item){
+        // Get current date and item expiration date
+        Date currentTime = Calendar.getInstance().getTime();
+        String itemDate = item.getExp_date();
+
+        // Cast string date to date object
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        try {
+            Date item_expDate = sdf.parse(itemDate);
+
+            long diff = item_expDate.getTime() - currentTime.getTime();
+            int days = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+
+
+            if(days < 0) return R.color.expired;
+
+
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+
+
+        return 0;
     }
 }
