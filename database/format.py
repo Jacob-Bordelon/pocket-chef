@@ -26,6 +26,7 @@ while True:
             line3 = line3.replace(".", " ").replace("/"," or ")
             print(line3+": {")
             print(line2)
+            print('"image":' + '"",')
         elif line2.strip() == "{":
             line2 = file1.readline()
             line3 = file1.readline().strip().split(':')[1].strip()[0:-1]
@@ -33,6 +34,7 @@ while True:
             print("{")
             print(line3+": {")
             print(line2.strip())
+            print('"image":' + '"",')
         else:
             try:
                 if line2.strip().find("name") != -1:
