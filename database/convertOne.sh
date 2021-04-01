@@ -11,7 +11,7 @@ python3 format.py > temp
 
 head -c -4 < temp | tail -c +3 > temp2
 
-cat temp2 >> pocketchef-9fb14-default-rtdb-export.json
-echo "} } }" >> pocketchef-9fb14-default-rtdb-export.json
+cat temp2 >> food.json
+echo "} } }" >> food.json
 
 rm 1.json 2.json 3.json 4.json 5.json 6.json temp temp2

@@ -1,0 +1,25 @@
+{
+  "recipeBook" : {
+    "boiled egg" : {
+      "Instructions" : {
+        "step1" : "take egg out of fridge",
+        "step2" : "pour water into a deep pan",
+        "step3" : "place egg into the pan",
+        "step4" : "let water start to boil",
+        "step5" : "lower flame to a minimum",
+        "step6" : "cook for 15 minutes"
+      },
+      "author" : "ricardo aranaga",
+      "cook_time" : 10,
+      "description" : "boiling an egg perfectly",
+      "difficulty" : "easy",
+      "id" : 1,
+      "ingredients" : {
+        "amount" : 1,
+        "fdcId" : 748967,
+        "measurement" : "unit"
+      },
+      "prep_time" : 5
+    }
+  }
+}
