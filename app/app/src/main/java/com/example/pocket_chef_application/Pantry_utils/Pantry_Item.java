@@ -9,6 +9,7 @@ public class Pantry_Item {
     private int amount;
     private String imageUrl;
 
+
     public Pantry_Item(DBItem item) {
         this.item = item;
         this.title = item.item_Name;

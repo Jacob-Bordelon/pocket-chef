@@ -2,71 +2,62 @@ package com.example.pocket_chef_application;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.example.pocket_chef_application.Pantry_utils.PantryTextWatcher;
 import com.example.pocket_chef_application.Pantry_utils.Pantry_Adapter;
 import com.example.pocket_chef_application.Pantry_utils.Pantry_Item;
+import com.example.pocket_chef_application.Pantry_utils.Searchbar_Adapter;
+import com.example.pocket_chef_application.Pantry_utils.Suggested_Item;
 import com.example.pocket_chef_application.data.DBItem;
 import com.example.pocket_chef_application.data.LocalDB;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Arrays;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Pantry extends Fragment {
-    private EditText itemNameView, itemAmountView, itemEXPView;
-    private android.widget.Button addItem, clearInput, camerabtn;
-    PantryTextWatcher tw;
+    private ImageButton  camerabtn, expand_menu_btn;
+    private SearchView searchView;
 
-    private RecyclerView mRecyclerview;
     private Pantry_Adapter Padapter;
+    private Searchbar_Adapter Sadapter;
+
     private List<Pantry_Item> pantry_items;
-    private FirebaseFirestore firebase_db;
-    private FirebaseStorage firebase_storage;
-    private StorageReference fb_storageRef;
-    private CollectionReference food_warehouse;
+    private List<Suggested_Item> suggestion_items;
+    private LinearLayout exanded_menu;
+    private View rootView;
+    private RecyclerView mRecyclerview;
+    private ListView mListview;
+
+
 
     private final String TAG = "PANTRY";
-
-
-    public static Pantry newInstance(String param1, String param2) {
+    public static Pantry newInstance() {
         Pantry fragment = new Pantry();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        Log.d("PANTRY", "New Instance ");
         return fragment;
     }
+
+    
+    // ------------------------- Lifecycle ---------------------------
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,62 +69,118 @@ public class Pantry extends Fragment {
         LocalDB db = LocalDB.getDBInstance(this.getContext());
         List<DBItem> dbitems = db.itemDAO().getAllItems();
         pantry_items = dbitems.stream().map(Pantry_Item::new).collect(Collectors.toList());
+        suggestion_items = new ArrayList<Suggested_Item>();
+        suggestion_items.add(new Suggested_Item("apples"));
+        suggestion_items.add(new Suggested_Item("cherries"));
+        suggestion_items.add(new Suggested_Item("bananas"));
+
         initRecyclerView(view);
-        //insertDummyItems();
-
+        initSearchView(view);
         setOnClickListeners();
-
         return view;
     }
 
+    private void initSearchView(View view) {
+
+    }
+
+    // --------------------------- Functionality ---------------------
     private void getViews(View view){
-        itemNameView = (EditText) view.findViewById(R.id.item_name);
-        itemAmountView = (EditText) view.findViewById(R.id.item_amount);
-        itemEXPView = (EditText) view.findViewById(R.id.item_exp);
-        addItem = (android.widget.Button) view.findViewById(R.id.item_button);
-        clearInput = (android.widget.Button) view.findViewById(R.id.clear);
-        camerabtn = (android.widget.Button) view.findViewById(R.id.camerabtn);
-
-        firebase_db = FirebaseFirestore.getInstance();
-        firebase_storage = FirebaseStorage.getInstance();
-        fb_storageRef = firebase_storage.getReference();
-
+        camerabtn = view.findViewById(R.id.camerabtn);
+        searchView = view.findViewById(R.id.searchView);
+        expand_menu_btn = view.findViewById(R.id.expand_menu_btn);
+        exanded_menu = view.findViewById(R.id.expanded_menu);
+        rootView = view.findViewById(R.id.root_layout);
+        mListview = view.findViewById(R.id.pantry_listview);
 
     }
 
     private void setOnClickListeners(){
-        addItem.setOnClickListener(v -> NewItem());
-        clearInput.setOnClickListener(v -> clearInputs());
         camerabtn.setOnClickListener(v -> barcode_scanner());
+        setupUI(rootView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Padapter.filter(newText);
+                return false;
+            }
+        });
+        searchView.clearFocus();
+        expand_menu_btn.setOnClickListener(v -> {
+            if(exanded_menu.getVisibility() == View.GONE){
+                exanded_menu.setVisibility(View.VISIBLE);
+                expand_menu_btn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
+                camerabtn.setVisibility(View.VISIBLE);
+                mListview.setVisibility(View.VISIBLE);
+
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        return false;
+                    }
+                });
+
+            }else {
+                exanded_menu.setVisibility(View.GONE);
+                expand_menu_btn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                camerabtn.setVisibility(View.GONE);
+                mListview.setVisibility(View.GONE);
+
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        Padapter.filter(newText);
+                        return false;
+                    }
+                });
 
 
-        tw = new PantryTextWatcher(itemEXPView);
-        itemEXPView.addTextChangedListener(tw);
+            }
+        });
+
     }
 
-    private void barcode_scanner(){
-        Intent i = new Intent(this.getContext(), Item_Recognition_Activity.class);
-        startActivity(i);
-    }
+    public void setupUI(View view) {
 
-    private void clearInputs(){
-        itemNameView.setText(null);
-        itemAmountView.setText(null);
-        itemEXPView.setText(null);
-    }
+        if(!(view instanceof SearchView)) {
 
-    private void insertDummyItems(){
-        List<String> names = Arrays.asList("pears", "peaches", "cucumbers","tomatoes","milk","cheese","ground beef");
+            view.setOnTouchListener(new View.OnTouchListener() {
 
-        for(String n : names){
-            DBItem item = new DBItem();
-            item.item_Name = n;
-            item.exp_date = "12/12/2021";
-            item.amount = 4;
-            pantry_items.add(new Pantry_Item(item));
+                public boolean onTouch(View v, MotionEvent event) {
+                    searchView.clearFocus();
+                    return false;
+                }
+
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+
+                View innerView = ((ViewGroup) view).getChildAt(i);
+
+                setupUI(innerView);
+            }
         }
     }
-
+    
     private void initRecyclerView(View view){
         mRecyclerview = view.findViewById(R.id.pantry_recyclerView);
         Padapter = new Pantry_Adapter(pantry_items,view.getContext());
@@ -142,8 +189,7 @@ public class Pantry extends Fragment {
         mRecyclerview.setAdapter(Padapter);
     }
 
-    private void NewItem(){
-        System.out.println(LocalDB.getDBInstance(this.getContext()).itemDAO().getCount());
+    /*  private void NewItem(){
 
         if(     !(itemNameView.getText().toString().matches("")   |
                 itemAmountView.getText().toString().matches("") |
@@ -160,10 +206,11 @@ public class Pantry extends Fragment {
         itemEXPView.removeTextChangedListener(tw);
         clearInputs();
         itemEXPView.addTextChangedListener(tw);
-    }
+    }*/
 
     private void AddItem(String name, int amount, String exp_date){
         LocalDB db = LocalDB.getDBInstance(this.getContext());
+
 
         try {
             DBItem item = new DBItem();
@@ -171,42 +218,28 @@ public class Pantry extends Fragment {
             item.item_Name = name.toLowerCase();
             item.exp_date = exp_date.toLowerCase();
             item.amount = amount;
+            int position = pantry_items.size();
 
 
-                    //TODO -- add image url column to local database so the firebase ImageUrl can be saved in the app.
-            firebase_db.collection("food_warehouse")
-                    .whereEqualTo("name", item.item_Name)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
 
-                                if(task.isSuccessful()){
 
-                                    item.image_url = Objects.requireNonNull(document.getData().get("image")).toString();
-                                    Log.d(TAG, "task completed - successful: "+item.image_url);
-                                }else{
-                                    Log.d(TAG, "task completed - unsuccessful");
 
-                                }
 
-                            }
-                            db.itemDAO().insertItem(item);
-                            Pantry_Item pItem = new Pantry_Item(item);
-                            pItem.setImageUrl(item.image_url);
-                            int position = pantry_items.size();
-                            pantry_items.add(position, pItem);
-                            Padapter.notifyItemInserted(position);
-                        }
-                    });
+
             /* TODO -- decided whether we want the app to work offline (ie. generate images for offline use). Would result in fewer calls to firebase but would take up memory of the device.
            */
 
-        }
-        catch (SQLiteConstraintException e) {
+
+
+        } catch (SQLiteConstraintException e) {
             Toast.makeText(this.getContext(), "Item already in Pantry", Toast.LENGTH_LONG).show();
         }
+    }
+
+    // Image Recognition
+    private void barcode_scanner(){
+        Intent i = new Intent(this.getContext(), Item_Recognition_Activity.class);
+        startActivity(i);
     }
 
 

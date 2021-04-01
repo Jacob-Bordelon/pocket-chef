@@ -18,5 +18,10 @@
     <color name="darkred">#D0312D</color>
     <color name="transparent">#00000000</color>
 
+    <color name="fresh">#69d84f</color>
+    <color name="good">#fece00</color>
+    <color name="safe">#FF8E15</color>
+    <color name="expired">#c3000d</color>
+
 
 </resources>
