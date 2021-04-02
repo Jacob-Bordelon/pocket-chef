@@ -3,6 +3,7 @@ package com.example.pocket_chef_application.Firebase;
 import androidx.annotation.NonNull;
 
 import com.example.pocket_chef_application.Model.Recipe;
+import com.example.pocket_chef_application.Pantry_utils.Suggested_Item;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -12,7 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirebaseDatabase_Helper {
+public class FirebaseRecipeDatabase_Helper {
     private FirebaseDatabase mDatabase;
     private DatabaseReference mReference;
     private List<Recipe> recipes = new ArrayList<>();
@@ -24,7 +25,9 @@ public class FirebaseDatabase_Helper {
         void DataIsDeleted();
     }
 
-    public FirebaseDatabase_Helper() {
+
+
+    public FirebaseRecipeDatabase_Helper() {
         mDatabase = FirebaseDatabase.getInstance();
         mReference = mDatabase.getReference("recipeBook");
     }
@@ -52,4 +55,8 @@ public class FirebaseDatabase_Helper {
             }
         });
     }
+
+
+
+
 }
