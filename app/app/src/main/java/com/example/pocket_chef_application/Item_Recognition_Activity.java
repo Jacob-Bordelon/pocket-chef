@@ -14,32 +14,50 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Size;
 import android.view.OrientationEventListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.common.util.concurrent.ListenableFuture;
 
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.mlkit.common.model.LocalModel;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.objects.DetectedObject;
+import com.google.mlkit.vision.objects.ObjectDetection;
+import com.google.mlkit.vision.objects.ObjectDetector;
+import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
+
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+
+
 public class Item_Recognition_Activity extends AppCompatActivity {
     private final int REQUEST_CODE_PERMISSIONS = 10;
     private final String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.CAMERA};
-
+    private final String TAG = "ImageActivity";
 
     private PreviewView previewView;
     private TextView output;
     private Button scan_button;
-    private ImageCapture imageCapture;
     private ExecutorService cameraExecutor;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
-
+    private ProcessCameraProvider cameraProvider;
 
 
     @Override
@@ -54,8 +72,6 @@ public class Item_Recognition_Activity extends AppCompatActivity {
         checkPermissions();
         setOnClickListeners();
         cameraExecutor = Executors.newSingleThreadExecutor();
-
-
     }
 
     private void setOnClickListeners() {
@@ -66,11 +82,7 @@ public class Item_Recognition_Activity extends AppCompatActivity {
         if(allPermissionsGranted()){
             startCamera();
         }else{
-            ActivityCompat.requestPermissions(
-                    this,
-                    REQUIRED_PERMISSIONS,
-                    REQUEST_CODE_PERMISSIONS
-            );
+            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
         }
     }
 
@@ -86,7 +98,6 @@ public class Item_Recognition_Activity extends AppCompatActivity {
         }
     }
 
-
     private boolean allPermissionsGranted() {
         return ContextCompat.checkSelfPermission(
                 this,
@@ -100,20 +111,15 @@ public class Item_Recognition_Activity extends AppCompatActivity {
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .build();
 
-        imageAnalysis.setAnalyzer(
-                ContextCompat.getMainExecutor(this),
-                new ImageAnalysis.Analyzer() {
-                    @Override
-                    public void analyze(@NonNull ImageProxy imageProxy) {
-                        imageProxy.close();;
-                    }
-                });
+        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this), new ImageAnalyzer(this,output));
+
 
         OrientationEventListener orientationEventListener = new OrientationEventListener(this) {
             @Override
             public void onOrientationChanged(int orientation) {
             }
         };
+
 
         orientationEventListener.enable();
         Preview preview = new Preview.Builder().build();
@@ -122,33 +128,128 @@ public class Item_Recognition_Activity extends AppCompatActivity {
                 .build();
 
         preview.setSurfaceProvider(previewView.getSurfaceProvider());
-        cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, imageAnalysis, preview);
+        cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector,  imageAnalysis, preview);
+
+
 
     }
 
-
     private void startCamera() {
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
-        cameraProviderFuture.addListener(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
-                    bindImageAnalysis(cameraProvider);
-                }  catch (ExecutionException | InterruptedException e){ e.printStackTrace();}
-            }
+        cameraProviderFuture.addListener(() -> {
+            try {
+                Log.d(TAG, "startCamera:0 "+previewView.getDisplay());
+                cameraProvider = cameraProviderFuture.get();
+                Log.d(TAG, "startCamera:1 "+previewView.getDisplay());
+                bindImageAnalysis(cameraProvider);
+                Log.d(TAG, "startCamera:2 "+previewView.getDisplay());
+            }  catch (ExecutionException | InterruptedException e){ e.printStackTrace();}
         }, ContextCompat.getMainExecutor(this));
+
+
 
 
     }
 
     private void takePhoto() {
+
+
     }
+
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        cameraExecutor.shutdown();
+        cameraExecutor.shutdownNow();
+        Log.d(TAG, "onDestroy: "+cameraExecutor.isTerminated()+"\n");
     }
+
+    private class ImageAnalyzer implements ImageAnalysis.Analyzer {
+
+        private LocalModel model;
+        private boolean newUpdateGraphicOverlayImageSourceInfo = true;
+        private Context context;
+        private ObjectDetector objectDetector;
+        private TextView output;
+        private Dialog mDialog ;
+
+        public ImageAnalyzer(Context context, TextView output) {
+            this.context = context;
+            this.output = output;
+            mDialog= new Dialog(this.context);
+
+            this.model = new LocalModel.Builder()
+                    .setAssetFilePath("FoodModel.tflite")
+                    .build();
+
+
+            CustomObjectDetectorOptions customObjectDetectorOptions = new CustomObjectDetectorOptions.Builder(model)
+                    .setDetectorMode(CustomObjectDetectorOptions.STREAM_MODE)
+                    .enableClassification()
+                    .setClassificationConfidenceThreshold(0.8f)
+                    .setMaxPerObjectLabelCount(3)
+                    .build();
+
+            objectDetector = ObjectDetection.getClient(customObjectDetectorOptions);
+            Log.d(TAG, "ImageAnalyzer: "+previewView.getDisplay());
+
+        }
+
+        @Override
+        public void analyze(@NonNull ImageProxy imageProxy) {
+            @SuppressLint("UnsafeExperimentalUsageError") Image image = imageProxy.getImage();
+            if(image != null){
+                InputImage inputImage = InputImage.fromMediaImage(image,
+                        imageProxy.getImageInfo().getRotationDegrees());
+
+
+                objectDetector.process(inputImage)
+                        .addOnFailureListener( e -> Log.e(TAG, "analyze: Failed"+e))
+                        .addOnSuccessListener(detectedObjects -> {
+                            for(DetectedObject obj : detectedObjects){
+                                if(!obj.getLabels().isEmpty() && !mDialog.isShowing()){
+                                    Log.d(TAG, "onSuccess: "+obj.getLabels().get(0).getText());
+                                    output.setText(Integer.toString(obj.getLabels().size()));
+
+
+                                    mDialog.setContentView(R.layout.pantry_imgrec_dialog);
+                                    TextView option1, option2, option3;
+                                    option1 = mDialog.findViewById(R.id.option1);
+                                    option2 = mDialog.findViewById(R.id.option2);
+                                    option3 = mDialog.findViewById(R.id.option3);
+
+                                    List<TextView> textViews = Arrays.asList(option1,option2,option3);
+                                    for(int i = 0; i<obj.getLabels().size(); i++){
+                                        textViews.get(i).setText(obj.getLabels().get(i).getText());
+                                    }
+
+
+
+                                    mDialog.findViewById(R.id.closebtn).setOnClickListener(v -> mDialog.dismiss());
+                                    mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    mDialog.show();
+
+
+
+                                }
+
+
+                            }
+                        })
+                        .addOnCompleteListener(task -> imageProxy.close());
+
+                Log.d(TAG, "analyze: "+previewView.getDisplay());
+            }
+
+        }
+
+
+
+
+
+    }
+
+
 
 }

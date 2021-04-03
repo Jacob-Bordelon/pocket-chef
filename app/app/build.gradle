@@ -25,6 +25,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    aaptOptions{
+        noCompress "tflite"
+    }
+    buildFeatures {
+        mlModelBinding true
+    }
 }
 
 dependencies {
@@ -36,6 +43,8 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.3.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'org.tensorflow:tensorflow-lite-support:0.1.0-rc1'
+    implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0-rc1'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -75,6 +84,7 @@ dependencies {
 
     // ml kit
     implementation 'com.google.mlkit:barcode-scanning:16.1.1'
+    implementation 'com.google.mlkit:object-detection-custom:16.3.1'
 
     //Camera X
     def camerax_version = "1.1.0-alpha02"
@@ -82,8 +92,12 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     implementation "androidx.camera:camera-view:1.0.0-alpha23"
 
-    // Glide
+    // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // Tensorflow
+
+
 
 
 

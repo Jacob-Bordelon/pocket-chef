@@ -144,5 +144,10 @@
         <item>December</item>
     </string-array>
 
+    <string name="pref_key_still_image_object_detector_enable_multiple_objects" translatable="false">siodemo</string>
+    <string name="pref_key_still_image_object_detector_enable_classification" translatable="false">siodec</string>
+
+
+
 
 </resources>
