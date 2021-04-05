@@ -2,7 +2,6 @@ package com.example.pocket_chef_application;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
@@ -13,32 +12,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.example.pocket_chef_application.API.ISearchRecipeAPI;
-import com.example.pocket_chef_application.Model.Camera;
-import com.example.pocket_chef_application.Model.Recipe;
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
-
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UploadActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
-
-    private String server_ip = "192.168.0.10";//"10.0.2.2" "54.144.65.217"
-    private String server_domain = "https://pocketchef.xyz/";
     private JSONArray ingredientsList = new JSONArray();
     private JSONObject fullRecipe = new JSONObject();
     private static ConstraintLayout layout;
@@ -60,18 +43,6 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
         measurement.setSelection(11);
         measurement.setOnItemSelectedListener(this);
 
-
-        // Only for local testing purposes
-        OkHttpClient okHttpClient = UnSafeOkHttpClient.getUnsafeOkHttpClient();
-
-        // ToDo: create a retrofit client class
-        // Retrofit Client. Creates connection parameters to AWS EC2 Server through port 3000
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(server_domain)  //"https://"+server_ip+":3000/"  //server_domain
-                .client(okHttpClient) // Checks certification    // new OkHttpClient()  //okHttpClient
-                .addConverterFactory(GsonConverterFactory.create()) // JSON converter
-                .build(); // Build retrofit
-        // Initialize interface with retrofit client
-        ISearchRecipeAPI jsonPlaceHolderApi = retrofit.create(ISearchRecipeAPI.class);
 
         Button cameraButton = findViewById(R.id.cameraButton);
         cameraButton.setOnClickListener(v -> {
@@ -139,33 +110,8 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
                 Toast.makeText(context, "Recipe Saved", Toast.LENGTH_LONG).show();
                 Log.i("Full Recipe", fullRecipe.toString());
 
-                Call<List<Recipe>> uploadedRecipeList = jsonPlaceHolderApi.uploadRecipe(fullRecipe.toString());
-                uploadRecipe(uploadedRecipeList);
+                //TODO: Upload recipe logic
             }});
-    }
-
-    private void uploadRecipe(Call<List<Recipe>> uploadedRecipe) {
-        // send the request and notify callback of its response or if an error occurred talking to the server,
-        uploadedRecipe.enqueue(new Callback<List<Recipe>>() {
-            @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) { // -> on response from server
-                if (!response.isSuccessful()) { // -> not successful warns user
-                    if (response.code() == 500) {
-                        Log.i("Full Recipe", "Good Response");
-                    }
-                    else {
-                        Log.i("Full Recipe", "Code " + response.code());
-                    }
-                }
-
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) { // -> if failure, sets message
-                Log.i("Full Recipe", t.getMessage());
-            }
-        });
     }
 
     @Override

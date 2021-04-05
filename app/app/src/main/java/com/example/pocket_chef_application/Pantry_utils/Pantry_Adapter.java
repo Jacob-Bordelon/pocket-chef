@@ -236,7 +236,7 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
     }
 
     private int setExpFlag(Pantry_Item item){
-        // Get current date and item expiration date
+        // Get current date and recipe_item expiration date
         Date currentTime = Calendar.getInstance().getTime();
         String itemDate = item.getExp_date();
 

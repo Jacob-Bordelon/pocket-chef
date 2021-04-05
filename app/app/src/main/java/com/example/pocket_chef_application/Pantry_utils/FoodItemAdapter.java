@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocket_chef_application.Model.Food;
-import com.example.pocket_chef_application.Model.Recipe;
 import com.example.pocket_chef_application.R;
 
 import java.util.ArrayList;
@@ -36,13 +35,13 @@ public class FoodItemAdapter {
         public FoodItemView(ViewGroup parent){
             super(LayoutInflater.from(context).inflate(R.layout.suggestion_layout, parent, false));
 
-            // Grab views by idea from item.xml using itemView.findViewById instead of view.findViewById
+            // Grab views by idea from recipe_item.xml using itemView.findViewById instead of view.findViewById
             name = (TextView) itemView.findViewById(R.id.item_name);
 
 
         }
 
-        // using the same names from the constructor, set the values per each unique item here
+        // using the same names from the constructor, set the values per each unique recipe_item here
         public void bind(Food food, String key ){
             name.setText(food.getName());
             this.key = key;

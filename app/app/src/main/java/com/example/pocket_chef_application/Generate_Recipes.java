@@ -6,32 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocket_chef_application.Firebase.FirebaseRecipeDatabase_Helper;
-import com.example.pocket_chef_application.Model.Recipe;
-import com.example.pocket_chef_application.data.DBItem;
-import com.example.pocket_chef_application.data.LocalDB;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.example.pocket_chef_application.Recipe_utils.Recipe_Adapter;
+import com.example.pocket_chef_application.Recipe_utils.Recipe_Item;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-
 public class Generate_Recipes extends Fragment {
-    // Textview variables
-    private TextView textView; // -> for displaying the recipes
     private TextView statusBar; // -> for displaying connection status
-    private String server_ip = "172.28.78.246";//"10.0.2.2" "54.144.65.217"
-    private String server_domain = "https://pocketchef.xyz/";
-    private RecipeAdapter Radapter;
+    private Recipe_Adapter Radapter;
     private RecyclerView mRecyclerView;
-    private ArrayList<Recipe> recipes;
+    private ArrayList<Recipe_Item> recipes;
     private static final String TEXT = "text";
 
     public static Generate_Recipes newInstance(String text){
@@ -50,8 +39,8 @@ public class Generate_Recipes extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cookbook_recyclerview);
         new FirebaseRecipeDatabase_Helper().readRecipes(new FirebaseRecipeDatabase_Helper.DataStatus() {
             @Override
-            public void DataIsLoaded(List<Recipe> recipes, List<String> keys) {
-                new RecipeAdapter().setConfig(mRecyclerView, getContext(), recipes, keys);
+            public void DataIsLoaded(List<Recipe_Item> recipes, List<String> keys) {
+                new Recipe_Adapter(mRecyclerView, getContext(), recipes, keys);
 
             }
 

@@ -9,10 +9,10 @@
     android:clickable="true"
     android:focusable="true"
     android:background="@color/transparent"
-    android:id="@+id/pantry_item_cardview"
     android:foreground="?android:attr/selectableItemBackground"
     cardview:cardCornerRadius="4dp"
-    cardview:cardElevation="10dp">
+    cardview:cardElevation="10dp"
+    android:id="@+id/pantry_item_cardview">
 
     <TextView
         android:id="@+id/item_exp"

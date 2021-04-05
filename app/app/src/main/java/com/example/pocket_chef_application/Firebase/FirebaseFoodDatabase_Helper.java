@@ -3,7 +3,6 @@ package com.example.pocket_chef_application.Firebase;
 import androidx.annotation.NonNull;
 
 import com.example.pocket_chef_application.Model.Food;
-import com.example.pocket_chef_application.Model.Recipe;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
