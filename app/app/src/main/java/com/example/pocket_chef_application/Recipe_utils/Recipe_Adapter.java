@@ -135,7 +135,6 @@ public class Recipe_Adapter extends RecyclerView.Adapter<Recipe_Adapter.RecipeIt
             img.setImageResource(R.drawable.no_image_found);
         }
 
-
         closebtn.setOnClickListener(v -> mDialog.dismiss());
 
         // display window
