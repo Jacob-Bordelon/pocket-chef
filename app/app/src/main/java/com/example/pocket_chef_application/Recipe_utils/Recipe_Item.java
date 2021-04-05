@@ -14,6 +14,7 @@ public class Recipe_Item {
     private int CookTime;
     private int PrepTime;
     private String Image;
+    private int ServingSize;
 
     public Recipe_Item() {
     }
@@ -44,6 +45,7 @@ public class Recipe_Item {
     }
     public void setRating(float rating) { Rating = rating; }
     public void setImageUrl(String image) { Image = image; }
+    public void setServingSize(int servingSize) { ServingSize = servingSize; }
 
     public String getRName() {
         return RName;
@@ -69,6 +71,7 @@ public class Recipe_Item {
     public int getPrepTime() {
         return PrepTime;
     }
+    public int getServingSize() { return ServingSize; }
     public float getRating() { return Rating; }
     public Map<String,Object> getInstructions() {
         Map<String,Object> instructions = (Map<String,Object>)Instructions;

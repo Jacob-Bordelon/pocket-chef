@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center"
-        android:padding="5dp">
+        android:paddingTop="10dp">
 
         <TextView
             android:id="@+id/closebtn"
@@ -34,7 +34,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:paddingBottom="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -84,8 +84,9 @@
             style="@style/PantryItemTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/serving_size"
             android:layout_alignParentEnd="true"
-            android:text="__"
+            android:text=""
             android:textSize="14dp" />
     </RelativeLayout>
 
@@ -141,7 +142,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/nutrition_panel"
-                    android:padding="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
                     android:id="@+id/ingredient_table">
                 </TableLayout>
 
@@ -166,6 +168,7 @@
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:paddingBottom="20pt"
                     android:id="@+id/instructions_table">
                 </TableLayout>
 

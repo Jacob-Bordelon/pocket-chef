@@ -57,7 +57,7 @@ public class Recipe_Adapter extends RecyclerView.Adapter<Recipe_Adapter.RecipeIt
 
     @SuppressLint("SetTextI18n")
     public void ShowPopup(Recipe_Item item){
-        TextView closebtn, name, RName, amount, measure, currStep;
+        TextView closebtn, name, RName, amount, measure, currStep, serving;
         RatingBar ratingBar;
         TableLayout ingredientTable, instructionTable;
         ImageView img;
@@ -69,11 +69,13 @@ public class Recipe_Adapter extends RecyclerView.Adapter<Recipe_Adapter.RecipeIt
         ratingBar = (RatingBar) mDialog.findViewById(R.id.ratingBar);
         name = mDialog.findViewById(R.id.item_name);
         img = (ImageView ) mDialog.findViewById(R.id.item_image);
+        serving = (TextView) mDialog.findViewById(R.id.serving_size);
         closebtn = (TextView) mDialog.findViewById(R.id.closebtn);
 
         // set values and listeners in views
         name.setText(item.getRName());
         ratingBar.setRating(item.getRating());
+        serving.setText(""+item.getServingSize());
 
         Log.d("Ingredient keys",""+item.getIngredients().keySet());
         for (String key : item.getIngredients().keySet()) {
@@ -86,7 +88,7 @@ public class Recipe_Adapter extends RecyclerView.Adapter<Recipe_Adapter.RecipeIt
             RName = new TextView(context);
             RName.setTextColor(Color.WHITE);
             RName.setText(currIngredient.get("name").toString());
-            RName.setWidth(550);
+            RName.setWidth(450);
             row.addView(RName);
             amount = new TextView(context);
             amount.setText(currIngredient.get("amount").toString());

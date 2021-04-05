@@ -57,6 +57,7 @@ public class FirebaseRecipeDatabase_Helper {
                     recipe.setIngredients(recipeValues.get("ingredients"));
                     recipe.setRating(Float.parseFloat(recipeValues.get("rating").toString()));
                     recipe.setImageUrl(recipeValues.get("image").toString());
+                    recipe.setServingSize(Integer.parseInt(recipeValues.get("serving_size").toString()));
 
                     System.out.println(recipe == null);
                     recipes.add(recipe);
