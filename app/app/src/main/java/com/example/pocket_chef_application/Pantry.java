@@ -110,7 +110,7 @@ public class Pantry extends Fragment {
         searchView = view.findViewById(R.id.searchView);
         expand_menu_btn = view.findViewById(R.id.expand_menu_btn);
         exanded_menu = view.findViewById(R.id.expanded_menu);
-        rootView = view.findViewById(R.id.root_layout);
+        rootView = view.findViewById(R.id.pantryFragment);
 
     }
 
@@ -136,7 +136,7 @@ public class Pantry extends Fragment {
                 exanded_menu.setVisibility(View.VISIBLE);
                 expand_menu_btn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
                 camerabtn.setVisibility(View.VISIBLE);
-                SuggestionsView.setVisibility(View.VISIBLE);
+                //SuggestionsView.setVisibility(View.VISIBLE);
 
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
@@ -156,7 +156,7 @@ public class Pantry extends Fragment {
                 exanded_menu.setVisibility(View.GONE);
                 expand_menu_btn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
                 camerabtn.setVisibility(View.GONE);
-                SuggestionsView.setVisibility(View.GONE);
+                //SuggestionsView.setVisibility(View.GONE);
 
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
