@@ -45,6 +45,7 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
     private static ConstraintLayout layout;
     private static FragmentManager manager;
     private String record;
+    final static String TAG = UploadActivity.class.getSimpleName();
 
 
     @Override
@@ -74,6 +75,7 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
 
         Button cameraButton = findViewById(R.id.cameraButton);
         cameraButton.setOnClickListener(v -> {
+            testUpload();
         });
 
         Button addButton = findViewById(R.id.add);
@@ -102,6 +104,7 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
         // Lambda handler of fab.
         Button saveButton = findViewById(R.id.save);
         saveButton.setOnClickListener(v -> {
+
             boolean valuesHere = true;
 
             // check if any values are empty
@@ -137,21 +140,68 @@ public class UploadActivity extends AppCompatActivity implements AdapterView.OnI
                 recipe.setInstructions(instruct);
                 recipe.setAuthor("jacob bordelon");
                 recipe.setId(10001010);
-                recipe.setImage("");
+                recipe.setImage("null");
+                recipe.setDifficulty("easy");
 
 
                 uploadRecipe(recipe);
                 Toast.makeText(context, "Recipe Saved", Toast.LENGTH_LONG).show();
             }
 
-
             });
     }
 
-    private void uploadRecipe(Recipe recipe) {
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("recipeBook");
-        mDatabase.setValue(recipe.getTitle(), recipe);
+    private void testUpload(){
+        Recipe recipe = new Recipe();
+        recipe.setTitle("pancakes");
+        recipe.setDescription("Fluffy delicous pancakes");
+        recipe.setAuthor("jacob bordelon");
+        recipe.setImage("null");
+        recipe.setId(100010);
 
+        String[] steps = {"mix the ingredients together", "pour batter on hot plate", "flip after 1 minute", "serve immediately"};
+        HashMap<String, String> instruct = new HashMap<>();
+        for(int i = 0; i < steps.length; i++){
+            instruct.put("step"+i,steps[i]);
+        }
+
+        recipe.setInstructions(instruct);
+
+        HashMap<String, Ingredient> ingredientsList = new HashMap<>();
+        Ingredient ingredient = new Ingredient();
+        ingredient.setName("pancake miz");
+        ingredient.setAmount(2);
+        ingredient.setMeasurement("Cup");
+
+        ingredientsList.put("325871", ingredient);
+        ingredientsList.put("325871", ingredient);
+        ingredientsList.put("325871", ingredient);
+
+
+        recipe.setIngredients(ingredientsList);
+
+        recipe.setRating(3);
+        recipe.setDifficulty("easy");
+        Log.d(TAG, "testUpload: ");
+
+
+        uploadRecipe(recipe);
+
+    }
+
+    private void uploadRecipe(Recipe recipe) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("recipeBook/"+recipe.getTitle());
+        mDatabase.child("author").setValue(recipe.getAuthor());
+        mDatabase.child("prep_time").setValue(recipe.getPrep_time());
+        mDatabase.child("cook_time").setValue(recipe.getCook_time());
+        mDatabase.child("difficulty").setValue(recipe.getDifficulty());
+        mDatabase.child("id").setValue(recipe.getId());
+        mDatabase.child("image").setValue(recipe.getImage());
+        mDatabase.child("rating").setValue(recipe.getRating());
+        mDatabase.child("description").setValue(recipe.getDescription());
+        mDatabase.child("ingredients").setValue(recipe.getIngredients());
+        mDatabase.child("instructions").setValue(recipe.getInstructions());
+        mDatabase.child("serving_size").setValue("1");
     }
 
     @Override

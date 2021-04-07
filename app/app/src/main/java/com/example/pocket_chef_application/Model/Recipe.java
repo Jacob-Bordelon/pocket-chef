@@ -9,10 +9,13 @@ import org.json.JSONArray;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import com.google.firebase.database.IgnoreExtraProperties;
 
+@IgnoreExtraProperties
 public class Recipe {
 
     private String title;
@@ -30,6 +33,17 @@ public class Recipe {
 
 
     public Recipe() {
+    }
+
+    public Recipe(String title, String author, String description, int id, int cook_time, int prep_time, int rating, String difficulty) {
+        this.title = title;
+        this.author = author;
+        this.description = description;
+        this.id = id;
+        this.cook_time = cook_time;
+        this.prep_time = prep_time;
+        this.rating = rating;
+        this.difficulty = difficulty;
     }
 
     public Recipe(String author, String description, int id, int cook_time, int prep_time, int rating, String difficulty, String image, HashMap<String, String> instructions, HashMap<String, Ingredient> ingredients) {
@@ -54,7 +68,11 @@ public class Recipe {
     }
 
     public Set<String> getIngredientsId(){
-        return ingredients.keySet();
+        if(ingredients != null){
+            return ingredients.keySet();
+        }
+
+        return Collections.emptySet();
     }
 
     public HashMap<String, String> getInstructions() {
