@@ -122,9 +122,7 @@ public class Generate_Recipes extends Fragment {
                 if(isChecked){
                     LocalDB db = LocalDB.getDBInstance(getContext());
                     List<DBItem> dbitems = db.itemDAO().getAllItems();
-                    for(DBItem i : dbitems){
-                        adapter.addfilter(i);
-                    }
+                    adapter.addfilter(dbitems);
 
                 }else{
                     adapter.clearAllFilters();

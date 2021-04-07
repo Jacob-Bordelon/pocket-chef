@@ -11,6 +11,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class Recipe {
 
@@ -50,6 +51,10 @@ public class Recipe {
 
     public void setIngredients(HashMap<String, Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public Set<String> getIngredientsId(){
+        return ingredients.keySet();
     }
 
     public HashMap<String, String> getInstructions() {

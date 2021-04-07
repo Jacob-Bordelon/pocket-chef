@@ -97,9 +97,6 @@ public class ItemsRecyclerView extends RecyclerView.Adapter<ItemsRecyclerView.It
 
         }
 
-
-
-
         @Override
         public void onClick(View v) {
             Food food = foodList.get(getAdapterPosition());
@@ -111,7 +108,7 @@ public class ItemsRecyclerView extends RecyclerView.Adapter<ItemsRecyclerView.It
 
     private void EditOperation(Food i){
         name.setText(i.getName());
-        if(i.getImage() != null){
+        if(i.getImage() != null && !i.getImage().equals("")){
             Picasso.get()
                     .load(i.getImage())
                     .fit()

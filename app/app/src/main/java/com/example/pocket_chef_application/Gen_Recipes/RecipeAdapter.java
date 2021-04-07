@@ -38,9 +38,14 @@ import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 public class RecipeAdapter {
     private static final String TAG = RecipeAdapter.class.getSimpleName();
@@ -175,15 +180,20 @@ public class RecipeAdapter {
 
 
 
-    public void addfilter(DBItem item){
+
+
+    public void addfilter(List<DBItem> items){
         Adapter.recipeList.clear();
-        for(Recipe i:recipeAdapter.backups){
-            Log.d(TAG, "addfilter: ingredients"+i.getIngredients().keySet());
-            Log.d(TAG, "addfilter: item"+item.item_id);
-            if(i.getIngredients().containsKey(item.item_id)){
-                Adapter.recipeList.add(i);
-            }
-        }
+        Set<String> pantry_items = items.stream().map(o -> o.item_id).collect(Collectors.toSet());
+
+         for(Recipe i: recipeAdapter.backups){
+             boolean contains = i.getIngredientsId().stream().anyMatch(pantry_items::contains);
+             if(contains) {
+                 Adapter.recipeList.add(i);
+             }
+         }
+
+
         recipeAdapter.notifyDataSetChanged();
     }
 

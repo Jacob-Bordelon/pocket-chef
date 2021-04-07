@@ -83,7 +83,7 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         exp_date.setText(i.getExp_date());
         amount.setText(Integer.toString(i.getAmount()));
 
-        if(i.getImageUrl() != null){
+        if(i.getImageUrl() != null  && !i.getImageUrl().equals("")){
             Picasso.get()
                     .load(i.getImageUrl())
                     .fit()
@@ -111,11 +111,14 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         name.setText(i.getTitle());
 
         ImageView img = mDialog.findViewById(R.id.item_image);
-        Picasso.get()
-                .load(i.getImageUrl())
-                .fit()
-                .centerCrop()
-                .into(img);
+        if(i.getImageUrl() != null && !i.getImageUrl().equals("")){
+            Picasso.get()
+                    .load(i.getImageUrl())
+                    .fit()
+                    .centerCrop()
+                    .into(img);
+        }
+
 
         EditText amount = mDialog.findViewById(R.id.edititem_amount);
         amount.setHint(Integer.toString(i.getAmount()));
@@ -166,7 +169,7 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
     public void onBindViewHolder(@NonNull PantryViewHolder holder, int position) {
         holder.titleTextView.setText(list.get(position).getTitle());
 
-        if(list.get(position).getImageUrl() != null){
+        if(list.get(position).getImageUrl() != null && !list.get(position).getImageUrl().equals("")){
 
             Picasso.get()
                     .load(list.get(position).getImageUrl())
