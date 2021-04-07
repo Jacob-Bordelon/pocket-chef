@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.pocket_chef_application.API.ISearchRecipeAPI;
 import com.example.pocket_chef_application.Gen_Recipes.Ingredient;
 import com.example.pocket_chef_application.Model.Camera;
 import com.example.pocket_chef_application.Model.Recipe;
