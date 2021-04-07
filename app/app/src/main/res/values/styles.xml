@@ -15,8 +15,44 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">18sp</item>
     </style>
+
     <style name="PantryItemTitle" parent="PantryItemText">
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="PantryImageButton">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+
+    </style>
+
+    <style name="customRatingBar" parent="android:Widget.Material.RatingBar.Small"/>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/orange</item>
+        <item name="colorControlActivated">@color/orange</item>
+    </style>
+
+    <style name="RecipeLabel">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:paddingEnd">2dp</item>
+    </style>
+
+    <style name="ChipTextAppearance" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="chipBackgroundColor">@color/colorAccent</item>
+
+    </style>
+
+
+
 
 </resources>

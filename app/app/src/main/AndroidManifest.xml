@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.pocket_chef_application">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.any" />
 
     <application
         android:allowBackup="true"
@@ -15,18 +19,34 @@
         android:theme="@style/Theme.Pocket_Chef_Application.NoActionBar"
         android:usesCleartextTraffic="true">
 
-        <activity
-            android:name=".Pantry.PantryItem_Activity"
-            android:theme="@style/AppTheme.Popup"/>
+
+
 
         <activity
-            android:name=".UploadActivity" />
+            android:name=".Pantry_utils.AddItemsToPantry"
+            android:label="@string/title_activity_add_items_to_pantry"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".Item_Recognition_Activity"
+            android:screenOrientation="portrait" />
 
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="barcode" />
+
+        <activity
+            android:name=".Pantry_utils.PantryItem_Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Popup" />
+        <activity android:name=".UploadActivity" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Pocket_Chef_Application.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "644643230269",
+    "project_id": "pocketchef-9fb14",
+    "storage_bucket": "pocketchef-9fb14.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644643230269:android:2f3f9c5d01e62f95b01054",
+        "android_client_info": {
+          "package_name": "com.example.pocket_chef_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644643230269-rl38igs4093vq3dq4oa9orh6n09r9kv7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKUJOljNtlotrIPqmf61W-tblvgmLfj88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644643230269-rl38igs4093vq3dq4oa9orh6n09r9kv7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

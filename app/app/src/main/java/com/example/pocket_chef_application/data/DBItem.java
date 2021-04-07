@@ -10,6 +10,9 @@ public class DBItem {
 
     @PrimaryKey
     @NonNull
+    @ColumnInfo(name = "item_id")
+    public String item_id;
+
     @ColumnInfo(name = "item_name")
     public String item_Name;
 
@@ -19,6 +22,6 @@ public class DBItem {
     @ColumnInfo(name = "amount")
     public int amount;
 
-
-
+    @ColumnInfo(name = "image_url")
+    public String image_url;
 }

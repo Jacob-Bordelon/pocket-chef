@@ -4,12 +4,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 
+import androidx.test.espresso.action.ViewActions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 
@@ -54,16 +56,19 @@ public class EspressoTests {
         onView(withId(R.id.upload_fragment)).check(matches(isDisplayed()));
     }
 
-    // test splashpage fragment is displayed
     @Test
-    public void test_goto_splashpage(){
-        onView(withId(R.id.fab)).perform(click());
-        onView(withId(R.id.fab_pantry_btn)).perform(click());
-        onView(withId(R.id.fab)).perform(click());
-        onView(withId(R.id.fab_homepage_btn)).perform(click());
+    public void test_camerax(){
+        onView(withId(R.id.expand_menu_btn)).perform(click());
+        onView(withId(R.id.camerabtn)).perform(click());
+        onView(isRoot()).perform(ViewActions.pressBack());
+        onView(withId(R.id.camerabtn)).perform(click());
 
-        onView(withId(R.id.homepageFragment)).check(matches(isDisplayed()));
-        onView(withId(R.id.fab)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void test_addItem(){
+        onView(withId(R.id.expand_menu_btn)).perform(click());
+        onView(withId(R.id.addItem)).check(matches(isDisplayed()));
     }
 
 

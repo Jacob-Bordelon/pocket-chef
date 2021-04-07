@@ -3,24 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/Pantry">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.pocket_chef_application.Homepage"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/homepage">
-        <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.pocket_chef_application.Generate_Recipes"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/generate_recipes">
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
+        android:id="@+id/Pantry"
+        android:name="com.example.pocket_chef_application.Pantry"
+        android:label="Pantry"
+        tools:layout="@layout/pantry"/>
+
+
 </navigation>
