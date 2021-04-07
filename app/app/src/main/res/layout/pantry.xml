@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/expanded_menu"
             android:visibility="gone"
             android:layout_width="match_parent"
@@ -33,15 +33,36 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/filtersbtn"
-                android:clickable="true"
+                android:id="@+id/signal_lbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Filters +"
-                android:background="@drawable/input_bar"
+                android:text="Status:"
                 android:textSize="18sp"
-                android:focusable="true" />
-        </LinearLayout>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/signal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@id/signal_lbl"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/firebase_lbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search for items to add"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/menu_options"
@@ -53,14 +74,16 @@
             <SearchView
                 android:id="@+id/searchView"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
-                app:layout_constraintEnd_toStartOf="@+id/camerabtn"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="0dp"
                 android:background="@drawable/input_bar"
-                tools:ignore="MissingConstraints"
-                android:iconifiedByDefault="false"
                 android:focusable="true"
-                android:focusableInTouchMode="true"/>
+                android:focusableInTouchMode="true"
+                android:iconifiedByDefault="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/expand_menu_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
 
 
             <ImageButton
@@ -82,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
+                android:src="@drawable/ic_baseline_add_40"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

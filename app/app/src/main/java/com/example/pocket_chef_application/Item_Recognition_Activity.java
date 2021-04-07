@@ -138,11 +138,8 @@ public class Item_Recognition_Activity extends AppCompatActivity {
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         cameraProviderFuture.addListener(() -> {
             try {
-                Log.d(TAG, "startCamera:0 "+previewView.getDisplay());
                 cameraProvider = cameraProviderFuture.get();
-                Log.d(TAG, "startCamera:1 "+previewView.getDisplay());
                 bindImageAnalysis(cameraProvider);
-                Log.d(TAG, "startCamera:2 "+previewView.getDisplay());
             }  catch (ExecutionException | InterruptedException e){ e.printStackTrace();}
         }, ContextCompat.getMainExecutor(this));
 
@@ -161,8 +158,7 @@ public class Item_Recognition_Activity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        cameraExecutor.shutdownNow();
-        Log.d(TAG, "onDestroy: "+cameraExecutor.isTerminated()+"\n");
+        cameraExecutor.shutdown();
     }
 
     private class ImageAnalyzer implements ImageAnalysis.Analyzer {
@@ -187,12 +183,11 @@ public class Item_Recognition_Activity extends AppCompatActivity {
             CustomObjectDetectorOptions customObjectDetectorOptions = new CustomObjectDetectorOptions.Builder(model)
                     .setDetectorMode(CustomObjectDetectorOptions.STREAM_MODE)
                     .enableClassification()
-                    .setClassificationConfidenceThreshold(0.8f)
+                    .setClassificationConfidenceThreshold(0.7f)
                     .setMaxPerObjectLabelCount(3)
                     .build();
 
             objectDetector = ObjectDetection.getClient(customObjectDetectorOptions);
-            Log.d(TAG, "ImageAnalyzer: "+previewView.getDisplay());
 
         }
 
@@ -239,7 +234,6 @@ public class Item_Recognition_Activity extends AppCompatActivity {
                         })
                         .addOnCompleteListener(task -> imageProxy.close());
 
-                Log.d(TAG, "analyze: "+previewView.getDisplay());
             }
 
         }

@@ -10,6 +10,9 @@ public class DBItem {
 
     @PrimaryKey
     @NonNull
+    @ColumnInfo(name = "item_id")
+    public String item_id;
+
     @ColumnInfo(name = "item_name")
     public String item_Name;
 
