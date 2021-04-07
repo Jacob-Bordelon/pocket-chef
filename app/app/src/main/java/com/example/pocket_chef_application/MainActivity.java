@@ -28,7 +28,7 @@ import android.widget.SearchView;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static FragmentManager manager;
-    private Dialog panel_switch;
+    private static Dialog panel_switch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void switch_fragment(Fragment fragment){
+    public static void switch_fragment(Fragment fragment){
         manager.beginTransaction()
                 .replace(R.id.nav_host_fragment,fragment)
                 .addToBackStack(null)

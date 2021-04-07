@@ -146,8 +146,12 @@
 
     <string name="pref_key_still_image_object_detector_enable_multiple_objects" translatable="false">siodemo</string>
     <string name="pref_key_still_image_object_detector_enable_classification" translatable="false">siodec</string>
-
-
+    <string name="title_activity_add_items_to_pantry">addItemsToPantry</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 
 
 </resources>

@@ -65,5 +65,11 @@ public class EspressoTests {
 
     }
 
+    @Test
+    public void test_addItem(){
+        onView(withId(R.id.expand_menu_btn)).perform(click());
+        onView(withId(R.id.addItem)).check(matches(isDisplayed()));
+    }
+
 
 }

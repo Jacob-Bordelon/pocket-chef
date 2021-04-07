@@ -9,6 +9,10 @@ public class Food {
     private int fdcId;
     private ArrayList Nutrients;
 
+    public Food(String name) {
+        this.name = name;
+    }
+
     public Food() {
     }
 

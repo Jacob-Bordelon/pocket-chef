@@ -1,0 +1,3190 @@
+{
+  "1105897" : {
+    "fullName":"Apples, fuji, with skin, raw",
+    "fdcId" : 1105897,
+    "foodNutrients" : {
+      "Ash" : {
+        "amount" : 0.43,
+        "unitName" : "G"
+      },
+      "Calcium, Ca" : {
+        "amount" : 6.0,
+        "unitName" : "MG"
+      },
+      "Carbohydrate, by difference" : {
+        "amount" : 15.7,
+        "unitName" : "G"
+      },
+      "Copper, Cu" : {
+        "amount" : 0.033,
+        "unitName" : "MG"
+      },
+      "Energy" : {
+        "amount" : 271,
+        "unitName" : "kJ"
+      },
+      "Energy (Atwater General Factors)" : {
+        "amount" : 65.0,
+        "unitName" : "KCAL"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 58.0,
+        "unitName" : "KCAL"
+      },
+      "Fiber, total dietary" : {
+        "amount" : 2.1,
+        "unitName" : "G"
+      },
+      "Folate, total" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Fructose" : {
+        "amount" : 8.4,
+        "unitName" : "G"
+      },
+      "Glucose (dextrose)" : {
+        "amount" : 2.61,
+        "unitName" : "G"
+      },
+      "Iron, Fe" : {
+        "amount" : 0.02,
+        "unitName" : "MG"
+      },
+      "Lactose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Magnesium, Mg" : {
+        "amount" : 4.7,
+        "unitName" : "MG"
+      },
+      "Maltose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Manganese, Mn" : {
+        "amount" : 0.033,
+        "unitName" : "MG"
+      },
+      "Niacin" : {
+        "amount" : 0.091,
+        "unitName" : "MG"
+      },
+      "Nitrogen" : {
+        "amount" : 0.02,
+        "unitName" : "G"
+      },
+      "Phosphorus, P" : {
+        "amount" : 10.0,
+        "unitName" : "MG"
+      },
+      "Potassium, K" : {
+        "amount" : 104,
+        "unitName" : "MG"
+      },
+      "Protein" : {
+        "amount" : 0.15,
+        "unitName" : "G"
+      },
+      "Riboflavin" : {
+        "amount" : 0.068,
+        "unitName" : "MG"
+      },
+      "Sodium, Na" : {
+        "amount" : 1.0,
+        "unitName" : "MG"
+      },
+      "Sucrose" : {
+        "amount" : 1.59,
+        "unitName" : "G"
+      },
+      "Sugars, Total NLEA" : {
+        "amount" : 12.6,
+        "unitName" : "G"
+      },
+      "Thiamin" : {
+        "amount" : 0.006,
+        "unitName" : "MG"
+      },
+      "Total lipid (fat)" : {
+        "amount" : 0.16,
+        "unitName" : "G"
+      },
+      "Vitamin B-6" : {
+        "amount" : 0.036,
+        "unitName" : "MG"
+      },
+      "Water" : {
+        "amount" : 83.6,
+        "unitName" : "G"
+      },
+      "Zinc, Zn" : {
+        "amount" : 0.02,
+        "unitName" : "MG"
+      }
+    },
+    "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/fruits%2Fapple.jpg?alt=media&token=3a61637b-1099-412d-acf9-73fb12525f85",
+    "name" : "Fuji Apple"
+  },
+  "1105073" : {
+    "fullName":"Bananas, overripe, raw",
+    "fdcId" : 1105073,
+    "foodNutrients" : {
+      "Ash" : {
+        "amount" : 0.67,
+        "unitName" : "G"
+      },
+      "Biotin" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Carbohydrate, by difference" : {
+        "amount" : 20.1,
+        "unitName" : "G"
+      },
+      "Carbohydrate, by summation" : {
+        "amount" : 18.0,
+        "unitName" : "G"
+      },
+      "Carotene, alpha" : {
+        "amount" : 8.0,
+        "unitName" : "UG"
+      },
+      "Carotene, beta" : {
+        "amount" : 10.0,
+        "unitName" : "UG"
+      },
+      "Citric acid" : {
+        "amount" : 279,
+        "unitName" : "MG"
+      },
+      "Cryptoxanthin, alpha" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Cryptoxanthin, beta" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Energy" : {
+        "amount" : 357,
+        "unitName" : "kJ"
+      },
+      "Energy (Atwater General Factors)" : {
+        "amount" : 85.0,
+        "unitName" : "KCAL"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 77.0,
+        "unitName" : "KCAL"
+      },
+      "Fiber, total dietary" : {
+        "amount" : 1.7,
+        "unitName" : "G"
+      },
+      "Folate, total" : {
+        "amount" : 25.0,
+        "unitName" : "UG"
+      },
+      "Fructose" : {
+        "amount" : 6.7,
+        "unitName" : "G"
+      },
+      "Galactose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Glucose (dextrose)" : {
+        "amount" : 7.0,
+        "unitName" : "G"
+      },
+      "Lactose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Malic acid" : {
+        "amount" : 290,
+        "unitName" : "MG"
+      },
+      "Maltose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Niacin" : {
+        "amount" : 0.57,
+        "unitName" : "MG"
+      },
+      "Nitrogen" : {
+        "amount" : 0.12,
+        "unitName" : "G"
+      },
+      "Protein" : {
+        "amount" : 0.73,
+        "unitName" : "G"
+      },
+      "Riboflavin" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Starch" : {
+        "amount" : 0.41,
+        "unitName" : "G"
+      },
+      "Sucrose" : {
+        "amount" : 2.1,
+        "unitName" : "G"
+      },
+      "Sugars, Total NLEA" : {
+        "amount" : 15.8,
+        "unitName" : "G"
+      },
+      "Thiamin" : {
+        "amount" : 0.04,
+        "unitName" : "MG"
+      },
+      "Total dietary fiber (AOAC 2011 25)" : {
+        "amount" : 2.02,
+        "unitName" : "G"
+      },
+      "Total lipid (fat)" : {
+        "amount" : 0.22,
+        "unitName" : "G"
+      },
+      "Vitamin A, RAE" : {
+        "amount" : 1.0,
+        "unitName" : "UG"
+      },
+      "Vitamin B-6" : {
+        "amount" : 0.234,
+        "unitName" : "MG"
+      },
+      "Vitamin C, total ascorbic acid" : {
+        "amount" : 9.7,
+        "unitName" : "MG"
+      },
+      "Vitamin K (Dihydrophylloquinone)" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Vitamin K (Menaquinone-4)" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Vitamin K (phylloquinone)" : {
+        "amount" : 0.2,
+        "unitName" : "UG"
+      },
+      "Water" : {
+        "amount" : 78.3,
+        "unitName" : "G"
+      },
+      "cis-Lutein or Zeaxanthin" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "cis-Lycopene" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "cis-beta-Carotene" : {
+        "amount" : 1.0,
+        "unitName" : "UG"
+      },
+      "trans-Lycopene" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "trans-beta-Carotene" : {
+        "amount" : 9.0,
+        "unitName" : "UG"
+      }
+    },
+    "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/fruits%2Fbanana.jpg?alt=media&token=12d092f0-baa6-491e-b0fb-4f31bc39b2d4",
+    "name" : "Banana"
+  },
+  "747431" : {
+    "fullName":"Beans, Dry, Red (0% moisture)",
+    "fdcId" : 747431,
+    "foodNutrients" : {
+      "Boron, B" : {
+        "amount" : 1320.0,
+        "unitName" : "UG"
+      },
+      "Calcium, Ca" : {
+        "amount" : 148,
+        "unitName" : "MG"
+      },
+      "Cobalt, Co" : {
+        "amount" : 56.5,
+        "unitName" : "UG"
+      },
+      "Copper, Cu" : {
+        "amount" : 0.959,
+        "unitName" : "MG"
+      },
+      "Fiber, total dietary" : {
+        "amount" : 4.0,
+        "unitName" : "G"
+      },
+      "Iron, Fe" : {
+        "amount" : 5.05,
+        "unitName" : "MG"
+      },
+      "Magnesium, Mg" : {
+        "amount" : 152,
+        "unitName" : "MG"
+      },
+      "Manganese, Mn" : {
+        "amount" : 1.93,
+        "unitName" : "MG"
+      },
+      "Molybdenum, Mo" : {
+        "amount" : 488,
+        "unitName" : "UG"
+      },
+      "Nickel, Ni" : {
+        "amount" : 278,
+        "unitName" : "UG"
+      },
+      "Phosphorus, P" : {
+        "amount" : 380,
+        "unitName" : "MG"
+      },
+      "Potassium, K" : {
+        "amount" : 1540.0,
+        "unitName" : "MG"
+      },
+      "Protein" : {
+        "amount" : 21.3,
+        "unitName" : "G"
+      },
+      "Starch" : {
+        "amount" : 39.7,
+        "unitName" : "G"
+      },
+      "Sulfur, S" : {
+        "amount" : 204,
+        "unitName" : "MG"
+      },
+      "Total lipid (fat)" : {
+        "amount" : 1.16,
+        "unitName" : "G"
+      },
+      "Water" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Zinc, Zn" : {
+        "amount" : 2.84,
+        "unitName" : "MG"
+      }
+    },
+    "image" : "",
+    "name" : "Red Beans"
+  },
+  "746763" : {
+    "fullName":"Beef, short loin, t-bone steak, bone-in, separable lean only, trimmed to 1 or 8\" fat, choice, cooked, grilled",
+    "fdcId" : 746763,
+    "foodNutrients" : {
+      "10:0" : {
+        "amount" : 0.011,
+        "unitName" : "G"
+      },
+      "12:0" : {
+        "amount" : 0.01,
+        "unitName" : "G"
+      },
+      "14:0" : {
+        "amount" : 0.304,
+        "unitName" : "G"
+      },
+      "14:1 c" : {
+        "amount" : 0.066,
+        "unitName" : "G"
+      },
+      "15:0" : {
+        "amount" : 0.049,
+        "unitName" : "G"
+      },
+      "16:0" : {
+        "amount" : 2.66,
+        "unitName" : "G"
+      },
+      "16:1 c" : {
+        "amount" : 0.347,
+        "unitName" : "G"
+      },
+      "16:1 t" : {
+        "amount" : 0.031,
+        "unitName" : "G"
+      },
+      "17:0" : {
+        "amount" : 0.125,
+        "unitName" : "G"
+      },
+      "17:1" : {
+        "amount" : 0.089,
+        "unitName" : "G"
+      },
+      "17:1 c" : {
+        "amount" : 0.089,
+        "unitName" : "G"
+      },
+      "18:0" : {
+        "amount" : 1.52,
+        "unitName" : "G"
+      },
+      "18:1 c" : {
+        "amount" : 4.15,
+        "unitName" : "G"
+      },
+      "18:1 t" : {
+        "amount" : 0.502,
+        "unitName" : "G"
+      },
+      "18:2 CLAs" : {
+        "amount" : 0.04,
+        "unitName" : "G"
+      },
+      "18:2 c" : {
+        "amount" : 0.407,
+        "unitName" : "G"
+      },
+      "18:2 n-6 c,c" : {
+        "amount" : 0.367,
+        "unitName" : "G"
+      },
+      "18:2 t not further defined" : {
+        "amount" : 0.06,
+        "unitName" : "G"
+      },
+      "18:3 c" : {
+        "amount" : 0.021,
+        "unitName" : "G"
+      },
+      "18:3 n-3 c,c,c (ALA)" : {
+        "amount" : 0.021,
+        "unitName" : "G"
+      },
+      "20:0" : {
+        "amount" : 0.006,
+        "unitName" : "G"
+      },
+      "20:1" : {
+        "amount" : 0.021,
+        "unitName" : "G"
+      },
+      "20:1 c" : {
+        "amount" : 0.021,
+        "unitName" : "G"
+      },
+      "20:2 c" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "20:2 n-6 c,c" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "20:3 c" : {
+        "amount" : 0.018,
+        "unitName" : "G"
+      },
+      "20:3 n-6" : {
+        "amount" : 0.018,
+        "unitName" : "G"
+      },
+      "20:4" : {
+        "amount" : 0.051,
+        "unitName" : "G"
+      },
+      "20:4 c" : {
+        "amount" : 0.051,
+        "unitName" : "G"
+      },
+      "20:5 c" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "20:5 n-3 (EPA)" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "22:5 c" : {
+        "amount" : 0.013,
+        "unitName" : "G"
+      },
+      "22:5 n-3 (DPA)" : {
+        "amount" : 0.013,
+        "unitName" : "G"
+      },
+      "22:6 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:6 n-3 (DHA)" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "24:0" : {
+        "amount" : 0.004,
+        "unitName" : "G"
+      },
+      "Ash" : {
+        "amount" : 1.02,
+        "unitName" : "G"
+      },
+      "Calcium, Ca" : {
+        "amount" : 19.0,
+        "unitName" : "MG"
+      },
+      "Carbohydrate, by difference" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Cholesterol" : {
+        "amount" : 80.0,
+        "unitName" : "MG"
+      },
+      "Copper, Cu" : {
+        "amount" : 0.078,
+        "unitName" : "MG"
+      },
+      "Energy" : {
+        "amount" : 219,
+        "unitName" : "KCAL"
+      },
+      "Energy (Atwater General Factors)" : {
+        "amount" : 212,
+        "unitName" : "KCAL"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 219,
+        "unitName" : "KCAL"
+      },
+      "Fatty acids, total monounsaturated" : {
+        "amount" : 4.67,
+        "unitName" : "G"
+      },
+      "Fatty acids, total polyunsaturated" : {
+        "amount" : 0.514,
+        "unitName" : "G"
+      },
+      "Fatty acids, total saturated" : {
+        "amount" : 4.68,
+        "unitName" : "G"
+      },
+      "Fatty acids, total trans" : {
+        "amount" : 0.594,
+        "unitName" : "G"
+      },
+      "Fatty acids, total trans-dienoic" : {
+        "amount" : 0.06,
+        "unitName" : "G"
+      },
+      "Fatty acids, total trans-monoenoic" : {
+        "amount" : 0.533,
+        "unitName" : "G"
+      },
+      "Iron, Fe" : {
+        "amount" : 3.53,
+        "unitName" : "MG"
+      },
+      "Magnesium, Mg" : {
+        "amount" : 20.0,
+        "unitName" : "MG"
+      },
+      "Manganese, Mn" : {
+        "amount" : 0.003,
+        "unitName" : "MG"
+      },
+      "Niacin" : {
+        "amount" : 6.37,
+        "unitName" : "MG"
+      },
+      "Phosphorus, P" : {
+        "amount" : 211,
+        "unitName" : "MG"
+      },
+      "Potassium, K" : {
+        "amount" : 283,
+        "unitName" : "MG"
+      },
+      "Protein" : {
+        "amount" : 27.3,
+        "unitName" : "G"
+      },
+      "Riboflavin" : {
+        "amount" : 0.27,
+        "unitName" : "MG"
+      },
+      "Selenium, Se" : {
+        "amount" : 29.7,
+        "unitName" : "UG"
+      },
+      "Sodium, Na" : {
+        "amount" : 67.0,
+        "unitName" : "MG"
+      },
+      "Total fat (NLEA)" : {
+        "amount" : 10.5,
+        "unitName" : "G"
+      },
+      "Total lipid (fat)" : {
+        "amount" : 11.4,
+        "unitName" : "G"
+      },
+      "Vitamin B-12" : {
+        "amount" : 1.88,
+        "unitName" : "UG"
+      },
+      "Vitamin B-6" : {
+        "amount" : 0.753,
+        "unitName" : "MG"
+      },
+      "Water" : {
+        "amount" : 60.3,
+        "unitName" : "G"
+      },
+      "Zinc, Zn" : {
+        "amount" : 4.69,
+        "unitName" : "MG"
+      }
+    },
+    "image" : "",
+    "name" : "T-Bone Steak"
+  },
+  "325871" : {
+    "fullName":"Bread, white, commercially prepared",
+    "fdcId" : 325871,
+    "foodNutrients" : {
+      "10:0" : {
+        "amount" : 0.005,
+        "unitName" : "G"
+      },
+      "11:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "12:0" : {
+        "amount" : 0.013,
+        "unitName" : "G"
+      },
+      "14:0" : {
+        "amount" : 0.014,
+        "unitName" : "G"
+      },
+      "14:1 c" : {
+        "amount" : 0.001,
+        "unitName" : "G"
+      },
+      "15:0" : {
+        "amount" : 0.004,
+        "unitName" : "G"
+      },
+      "15:1" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "16:0" : {
+        "amount" : 0.493,
+        "unitName" : "G"
+      },
+      "16:1 c" : {
+        "amount" : 0.021,
+        "unitName" : "G"
+      },
+      "16:1 t" : {
+        "amount" : 0.001,
+        "unitName" : "G"
+      },
+      "17:0" : {
+        "amount" : 0.005,
+        "unitName" : "G"
+      },
+      "17:1" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "17:1 c" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "18:0" : {
+        "amount" : 0.252,
+        "unitName" : "G"
+      },
+      "18:1 c" : {
+        "amount" : 0.682,
+        "unitName" : "G"
+      },
+      "18:1 t" : {
+        "amount" : 0.027,
+        "unitName" : "G"
+      },
+      "18:2 CLAs" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "18:2 c" : {
+        "amount" : 1.67,
+        "unitName" : "G"
+      },
+      "18:2 n-6 c,c" : {
+        "amount" : 1.67,
+        "unitName" : "G"
+      },
+      "18:2 t not further defined" : {
+        "amount" : 0.007,
+        "unitName" : "G"
+      },
+      "18:3 c" : {
+        "amount" : 0.2,
+        "unitName" : "G"
+      },
+      "18:3 n-3 c,c,c (ALA)" : {
+        "amount" : 0.2,
+        "unitName" : "G"
+      },
+      "18:3 n-6 c,c,c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "18:4" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:0" : {
+        "amount" : 0.01,
+        "unitName" : "G"
+      },
+      "20:1" : {
+        "amount" : 0.011,
+        "unitName" : "G"
+      },
+      "20:1 c" : {
+        "amount" : 0.011,
+        "unitName" : "G"
+      },
+      "20:2 c" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "20:2 n-6 c,c" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "20:3 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:3 n-3" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:3 n-6" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:4" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "20:4 c" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "20:5 c" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "20:5 n-3 (EPA)" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "22:0" : {
+        "amount" : 0.01,
+        "unitName" : "G"
+      },
+      "22:1 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:1 t" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:2" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:4" : {
+        "amount" : 0.004,
+        "unitName" : "G"
+      },
+      "22:5 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:5 n-3 (DPA)" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:6 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:6 n-3 (DHA)" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "24:0" : {
+        "amount" : 0.004,
+        "unitName" : "G"
+      },
+      "24:1 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "4:0" : {
+        "amount" : 0.004,
+        "unitName" : "G"
+      },
+      "6:0" : {
+        "amount" : 0.001,
+        "unitName" : "G"
+      },
+      "8:0" : {
+        "amount" : 0.006,
+        "unitName" : "G"
+      },
+      "Ash" : {
+        "amount" : 2.1,
+        "unitName" : "G"
+      },
+      "Calcium, Ca" : {
+        "amount" : 211,
+        "unitName" : "MG"
+      },
+      "Carbohydrate, by difference" : {
+        "amount" : 49.2,
+        "unitName" : "G"
+      },
+      "Carbohydrate, by summation" : {
+        "amount" : 44.8,
+        "unitName" : "G"
+      },
+      "Copper, Cu" : {
+        "amount" : 0.124,
+        "unitName" : "MG"
+      },
+      "Energy" : {
+        "amount" : 1130.0,
+        "unitName" : "kJ"
+      },
+      "Energy (Atwater General Factors)" : {
+        "amount" : 267,
+        "unitName" : "KCAL"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 270,
+        "unitName" : "KCAL"
+      },
+      "Fatty acids, total monounsaturated" : {
+        "amount" : 0.717,
+        "unitName" : "G"
+      },
+      "Fatty acids, total polyunsaturated" : {
+        "amount" : 1.87,
+        "unitName" : "G"
+      },
+      "Fatty acids, total saturated" : {
+        "amount" : 0.821,
+        "unitName" : "G"
+      },
+      "Fatty acids, total trans" : {
+        "amount" : 0.035,
+        "unitName" : "G"
+      },
+      "Fatty acids, total trans-dienoic" : {
+        "amount" : 0.007,
+        "unitName" : "G"
+      },
+      "Fatty acids, total trans-monoenoic" : {
+        "amount" : 0.028,
+        "unitName" : "G"
+      },
+      "Fiber, total dietary" : {
+        "amount" : 2.3,
+        "unitName" : "G"
+      },
+      "Fructose" : {
+        "amount" : 2.28,
+        "unitName" : "G"
+      },
+      "Galactose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Glucose (dextrose)" : {
+        "amount" : 1.44,
+        "unitName" : "G"
+      },
+      "Iron, Fe" : {
+        "amount" : 3.36,
+        "unitName" : "MG"
+      },
+      "Lactose" : {
+        "amount" : 0.06,
+        "unitName" : "G"
+      },
+      "Magnesium, Mg" : {
+        "amount" : 26.9,
+        "unitName" : "MG"
+      },
+      "Maltose" : {
+        "amount" : 1.56,
+        "unitName" : "G"
+      },
+      "Manganese, Mn" : {
+        "amount" : 0.632,
+        "unitName" : "MG"
+      },
+      "Niacin" : {
+        "amount" : 4.76,
+        "unitName" : "MG"
+      },
+      "Nitrogen" : {
+        "amount" : 1.51,
+        "unitName" : "G"
+      },
+      "Pantothenic acid" : {
+        "amount" : 0.548,
+        "unitName" : "MG"
+      },
+      "Phosphorus, P" : {
+        "amount" : 113,
+        "unitName" : "MG"
+      },
+      "Potassium, K" : {
+        "amount" : 117,
+        "unitName" : "MG"
+      },
+      "Protein" : {
+        "amount" : 9.43,
+        "unitName" : "G"
+      },
+      "Riboflavin" : {
+        "amount" : 0.24,
+        "unitName" : "MG"
+      },
+      "Selenium, Se" : {
+        "amount" : 23.2,
+        "unitName" : "UG"
+      },
+      "Sodium, Na" : {
+        "amount" : 477,
+        "unitName" : "MG"
+      },
+      "Starch" : {
+        "amount" : 37.2,
+        "unitName" : "G"
+      },
+      "Sucrose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Sugars, Total NLEA" : {
+        "amount" : 5.34,
+        "unitName" : "G"
+      },
+      "Thiamin" : {
+        "amount" : 0.507,
+        "unitName" : "MG"
+      },
+      "Total fat (NLEA)" : {
+        "amount" : 3.45,
+        "unitName" : "G"
+      },
+      "Total lipid (fat)" : {
+        "amount" : 3.59,
+        "unitName" : "G"
+      },
+      "Vitamin B-6" : {
+        "amount" : 0.092,
+        "unitName" : "MG"
+      },
+      "Water" : {
+        "amount" : 35.7,
+        "unitName" : "G"
+      },
+      "Zinc, Zn" : {
+        "amount" : 0.88,
+        "unitName" : "MG"
+      }
+    },
+    "image" : "",
+    "name" : "White Bread"
+  },
+  "747447" : {
+    "fullName":"Broccoli, raw",
+    "fdcId" : 747447,
+    "foodNutrients" : {
+      "10:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "12:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "14:0" : {
+        "amount" : 0.001,
+        "unitName" : "G"
+      },
+      "14:1 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "15:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "15:1" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "16:0" : {
+        "amount" : 0.029,
+        "unitName" : "G"
+      },
+      "16:1 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "17:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "17:1" : {
+        "amount" : 0.001,
+        "unitName" : "G"
+      },
+      "17:1 c" : {
+        "amount" : 0.001,
+        "unitName" : "G"
+      },
+      "18:0" : {
+        "amount" : 0.006,
+        "unitName" : "G"
+      },
+      "18:1" : {
+        "amount" : 0.01,
+        "unitName" : "G"
+      },
+      "18:1 c" : {
+        "amount" : 0.01,
+        "unitName" : "G"
+      },
+      "18:2" : {
+        "amount" : 0.017,
+        "unitName" : "G"
+      },
+      "18:2 c" : {
+        "amount" : 0.017,
+        "unitName" : "G"
+      },
+      "18:3" : {
+        "amount" : 0.021,
+        "unitName" : "G"
+      },
+      "18:3 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "18:3 n-6 c,c,c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:0" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "20:1" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:1 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:2 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:2 n-6 c,c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:3" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:3 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:4" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:4 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:0" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "8:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Alanine" : {
+        "amount" : 0.104,
+        "unitName" : "G"
+      },
+      "Arginine" : {
+        "amount" : 0.191,
+        "unitName" : "G"
+      },
+      "Ash" : {
+        "amount" : 0.83,
+        "unitName" : "G"
+      },
+      "Aspartic acid" : {
+        "amount" : 0.325,
+        "unitName" : "G"
+      },
+      "Calcium, Ca" : {
+        "amount" : 46.0,
+        "unitName" : "MG"
+      },
+      "Carbohydrate, by difference" : {
+        "amount" : 6.27,
+        "unitName" : "G"
+      },
+      "Carbohydrate, by summation" : {
+        "amount" : 3.8,
+        "unitName" : "G"
+      },
+      "Carotene, alpha" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Carotene, beta" : {
+        "amount" : 93.0,
+        "unitName" : "UG"
+      },
+      "Copper, Cu" : {
+        "amount" : 0.059,
+        "unitName" : "MG"
+      },
+      "Cryptoxanthin, beta" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Cystine" : {
+        "amount" : 0.028,
+        "unitName" : "G"
+      },
+      "Energy" : {
+        "amount" : 31.0,
+        "unitName" : "KCAL"
+      },
+      "Energy (Atwater General Factors)" : {
+        "amount" : 39.0,
+        "unitName" : "KCAL"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 32.0,
+        "unitName" : "KCAL"
+      },
+      "Fatty acids, total monounsaturated" : {
+        "amount" : 0.011,
+        "unitName" : "G"
+      },
+      "Fatty acids, total polyunsaturated" : {
+        "amount" : 0.017,
+        "unitName" : "G"
+      },
+      "Fatty acids, total saturated" : {
+        "amount" : 0.039,
+        "unitName" : "G"
+      },
+      "Fiber, insoluble" : {
+        "amount" : 2.4,
+        "unitName" : "G"
+      },
+      "Fiber, soluble" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Fiber, total dietary" : {
+        "amount" : 2.4,
+        "unitName" : "G"
+      },
+      "Folate, total" : {
+        "amount" : 65.0,
+        "unitName" : "UG"
+      },
+      "Fructose" : {
+        "amount" : 0.82,
+        "unitName" : "G"
+      },
+      "Galactose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Glucose (dextrose)" : {
+        "amount" : 0.58,
+        "unitName" : "G"
+      },
+      "Glutamic acid" : {
+        "amount" : 0.542,
+        "unitName" : "G"
+      },
+      "Glycine" : {
+        "amount" : 0.089,
+        "unitName" : "G"
+      },
+      "Histidine" : {
+        "amount" : 0.059,
+        "unitName" : "G"
+      },
+      "Iron, Fe" : {
+        "amount" : 0.69,
+        "unitName" : "MG"
+      },
+      "Isoleucine" : {
+        "amount" : 0.079,
+        "unitName" : "G"
+      },
+      "Lactose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Leucine" : {
+        "amount" : 0.129,
+        "unitName" : "G"
+      },
+      "Lutein + zeaxanthin" : {
+        "amount" : 745,
+        "unitName" : "UG"
+      },
+      "Lycopene" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Lysine" : {
+        "amount" : 0.135,
+        "unitName" : "G"
+      },
+      "Magnesium, Mg" : {
+        "amount" : 21.0,
+        "unitName" : "MG"
+      },
+      "Maltose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Manganese, Mn" : {
+        "amount" : 0.197,
+        "unitName" : "MG"
+      },
+      "Methionine" : {
+        "amount" : 0.038,
+        "unitName" : "G"
+      },
+      "Niacin" : {
+        "amount" : 0.639,
+        "unitName" : "MG"
+      },
+      "Nitrogen" : {
+        "amount" : 0.41,
+        "unitName" : "G"
+      },
+      "Pantothenic acid" : {
+        "amount" : 0.61,
+        "unitName" : "MG"
+      },
+      "Phenylalanine" : {
+        "amount" : 0.117,
+        "unitName" : "G"
+      },
+      "Phosphorus, P" : {
+        "amount" : 67.0,
+        "unitName" : "MG"
+      },
+      "Phytoene" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Phytofluene" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Potassium, K" : {
+        "amount" : 303,
+        "unitName" : "MG"
+      },
+      "Proline" : {
+        "amount" : 0.11,
+        "unitName" : "G"
+      },
+      "Protein" : {
+        "amount" : 2.57,
+        "unitName" : "G"
+      },
+      "Riboflavin" : {
+        "amount" : 0.114,
+        "unitName" : "MG"
+      },
+      "Selenium, Se" : {
+        "amount" : 1.6,
+        "unitName" : "UG"
+      },
+      "Serine" : {
+        "amount" : 0.121,
+        "unitName" : "G"
+      },
+      "Sodium, Na" : {
+        "amount" : 36.0,
+        "unitName" : "MG"
+      },
+      "Starch" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Sucrose" : {
+        "amount" : 0.01,
+        "unitName" : "G"
+      },
+      "Sugars, Total NLEA" : {
+        "amount" : 1.4,
+        "unitName" : "G"
+      },
+      "Thiamin" : {
+        "amount" : 0.077,
+        "unitName" : "MG"
+      },
+      "Threonine" : {
+        "amount" : 0.088,
+        "unitName" : "G"
+      },
+      "Tocopherol, beta" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocopherol, delta" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocopherol, gamma" : {
+        "amount" : 0.04,
+        "unitName" : "MG"
+      },
+      "Tocotrienol, alpha" : {
+        "amount" : 0.01,
+        "unitName" : "MG"
+      },
+      "Tocotrienol, beta" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocotrienol, delta" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocotrienol, gamma" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Total fat (NLEA)" : {
+        "amount" : 0.07,
+        "unitName" : "G"
+      },
+      "Total lipid (fat)" : {
+        "amount" : 0.34,
+        "unitName" : "G"
+      },
+      "Tryptophan" : {
+        "amount" : 0.033,
+        "unitName" : "G"
+      },
+      "Tyrosine" : {
+        "amount" : 0.05,
+        "unitName" : "G"
+      },
+      "Valine" : {
+        "amount" : 0.125,
+        "unitName" : "G"
+      },
+      "Vitamin A, RAE" : {
+        "amount" : 8.0,
+        "unitName" : "UG"
+      },
+      "Vitamin B-6" : {
+        "amount" : 0.191,
+        "unitName" : "MG"
+      },
+      "Vitamin C, total ascorbic acid" : {
+        "amount" : 91.3,
+        "unitName" : "MG"
+      },
+      "Vitamin E (alpha-tocopherol)" : {
+        "amount" : 0.15,
+        "unitName" : "MG"
+      },
+      "Vitamin K (Dihydrophylloquinone)" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Vitamin K (phylloquinone)" : {
+        "amount" : 102,
+        "unitName" : "UG"
+      },
+      "Water" : {
+        "amount" : 90.0,
+        "unitName" : "G"
+      },
+      "Zinc, Zn" : {
+        "amount" : 0.42,
+        "unitName" : "MG"
+      }
+    },
+    "image" : "",
+    "name" : "Broccoli"
+  },
+  "790508" : {
+    "fullName":"Butter, stick, salted",
+    "fdcId" : 790508,
+    "foodNutrients" : {
+      "10:0" : {
+        "amount" : 1.92,
+        "unitName" : "G"
+      },
+      "11:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "12:0" : {
+        "amount" : 2.2,
+        "unitName" : "G"
+      },
+      "12:1" : {
+        "amount" : 0.052,
+        "unitName" : "G"
+      },
+      "14:0" : {
+        "amount" : 7.15,
+        "unitName" : "G"
+      },
+      "14:1 c" : {
+        "amount" : 0.597,
+        "unitName" : "G"
+      },
+      "15:0" : {
+        "amount" : 0.753,
+        "unitName" : "G"
+      },
+      "15:1" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "16:0" : {
+        "amount" : 21.2,
+        "unitName" : "G"
+      },
+      "16:1 c" : {
+        "amount" : 0.999,
+        "unitName" : "G"
+      },
+      "17:0" : {
+        "amount" : 0.432,
+        "unitName" : "G"
+      },
+      "17:1" : {
+        "amount" : 0.135,
+        "unitName" : "G"
+      },
+      "17:1 c" : {
+        "amount" : 0.135,
+        "unitName" : "G"
+      },
+      "18:0" : {
+        "amount" : 7.42,
+        "unitName" : "G"
+      },
+      "18:1 c" : {
+        "amount" : 15.0,
+        "unitName" : "G"
+      },
+      "18:2 CLAs" : {
+        "amount" : 0.358,
+        "unitName" : "G"
+      },
+      "18:2 c" : {
+        "amount" : 2.25,
+        "unitName" : "G"
+      },
+      "18:2 n-6 c,c" : {
+        "amount" : 1.89,
+        "unitName" : "G"
+      },
+      "18:3 c" : {
+        "amount" : 0.331,
+        "unitName" : "G"
+      },
+      "18:3 n-3 c,c,c (ALA)" : {
+        "amount" : 0.308,
+        "unitName" : "G"
+      },
+      "18:3 n-6 c,c,c" : {
+        "amount" : 0.023,
+        "unitName" : "G"
+      },
+      "18:4" : {
+        "amount" : 0.015,
+        "unitName" : "G"
+      },
+      "20:0" : {
+        "amount" : 0.102,
+        "unitName" : "G"
+      },
+      "20:1 c" : {
+        "amount" : 0.117,
+        "unitName" : "G"
+      },
+      "20:2 c" : {
+        "amount" : 0.016,
+        "unitName" : "G"
+      },
+      "20:2 n-6 c,c" : {
+        "amount" : 0.016,
+        "unitName" : "G"
+      },
+      "20:3 c" : {
+        "amount" : 0.081,
+        "unitName" : "G"
+      },
+      "20:3 n-3" : {
+        "amount" : 0.004,
+        "unitName" : "G"
+      },
+      "20:3 n-6" : {
+        "amount" : 0.077,
+        "unitName" : "G"
+      },
+      "20:3 n-9" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:4" : {
+        "amount" : 0.104,
+        "unitName" : "G"
+      },
+      "20:4 c" : {
+        "amount" : 0.104,
+        "unitName" : "G"
+      },
+      "20:5 c" : {
+        "amount" : 0.024,
+        "unitName" : "G"
+      },
+      "20:5 n-3 (EPA)" : {
+        "amount" : 0.024,
+        "unitName" : "G"
+      },
+      "21:0" : {
+        "amount" : 0.011,
+        "unitName" : "G"
+      },
+      "22:0" : {
+        "amount" : 0.043,
+        "unitName" : "G"
+      },
+      "22:1 c" : {
+        "amount" : 0.004,
+        "unitName" : "G"
+      },
+      "22:1 n-11" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:1 n-9" : {
+        "amount" : 0.004,
+        "unitName" : "G"
+      },
+      "22:2" : {
+        "amount" : 0.006,
+        "unitName" : "G"
+      },
+      "22:3" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:4" : {
+        "amount" : 0.016,
+        "unitName" : "G"
+      },
+      "22:5 c" : {
+        "amount" : 0.039,
+        "unitName" : "G"
+      },
+      "22:5 n-3 (DPA)" : {
+        "amount" : 0.039,
+        "unitName" : "G"
+      },
+      "22:6 c" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "22:6 n-3 (DHA)" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "23:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "24:0" : {
+        "amount" : 0.016,
+        "unitName" : "G"
+      },
+      "24:1 c" : {
+        "amount" : 0.001,
+        "unitName" : "G"
+      },
+      "25-hydroxycholecalciferol" : {
+        "amount" : 0.11,
+        "unitName" : "UG"
+      },
+      "4:0" : {
+        "amount" : 2.04,
+        "unitName" : "G"
+      },
+      "5:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "6:0" : {
+        "amount" : 1.44,
+        "unitName" : "G"
+      },
+      "7:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "8:0" : {
+        "amount" : 0.84,
+        "unitName" : "G"
+      },
+      "9:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Alanine" : {
+        "amount" : 0.017,
+        "unitName" : "G"
+      },
+      "Arginine" : {
+        "amount" : 0.035,
+        "unitName" : "G"
+      },
+      "Aspartic acid" : {
+        "amount" : 0.043,
+        "unitName" : "G"
+      },
+      "Biotin" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Calcium, Ca" : {
+        "amount" : 21.0,
+        "unitName" : "MG"
+      },
+      "Carotene, alpha" : {
+        "amount" : 2.0,
+        "unitName" : "UG"
+      },
+      "Carotene, beta" : {
+        "amount" : 168,
+        "unitName" : "UG"
+      },
+      "Cholesterol" : {
+        "amount" : 235,
+        "unitName" : "MG"
+      },
+      "Copper, Cu" : {
+        "amount" : 0.006,
+        "unitName" : "MG"
+      },
+      "Cryptoxanthin, alpha" : {
+        "amount" : 2.0,
+        "unitName" : "UG"
+      },
+      "Cryptoxanthin, beta" : {
+        "amount" : 8.0,
+        "unitName" : "UG"
+      },
+      "Cysteine" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Fatty acids, total monounsaturated" : {
+        "amount" : 16.9,
+        "unitName" : "G"
+      },
+      "Fatty acids, total polyunsaturated" : {
+        "amount" : 2.52,
+        "unitName" : "G"
+      },
+      "Fatty acids, total saturated" : {
+        "amount" : 45.6,
+        "unitName" : "G"
+      },
+      "Folate, total" : {
+        "amount" : 5.0,
+        "unitName" : "UG"
+      },
+      "Fructose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Glucose (dextrose)" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Glutamic acid" : {
+        "amount" : 0.08,
+        "unitName" : "G"
+      },
+      "Glycine" : {
+        "amount" : 0.007,
+        "unitName" : "G"
+      },
+      "Histidine" : {
+        "amount" : 0.012,
+        "unitName" : "G"
+      },
+      "Hydroxyproline" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Iodine, I" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Iron, Fe" : {
+        "amount" : 0.06,
+        "unitName" : "MG"
+      },
+      "Isoleucine" : {
+        "amount" : 0.022,
+        "unitName" : "G"
+      },
+      "Lactose" : {
+        "amount" : 0.58,
+        "unitName" : "G"
+      },
+      "Leucine" : {
+        "amount" : 0.05,
+        "unitName" : "G"
+      },
+      "Lutein" : {
+        "amount" : 12.0,
+        "unitName" : "UG"
+      },
+      "Lysine" : {
+        "amount" : 0.07,
+        "unitName" : "G"
+      },
+      "Magnesium, Mg" : {
+        "amount" : 1.6,
+        "unitName" : "MG"
+      },
+      "Maltose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Manganese, Mn" : {
+        "amount" : 0.005,
+        "unitName" : "MG"
+      },
+      "Methionine" : {
+        "amount" : 0.013,
+        "unitName" : "G"
+      },
+      "Niacin" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Phenylalanine" : {
+        "amount" : 0.025,
+        "unitName" : "G"
+      },
+      "Phosphorus, P" : {
+        "amount" : 22.0,
+        "unitName" : "MG"
+      },
+      "Potassium, K" : {
+        "amount" : 23.0,
+        "unitName" : "MG"
+      },
+      "Proline" : {
+        "amount" : 0.06,
+        "unitName" : "G"
+      },
+      "Retinol" : {
+        "amount" : 744,
+        "unitName" : "UG"
+      },
+      "Riboflavin" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Selenium, Se" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Serine" : {
+        "amount" : 0.037,
+        "unitName" : "G"
+      },
+      "Sodium, Na" : {
+        "amount" : 524,
+        "unitName" : "MG"
+      },
+      "Sucrose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Sugars, Total NLEA" : {
+        "amount" : 0.58,
+        "unitName" : "G"
+      },
+      "Threonine" : {
+        "amount" : 0.025,
+        "unitName" : "G"
+      },
+      "Tocopherol, beta" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocopherol, delta" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocopherol, gamma" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocotrienol, alpha" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocotrienol, beta" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocotrienol, delta" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocotrienol, gamma" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Total fat (NLEA)" : {
+        "amount" : 65.0,
+        "unitName" : "G"
+      },
+      "Total lipid (fat)" : {
+        "amount" : 82.2,
+        "unitName" : "G"
+      },
+      "Tryptophan" : {
+        "amount" : 0.01,
+        "unitName" : "G"
+      },
+      "Tyrosine" : {
+        "amount" : 0.017,
+        "unitName" : "G"
+      },
+      "Valine" : {
+        "amount" : 0.03,
+        "unitName" : "G"
+      },
+      "Vitamin A, RAE" : {
+        "amount" : 758,
+        "unitName" : "UG"
+      },
+      "Vitamin B-12" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Vitamin B-6" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Vitamin D (D2 + D3)" : {
+        "amount" : 0.4,
+        "unitName" : "UG"
+      },
+      "Vitamin D (D2 + D3), International Units" : {
+        "amount" : 16.0,
+        "unitName" : "IU"
+      },
+      "Vitamin D2 (ergocalciferol)" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Vitamin D3 (cholecalciferol)" : {
+        "amount" : 0.4,
+        "unitName" : "UG"
+      },
+      "Vitamin E (alpha-tocopherol)" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Water" : {
+        "amount" : 15.8,
+        "unitName" : "G"
+      },
+      "Zeaxanthin" : {
+        "amount" : 4.0,
+        "unitName" : "UG"
+      },
+      "Zinc, Zn" : {
+        "amount" : 0.07,
+        "unitName" : "MG"
+      },
+      "cis-Lutein or Zeaxanthin" : {
+        "amount" : 1.0,
+        "unitName" : "UG"
+      },
+      "cis-Lycopene" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "cis-beta-Carotene" : {
+        "amount" : 27.0,
+        "unitName" : "UG"
+      },
+      "trans-Lycopene" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "trans-beta-Carotene" : {
+        "amount" : 140,
+        "unitName" : "UG"
+      }
+    },
+    "image" : "",
+    "name" : "Salted Butter"
+  },
+  "746764" : {
+    "fullName":"Carrots, frozen, unprepared",
+    "fdcId" : 746764,
+    "foodNutrients" : {
+      "10:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "12:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "14:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "14:1 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "15:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "16:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "16:1 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "17:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "18:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "18:1" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "18:1 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "18:2" : {
+        "amount" : 0.163,
+        "unitName" : "G"
+      },
+      "18:2 c" : {
+        "amount" : 0.163,
+        "unitName" : "G"
+      },
+      "18:3" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "18:3 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "18:4" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:1" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:1 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:4" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:4 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:5 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:5 n-3 (EPA)" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:1" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:1 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:5 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:5 n-3 (DPA)" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:6 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:6 n-3 (DHA)" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "24:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "4:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "6:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "8:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Alanine" : {
+        "amount" : 0.075,
+        "unitName" : "G"
+      },
+      "Arginine" : {
+        "amount" : 0.06,
+        "unitName" : "G"
+      },
+      "Ash" : {
+        "amount" : 0.72,
+        "unitName" : "G"
+      },
+      "Aspartic acid" : {
+        "amount" : 0.112,
+        "unitName" : "G"
+      },
+      "Calcium, Ca" : {
+        "amount" : 33.0,
+        "unitName" : "MG"
+      },
+      "Carbohydrate, by difference" : {
+        "amount" : 7.92,
+        "unitName" : "G"
+      },
+      "Carbohydrate, by summation" : {
+        "amount" : 7.79,
+        "unitName" : "G"
+      },
+      "Copper, Cu" : {
+        "amount" : 0.08,
+        "unitName" : "MG"
+      },
+      "Cystine" : {
+        "amount" : 0.048,
+        "unitName" : "G"
+      },
+      "Energy" : {
+        "amount" : 153,
+        "unitName" : "kJ"
+      },
+      "Energy (Atwater General Factors)" : {
+        "amount" : 39.0,
+        "unitName" : "KCAL"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 37.0,
+        "unitName" : "KCAL"
+      },
+      "Fatty acids, total monounsaturated" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Fatty acids, total polyunsaturated" : {
+        "amount" : 0.163,
+        "unitName" : "G"
+      },
+      "Fatty acids, total saturated" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Fiber, insoluble" : {
+        "amount" : 1.9,
+        "unitName" : "G"
+      },
+      "Fiber, soluble" : {
+        "amount" : 1.4,
+        "unitName" : "G"
+      },
+      "Fiber, total dietary" : {
+        "amount" : 3.2,
+        "unitName" : "G"
+      },
+      "Folate, total" : {
+        "amount" : 7.0,
+        "unitName" : "UG"
+      },
+      "Fructose" : {
+        "amount" : 1.05,
+        "unitName" : "G"
+      },
+      "Galactose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Glucose (dextrose)" : {
+        "amount" : 0.84,
+        "unitName" : "G"
+      },
+      "Glutamic acid" : {
+        "amount" : 0.196,
+        "unitName" : "G"
+      },
+      "Glycine" : {
+        "amount" : 0.031,
+        "unitName" : "G"
+      },
+      "Histidine" : {
+        "amount" : 0.03,
+        "unitName" : "G"
+      },
+      "Iron, Fe" : {
+        "amount" : 0.43,
+        "unitName" : "MG"
+      },
+      "Isoleucine" : {
+        "amount" : 0.052,
+        "unitName" : "G"
+      },
+      "Lactose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Leucine" : {
+        "amount" : 0.066,
+        "unitName" : "G"
+      },
+      "Lysine" : {
+        "amount" : 0.075,
+        "unitName" : "G"
+      },
+      "Magnesium, Mg" : {
+        "amount" : 10.8,
+        "unitName" : "MG"
+      },
+      "Maltose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Manganese, Mn" : {
+        "amount" : 0.143,
+        "unitName" : "MG"
+      },
+      "Methionine" : {
+        "amount" : 0.015,
+        "unitName" : "G"
+      },
+      "Niacin" : {
+        "amount" : 0.465,
+        "unitName" : "MG"
+      },
+      "Nitrogen" : {
+        "amount" : 0.13,
+        "unitName" : "G"
+      },
+      "Pantothenic acid" : {
+        "amount" : 0.196,
+        "unitName" : "MG"
+      },
+      "Phenylalanine" : {
+        "amount" : 0.042,
+        "unitName" : "G"
+      },
+      "Phosphorus, P" : {
+        "amount" : 31.0,
+        "unitName" : "MG"
+      },
+      "Potassium, K" : {
+        "amount" : 210,
+        "unitName" : "MG"
+      },
+      "Proline" : {
+        "amount" : 0.034,
+        "unitName" : "G"
+      },
+      "Protein" : {
+        "amount" : 0.81,
+        "unitName" : "G"
+      },
+      "Riboflavin" : {
+        "amount" : 0.047,
+        "unitName" : "MG"
+      },
+      "Serine" : {
+        "amount" : 0.033,
+        "unitName" : "G"
+      },
+      "Sodium, Na" : {
+        "amount" : 66.0,
+        "unitName" : "MG"
+      },
+      "Starch" : {
+        "amount" : 0.38,
+        "unitName" : "G"
+      },
+      "Sucrose" : {
+        "amount" : 2.31,
+        "unitName" : "G"
+      },
+      "Sugars, Total NLEA" : {
+        "amount" : 4.2,
+        "unitName" : "G"
+      },
+      "Thiamin" : {
+        "amount" : 0.039,
+        "unitName" : "MG"
+      },
+      "Threonine" : {
+        "amount" : 0.127,
+        "unitName" : "G"
+      },
+      "Tocopherol, beta" : {
+        "amount" : 0.01,
+        "unitName" : "MG"
+      },
+      "Tocopherol, delta" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocopherol, gamma" : {
+        "amount" : 0.01,
+        "unitName" : "MG"
+      },
+      "Tocotrienol, alpha" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocotrienol, beta" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocotrienol, delta" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocotrienol, gamma" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Total fat (NLEA)" : {
+        "amount" : 0.33,
+        "unitName" : "G"
+      },
+      "Total lipid (fat)" : {
+        "amount" : 0.47,
+        "unitName" : "G"
+      },
+      "Tryptophan" : {
+        "amount" : 0.007,
+        "unitName" : "G"
+      },
+      "Tyrosine" : {
+        "amount" : 0.031,
+        "unitName" : "G"
+      },
+      "Valine" : {
+        "amount" : 0.047,
+        "unitName" : "G"
+      },
+      "Vitamin B-6" : {
+        "amount" : 0.088,
+        "unitName" : "MG"
+      },
+      "Vitamin C, total ascorbic acid" : {
+        "amount" : 2.2,
+        "unitName" : "MG"
+      },
+      "Vitamin E (alpha-tocopherol)" : {
+        "amount" : 0.69,
+        "unitName" : "MG"
+      },
+      "Vitamin K (Dihydrophylloquinone)" : {
+        "amount" : 0.0,
+        "unitName" : "UG"
+      },
+      "Vitamin K (phylloquinone)" : {
+        "amount" : 15.0,
+        "unitName" : "UG"
+      },
+      "Water" : {
+        "amount" : 90.1,
+        "unitName" : "G"
+      },
+      "Zinc, Zn" : {
+        "amount" : 0.28,
+        "unitName" : "MG"
+      }
+    },
+    "image" : "",
+    "name" : "Carrots (frozen)"
+  },
+  "747429" : {
+    "fullName":"Cheese, American, restaurant",
+    "fdcId" : 747429,
+    "foodNutrients" : {
+      "10:0" : {
+        "amount" : 0.759,
+        "unitName" : "G"
+      },
+      "11:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "12:0" : {
+        "amount" : 0.856,
+        "unitName" : "G"
+      },
+      "12:1" : {
+        "amount" : 0.016,
+        "unitName" : "G"
+      },
+      "14:0" : {
+        "amount" : 2.75,
+        "unitName" : "G"
+      },
+      "14:1 c" : {
+        "amount" : 0.215,
+        "unitName" : "G"
+      },
+      "14:1 t" : {
+        "amount" : 0.047,
+        "unitName" : "G"
+      },
+      "15:0" : {
+        "amount" : 0.295,
+        "unitName" : "G"
+      },
+      "15:1" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "16:0" : {
+        "amount" : 8.3,
+        "unitName" : "G"
+      },
+      "16:1 c" : {
+        "amount" : 0.367,
+        "unitName" : "G"
+      },
+      "16:1 t" : {
+        "amount" : 0.087,
+        "unitName" : "G"
+      },
+      "17:0" : {
+        "amount" : 0.172,
+        "unitName" : "G"
+      },
+      "17:1" : {
+        "amount" : 0.052,
+        "unitName" : "G"
+      },
+      "17:1 c" : {
+        "amount" : 0.052,
+        "unitName" : "G"
+      },
+      "18:0" : {
+        "amount" : 3.02,
+        "unitName" : "G"
+      },
+      "18:1 c" : {
+        "amount" : 5.9,
+        "unitName" : "G"
+      },
+      "18:1 t" : {
+        "amount" : 0.698,
+        "unitName" : "G"
+      },
+      "18:2 CLAs" : {
+        "amount" : 0.123,
+        "unitName" : "G"
+      },
+      "18:2 c" : {
+        "amount" : 1.06,
+        "unitName" : "G"
+      },
+      "18:2 n-6 c,c" : {
+        "amount" : 0.936,
+        "unitName" : "G"
+      },
+      "18:2 t not further defined" : {
+        "amount" : 0.175,
+        "unitName" : "G"
+      },
+      "18:3 c" : {
+        "amount" : 0.153,
+        "unitName" : "G"
+      },
+      "18:3 n-3 c,c,c (ALA)" : {
+        "amount" : 0.143,
+        "unitName" : "G"
+      },
+      "18:3 n-6 c,c,c" : {
+        "amount" : 0.01,
+        "unitName" : "G"
+      },
+      "18:3 t" : {
+        "amount" : 0.003,
+        "unitName" : "G"
+      },
+      "18:4" : {
+        "amount" : 0.005,
+        "unitName" : "G"
+      },
+      "20:0" : {
+        "amount" : 0.041,
+        "unitName" : "G"
+      },
+      "20:1 c" : {
+        "amount" : 0.049,
+        "unitName" : "G"
+      },
+      "20:1 t" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:2 c" : {
+        "amount" : 0.006,
+        "unitName" : "G"
+      },
+      "20:2 n-6 c,c" : {
+        "amount" : 0.006,
+        "unitName" : "G"
+      },
+      "20:3 c" : {
+        "amount" : 0.035,
+        "unitName" : "G"
+      },
+      "20:3 n-3" : {
+        "amount" : 0.001,
+        "unitName" : "G"
+      },
+      "20:3 n-6" : {
+        "amount" : 0.034,
+        "unitName" : "G"
+      },
+      "20:3 n-9" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:4" : {
+        "amount" : 0.042,
+        "unitName" : "G"
+      },
+      "20:4 c" : {
+        "amount" : 0.042,
+        "unitName" : "G"
+      },
+      "20:5 c" : {
+        "amount" : 0.009,
+        "unitName" : "G"
+      },
+      "20:5 n-3 (EPA)" : {
+        "amount" : 0.009,
+        "unitName" : "G"
+      },
+      "21:0" : {
+        "amount" : 0.004,
+        "unitName" : "G"
+      },
+      "22:0" : {
+        "amount" : 0.016,
+        "unitName" : "G"
+      },
+      "22:1 c" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "22:1 n-11" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:1 n-9" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "22:1 t" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:2" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "22:3" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:4" : {
+        "amount" : 0.007,
+        "unitName" : "G"
+      },
+      "22:5 c" : {
+        "amount" : 0.017,
+        "unitName" : "G"
+      },
+      "22:5 n-3 (DPA)" : {
+        "amount" : 0.017,
+        "unitName" : "G"
+      },
+      "22:6 c" : {
+        "amount" : 0.001,
+        "unitName" : "G"
+      },
+      "22:6 n-3 (DHA)" : {
+        "amount" : 0.001,
+        "unitName" : "G"
+      },
+      "23:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "24:0" : {
+        "amount" : 0.008,
+        "unitName" : "G"
+      },
+      "24:1 c" : {
+        "amount" : 0.001,
+        "unitName" : "G"
+      },
+      "4:0" : {
+        "amount" : 0.656,
+        "unitName" : "G"
+      },
+      "5:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "6:0" : {
+        "amount" : 0.526,
+        "unitName" : "G"
+      },
+      "7:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "8:0" : {
+        "amount" : 0.327,
+        "unitName" : "G"
+      },
+      "9:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Ash" : {
+        "amount" : 5.57,
+        "unitName" : "G"
+      },
+      "Calcium, Ca" : {
+        "amount" : 508,
+        "unitName" : "MG"
+      },
+      "Carbohydrate, by difference" : {
+        "amount" : 6.35,
+        "unitName" : "G"
+      },
+      "Copper, Cu" : {
+        "amount" : 0.042,
+        "unitName" : "MG"
+      },
+      "Energy" : {
+        "amount" : 1570.0,
+        "unitName" : "kJ"
+      },
+      "Energy (Atwater General Factors)" : {
+        "amount" : 375,
+        "unitName" : "KCAL"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 373,
+        "unitName" : "KCAL"
+      },
+      "Fatty acids, total monounsaturated" : {
+        "amount" : 6.62,
+        "unitName" : "G"
+      },
+      "Fatty acids, total polyunsaturated" : {
+        "amount" : 1.23,
+        "unitName" : "G"
+      },
+      "Fatty acids, total saturated" : {
+        "amount" : 17.7,
+        "unitName" : "G"
+      },
+      "Fatty acids, total trans" : {
+        "amount" : 1.01,
+        "unitName" : "G"
+      },
+      "Fatty acids, total trans-dienoic" : {
+        "amount" : 0.175,
+        "unitName" : "G"
+      },
+      "Fatty acids, total trans-monoenoic" : {
+        "amount" : 0.832,
+        "unitName" : "G"
+      },
+      "Fatty acids, total trans-polyenoic" : {
+        "amount" : 0.003,
+        "unitName" : "G"
+      },
+      "Fructose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Galactose" : {
+        "amount" : 0.12,
+        "unitName" : "G"
+      },
+      "Glucose (dextrose)" : {
+        "amount" : 0.01,
+        "unitName" : "G"
+      },
+      "Iodine, I" : {
+        "amount" : 54.1,
+        "unitName" : "UG"
+      },
+      "Iron, Fe" : {
+        "amount" : 0.24,
+        "unitName" : "MG"
+      },
+      "Lactose" : {
+        "amount" : 3.62,
+        "unitName" : "G"
+      },
+      "Magnesium, Mg" : {
+        "amount" : 25.0,
+        "unitName" : "MG"
+      },
+      "Maltose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Manganese, Mn" : {
+        "amount" : 0.018,
+        "unitName" : "MG"
+      },
+      "Nitrogen" : {
+        "amount" : 2.74,
+        "unitName" : "G"
+      },
+      "Phosphorus, P" : {
+        "amount" : 380,
+        "unitName" : "MG"
+      },
+      "Potassium, K" : {
+        "amount" : 173,
+        "unitName" : "MG"
+      },
+      "Protein" : {
+        "amount" : 17.5,
+        "unitName" : "G"
+      },
+      "Sodium, Na" : {
+        "amount" : 1600.0,
+        "unitName" : "MG"
+      },
+      "Sucrose" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Sugars, Total NLEA" : {
+        "amount" : 3.76,
+        "unitName" : "G"
+      },
+      "Total fat (NLEA)" : {
+        "amount" : 26.6,
+        "unitName" : "G"
+      },
+      "Total lipid (fat)" : {
+        "amount" : 31.1,
+        "unitName" : "G"
+      },
+      "Water" : {
+        "amount" : 39.5,
+        "unitName" : "G"
+      },
+      "Zinc, Zn" : {
+        "amount" : 2.45,
+        "unitName" : "MG"
+      }
+    },
+    "image" : "",
+    "name" : "American Cheese"
+  },
+  "331960" : {
+    "fullName":"Chicken, broiler or fryers, breast, skinless, boneless, meat only, cooked, braised",
+    "fdcId" : 331960,
+    "foodNutrients" : {
+      "10:0" : {
+        "amount" : 0.015,
+        "unitName" : "G"
+      },
+      "11:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "12:0" : {
+        "amount" : 0.005,
+        "unitName" : "G"
+      },
+      "14:0" : {
+        "amount" : 0.019,
+        "unitName" : "G"
+      },
+      "14:1 c" : {
+        "amount" : 0.005,
+        "unitName" : "G"
+      },
+      "15:0" : {
+        "amount" : 0.004,
+        "unitName" : "G"
+      },
+      "15:1" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "16:0" : {
+        "amount" : 0.746,
+        "unitName" : "G"
+      },
+      "16:1 c" : {
+        "amount" : 0.155,
+        "unitName" : "G"
+      },
+      "16:1 t" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "17:0" : {
+        "amount" : 0.004,
+        "unitName" : "G"
+      },
+      "17:1" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "17:1 c" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "18:0" : {
+        "amount" : 0.211,
+        "unitName" : "G"
+      },
+      "18:1 c" : {
+        "amount" : 1.08,
+        "unitName" : "G"
+      },
+      "18:1 t" : {
+        "amount" : 0.011,
+        "unitName" : "G"
+      },
+      "18:2 CLAs" : {
+        "amount" : 0.001,
+        "unitName" : "G"
+      },
+      "18:2 c" : {
+        "amount" : 0.599,
+        "unitName" : "G"
+      },
+      "18:2 n-6 c,c" : {
+        "amount" : 0.598,
+        "unitName" : "G"
+      },
+      "18:2 t not further defined" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "18:3 c" : {
+        "amount" : 0.026,
+        "unitName" : "G"
+      },
+      "18:3 n-3 c,c,c (ALA)" : {
+        "amount" : 0.026,
+        "unitName" : "G"
+      },
+      "18:3 n-6 c,c,c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "18:3i" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "18:4" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:0" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "20:1" : {
+        "amount" : 0.018,
+        "unitName" : "G"
+      },
+      "20:1 c" : {
+        "amount" : 0.018,
+        "unitName" : "G"
+      },
+      "20:2 c" : {
+        "amount" : 0.011,
+        "unitName" : "G"
+      },
+      "20:2 n-6 c,c" : {
+        "amount" : 0.011,
+        "unitName" : "G"
+      },
+      "20:3 c" : {
+        "amount" : 0.022,
+        "unitName" : "G"
+      },
+      "20:3 n-3" : {
+        "amount" : 0.001,
+        "unitName" : "G"
+      },
+      "20:3 n-6" : {
+        "amount" : 0.021,
+        "unitName" : "G"
+      },
+      "20:3 n-9" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "20:4" : {
+        "amount" : 0.086,
+        "unitName" : "G"
+      },
+      "20:4 c" : {
+        "amount" : 0.086,
+        "unitName" : "G"
+      },
+      "20:5 c" : {
+        "amount" : 0.004,
+        "unitName" : "G"
+      },
+      "20:5 n-3 (EPA)" : {
+        "amount" : 0.004,
+        "unitName" : "G"
+      },
+      "22:0" : {
+        "amount" : 0.005,
+        "unitName" : "G"
+      },
+      "22:1 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:1 t" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:2" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "22:4" : {
+        "amount" : 0.023,
+        "unitName" : "G"
+      },
+      "22:5 c" : {
+        "amount" : 0.01,
+        "unitName" : "G"
+      },
+      "22:5 n-3 (DPA)" : {
+        "amount" : 0.01,
+        "unitName" : "G"
+      },
+      "22:6 c" : {
+        "amount" : 0.007,
+        "unitName" : "G"
+      },
+      "22:6 n-3 (DHA)" : {
+        "amount" : 0.007,
+        "unitName" : "G"
+      },
+      "24:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "24:1 c" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "4:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "6:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "8:0" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Ash" : {
+        "amount" : 1.19,
+        "unitName" : "G"
+      },
+      "Calcium, Ca" : {
+        "amount" : 6.0,
+        "unitName" : "MG"
+      },
+      "Carbohydrate, by difference" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Cholesterol" : {
+        "amount" : 116,
+        "unitName" : "MG"
+      },
+      "Copper, Cu" : {
+        "amount" : 0.044,
+        "unitName" : "MG"
+      },
+      "Energy" : {
+        "amount" : 695,
+        "unitName" : "kJ"
+      },
+      "Energy (Atwater General Factors)" : {
+        "amount" : 158,
+        "unitName" : "KCAL"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 166,
+        "unitName" : "KCAL"
+      },
+      "Fatty acids, total monounsaturated" : {
+        "amount" : 1.26,
+        "unitName" : "G"
+      },
+      "Fatty acids, total polyunsaturated" : {
+        "amount" : 0.766,
+        "unitName" : "G"
+      },
+      "Fatty acids, total saturated" : {
+        "amount" : 1.01,
+        "unitName" : "G"
+      },
+      "Fatty acids, total trans" : {
+        "amount" : 0.013,
+        "unitName" : "G"
+      },
+      "Fatty acids, total trans-dienoic" : {
+        "amount" : 0.002,
+        "unitName" : "G"
+      },
+      "Fatty acids, total trans-monoenoic" : {
+        "amount" : 0.011,
+        "unitName" : "G"
+      },
+      "Iron, Fe" : {
+        "amount" : 0.49,
+        "unitName" : "MG"
+      },
+      "Magnesium, Mg" : {
+        "amount" : 32.0,
+        "unitName" : "MG"
+      },
+      "Manganese, Mn" : {
+        "amount" : 0.012,
+        "unitName" : "MG"
+      },
+      "Niacin" : {
+        "amount" : 9.45,
+        "unitName" : "MG"
+      },
+      "Nitrogen" : {
+        "amount" : 5.13,
+        "unitName" : "G"
+      },
+      "Pantothenic acid" : {
+        "amount" : 1.58,
+        "unitName" : "MG"
+      },
+      "Phosphorus, P" : {
+        "amount" : 241,
+        "unitName" : "MG"
+      },
+      "Potassium, K" : {
+        "amount" : 343,
+        "unitName" : "MG"
+      },
+      "Protein" : {
+        "amount" : 32.1,
+        "unitName" : "G"
+      },
+      "Riboflavin" : {
+        "amount" : 0.187,
+        "unitName" : "MG"
+      },
+      "Selenium, Se" : {
+        "amount" : 31.9,
+        "unitName" : "UG"
+      },
+      "Sodium, Na" : {
+        "amount" : 47.0,
+        "unitName" : "MG"
+      },
+      "Thiamin" : {
+        "amount" : 0.098,
+        "unitName" : "MG"
+      },
+      "Tocopherol, beta" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocopherol, delta" : {
+        "amount" : 0.01,
+        "unitName" : "MG"
+      },
+      "Tocopherol, gamma" : {
+        "amount" : 0.07,
+        "unitName" : "MG"
+      },
+      "Tocotrienol, alpha" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocotrienol, beta" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocotrienol, delta" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Tocotrienol, gamma" : {
+        "amount" : 0.0,
+        "unitName" : "MG"
+      },
+      "Total fat (NLEA)" : {
+        "amount" : 3.05,
+        "unitName" : "G"
+      },
+      "Total lipid (fat)" : {
+        "amount" : 3.24,
+        "unitName" : "G"
+      },
+      "Vitamin B-12" : {
+        "amount" : 0.2,
+        "unitName" : "UG"
+      },
+      "Vitamin B-6" : {
+        "amount" : 0.921,
+        "unitName" : "MG"
+      },
+      "Vitamin E (alpha-tocopherol)" : {
+        "amount" : 0.33,
+        "unitName" : "MG"
+      },
+      "Water" : {
+        "amount" : 65.3,
+        "unitName" : "G"
+      },
+      "Zinc, Zn" : {
+        "amount" : 0.96,
+        "unitName" : "MG"
+      }
+    },
+    "image" : "",
+    "name" : "Chicken Breast"
+  }
+}
