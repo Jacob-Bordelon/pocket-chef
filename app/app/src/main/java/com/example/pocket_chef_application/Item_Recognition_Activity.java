@@ -183,7 +183,7 @@ public class Item_Recognition_Activity extends AppCompatActivity {
             CustomObjectDetectorOptions customObjectDetectorOptions = new CustomObjectDetectorOptions.Builder(model)
                     .setDetectorMode(CustomObjectDetectorOptions.STREAM_MODE)
                     .enableClassification()
-                    .setClassificationConfidenceThreshold(0.7f)
+                    .setClassificationConfidenceThreshold(0.9f)
                     .setMaxPerObjectLabelCount(3)
                     .build();
 
