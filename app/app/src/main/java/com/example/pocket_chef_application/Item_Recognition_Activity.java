@@ -54,6 +54,7 @@ import org.ahocorasick.trie.Emit;
 import org.ahocorasick.trie.Trie;
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -243,44 +244,44 @@ public class Item_Recognition_Activity extends AppCompatActivity {
 
                                     List<Button> buttons = Arrays.asList(option1,option2,option3,option4,option5);
                                     Button currentButton;
-                                    for(int i = 0; i<obj.getLabels().size(); i++){
-                                        currentButton = buttons.get(i);
-                                        currentButton.setText(obj.getLabels().get(i).getText());
-                                        Button finalCurrentButton = currentButton;
-                                        currentButton.setOnClickListener(new View.OnClickListener() {
-                                            public void onClick(View v) {
-                                                String selectedOption = finalCurrentButton.getText().toString();
-                                                int indexOfDash = selectedOption.indexOf("-");
-                                                if(indexOfDash != -1) {
-                                                    selectedOption = selectedOption.substring(0,indexOfDash-1).replace(",","");
-                                                }
-                                                String[] keywords = selectedOption.split(" ");
-                                                int highest = 0;
-                                                Food match = new Food();
 
-                                                for (Food food:foodList
-                                                     ) {
-                                                    int iTemp = searchWords(keywords,food.getName().toLowerCase());
-                                                    if(highest <= iTemp) {
-                                                        highest = iTemp;
-                                                        match = food;
-                                                    }
+                                    int highest = 0;
+                                    List<Food> matches =  new ArrayList<>();
+                                    for(int i = 0; i<obj.getLabels().size(); i++) {
+                                        String currOption = obj.getLabels().get(i).getText();
+                                        int indexOfDash = currOption.indexOf("-");
+                                        if (indexOfDash != -1) {
+                                            currOption = currOption.substring(0, indexOfDash - 1).replace(",", "");
+                                        }
+                                        String[] keywords = currOption.split(" ");
+                                        for (Food food : foodList
+                                        ) {
+                                            int iTemp = searchWords(keywords, food.getName());
+                                            if (highest < iTemp) {
+                                                highest = iTemp;
+                                                matches.clear();
+                                                matches.add(food);
+                                            } else if (highest == iTemp) {
+                                                if(!matches.contains(food)){
+                                                    matches.add(food);
                                                 }
-                                                System.out.println("MATCHING RATE: "+highest);
-                                                System.out.println("KEYWORDS: "+selectedOption);
-                                                System.out.println("MATCH: "+match.getName());
-
-                                                mDialog.dismiss();
-                                                if(highest > 0) {
-                                                    EditOperation(match);
+                                            }
+                                        }
+                                    }
+                                    if(highest > 0) {
+                                        for (int i = 0; i<matches.size(); i++) {
+                                            currentButton = buttons.get(i);
+                                            currentButton.setText(matches.get(i).getName());
+                                            int finalI = i;
+                                            currentButton.setOnClickListener(new View.OnClickListener() {
+                                                public void onClick(View v) {
+                                                    EditOperation(matches.get(finalI));
                                                     objectDetector.close();
                                                 }
-
-                                            }
-                                        });
+                                            });
+                                        }
                                     }
-
-
+                                      
 
                                     mDialog.findViewById(R.id.closebtn).setOnClickListener(v -> mDialog.dismiss());
                                     mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
