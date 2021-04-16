@@ -32,32 +32,48 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/closebtn">
 
-        <TextView
+        <Button
             android:id="@+id/option1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:layout_marginVertical="5dp"
             android:text="Option 1"/>
-        <TextView
+        <Button
             android:id="@+id/option2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:layout_marginVertical="5dp"
             android:text="Option 2"/>
-        <TextView
+        <Button
             android:id="@+id/option3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:layout_marginVertical="5dp"
             android:text="Option 3"/>
 
+        <Button
+            android:id="@+id/option4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginVertical="5dp"
+            android:text="Option 4"/>
 
+        <Button
+            android:id="@+id/option5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginVertical="5dp"
+            android:text="Option 5"/>
     </LinearLayout>
 
 

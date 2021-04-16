@@ -12,11 +12,13 @@ import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -25,11 +27,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
 import android.view.OrientationEventListener;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.pocket_chef_application.Firebase.FirebaseFoodDatabase_Helper;
+import com.example.pocket_chef_application.Model.Food;
+import com.example.pocket_chef_application.Pantry_utils.AddItemsToPantry;
+import com.example.pocket_chef_application.Pantry_utils.ItemsRecyclerView;
+import com.example.pocket_chef_application.Pantry_utils.PantryTextWatcher;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.mlkit.common.model.LocalModel;
 import com.google.mlkit.vision.common.InputImage;
@@ -37,9 +47,15 @@ import com.google.mlkit.vision.objects.DetectedObject;
 import com.google.mlkit.vision.objects.ObjectDetection;
 import com.google.mlkit.vision.objects.ObjectDetector;
 import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
+import com.squareup.picasso.Picasso;
 
+
+import org.ahocorasick.trie.Emit;
+import org.ahocorasick.trie.Trie;
+import org.w3c.dom.Text;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -58,7 +74,14 @@ public class Item_Recognition_Activity extends AppCompatActivity {
     private ExecutorService cameraExecutor;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private ProcessCameraProvider cameraProvider;
+    private List<Food> foodList;
 
+    private Dialog mDialog2;
+    private EditText amount, exp;
+    private Button submit;
+    private TextView name;
+    private ImageView img;
+    private PantryTextWatcher tw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +95,7 @@ public class Item_Recognition_Activity extends AppCompatActivity {
         checkPermissions();
         setOnClickListeners();
         cameraExecutor = Executors.newSingleThreadExecutor();
+        fetchFood();
     }
 
     private void setOnClickListeners() {
@@ -174,6 +198,7 @@ public class Item_Recognition_Activity extends AppCompatActivity {
             this.context = context;
             this.output = output;
             mDialog= new Dialog(this.context);
+            setupDialog();
 
             this.model = new LocalModel.Builder()
                     .setAssetFilePath("FoodModel.tflite")
@@ -184,7 +209,7 @@ public class Item_Recognition_Activity extends AppCompatActivity {
                     .setDetectorMode(CustomObjectDetectorOptions.STREAM_MODE)
                     .enableClassification()
                     .setClassificationConfidenceThreshold(0.7f)
-                    .setMaxPerObjectLabelCount(3)
+                    .setMaxPerObjectLabelCount(5)
                     .build();
 
             objectDetector = ObjectDetection.getClient(customObjectDetectorOptions);
@@ -209,14 +234,50 @@ public class Item_Recognition_Activity extends AppCompatActivity {
 
 
                                     mDialog.setContentView(R.layout.pantry_imgrec_dialog);
-                                    TextView option1, option2, option3;
+                                    Button option1, option2, option3, option4, option5;
                                     option1 = mDialog.findViewById(R.id.option1);
                                     option2 = mDialog.findViewById(R.id.option2);
                                     option3 = mDialog.findViewById(R.id.option3);
+                                    option4 = mDialog.findViewById(R.id.option4);
+                                    option5 = mDialog.findViewById(R.id.option5);
 
-                                    List<TextView> textViews = Arrays.asList(option1,option2,option3);
+                                    List<Button> buttons = Arrays.asList(option1,option2,option3,option4,option5);
+                                    Button currentButton;
                                     for(int i = 0; i<obj.getLabels().size(); i++){
-                                        textViews.get(i).setText(obj.getLabels().get(i).getText());
+                                        currentButton = buttons.get(i);
+                                        currentButton.setText(obj.getLabels().get(i).getText());
+                                        Button finalCurrentButton = currentButton;
+                                        currentButton.setOnClickListener(new View.OnClickListener() {
+                                            public void onClick(View v) {
+                                                String selectedOption = finalCurrentButton.getText().toString();
+                                                int indexOfDash = selectedOption.indexOf("-");
+                                                if(indexOfDash != -1) {
+                                                    selectedOption = selectedOption.substring(0,indexOfDash-1).replace(",","");
+                                                }
+                                                String[] keywords = selectedOption.split(" ");
+                                                int highest = 0;
+                                                Food match = new Food();
+
+                                                for (Food food:foodList
+                                                     ) {
+                                                    int iTemp = searchWords(keywords,food.getName().toLowerCase());
+                                                    if(highest <= iTemp) {
+                                                        highest = iTemp;
+                                                        match = food;
+                                                    }
+                                                }
+                                                System.out.println("MATCHING RATE: "+highest);
+                                                System.out.println("KEYWORDS: "+selectedOption);
+                                                System.out.println("MATCH: "+match.getName());
+
+                                                mDialog.dismiss();
+                                                if(highest > 0) {
+                                                    EditOperation(match);
+                                                    objectDetector.close();
+                                                }
+
+                                            }
+                                        });
                                     }
 
 
@@ -239,11 +300,82 @@ public class Item_Recognition_Activity extends AppCompatActivity {
         }
 
 
+    }
 
+    public void setupDialog() {
+        mDialog2 = new Dialog(this);
+        mDialog2.setContentView(R.layout.dialog_add_new_item);
+        amount = mDialog2.findViewById(R.id.edititem_amount);
+        exp = mDialog2.findViewById(R.id.edititem_exp);
+        name = mDialog2.findViewById(R.id.item_name);
+        submit = mDialog2.findViewById(R.id.submitbtn);
+        img = mDialog2.findViewById(R.id.item_image);
+        TextView cancel = mDialog2.findViewById(R.id.closebtn);
+
+        cancel.setOnClickListener(n-> mDialog2.onBackPressed());
+        tw = new PantryTextWatcher(exp);
+        exp.addTextChangedListener(tw);
+
+    }
+
+    private void EditOperation(Food i){
+        name.setText(i.getName());
+        if(i.getImage() != null && !i.getImage().equals("")){
+            Picasso.get()
+                    .load(i.getImage())
+                    .fit()
+                    .centerCrop()
+                    .into(img);
+        }
+
+        submit.setOnClickListener(v -> {
+
+            Pantry.AddItem(i, exp.getText().toString(), Integer.parseInt(amount.getText().toString()));
+            mDialog2.dismiss();
+            onBackPressed();
+        });
+
+        mDialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mDialog2.show();
 
 
     }
 
+    public int searchWords(String[] keywords, String lin2) {
+
+        Trie trie = Trie.builder().ignoreCase().addKeywords(keywords).build();
+        Collection<Emit> emits = trie.parseText(lin2);
+
+        return emits.size();
+    }
+
+    public void fetchFood() {
+        FirebaseFoodDatabase_Helper helper = new FirebaseFoodDatabase_Helper();
+        helper.readFood(new FirebaseFoodDatabase_Helper.DataStatus() {
+            @Override
+            public void DataIsLoaded(List<Food> foods, List<String> keys) {
+                foodList = foods;
+
+            }
+
+            @Override
+            public void DataIsInserted() {
+
+            }
+
+            @Override
+            public void DataIsUpdated() {
+
+            }
+
+            @Override
+            public void DataIsDeleted() {
+
+            }
+        });
+
+
+    }
 
 
 }
