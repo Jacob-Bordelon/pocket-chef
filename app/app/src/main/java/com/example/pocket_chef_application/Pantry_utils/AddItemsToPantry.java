@@ -46,36 +46,43 @@ public class AddItemsToPantry extends Fragment {
         View view = inflater.inflate(R.layout.activity_add_items_to_pantry, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.item_list);
-        back_btn = (ImageButton) view.findViewById(R.id.back_btn);
         camerabtn  = (ImageButton) view.findViewById(R.id.camerabtn);
         FirebaseFoodDatabase_Helper helper = new FirebaseFoodDatabase_Helper();
-        helper.readFood(new FirebaseFoodDatabase_Helper.DataStatus() {
+        helper.setConfig(mRecyclerView,getContext());
+        helper.defaultPage();
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void DataIsLoaded(List<Food> foods, List<String> keys) {
-                adapter = new ItemsRecyclerView(foods,getContext());
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                mRecyclerView.setHasFixedSize(true);
-                mRecyclerView.setAdapter(adapter);
-
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
             }
 
             @Override
-            public void DataIsInserted() {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
 
-            }
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
-            @Override
-            public void DataIsUpdated() {
 
-            }
+                if (linearLayoutManager != null &&
+                        linearLayoutManager.findLastCompletelyVisibleItemPosition() ==
+                                helper.getAdapterSize() - 1) {
+                    //bottom of list!
+                    helper.nextPage();
 
-            @Override
-            public void DataIsDeleted() {
+                }
+
+
 
             }
         });
 
-        back_btn.setOnClickListener(v-> getActivity().onBackPressed());
+
+
+
+
+
+
+
         camerabtn.setOnClickListener(v -> {
             Log.d(TAG, "onCreateView: ");
             image_recog();

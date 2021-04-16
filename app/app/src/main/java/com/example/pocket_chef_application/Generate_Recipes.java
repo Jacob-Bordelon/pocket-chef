@@ -1,11 +1,13 @@
 package com.example.pocket_chef_application;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
@@ -14,7 +16,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocket_chef_application.Firebase.FirebaseRecipeDatabase_Helper;
@@ -30,7 +35,7 @@ import java.util.stream.Collectors;
 
 public class Generate_Recipes extends Fragment {
     // Textview variables
-    private TextView filterButton, calCount;
+    private TextView filterButton, calCount, new_rec;
     private SeekBar calBar;
     private SearchView searchView;
     private ListView listView;
@@ -40,10 +45,9 @@ public class Generate_Recipes extends Fragment {
     private static final String TEXT = "text";
     private int min=10, max=100, current=10;
 
-    public static Generate_Recipes newInstance(String text){
+    public static Generate_Recipes newInstance(){
         Generate_Recipes fragment = new Generate_Recipes();
         Bundle args = new Bundle();
-        args.putString(TEXT,text);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,6 +57,7 @@ public class Generate_Recipes extends Fragment {
         // Initializes the view and the status bar on create for non null reference
         View view = inflater.inflate(R.layout.generate_recipes, container, false);
         filterMenu = (ConstraintLayout) view.findViewById(R.id.filterMenu);
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cookbook_recyclerview);
         RecipeAdapter adapter= new  RecipeAdapter();
         new FirebaseRecipeDatabase_Helper().readRecipes(new FirebaseRecipeDatabase_Helper.DataStatus() {
@@ -75,6 +80,16 @@ public class Generate_Recipes extends Fragment {
             public void DataIsDeleted() {
 
             }
+        });
+
+        new_rec = view.findViewById(R.id.new_rec);
+        new_rec.setOnClickListener(v ->{
+            UploadActivity uploadActivity = new UploadActivity(getActivity());
+            uploadActivity.show();
+            Window window = uploadActivity.getWindow();
+            window.setLayout(CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.MATCH_PARENT);
+
+
         });
 
         filterButton = view.findViewById(R.id.filterbtn);

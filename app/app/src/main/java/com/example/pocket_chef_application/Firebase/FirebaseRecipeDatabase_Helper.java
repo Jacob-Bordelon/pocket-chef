@@ -42,7 +42,7 @@ public class FirebaseRecipeDatabase_Helper {
 
     public void readRecipes(final DataStatus dataStatus){
         mReference
-                .limitToFirst(100)
+                .limitToFirst(20)
                 .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -65,6 +65,10 @@ public class FirebaseRecipeDatabase_Helper {
 
             }
         });
+    }
+
+    public void readNextPage(final DataStatus dataStatus){
+
     }
 
 

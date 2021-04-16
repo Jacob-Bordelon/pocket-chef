@@ -66,6 +66,7 @@ public class Pantry extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TransitionInflater inflater = TransitionInflater.from(requireContext());
+        setEnterTransition(inflater.inflateTransition(R.transition.fade));
         setExitTransition(inflater.inflateTransition(R.transition.fade));
         context = this.getContext();
     }
@@ -143,69 +144,6 @@ public class Pantry extends Fragment {
             }
         });
         searchView.clearFocus();
-        /*expand_menu_btn.setOnClickListener(v -> {
-            if(exanded_menu.getVisibility() == View.GONE){
-                exanded_menu.setVisibility(View.VISIBLE);
-                expand_menu_btn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
-                camerabtn.setVisibility(View.VISIBLE);
-                suggestionsView.setVisibility(View.VISIBLE);
-                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-
-                        helper.getFood(dataStatus, newText);
-
-                        //Sadapter.filter(newText);
-                        return false;
-                    }
-                });
-            }else {
-                exanded_menu.setVisibility(View.GONE);
-                expand_menu_btn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
-                camerabtn.setVisibility(View.GONE);
-                suggestionsView.setVisibility(View.GONE);
-                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-                        Padapter.filter(newText);
-                        return false;
-                    }
-                });
-            }
-        });
-
-        DatabaseReference connectedRef = helper.mDatabase.getInstance().getReference(".info/connected");
-        connectedRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    statusVal.setTextColor(getContext().getColor(R.color.fresh));
-                    statusVal.setText("connected");
-                } else {
-                    statusVal.setTextColor(getContext().getColor(R.color.expired));
-                    statusVal.setText("not connected");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Listener was cancelled");
-            }
-        });*/
-        expand_menu_btn.setOnClickListener(v -> {
-            MainActivity.switch_fragment(new AddItemsToPantry());
-        });
     }
 
     public void setupUI(View view) {
