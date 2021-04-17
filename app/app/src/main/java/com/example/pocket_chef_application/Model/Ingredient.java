@@ -1,5 +1,9 @@
 package com.example.pocket_chef_application.Model;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class Ingredient {
     private int amount;
     private String name, measurement;
@@ -37,6 +41,7 @@ public class Ingredient {
         this.measurement = measurement;
     }
 
+    @Exclude
     public String getFilterName(){
         return this.name.split(",")[0];
     }

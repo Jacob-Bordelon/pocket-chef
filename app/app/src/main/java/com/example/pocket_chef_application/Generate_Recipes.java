@@ -60,7 +60,7 @@ public class Generate_Recipes extends Fragment {
         filterMenu = (ConstraintLayout) view.findViewById(R.id.filterMenu);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cookbook_recyclerview);
-        RecipeAdapter adapter= new  RecipeAdapter();
+        RecipeAdapter adapter = new  RecipeAdapter();
         helper = new FirebaseRecipeDatabase_Helper();
         helper.readRecipes(recipes -> adapter.setConfig(mRecyclerView,getContext(), recipes));
 
@@ -110,17 +110,14 @@ public class Generate_Recipes extends Fragment {
         });
 
         usePantry = (CheckBox) view.findViewById(R.id.usepantry_checkBox);
-        usePantry.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    LocalDB db = LocalDB.getDBInstance(getContext());
-                    List<DBItem> dbitems = db.itemDAO().getAllItems();
-                    adapter.addfilter(dbitems);
+        usePantry.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+                LocalDB db = LocalDB.getDBInstance(getContext());
+                List<DBItem> dbitems = db.itemDAO().getAllItems();
+                adapter.addfilter(dbitems);
 
-                }else{
-                    adapter.clearAllFilters();
-                }
+            }else{
+                adapter.clearAllFilters();
             }
         });
 

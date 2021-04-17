@@ -51,7 +51,6 @@ public class RecipeAdapter {
         private TextView titleView, prepView, cookView, totalView, diffView, authorView, descView;
         private ConstraintLayout hiddenView;
         private ImageView imageView;
-        private String key;
         private CardView cardView;
         private RatingBar ratingBar;
         private ChipGroup filterView;
@@ -91,19 +90,15 @@ public class RecipeAdapter {
             addChips(new ArrayList<>(recipe.getIngredients().values()));
 
 
-            if(recipe.getImage() != null){
+            if(recipe.getImage() != null && recipe.getImage().contains("https://firebasestorage.googleapis.com")){
                 Picasso.get()
                         .load(recipe.getImage())
                         .fit()
                         .centerCrop()
                         .into(imageView);
-                Log.i(TAG, "bind: Load image into adapter for- "+recipe.getTitle());
-            }
-            else{
-                Log.i(TAG, "bind: No image found for: "+recipe.getTitle());
+            } else{
                 imageView.setImageResource(R.drawable.no_image_found);
             }
-            this.key = key;
         }
 
 
@@ -138,7 +133,7 @@ public class RecipeAdapter {
         private ArrayList<Recipe> backups;
 
         public Adapter(List<Recipe> recipeList) {
-            this.recipeList = recipeList;
+            Adapter.recipeList = recipeList;
             backups=new ArrayList<>();
             backups.addAll(recipeList);
         }

@@ -8,6 +8,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,7 @@ public class FirebaseRecipeDatabase_Helper {
     private List<Recipe> recipes = new ArrayList<>();
     private final String TAG = "FirebaseRecipeHelper";
     private ValueEventListener listener;
-    private int limitAmount;
+    private int limitAmount = 20;
     public String DEFAULT_PAGE_INDEX = "boiled egg";
 
     public void removeListeners() {
@@ -33,11 +35,11 @@ public class FirebaseRecipeDatabase_Helper {
         void RetrievedData(List<Recipe> recipes, String nextPage);
     }
 
-
-
     public FirebaseRecipeDatabase_Helper() {
         mDatabase = FirebaseDatabase.getInstance();
         mReference = mDatabase.getReference("recipeBook");
+
+
         listener = nullValueEventListener();
 
 
@@ -57,6 +59,8 @@ public class FirebaseRecipeDatabase_Helper {
         };
     }
 
+    //TODO - add update operation
+
     public void readRecipes(final DataStatus dataStatus){
         mReference.removeEventListener(listener);
         listener = new ValueEventListener() {
@@ -66,8 +70,6 @@ public class FirebaseRecipeDatabase_Helper {
 
                 for(DataSnapshot keyNode : snapshot.getChildren()){
                     Recipe recipe = keyNode.getValue(Recipe.class);
-                    recipe.setTitle(keyNode.getKey());
-
                     recipes.add(recipe);
                 }
                 dataStatus.DataIsLoaded(recipes);
@@ -79,9 +81,7 @@ public class FirebaseRecipeDatabase_Helper {
             }
         };
 
-        mReference
-                .limitToFirst(20)
-                .addValueEventListener(listener);
+        mReference.limitToFirst(limitAmount).addValueEventListener(listener);
     }
 
     public void paginate(String page, final FirebaseRecipeDatabase_Helper.Data data){
