@@ -1,13 +1,8 @@
 package com.example.pocket_chef_application.Firebase;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
-import com.example.pocket_chef_application.Gen_Recipes.Ingredient;
-import com.example.pocket_chef_application.Model.Food;
 import com.example.pocket_chef_application.Model.Recipe;
-import com.example.pocket_chef_application.Pantry_utils.Suggested_Item;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,9 +10,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class FirebaseRecipeDatabase_Helper {
     protected FirebaseDatabase mDatabase;

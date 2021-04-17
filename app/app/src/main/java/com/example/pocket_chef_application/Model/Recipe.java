@@ -1,17 +1,7 @@
 package com.example.pocket_chef_application.Model;
 
-import android.util.Log;
-
-import com.example.pocket_chef_application.Gen_Recipes.Ingredient;
-import com.example.pocket_chef_application.MainActivity;
-
-import org.json.JSONArray;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 import com.google.firebase.database.IgnoreExtraProperties;
 

@@ -1,6 +1,5 @@
 package com.example.pocket_chef_application.Recipe_utils;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pocket_chef_application.Gen_Recipes.Ingredient;
+import com.example.pocket_chef_application.Model.Ingredient;
 import com.example.pocket_chef_application.R;
 
 import java.util.List;

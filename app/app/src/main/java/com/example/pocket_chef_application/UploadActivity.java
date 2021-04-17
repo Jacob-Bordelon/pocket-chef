@@ -1,104 +1,67 @@
 package com.example.pocket_chef_application;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
+import android.provider.MediaStore;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.annotation.Nullable;
 
-import com.example.pocket_chef_application.Firebase.FirebaseFoodDatabase_Helper;
 import com.example.pocket_chef_application.Firebase.SuggestionAdapter;
-import com.example.pocket_chef_application.Gen_Recipes.Ingredient;
-import com.example.pocket_chef_application.Model.Camera;
-import com.example.pocket_chef_application.Model.Food;
-import com.example.pocket_chef_application.Model.Recipe;
-import com.example.pocket_chef_application.Recipe_utils.Ingredient_Adapter;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.pocket_chef_application.Model.Ingredient;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-public class UploadActivity extends Dialog
-        implements android.view.View.OnClickListener {
+public class UploadActivity extends Activity implements View.OnClickListener {
 
     final static String TAG = UploadActivity.class.getSimpleName();
+    private static final int PICK_IMAGE = 100;
+    private Uri imageUri;
     private TextView cancel, save, upload;
     private EditText name, prep_time, cook_time, desc;
-    private LinearLayout ingredients;
-    private Spinner diff;
     private ImageView image;
-    private Activity activity;
+    private LinearLayout ingredients, instructions;
+    private Spinner diff;
 
     private ArrayList<Ingredient> ingredientsList;
     private String[] unitsList;
 
-
-
-
-    public UploadActivity(Activity a) {
-        super(a);
-        this.activity = a;
-    }
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_upload);
+        setContentView(R.layout.upload_layout);
         setupViews();
         setupOnClickListeners();
         setupListViews();
 
+    }
 
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.nothing, R.anim.slide_out_top);
     }
 
     private void setupViews(){
@@ -107,23 +70,24 @@ public class UploadActivity extends Dialog
         cook_time = findViewById(R.id.rec_cook);
         desc = findViewById(R.id.rec_desc);
         ingredients = findViewById(R.id.rec_ingredients);
-        image = findViewById(R.id.rec_img);
-        diff = findViewById(R.id.rec_difficulty);
+        image = findViewById(R.id.imageView);
+        diff =  findViewById(R.id.rec_difficulty);
         cancel = findViewById(R.id.cancel);
-        save = findViewById(R.id.savebtn);
+        save =  findViewById(R.id.savebtn);
         upload = findViewById(R.id.uploadbtn);
 
-        unitsList= getContext().getResources().getStringArray(R.array.units);
+        unitsList = this.getResources().getStringArray(R.array.units);
         ingredientsList = new ArrayList<>();
 
-
-
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
     }
 
     private void setupOnClickListeners(){
         cancel.setOnClickListener(this);
         save.setOnClickListener(this);
         upload.setOnClickListener(this);
+        image.setOnClickListener(this);
     }
 
     private void setupListViews(){
@@ -134,38 +98,17 @@ public class UploadActivity extends Dialog
     @SuppressLint("UseCompatLoadingForDrawables")
     private void newIngredient(){
         View ingredientView = getLayoutInflater().inflate(R.layout.ingredient_view, null, false);
-        EditText amount = (EditText) ingredientView.findViewById(R.id.amount);
-        AutoCompleteTextView prompt = (AutoCompleteTextView) ingredientView.findViewById(R.id.prompt);
-        Spinner units = (Spinner) ingredientView.findViewById(R.id.units);
-        Button add = (Button) ingredientView.findViewById(R.id.button5);
+        EditText amount =  ingredientView.findViewById(R.id.amount);
+        AutoCompleteTextView prompt =  ingredientView.findViewById(R.id.prompt);
+        Spinner units = ingredientView.findViewById(R.id.units);
+        Button add = ingredientView.findViewById(R.id.button5);
 
         List<String> keyList = new ArrayList<>();
-        SuggestionAdapter adapter = new SuggestionAdapter(getContext(),android.R.layout.simple_dropdown_item_1line,keyList);
+        SuggestionAdapter adapter = new SuggestionAdapter(this,android.R.layout.simple_dropdown_item_1line,keyList);
         prompt.setAdapter(adapter);
-        FirebaseFoodDatabase_Helper helper = new FirebaseFoodDatabase_Helper();
-
-        prompt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.d(TAG, "onTextChanged: "+s.toString());
 
 
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, unitsList);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, unitsList);
         units.setAdapter(arrayAdapter);
 
         add.setOnClickListener(v -> {
@@ -175,10 +118,10 @@ public class UploadActivity extends Dialog
                 String unit = units.getSelectedItem().toString();
                 ingredientsList.add(new Ingredient(amnt, name, unit));
                 add.setOnClickListener(v1 -> { removeIngredient(ingredientView); });
-                add.setBackground(getContext().getDrawable(R.drawable.ic_baseline_delete_24));
+                add.setBackground(getDrawable(R.drawable.ic_baseline_delete_24));
                 newIngredient();
             }else {
-                Toast.makeText(getContext(),"Values have been left empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"Values have been left empty", Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -211,7 +154,6 @@ public class UploadActivity extends Dialog
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.cancel:
-                dismiss();
                 break;
             case R.id.savebtn:
                 //TODO - grab all values from each pane
@@ -220,12 +162,59 @@ public class UploadActivity extends Dialog
                 //TODO - store that file locally on the device
                 break;
             case R.id.uploadbtn:
+                String uniqueID = UUID.randomUUID().toString();
                 //TODO - grab all values from each pane
                 //TODO - save those values to a json file type structure
-                //TODO - send the file to firebase (send the image to storage
+                //TODO - send the file to firebase (send the image to storage)
+                uploadImageToFirebase(uniqueID);
+                break;
+            case R.id.imageView:
+                //TODO - show option of take photo or select from existing
+                openGallery();
+
+
                 break;
         }
+    }
 
+
+
+    private void uploadImageToFirebase(String name){
+        if(imageUri != null){
+            ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            StorageReference ref = storageReference.child("/recipes/" + name);
+
+            ref.putFile(imageUri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                                progressDialog.dismiss();
+                                Toast.makeText(UploadActivity.this, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
+                            })
+                    .addOnFailureListener(e -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(UploadActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnProgressListener(taskSnapshot -> {
+                                double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                                progressDialog.setMessage("Uploaded " + (int)progress + "%");
+                            });
+        }
+    }
+
+    private void openGallery() {
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE && data != null && data.getData() != null){
+            imageUri = data.getData();
+            image.setImageURI(imageUri);
+        }
     }
 }
 

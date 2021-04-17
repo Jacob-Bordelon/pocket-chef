@@ -1,4 +1,4 @@
-package com.example.pocket_chef_application.Gen_Recipes;
+package com.example.pocket_chef_application.Model;
 
 public class Ingredient {
     private int amount;

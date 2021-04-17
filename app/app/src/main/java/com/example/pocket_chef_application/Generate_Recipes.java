@@ -1,6 +1,8 @@
 package com.example.pocket_chef_application;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
@@ -31,6 +33,7 @@ import com.example.pocket_chef_application.data.LocalDB;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Generate_Recipes extends Fragment {
@@ -63,12 +66,9 @@ public class Generate_Recipes extends Fragment {
 
         new_rec = view.findViewById(R.id.new_rec);
         new_rec.setOnClickListener(v ->{
-            UploadActivity uploadActivity = new UploadActivity(getActivity());
-            uploadActivity.show();
-            Window window = uploadActivity.getWindow();
-            window.setLayout(CoordinatorLayout.LayoutParams.MATCH_PARENT, CoordinatorLayout.LayoutParams.MATCH_PARENT);
-
-
+            Intent i = new Intent(this.getContext(), UploadActivity.class);
+            startActivity(i);
+            requireActivity().overridePendingTransition(R.anim.slide_in_top, R.anim.nothing);
         });
 
         filterButton = view.findViewById(R.id.filterbtn);
