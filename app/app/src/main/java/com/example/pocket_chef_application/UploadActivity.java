@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -25,7 +27,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,6 +46,7 @@ public class UploadActivity extends Activity implements View.OnClickListener {
     private Spinner diff;
 
     private ArrayList<Ingredient> ingredientsList;
+    private HashMap<String,String> instructionsList;
     private String[] unitsList;
 
     private FirebaseStorage storage;
@@ -75,9 +80,12 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         cancel = findViewById(R.id.cancel);
         save =  findViewById(R.id.savebtn);
         upload = findViewById(R.id.uploadbtn);
+        instructions = findViewById(R.id.rec_instructions);
+
 
         unitsList = this.getResources().getStringArray(R.array.units);
         ingredientsList = new ArrayList<>();
+        instructionsList =  new HashMap<>();
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -92,12 +100,13 @@ public class UploadActivity extends Activity implements View.OnClickListener {
 
     private void setupListViews(){
         newIngredient();
+        newStep();
 
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void newIngredient(){
-        View ingredientView = getLayoutInflater().inflate(R.layout.ingredient_view, null, false);
+        @SuppressLint("InflateParams") View ingredientView = getLayoutInflater().inflate(R.layout.ingredient_view, null, false);
         EditText amount =  ingredientView.findViewById(R.id.amount);
         AutoCompleteTextView prompt =  ingredientView.findViewById(R.id.prompt);
         Spinner units = ingredientView.findViewById(R.id.units);
@@ -112,12 +121,14 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         units.setAdapter(arrayAdapter);
 
         add.setOnClickListener(v -> {
-            if (!amount.getText().toString().matches("") && !prompt.getText().toString().matches("") && !units.getSelectedItem().toString().matches("")) {
-                int amnt = Integer.parseInt(amount.getText().toString());
-                String name = prompt.getText().toString();
-                String unit = units.getSelectedItem().toString();
-                ingredientsList.add(new Ingredient(amnt, name, unit));
-                add.setOnClickListener(v1 -> { removeIngredient(ingredientView); });
+            //if (!amount.getText().toString().matches("") && !prompt.getText().toString().matches("") && !units.getSelectedItem().toString().matches("")) {
+              if(true){
+                //int amnt = Integer.parseInt(amount.getText().toString());
+                //String name = prompt.getText().toString();
+                //String unit = units.getSelectedItem().toString();
+                Ingredient ingredient = new Ingredient(5, "", "unit");
+                ingredientsList.add(ingredient);
+                add.setOnClickListener(v1 -> { removeIngredient(ingredientView); ingredientsList.remove(ingredient); });
                 add.setBackground(getDrawable(R.drawable.ic_baseline_delete_24));
                 newIngredient();
             }else {
@@ -132,6 +143,79 @@ public class UploadActivity extends Activity implements View.OnClickListener {
 
     private void removeIngredient(View view){
         ingredients.removeView(view);
+    }
+
+    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
+    private void newStep(){
+        @SuppressLint("InflateParams") View instructionView = getLayoutInflater().inflate(R.layout.instruction_view, null, false);
+        TextView steptext = instructionView.findViewById(R.id.steptext);
+        EditText instruct = instructionView.findViewById(R.id.instruction);
+        Button addButton = instructionView.findViewById(R.id.addbtn);
+
+        int stepInt = instructions.getChildCount()+1;
+        steptext.setText("Step "+stepInt+": ");
+
+        addButton.setOnClickListener(v->addStep(addButton,instructionView));
+
+        if(instructions.getChildCount() > 0){
+            instruct.requestFocus();
+        }
+
+        instruct.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN)
+            {
+                switch (keyCode)
+                {
+                    case KeyEvent.KEYCODE_DPAD_CENTER:
+                    case KeyEvent.KEYCODE_ENTER:
+                        addStep(addButton,instructionView);
+                        return true;
+                    default:
+                        break;
+                }
+            }
+            return false;
+        });
+        instructions.addView(instructionView);
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void addStep(Button addButton, View view){
+        addButton.setOnClickListener(v1 -> { removeStep(view); });
+        addButton.setBackground(getDrawable(R.drawable.ic_baseline_delete_24));
+        newStep();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void removeStep(View view){
+        int start = instructions.indexOfChild(view);
+        instructions.removeView(view);
+        for(int i = start; i<instructions.getChildCount(); i++){
+            View v = instructions.getChildAt(i);
+            TextView stepText = v.findViewById(R.id.steptext);
+            stepText.setText("Step "+(i+1)+": ");
+        }
+    }
+
+    private Pair<String, String> getInstructionValues(View view){
+        TextView steptext = view.findViewById(R.id.steptext);
+        EditText instruct = view.findViewById(R.id.instruction);
+        String stepNum = steptext.getText().toString();
+        stepNum = stepNum.replace(" ","");
+        stepNum = stepNum.replace(":","");
+
+        String action = instruct.getText().toString();
+
+        return new Pair<>(stepNum, action);
+
+    }
+
+    private void getAllInstructions(){
+        for (int i = 0; i<instructions.getChildCount(); i++){
+            Pair<String, String> entry = getInstructionValues(instructions.getChildAt(i));
+            System.out.println(entry.first+" "+entry.second);
+            instructionsList.put(entry.first, entry.second);
+        }
     }
 
     private void grabAllValues(){
@@ -154,6 +238,7 @@ public class UploadActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.cancel:
+                finish();
                 break;
             case R.id.savebtn:
                 //TODO - grab all values from each pane
@@ -164,6 +249,7 @@ public class UploadActivity extends Activity implements View.OnClickListener {
             case R.id.uploadbtn:
                 String uniqueID = UUID.randomUUID().toString();
                 //TODO - grab all values from each pane
+                getAllInstructions();
                 //TODO - save those values to a json file type structure
                 //TODO - send the file to firebase (send the image to storage)
                 uploadImageToFirebase(uniqueID);

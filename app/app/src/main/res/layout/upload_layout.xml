@@ -80,43 +80,52 @@
         app:layout_constraintStart_toEndOf="@+id/diff_label"
         app:layout_constraintTop_toBottomOf="@+id/time_container" />
 
-    <EditText
-        android:id="@+id/rec_desc"
-        android:hint="Description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/recipe_info_boarder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <LinearLayout
-        android:id="@+id/rec_ingredients"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/rec_ingredient_border"
-        android:layoutAnimation="@anim/layout_animation"
-        android:orientation="vertical"
-        android:gravity="top"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/button_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rec_desc" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
 
-    <LinearLayout
-        android:id="@+id/rec_instructions"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical"
-        android:background="@drawable/rec_ingredient_border"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rec_ingredients" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            <EditText
+                android:id="@+id/rec_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minLines="4"
+                android:layout_margin="10dp"
+                android:background="@drawable/recipe_info_boarder"
+                android:hint="Description" />
+
+            <LinearLayout
+                android:id="@+id/rec_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/rec_ingredient_border"
+                android:gravity="top"
+                android:layoutAnimation="@anim/layout_animation"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:id="@+id/rec_instructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rec_ingredient_border"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/button_container"
@@ -164,10 +173,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
 
 
 
