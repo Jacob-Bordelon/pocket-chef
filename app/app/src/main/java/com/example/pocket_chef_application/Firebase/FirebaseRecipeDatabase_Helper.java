@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.pocket_chef_application.Gen_Recipes.Ingredient;
+import com.example.pocket_chef_application.Model.Food;
 import com.example.pocket_chef_application.Model.Recipe;
 import com.example.pocket_chef_application.Pantry_utils.Suggested_Item;
 import com.google.firebase.database.DataSnapshot;
@@ -23,12 +24,20 @@ public class FirebaseRecipeDatabase_Helper {
     private DatabaseReference mReference;
     private List<Recipe> recipes = new ArrayList<>();
     private final String TAG = "FirebaseRecipeHelper";
+    private ValueEventListener listener;
+    private int limitAmount;
+    public String DEFAULT_PAGE_INDEX = "boiled egg";
+
+    public void removeListeners() {
+        mReference.removeEventListener(listener);
+    }
 
     public interface DataStatus{
-        void DataIsLoaded(List<Recipe> recipes, List<String> keys);
-        void DataIsInserted();
-        void DataIsUpdated();
-        void DataIsDeleted();
+        void DataIsLoaded(List<Recipe> recipes);
+    }
+
+    public interface Data{
+        void RetrievedData(List<Recipe> recipes, String nextPage);
     }
 
 
@@ -36,39 +45,80 @@ public class FirebaseRecipeDatabase_Helper {
     public FirebaseRecipeDatabase_Helper() {
         mDatabase = FirebaseDatabase.getInstance();
         mReference = mDatabase.getReference("recipeBook");
+        listener = nullValueEventListener();
 
 
     }
 
-    public void readRecipes(final DataStatus dataStatus){
-        mReference
-                .limitToFirst(20)
-                .addValueEventListener(new ValueEventListener() {
+    private ValueEventListener nullValueEventListener(){
+        return new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                recipes.clear();
-                List<String> keys = new ArrayList<>();
 
-                for(DataSnapshot keyNode : snapshot.getChildren()){
-                    keys.add(keyNode.getKey());
-                    Recipe recipe = keyNode.getValue(Recipe.class);
-                    recipe.setTitle(keyNode.getKey());
-
-
-                    recipes.add(recipe);
-                }
-                dataStatus.DataIsLoaded(recipes, keys);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        };
     }
 
-    public void readNextPage(final DataStatus dataStatus){
+    public void readRecipes(final DataStatus dataStatus){
+        mReference.removeEventListener(listener);
+        listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                recipes.clear();
 
+                for(DataSnapshot keyNode : snapshot.getChildren()){
+                    Recipe recipe = keyNode.getValue(Recipe.class);
+                    recipe.setTitle(keyNode.getKey());
+
+                    recipes.add(recipe);
+                }
+                dataStatus.DataIsLoaded(recipes);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
+        mReference
+                .limitToFirst(20)
+                .addValueEventListener(listener);
+    }
+
+    public void paginate(String page, final FirebaseRecipeDatabase_Helper.Data data){
+        mReference.removeEventListener(listener);
+        listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                recipes.clear();
+                String nextpage = "";
+                for(DataSnapshot keyNode : snapshot.getChildren()){
+                    Recipe recipe = keyNode.getValue(Recipe.class);
+                    recipe.setTitle(keyNode.getKey());
+                    nextpage = keyNode.getKey();
+                    recipes.add(recipe);
+                }
+
+                data.RetrievedData(recipes, nextpage);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        mReference
+                .orderByKey()
+                .startAt(page)
+                .limitToFirst(limitAmount)
+                .addListenerForSingleValueEvent(listener);
     }
 
 

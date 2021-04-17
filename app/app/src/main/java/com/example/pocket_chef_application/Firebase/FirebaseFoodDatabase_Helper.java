@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,79 +50,100 @@ public class FirebaseFoodDatabase_Helper {
     public String gotoNextPage = "";
     public FoodItemView adapter;
     private int limitAmount = 10;
-    private List<Integer> itemsFdcIds;
+    private ValueEventListener listener;
 
     public static String key;
 
-    public interface DataStatus{
-        void DataIsLoaded(List<Food> foods, List<String> keys);
-        void DataIsInserted();
-        void DataIsUpdated();
-        void DataIsDeleted();
-    }
+
 
     public interface Data{
         void RetrievedData(List<Food> foods, String nextPage);
+    }
+
+    public interface Container{
+        void returnData(List<Food> foods);
     }
 
     public FirebaseFoodDatabase_Helper() {
 
         mDatabase = FirebaseDatabase.getInstance();
         mReference = mDatabase.getReference("food");
+        listener=voidListener();
 
     }
 
-    public void readFood(final DataStatus dataStatus){
-        mReference
-                .orderByKey()
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        foodList.clear();
-                        List<String> keys = new ArrayList<>();
+    public void removeListener(){
+        mReference.removeEventListener(listener);
+    }
+
+    public ValueEventListener voidListener(){
+        return new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+    }
 
 
-                        for(DataSnapshot keyNode : snapshot.getChildren()){
-                            key = keyNode.getKey();
-                            Food food = keyNode.getValue(Food.class);
-                            keys.add(key);
-                            foodList.add(food);
-                        }
-                        dataStatus.DataIsLoaded(foodList, keys);
-                    }
+    public void searchFor(String queryText, final Container container){
+        mReference.removeEventListener(listener);
+        listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                foodList.clear();
+                for(DataSnapshot keyNode : snapshot.getChildren()){
+                    Food food = keyNode.getValue(Food.class);
+                    foodList.add(food);
+                }
+                container.returnData(foodList);
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+            }
 
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        mReference.orderByChild("fullName")
+                .startAt(queryText)
+                .endAt(queryText+"\uf8ff")
+                .addListenerForSingleValueEvent(listener);
+
     }
 
     public void paginate(String i, final Data data){
+        mReference.removeEventListener(listener);
+        listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                foodList.clear();
+                String nextpage = "";
+                for(DataSnapshot keyNode : snapshot.getChildren()){
+                    Food food = keyNode.getValue(Food.class);
+                    foodList.add(food);
+                    nextpage = keyNode.getKey();
+                }
+
+                data.RetrievedData(foodList, nextpage);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
         mReference
                 .orderByKey()
                 .startAt(i)
                 .limitToFirst(limitAmount)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        foodList.clear();
-                        String nextpage = "";
-                        for(DataSnapshot keyNode : snapshot.getChildren()){
-                            Food food = keyNode.getValue(Food.class);
-                            foodList.add(food);
-                            nextpage = keyNode.getKey();
-                        }
-
-                        data.RetrievedData(foodList, nextpage);
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                .addListenerForSingleValueEvent(listener);
     }
 
     public void defaultPage(){
@@ -138,12 +160,10 @@ public class FirebaseFoodDatabase_Helper {
         });
     }
 
-
     // Custom Firebase Specific Recycler View Class
     public void setConfig(RecyclerView recyclerView, Context context){
         this.context = context;
         this.recyclerView = recyclerView;
-        itemsFdcIds = new ArrayList<>();
         adapter = new FoodItemView();
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
@@ -155,9 +175,18 @@ public class FirebaseFoodDatabase_Helper {
         return adapter.items.size();
     }
 
+    public void clearAdapterItems (){
+       adapter.clearList();
+    }
+
+    public void restoreAdapterItems(){
+        adapter.restoreList();
+    }
+
 
     public class FoodItemView extends RecyclerView.Adapter<FoodItemView.FoodItemHolder>{
         List<Food> items = new ArrayList<>();
+        List<Food> backup = new ArrayList<>();
 
         public FoodItemView(List<Food> items) {
             this.items = items;
@@ -168,16 +197,25 @@ public class FirebaseFoodDatabase_Helper {
         }
 
         public void updateList(List<Food> foods){
-            List<Food> foodItems = foodList.stream()
-                    .collect(Collectors.toList());
+            Set<Integer> itemsIDs = items.stream()
+                    .map(Food::getFdcId)
+                    .collect(toSet());
 
-            Log.d(TAG, "updateList: "+foodItems.size()+" "+items.size()+" "+foods.size());
+            foods.stream()
+                    .filter(food -> !itemsIDs.contains(food.getFdcId()))
+                    .forEach(items::add);
 
-            if(foodItems.size() >= 1){
-                Log.d(TAG, "updateList: "+foods.size());
-                items.addAll(foodItems);
-            }
-            this.notifyDataSetChanged();
+            notifyDataSetChanged();
+        }
+
+        public void clearList(){
+            items.clear();
+            notifyDataSetChanged();
+        }
+
+        public void restoreList(){
+            items.addAll(backup);
+            notifyDataSetChanged();
         }
 
         @NonNull

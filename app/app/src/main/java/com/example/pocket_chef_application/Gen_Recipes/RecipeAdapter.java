@@ -52,10 +52,10 @@ public class RecipeAdapter {
     private static Context context;
     public Adapter recipeAdapter;
 
-    public void setConfig(RecyclerView recyclerView, Context context, List<Recipe> recipes, List<String> keys)
+    public void setConfig(RecyclerView recyclerView, Context context, List<Recipe> recipes)
     {
         this.context = context;
-        recipeAdapter = new Adapter(recipes, keys);
+        recipeAdapter = new Adapter(recipes);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(recipeAdapter);
     }
@@ -93,7 +93,7 @@ public class RecipeAdapter {
 
         // using the same names from the constructor, set the values per each unique item here
         @SuppressLint("SetTextI18n")
-        public void bind(Recipe recipe, String key){
+        public void bind(Recipe recipe){
             titleView.setText(recipe.getTitle());
             prepView.setText(Integer.toString(recipe.getPrep_time()));
             cookView.setText(Integer.toString(recipe.getCook_time()));
@@ -151,9 +151,8 @@ public class RecipeAdapter {
         private List<String> keysList;
         private ArrayList<Recipe> backups;
 
-        public Adapter(List<Recipe> recipeList, List<String> keysList) {
+        public Adapter(List<Recipe> recipeList) {
             this.recipeList = recipeList;
-            this.keysList = keysList;
             backups=new ArrayList<>();
             backups.addAll(recipeList);
         }
@@ -166,7 +165,7 @@ public class RecipeAdapter {
 
         @Override
         public void onBindViewHolder(@NonNull RecipeItemView holder, int position) {
-            holder.bind(recipeList.get(position), keysList.get(position));
+            holder.bind(recipeList.get(position));
         }
 
         @Override

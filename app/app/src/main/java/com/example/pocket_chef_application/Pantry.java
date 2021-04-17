@@ -48,7 +48,6 @@ public class Pantry extends Fragment {
     private ConstraintLayout exanded_menu;
     private View rootView;
     private RecyclerView mRecyclerview, suggestionsView;
-    private FirebaseFoodDatabase_Helper.DataStatus dataStatus;
     private FirebaseFoodDatabase_Helper helper;
 
 
@@ -93,7 +92,7 @@ public class Pantry extends Fragment {
     private void initSearchView(View view) {
         suggestionsView = view.findViewById(R.id.pantry_suggestions);
         Sadapter = new FoodItemAdapter();
-        dataStatus = new FirebaseFoodDatabase_Helper.DataStatus() {
+        /*dataStatus = new FirebaseFoodDatabase_Helper.DataStatus() {
             @Override
             public void DataIsLoaded(List<Food> foods, List<String> keys) {
                 Sadapter.setConfig(suggestionsView, getContext(), foods, keys);
@@ -113,7 +112,7 @@ public class Pantry extends Fragment {
             public void DataIsDeleted() {
 
             }
-        };
+        };*/
         helper = new FirebaseFoodDatabase_Helper();
     }
 

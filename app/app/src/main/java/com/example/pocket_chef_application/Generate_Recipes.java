@@ -37,11 +37,10 @@ public class Generate_Recipes extends Fragment {
     // Textview variables
     private TextView filterButton, calCount, new_rec;
     private SeekBar calBar;
-    private SearchView searchView;
-    private ListView listView;
     private CheckBox usePantry;
     private ConstraintLayout filterMenu;
     private RecyclerView mRecyclerView;
+    private FirebaseRecipeDatabase_Helper helper;
     private static final String TEXT = "text";
     private int min=10, max=100, current=10;
 
@@ -54,33 +53,13 @@ public class Generate_Recipes extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Initializes the view and the status bar on create for non null reference
         View view = inflater.inflate(R.layout.generate_recipes, container, false);
         filterMenu = (ConstraintLayout) view.findViewById(R.id.filterMenu);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cookbook_recyclerview);
         RecipeAdapter adapter= new  RecipeAdapter();
-        new FirebaseRecipeDatabase_Helper().readRecipes(new FirebaseRecipeDatabase_Helper.DataStatus() {
-            @Override
-            public void DataIsLoaded(List<Recipe> recipes, List<String> keys) {
-                adapter.setConfig(mRecyclerView, getContext(), recipes, keys);
-            }
-
-            @Override
-            public void DataIsInserted() {
-
-            }
-
-            @Override
-            public void DataIsUpdated() {
-
-            }
-
-            @Override
-            public void DataIsDeleted() {
-
-            }
-        });
+        helper = new FirebaseRecipeDatabase_Helper();
+        helper.readRecipes(recipes -> adapter.setConfig(mRecyclerView,getContext(), recipes));
 
         new_rec = view.findViewById(R.id.new_rec);
         new_rec.setOnClickListener(v ->{
@@ -145,13 +124,13 @@ public class Generate_Recipes extends Fragment {
             }
         });
 
-
-
-
-
-
         return view;
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        helper.removeListeners();
 
+    }
 }

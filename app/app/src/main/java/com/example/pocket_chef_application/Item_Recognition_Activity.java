@@ -50,7 +50,7 @@ import java.util.concurrent.Executors;
 public class Item_Recognition_Activity extends AppCompatActivity {
     private final int REQUEST_CODE_PERMISSIONS = 10;
     private final String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.CAMERA};
-    private final String TAG = "ImageActivity";
+    private static final String TAG = "Image_Item_Rec";
 
     private PreviewView previewView;
     private TextView output;
@@ -191,12 +191,12 @@ public class Item_Recognition_Activity extends AppCompatActivity {
 
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void analyze(@NonNull ImageProxy imageProxy) {
             @SuppressLint("UnsafeExperimentalUsageError") Image image = imageProxy.getImage();
             if(image != null){
-                InputImage inputImage = InputImage.fromMediaImage(image,
-                        imageProxy.getImageInfo().getRotationDegrees());
+                InputImage inputImage = InputImage.fromMediaImage(image, imageProxy.getImageInfo().getRotationDegrees());
 
 
                 objectDetector.process(inputImage)
@@ -204,7 +204,10 @@ public class Item_Recognition_Activity extends AppCompatActivity {
                         .addOnSuccessListener(detectedObjects -> {
                             for(DetectedObject obj : detectedObjects){
                                 if(!obj.getLabels().isEmpty() && !mDialog.isShowing()){
-                                    Log.d(TAG, "onSuccess: "+obj.getLabels().get(0).getText());
+                                    Log.d(TAG, "analyze: "+obj.getTrackingId());
+
+
+
                                     output.setText(Integer.toString(obj.getLabels().size()));
 
 
