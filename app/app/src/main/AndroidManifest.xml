@@ -37,7 +37,10 @@
             android:name=".Pantry_utils.PantryItem_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Popup" />
-        <activity android:name=".UploadActivity" />
+
+        <activity android:name=".UploadActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"

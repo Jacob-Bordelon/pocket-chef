@@ -1,14 +1,15 @@
 /* eslint-disable max-len */
 const functions = require("firebase-functions");
 
-const arr = ["author",
+const arr = [
+  "author",
   "description",
   "ingredients",
   "instructions",
   "prep_time",
   "cook_time",
   "difficulty",
-  "serving_size"];
+];
 
 
 exports.checkForAllFields = functions.database

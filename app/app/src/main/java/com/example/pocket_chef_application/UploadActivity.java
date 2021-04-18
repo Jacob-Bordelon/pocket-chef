@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,10 +27,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.example.pocket_chef_application.Firebase.SuggestionAdapter;
 import com.example.pocket_chef_application.Model.Ingredient;
 import com.example.pocket_chef_application.Model.Recipe;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +41,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 
 import java.util.ArrayList;
@@ -424,11 +428,9 @@ public class UploadActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.uploadbtn:
                 String uniqueID = UUID.randomUUID().toString();
-                uploadImageToFirebase(uniqueID);
                 if(checkAllViews()){
                     Recipe recipe = formatDataToRecipe(uniqueID);
-                    checkRecipeImage(recipe);
-                    uploadRecipeToFirebase(recipe);
+                    uploadImageToFirebase(uniqueID, recipe);
                 }
                 break;
             case R.id.imageView:
@@ -437,10 +439,6 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    private void checkRecipeImage(Recipe recipe) {
-
-
-    }
 
 
     private void uploadRecipeToFirebase(Recipe recipe){
@@ -454,16 +452,45 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         });
     }
 
-    private void uploadImageToFirebase(String name){
+    private void uploadImageToFirebase(String name, Recipe recipe){
         if(imageUri != null){
             ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading Image...");
             progressDialog.show();
 
-            StorageReference ref = storageReference.child("/recipes/" + name);
+            StorageReference ref = storageReference.child("/recipes/" + name +".jpg");
 
             Log.d(TAG, "uploadImageToFirebase: "+ref);
-            ref.putFile(imageUri)
+            UploadTask uploadTask = ref.putFile(imageUri);
+
+            uploadTask.addOnProgressListener(taskSnapshot -> {
+                double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                progressDialog.setMessage("Uploaded " + (int)progress + "%");
+            });
+
+
+            uploadTask.addOnCompleteListener(UploadActivity.this, task -> {
+                progressDialog.dismiss();
+                Toast.makeText(UploadActivity.this, "Task has been completed", Toast.LENGTH_SHORT).show();
+            });
+
+            Task<Uri> getDownloadUriTask = uploadTask.continueWithTask(task -> {
+                if(!task.isSuccessful()){
+                    throw task.getException();
+                }
+                return ref.getDownloadUrl();
+            });
+
+            getDownloadUriTask.addOnCompleteListener(UploadActivity.this, task -> {
+                if (task.isSuccessful()) {
+                    Uri downloadedUri = task.getResult();
+                    recipe.setImage(downloadedUri.toString());
+                    uploadRecipeToFirebase(recipe);
+                }else{
+                    Toast.makeText(UploadActivity.this, "Activity failed to upload image", Toast.LENGTH_SHORT ).show();
+                }
+            });
+                     /*
                     .addOnSuccessListener(taskSnapshot -> {
                                 progressDialog.dismiss();
                                 Toast.makeText(UploadActivity.this, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
@@ -476,9 +503,28 @@ public class UploadActivity extends Activity implements View.OnClickListener {
                                 double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                                 progressDialog.setMessage("Uploaded " + (int)progress + "%");
                             });
-
+*/
 
         }
+        else {
+            new AlertDialog.Builder(UploadActivity.this)
+                    .setTitle("Warning")
+                    .setMessage("You have not selected an Image for this Recipe. No image will be displayed when other users view your content. \n Is this okay?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            uploadRecipeToFirebase(recipe);
+                        }
+                    })
+
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton("No", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+
+
+
+
     }
 
     private void openGallery() {
