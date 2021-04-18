@@ -21,4 +21,18 @@
         app:maxImageSize="50dp"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
+    <Button
+        android:id="@+id/signOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        android:text="Log Out"
+        android:textColor="#ffff"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRIght_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_contraintLeft_toLeftOf="parent" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
