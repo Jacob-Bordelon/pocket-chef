@@ -8,8 +8,10 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import com.example.pocket_chef_application.util.LogIn;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static FragmentManager manager;
     private static Dialog panel_switch;
     private Button logout;
+    private FirebaseAuth mFirebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         logout = (Button) findViewById(R.id.signOut);
+        mFirebaseAuth = FirebaseAuth.getInstance();
 
         logout.setOnClickListener(new View.OnClickListener(){
 
@@ -102,6 +106,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        if(mFirebaseUser!=null){
+            //logged in
+            return;
+        }else{
+            //not logged in
+            startActivity(new Intent(this, LogIn.class));
+            finish();
+        }
+
+    }
 
     public static void switch_fragment(Fragment fragment){
         manager.beginTransaction()
