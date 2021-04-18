@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 public class LogIn extends AppCompatActivity implements View.OnClickListener{
 
-    private TextView register;
+    private TextView register, forgotPassword;
     private EditText editTextEmail, editTextPassword;
     private Button signIn;
 
@@ -45,6 +45,9 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         mAuth = FirebaseAuth.getInstance();
+
+        forgotPassword = (TextView) findViewById(R.id.forgotPassword);
+        forgotPassword.setOnClickListener(this);
     }
 
     @Override
@@ -56,6 +59,10 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
              
             case R.id.signIn:
                 userLogin();
+                break;
+
+            case R.id.forgotPassword:
+                startActivity(new Intent(this, ForgotPassword.class));
                 break;
         }
     }

@@ -1,4 +1,4 @@
-package com.example.pocket_chef_application.data;
+package com.example.pocket_chef_application.util;
 
 public class User {
 

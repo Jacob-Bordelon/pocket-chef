@@ -22,16 +22,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pocket_Chef_Application.NoActionBar"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".util.Register"/>
-        <activity android:name=".util.LogIn"/>
-<!--            <intent-filter>
+        <activity android:name=".util.ForgotPassword"></activity>
+        <activity android:name=".util.Register" />
+        <activity android:name=".util.LogIn" />
+        <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>-->
-
+        </activity>
+        -->
         <uses-library
             android:name="com.google.android.wearable"
             android:required="true" />
