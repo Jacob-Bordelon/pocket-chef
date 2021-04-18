@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".util.LogIn">
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="205dp"
+        android:layout_height="205dp"
+        app:srcCompat="@drawable/Logo"
+        tools:layout_editor_absoluteX="71dp"
+        tools:layout_editor_absoluteY="256dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <EditText
         android:id="@+id/email"
         android:layout_width="380dp"
@@ -16,7 +27,7 @@
         android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/logo" />
 
     <EditText
         android:id="@+id/password"
@@ -80,5 +91,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
