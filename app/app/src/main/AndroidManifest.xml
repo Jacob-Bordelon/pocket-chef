@@ -4,9 +4,13 @@
     package="com.example.pocket_chef_application">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-feature android:name="android.hardware.type.watch" />
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera.any" />
 
     <application
@@ -18,15 +22,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pocket_Chef_Application.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity android:name=".util.Register"></activity>
+        <activity android:name=".util.LogIn">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
-
+        <uses-library
+            android:name="com.google.android.wearable"
+            android:required="true" />
+        <!--
+               Set to true if your app is Standalone, that is, it does not require the handheld
+               app to run.
+        -->
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
 
         <activity
             android:name=".Pantry_utils.AddItemsToPantry"
             android:label="@string/title_activity_add_items_to_pantry"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Item_Recognition_Activity"
             android:screenOrientation="portrait" />
