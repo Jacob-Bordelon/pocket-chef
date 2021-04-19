@@ -2,6 +2,8 @@ package com.example.pocket_chef_application.util;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.pocket_chef_application.MainActivity;
 import com.example.pocket_chef_application.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -100,12 +102,15 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                progressBar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                     if(user.isEmailVerified()){
                         //redirect to the main page
+                        startActivity(new Intent(LogIn.this, MainActivity.class));
                     }else {
+                        //if the user is not verified via email
                         user.sendEmailVerification();
                         Toast.makeText(LogIn.this, "Check your email to verify your account!", Toast.LENGTH_SHORT).show();
                     }

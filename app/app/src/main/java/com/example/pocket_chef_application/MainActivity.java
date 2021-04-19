@@ -109,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
         if(mFirebaseUser!=null){
             //logged in
@@ -119,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, LogIn.class));
             finish();
         }
-
     }
 
     public static void switch_fragment(Fragment fragment){

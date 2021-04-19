@@ -140,36 +140,18 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
             return;
         }
 
+
         progressBar.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        if(task.isSuccessful()){
-                            User user = new User(fullName, age, email);
-
-                            FirebaseDatabase.getInstance().getReference("User")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-
-                                    if(task.isSuccessful()){
-                                        Toast.makeText(Register.this, "User has been registered successfully!", Toast.LENGTH_SHORT).show();
-                                        progressBar.setVisibility(View.GONE);
-
-                                        //redirect to login layout
-                                    }else{
-                                        Toast.makeText(Register.this, "Failed to register! Try again!", Toast.LENGTH_SHORT).show();
-                                        progressBar.setVisibility(View.GONE);
-                                    }
-                                }
-                            });
-                        }else{
-                            Toast.makeText(Register.this, "Fail to register", Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
-                        }
+                .addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        User user = new User(fullName, age, email);
+                        Toast.makeText(Register.this, "User has been created", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        finish();
+                    }else{
+                        Toast.makeText(Register.this, "Fail to register! Try again!", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
 
