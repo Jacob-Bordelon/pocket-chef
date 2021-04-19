@@ -3,6 +3,7 @@ package com.example.pocket_chef_application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -28,6 +29,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -50,8 +52,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("remember", "false");
+                editor.apply();
+
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this, MainActivity.class));
+                startActivity(new Intent(MainActivity.this, LogIn.class));
             }
         });
 
@@ -112,7 +119,16 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
         if(mFirebaseUser!=null){
             //logged in
-            return;
+            SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+            String check_value = preferences.getString("remember", "");
+            //check point for when the checkbox is true
+            if(check_value.equals("true")){
+                return;
+            }
+            //add check point for when the checkbox is false
+            else{
+                FirebaseAuth.getInstance().signOut();
+            }
         }else{
             //not logged in
             startActivity(new Intent(this, LogIn.class));

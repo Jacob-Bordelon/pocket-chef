@@ -12,11 +12,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -27,6 +30,7 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
     private TextView register, forgotPassword;
     private EditText editTextEmail, editTextPassword;
     private Button signIn;
+    private CheckBox remember;
 
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
@@ -44,13 +48,42 @@ public class LogIn extends AppCompatActivity implements View.OnClickListener{
 
         editTextEmail = (EditText) findViewById(R.id.email);
         editTextPassword = (EditText) findViewById(R.id.password);
+
+        remember = findViewById(R.id.rememberMe);
         
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         mAuth = FirebaseAuth.getInstance();
 
         forgotPassword = (TextView) findViewById(R.id.forgotPassword);
         forgotPassword.setOnClickListener(this);
+
+        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+        String checkbox = preferences.getString("remember","");
+
+        if(checkbox.equals("true")){
+            startActivity(new Intent(LogIn.this, MainActivity.class));
+        }
+
+        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(compoundButton.isChecked()){
+                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember", "true");
+                    editor.apply();
+                    Toast.makeText(LogIn.this, "Your Login will be remembered", Toast.LENGTH_SHORT).show();
+                }else{
+                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember", "false");
+                    editor.apply();
+                    Toast.makeText(LogIn.this, "You will be logged out when the app is closed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
+
 
     @Override
     public void onClick(View v) {
