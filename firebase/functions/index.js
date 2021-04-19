@@ -1,55 +1,22 @@
 /* eslint-disable max-len */
 const functions = require("firebase-functions");
 
-const arr = [
-  "author",
-  "description",
-  "ingredients",
-  "instructions",
-  "prep_time",
-  "cook_time",
-  "difficulty",
-];
-
-
 exports.checkForAllFields = functions.database
     .ref("recipeBook/{recipeId}")
     .onCreate((snapshot, context)=>{
-      const hasAllKeys = arr.every((item) => (snapshot.hasChild(item)));
-      let img = "";
-      const id = Date.now().toString();
-      if (snapshot.child("image").exists()) {
-        img = snapshot.child("image").val();
-      }
-      return snapshot.ref
-          .transaction((t)=>{
-            if (!hasAllKeys) {
-              console.log("Is missing an item");
-              return;
-            } else {
-              return {
-                author: snapshot.child("author").val(),
-                description: snapshot.child("description").val(),
-                difficulty: snapshot.child("difficulty").val(),
-                prep_time: snapshot.child("prep_time").val(),
-                cook_time: snapshot.child("cook_time").val(),
-                ingredients: snapshot.child("ingredients").val(),
-                instructions: snapshot.child("instructions").val(),
-                serving_size: snapshot.child("serving_size").val(),
-                status: 0,
-                id: id,
-                image: img,
-                rating: 0,
-              };
-            }
-          })
-          .then((r) => {
-            return {response: "ok"};
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+      return snapshot.ref.update({status: 0});
     });
+
+
+exports.date = functions.database
+    .ref("TestVal/")
+    .onCreate((snapshot, context)=>{
+      let name = "recipes/1c080261-11e0-4fab-92a1-7844bf4c335a.jpg";
+      name = name.replace("recipes/", "");
+      name = name.replace(".jpg", "");
+      console.log(name);
+    });
+
 
 exports.formatFood = functions.database
     .ref("/food/{foodItem}/foodNutrients/")

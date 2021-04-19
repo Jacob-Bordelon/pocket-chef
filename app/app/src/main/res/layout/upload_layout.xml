@@ -25,17 +25,17 @@
         android:id="@+id/rec_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:inputType="text"
         android:hint="Recipe Name"
         android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/time_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,49 +44,90 @@
 
         <EditText
             android:id="@+id/rec_prep"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:hint="Prep Time"
-            android:textSize="10sp"/>
+            android:inputType="number"
+            android:layout_marginStart="5dp"
+            android:hint="Prep"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+
+        <TextView
+            android:id="@+id/prep_time_pickeer"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="3dp"
+            android:text="min"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            android:gravity="left|center"
+            app:layout_constraintBottom_toBottomOf="@+id/rec_prep"
+            app:layout_constraintStart_toEndOf="@+id/rec_prep"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/rec_cook"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:hint="Cook Time"
-            android:textSize="10sp"/>
-    </LinearLayout>
+            android:hint="Cook"
+            android:inputType="number"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/cook_time_pickeer" />
 
-    <TextView
-        android:id="@+id/diff_label"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="Difficulty"
-        app:layout_constraintBottom_toBottomOf="@+id/rec_difficulty"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/time_container" />
+        <TextView
+            android:id="@+id/cook_time_pickeer"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="left|center"
+            android:text="min"
+            android:layout_marginEnd="5dp"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@+id/rec_cook"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/rec_cook" />
 
-    <Spinner
-        android:id="@+id/rec_difficulty"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:textAlignment="center"
-        android:entries="@array/difficulties"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/diff_label"
-        app:layout_constraintTop_toBottomOf="@+id/time_container" />
+        <TextView
+            android:id="@+id/diff_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="2dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="Difficulty"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rec_prep" />
+
+        <Spinner
+            android:id="@+id/rec_difficulty"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="2dp"
+            android:entries="@array/difficulties"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@+id/diff_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/diff_label"
+            app:layout_constraintTop_toTopOf="@+id/diff_label" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
+        android:layout_marginTop="3dp"
         app:layout_constraintBottom_toTopOf="@+id/button_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,11 +137,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
+
             <EditText
                 android:id="@+id/rec_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minLines="4"
+                android:minLines="1"
+                android:gravity="top"
+                android:paddingStart="2dp"
                 android:layout_margin="10dp"
                 android:background="@drawable/recipe_info_boarder"
                 android:hint="Description" />
@@ -127,21 +171,43 @@
                     android:id="@+id/double_tap_clue1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Double Tap to add new ingredient +"
+                    android:paddingStart="2dp"
+                    android:text="Ingredients (Double Tap to add new item +)"
+                    android:minLines="1"
                     android:textStyle="italic"
                     android:gravity="center"/>
             </FrameLayout>
 
 
 
-            <LinearLayout
-                android:id="@+id/rec_instructions"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/rec_ingredient_border"
-                android:orientation="vertical" />
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:id="@+id/rec_instructions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="@drawable/rec_ingredient_border"
+                    android:orientation="vertical" />
+
+                <TextView
+                    android:id="@+id/double_tap_clue2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingStart="2dp"
+                    android:text="Instructions (Double Tap to add new step +)"
+                    android:minLines="1"
+                    android:textStyle="italic"
+                    android:gravity="center"/>
+            </FrameLayout>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

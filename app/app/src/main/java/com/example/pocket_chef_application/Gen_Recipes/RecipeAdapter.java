@@ -56,7 +56,7 @@ public class RecipeAdapter {
         private ChipGroup filterView;
 
         public RecipeItemView(ViewGroup parent){
-            super(LayoutInflater.from(context).inflate(R.layout.item, parent, false));
+            super(LayoutInflater.from(context).inflate(R.layout.recipe_layout, parent, false));
             cardView = itemView.findViewById(R.id.card_base);
             hiddenView = itemView.findViewById(R.id.hidden_view);
 

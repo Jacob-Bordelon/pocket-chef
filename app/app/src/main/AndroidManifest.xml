@@ -39,7 +39,8 @@
             android:theme="@style/AppTheme.Popup" />
 
         <activity android:name=".UploadActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            />
 
         <activity
             android:name=".MainActivity"

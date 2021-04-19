@@ -13,6 +13,7 @@ import com.example.pocket_chef_application.Pantry_utils.AddItemsToPantry;
 import com.example.pocket_chef_application.util.MasterPageAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +38,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
+    public static final FirebaseDatabase realtimedb = FirebaseDatabase.getInstance("http://127.0.0.1:9000/?ns=pocketchef-9fb14");
     private BottomNavigationView bottomNavigationView;
     private ViewPager viewPager;
     private int lastFragment;

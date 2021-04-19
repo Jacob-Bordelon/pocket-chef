@@ -64,7 +64,12 @@ exports.blurOffensiveImages = functions.storage.object().onFinalize(async (objec
     safeSearchResult.racy !== 'VERY_UNLIKELY'
   ) {
     functions.logger.log('Offensive image found. Blurring.');
-    return blurImage(object.name, object.bucket, object.metadata);
+    let name = object.name;
+    name = name.replace("recipes/", "");
+    name = name.replace(".jpg", "");
+    admin.database().ref("recipeBook/"+name).update({status:1});
+
+    return null;//blurImage(object.name, object.bucket, object.metadata);
   }
 
   return null;
@@ -96,6 +101,8 @@ async function blurImage(filePath, bucketName, metadata) {
     metadata: {metadata: metadata}, // Keeping custom metadata.
   });
   functions.logger.log('Blurred image uploaded to Storage at', filePath);
+
+  
 
   // Clean up the local file
   fs.unlinkSync(tempLocalFile);

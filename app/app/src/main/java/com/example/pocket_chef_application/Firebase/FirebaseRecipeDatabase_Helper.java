@@ -2,6 +2,7 @@ package com.example.pocket_chef_application.Firebase;
 
 import androidx.annotation.NonNull;
 
+import com.example.pocket_chef_application.MainActivity;
 import com.example.pocket_chef_application.Model.Recipe;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +37,7 @@ public class FirebaseRecipeDatabase_Helper {
     }
 
     public FirebaseRecipeDatabase_Helper() {
-        mDatabase = FirebaseDatabase.getInstance();
+        mDatabase = MainActivity.realtimedb;
         mReference = mDatabase.getReference("recipeBook");
 
 
@@ -81,7 +82,11 @@ public class FirebaseRecipeDatabase_Helper {
             }
         };
 
-        mReference.limitToFirst(limitAmount).addValueEventListener(listener);
+        mReference
+                .orderByChild("status")
+                .equalTo(0)
+                .limitToFirst(limitAmount)
+                .addValueEventListener(listener);
     }
 
     public void paginate(String page, final FirebaseRecipeDatabase_Helper.Data data){
@@ -108,6 +113,8 @@ public class FirebaseRecipeDatabase_Helper {
             }
         };
         mReference
+                .orderByChild("status")
+                .equalTo(0)
                 .orderByKey()
                 .startAt(page)
                 .limitToFirst(limitAmount)
