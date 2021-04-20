@@ -6,7 +6,11 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {DBItem.class},version = 1, exportSchema = false)
+@Database(
+        entities = {DBItem.class, GLItem.class},
+        version = 1,
+        exportSchema = false
+)
 public abstract class LocalDB extends RoomDatabase {
 
     public abstract ItemDAO itemDAO();

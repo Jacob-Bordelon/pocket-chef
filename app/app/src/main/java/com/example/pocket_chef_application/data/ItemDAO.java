@@ -12,8 +12,14 @@ public interface ItemDAO {
     @Query("SELECT * FROM DBItem")
     List<DBItem> getAllItems();
 
+    @Query("SELECT * FROM GLItem")
+    List<GLItem> getAllGLItems();
+
     @Insert
     void insertItem(DBItem... items);
+
+    @Insert
+    void insertGLItem(GLItem... items);
 
     @Query("DELETE FROM DBItem")
     public void nukeTable();
@@ -21,6 +27,13 @@ public interface ItemDAO {
     @Delete
     public void delete(DBItem item);
 
+    @Delete
+    public void removeGLItem(GLItem item);
+
     @Query("SELECT COUNT(item_name) FROM DBItem")
     int getCount();
+
+    @Query("SELECT COUNT(item_name) FROM GLItem")
+    int getGLCount();
+
 }

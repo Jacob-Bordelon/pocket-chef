@@ -92,27 +92,6 @@ public class Pantry extends Fragment {
     private void initSearchView(View view) {
         suggestionsView = view.findViewById(R.id.pantry_suggestions);
         Sadapter = new FoodItemAdapter();
-        /*dataStatus = new FirebaseFoodDatabase_Helper.DataStatus() {
-            @Override
-            public void DataIsLoaded(List<Food> foods, List<String> keys) {
-                Sadapter.setConfig(suggestionsView, getContext(), foods, keys);
-            }
-
-            @Override
-            public void DataIsInserted() {
-
-            }
-
-            @Override
-            public void DataIsUpdated() {
-
-            }
-
-            @Override
-            public void DataIsDeleted() {
-
-            }
-        };*/
         helper = new FirebaseFoodDatabase_Helper();
     }
 

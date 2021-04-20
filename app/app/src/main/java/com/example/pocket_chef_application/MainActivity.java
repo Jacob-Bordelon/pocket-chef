@@ -38,7 +38,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
-    public static final FirebaseDatabase realtimedb = FirebaseDatabase.getInstance("http://127.0.0.1:9000/?ns=pocketchef-9fb14");
+    public static final FirebaseDatabase realtimedb = FirebaseDatabase.getInstance();
     private BottomNavigationView bottomNavigationView;
     private ViewPager viewPager;
     private int lastFragment;

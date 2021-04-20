@@ -421,6 +421,7 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         .addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 Toast.makeText(UploadActivity.this, "Recipe Was Uploaded", Toast.LENGTH_SHORT).show();
+                finish();
             }else{
                 Toast.makeText(UploadActivity.this, "There was an error during upload", Toast.LENGTH_SHORT).show();
             }
@@ -490,10 +491,9 @@ public class UploadActivity extends Activity implements View.OnClickListener {
             new AlertDialog.Builder(UploadActivity.this)
                     .setTitle("Warning")
                     .setMessage("You have not selected an Image for this Recipe. No image will be displayed when other users view your content. \n Is this okay?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            uploadRecipeToFirebase(recipe);
-                        }
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        recipe.setImage("none");
+                        uploadRecipeToFirebase(recipe);
                     })
 
                     // A null listener allows the button to dismiss the dialog and take no further action.
@@ -501,12 +501,6 @@ public class UploadActivity extends Activity implements View.OnClickListener {
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
         }
-
-        //https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/recipes%2Fracy.jpg?alt=media&token=71fc154b-b2b8-4551-b048-6474a2f9cf80
-        //https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/blurred%2Frecipes%2Fracy.jpg?alt=media&token=71fc154b-b2b8-4551-b048-6474a2f9cf80
-
-
-
 
     }
 
@@ -523,5 +517,7 @@ public class UploadActivity extends Activity implements View.OnClickListener {
             image.setImageURI(imageUri);
         }
     }
+
+
 }
 

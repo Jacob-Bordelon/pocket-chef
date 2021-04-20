@@ -30,6 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -44,6 +45,10 @@ public class RecipeAdapter {
         recipeAdapter = new Adapter(recipes);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(recipeAdapter);
+    }
+
+    public void refresh(){
+        recipeAdapter.notifyDataSetChanged();
     }
 
 
@@ -79,6 +84,7 @@ public class RecipeAdapter {
         // using the same names from the constructor, set the values per each unique item here
         @SuppressLint("SetTextI18n")
         public void bind(Recipe recipe){
+            Log.d(TAG, "bind: "+recipe.getTitle());
             titleView.setText(recipe.getTitle());
             prepView.setText(Integer.toString(recipe.getPrep_time()));
             cookView.setText(Integer.toString(recipe.getCook_time()));
@@ -90,7 +96,7 @@ public class RecipeAdapter {
             addChips(new ArrayList<>(recipe.getIngredients().values()));
 
 
-            if(recipe.getImage() != null && recipe.getImage().contains("https://firebasestorage.googleapis.com")){
+            if((recipe.getImage() != null ) && recipe.getImage().contains("https://firebasestorage.googleapis.com")){
                 Picasso.get()
                         .load(recipe.getImage())
                         .fit()
@@ -129,7 +135,6 @@ public class RecipeAdapter {
 
     static class Adapter extends RecyclerView.Adapter<RecipeItemView>{
         public static List<Recipe> recipeList;
-        private List<String> keysList;
         private ArrayList<Recipe> backups;
 
         public Adapter(List<Recipe> recipeList) {
@@ -156,11 +161,6 @@ public class RecipeAdapter {
 
 
     }
-
-
-
-
-
 
     public void addfilter(List<DBItem> items){
         Adapter.recipeList.clear();

@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,14 +40,16 @@ import java.util.stream.Collectors;
 
 public class Generate_Recipes extends Fragment {
     // Textview variables
+    final static String TAG = Generate_Recipes.class.getSimpleName();
     private TextView filterButton, calCount, new_rec;
     private SeekBar calBar;
     private CheckBox usePantry;
     private ConstraintLayout filterMenu;
     private RecyclerView mRecyclerView;
-    private FirebaseRecipeDatabase_Helper helper;
+    public static FirebaseRecipeDatabase_Helper helper;
     private static final String TEXT = "text";
     private int min=10, max=100, current=10;
+    private LocalDB db;
 
     public static Generate_Recipes newInstance(){
         Generate_Recipes fragment = new Generate_Recipes();
@@ -54,15 +58,15 @@ public class Generate_Recipes extends Fragment {
         return fragment;
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.generate_recipes, container, false);
         filterMenu = (ConstraintLayout) view.findViewById(R.id.filterMenu);
-
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cookbook_recyclerview);
-        RecipeAdapter adapter = new  RecipeAdapter();
-        helper = new FirebaseRecipeDatabase_Helper();
-        helper.readRecipes(recipes -> adapter.setConfig(mRecyclerView,getContext(), recipes));
+        db = LocalDB.getDBInstance(getContext());
+        helper = new FirebaseRecipeDatabase_Helper(mRecyclerView, getContext());
 
         new_rec = view.findViewById(R.id.new_rec);
         new_rec.setOnClickListener(v ->{
@@ -112,16 +116,21 @@ public class Generate_Recipes extends Fragment {
         usePantry = (CheckBox) view.findViewById(R.id.usepantry_checkBox);
         usePantry.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked){
-                LocalDB db = LocalDB.getDBInstance(getContext());
                 List<DBItem> dbitems = db.itemDAO().getAllItems();
-                adapter.addfilter(dbitems);
+                helper.addFilter(dbitems);
 
             }else{
-                adapter.clearAllFilters();
+                helper.clearFilters();
             }
         });
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        helper.populate();
     }
 
     @Override
@@ -130,4 +139,6 @@ public class Generate_Recipes extends Fragment {
         helper.removeListeners();
 
     }
+
+
 }

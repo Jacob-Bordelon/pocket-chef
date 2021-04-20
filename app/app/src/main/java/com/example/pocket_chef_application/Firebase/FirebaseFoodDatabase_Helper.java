@@ -167,8 +167,6 @@ public class FirebaseFoodDatabase_Helper {
         adapter = new FoodItemView();
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
-
-
     }
 
     public int getAdapterSize(){
