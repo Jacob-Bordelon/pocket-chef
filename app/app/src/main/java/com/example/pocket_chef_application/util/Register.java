@@ -32,7 +32,7 @@ import java.util.Map;
 public class Register extends AppCompatActivity implements View.OnClickListener{
 
     private TextView registerUser;
-    private EditText editTextFullName, editTextAge, editTextEmail, editTextPassword, editTextPasswordConfirm;
+    private EditText editTextFirstName, editTextLastName, editTextEmail, editTextPassword, editTextPasswordConfirm;
     private ProgressBar progressBar;
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -54,7 +54,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         registerUser = (Button) findViewById(R.id.registerUser);
         registerUser.setOnClickListener(this);
 
-        editTextFullName = (EditText) findViewById(R.id.fullName);
+        editTextFirstName = (EditText) findViewById(R.id.firstName);
+        editTextLastName = (EditText) findViewById(R.id.lastName);
         editTextEmail = (EditText) findViewById(R.id.email);
         editTextPassword = (EditText) findViewById(R.id.password);
         editTextPasswordConfirm = (EditText) findViewById(R.id.confirmPassword);
@@ -62,22 +63,19 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         mDisplayDate = (TextView) findViewById(R.id.DOB);
-        mDisplayDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
+        mDisplayDate.setOnClickListener(v -> {
+            Calendar cal = Calendar.getInstance();
+            int year = cal.get(Calendar.YEAR);
+            int month = cal.get(Calendar.MONTH);
+            int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog = new DatePickerDialog(
-                        Register.this,
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        mDateSetListener,
-                        year,month,day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
+            DatePickerDialog dialog = new DatePickerDialog(
+                    Register.this,
+                    android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                    mDateSetListener,
+                    year,month,day);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
         });
 
         mDateSetListener = (view, year, month, dayOfMonth) -> {
@@ -101,24 +99,30 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String confirmation = editTextPasswordConfirm.getText().toString().trim();
-        String fullName = editTextFullName.getText().toString().trim();
+        String firstName = editTextFirstName.getText().toString().trim();
+        String lastName = editTextLastName.getText().toString().trim();
         String age = mDisplayDate.getText().toString().trim();
 
-        if(fullName.isEmpty()){
-            editTextFullName.setError("Full name is required!");
-            editTextFullName.requestFocus();
+        if(firstName.isEmpty()){
+            editTextFirstName.setError("First name is required!");
+            editTextFirstName.requestFocus();
             return;
         }
 
+        if(lastName.isEmpty()){
+            editTextLastName.setError("Last name is required!");
+            editTextLastName.requestFocus();
+        }
+
         if(age.isEmpty()){
-            editTextAge.setError("Age is required!");
-            editTextFullName.requestFocus();
+            mDisplayDate.setError("Age is required!");
+            mDisplayDate.requestFocus();
             return;
         }
 
         if(email.isEmpty()){
-            editTextAge.setError("Email is required!");
-            editTextFullName.requestFocus();
+            editTextEmail.setError("Email is required!");
+            editTextEmail.requestFocus();
             return;
         }
 
@@ -145,18 +149,18 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
             editTextPassword.requestFocus();
             return;
         }
-        Log.d(TAG, "Info: "+ fullName + email + age);
+        Log.d(TAG, "Info: "+ firstName + " " + lastName + " " + email + " " + age);
         progressBar.setVisibility(View.VISIBLE);
-        Registry(email, password, fullName, age);
+        Registry(email, password, firstName, lastName, age);
         progressBar.setVisibility(View.GONE);
     }
 
-    private void Registry(String email, String password, String fullName, String age){
+    private void Registry(String email, String password, String firstName, String lastName,  String age){
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         Toast.makeText(Register.this, "User has been created", Toast.LENGTH_SHORT).show();
-                        updateFireStore(fullName, age, email);
+                        updateFireStore(firstName, lastName, age, email);
                     }
                     else{
                         Toast.makeText(Register.this, "Fail to register! Try again!", Toast.LENGTH_SHORT).show();
@@ -165,12 +169,14 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
 
     }
 
-    private void updateFireStore(String fullName, String age, String email) {
-        Map<String, String> userMap = new HashMap<>();
+    private void updateFireStore(String firstName, String lastName, String age, String email) {
+        Map<String, Object> userMap = new HashMap<>();
 
-        userMap.put("name", fullName);
+        userMap.put("first_name", firstName);
+        userMap.put("last_name", lastName);
         userMap.put("DOB", age);
         userMap.put("email", email);
+        userMap.put("strikes", 0);
 
         mFireStore.collection("user_profiles")
                 .add(userMap)
