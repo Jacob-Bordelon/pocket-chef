@@ -2,17 +2,20 @@ package com.example.pocket_chef_application.util;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.pocket_chef_application.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Register extends AppCompatActivity implements View.OnClickListener{
 
@@ -32,7 +37,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
+/*    private FirebaseDatabase database;*/
+    private FirebaseFirestore mFireStore;
     private FirebaseAuth mAuth;
+
+    private static final String TAG = "UserInfo";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +49,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         setContentView(R.layout.activity_register);
 
         mAuth = FirebaseAuth.getInstance();
+        mFireStore = FirebaseFirestore.getInstance();
 
         registerUser = (Button) findViewById(R.id.registerUser);
         registerUser.setOnClickListener(this);
 
         editTextFullName = (EditText) findViewById(R.id.fullName);
-/*        editTextAge = (EditText) findViewById(R.id.DOB);*/
         editTextEmail = (EditText) findViewById(R.id.email);
         editTextPassword = (EditText) findViewById(R.id.password);
         editTextPasswordConfirm = (EditText) findViewById(R.id.confirmPassword);
@@ -71,14 +80,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
             }
         });
 
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                month = month + 1;
+        mDateSetListener = (view, year, month, dayOfMonth) -> {
+            month = month + 1;
 
-                String date = month + "/" + dayOfMonth + "/" + year;
-                mDisplayDate.setText(date);
-            }
+            String date = month + "/" + dayOfMonth + "/" + year;
+            mDisplayDate.setText(date);
         };
     }
 
@@ -139,21 +145,44 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
             editTextPassword.requestFocus();
             return;
         }
-
-
+        Log.d(TAG, "Info: "+ fullName + email + age);
         progressBar.setVisibility(View.VISIBLE);
+        Registry(email, password, fullName, age);
+        progressBar.setVisibility(View.GONE);
+    }
+
+    private void Registry(String email, String password, String fullName, String age){
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
-                        User user = new User(fullName, age, email);
                         Toast.makeText(Register.this, "User has been created", Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
-                        finish();
-                    }else{
+                        updateFireStore(fullName, age, email);
+                    }
+                    else{
                         Toast.makeText(Register.this, "Fail to register! Try again!", Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
                     }
                 });
 
+    }
+
+    private void updateFireStore(String fullName, String age, String email) {
+        Map<String, String> userMap = new HashMap<>();
+
+        userMap.put("name", fullName);
+        userMap.put("DOB", age);
+        userMap.put("email", email);
+
+        mFireStore.collection("user_profiles")
+                .add(userMap)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    Toast.makeText(Register.this, "User Profile added to FireStore", Toast.LENGTH_SHORT).show();
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    String error = e.getMessage();
+                    Log.w(TAG, "Error adding document", e);
+                    Toast.makeText(Register.this, "Error: " + error, Toast.LENGTH_SHORT).show();
+                });
     }
 }
