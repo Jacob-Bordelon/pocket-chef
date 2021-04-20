@@ -7,6 +7,7 @@ import com.example.pocket_chef_application.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -28,6 +29,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class Register extends AppCompatActivity implements View.OnClickListener{
 
@@ -37,9 +39,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
-/*    private FirebaseDatabase database;*/
     private FirebaseFirestore mFireStore;
     private FirebaseAuth mAuth;
+    private UUID uuid;
 
     private static final String TAG = "UserInfo";
 
@@ -178,10 +180,14 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         userMap.put("email", email);
         userMap.put("strikes", 0);
 
+        String doc_id = uuid.randomUUID().toString();
+        Log.d(TAG, "Document ID: " + doc_id);
+
         mFireStore.collection("user_profiles")
-                .add(userMap)
+                .document(doc_id)
+                .set(userMap)
                 .addOnSuccessListener(documentReference -> {
-                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+/*                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());*/
                     Toast.makeText(Register.this, "User Profile added to FireStore", Toast.LENGTH_SHORT).show();
                     finish();
                 })
