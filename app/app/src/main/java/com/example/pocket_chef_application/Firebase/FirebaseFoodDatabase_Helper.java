@@ -154,6 +154,33 @@ public class FirebaseFoodDatabase_Helper {
                 .addListenerForSingleValueEvent(listener);
     }
 
+    public void readFood(final Container data){
+        listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                foodList.clear();
+                String nextpage = "";
+                for(DataSnapshot keyNode : snapshot.getChildren()){
+                    Food food = keyNode.getValue(Food.class);
+                    foodList.add(food);
+                    nextpage = keyNode.getKey();
+                }
+
+                data.returnData(foodList);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        mReference
+                .orderByKey()
+                .addListenerForSingleValueEvent(listener);
+    }
+
+
     public void defaultPage(){
         paginate(DEFAULT_PAGE_INDEX, (foods, nextPage) -> {
             adapter.updateList(foods);
@@ -312,7 +339,7 @@ public class FirebaseFoodDatabase_Helper {
 
             @Override
             public void onClick(View v) {
-                showDialog(items.get(getBindingAdapterPosition()));
+                showDialog(items.get(getAdapterPosition()));
             }
         }
 

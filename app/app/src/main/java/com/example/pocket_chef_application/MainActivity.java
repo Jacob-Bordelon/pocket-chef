@@ -3,6 +3,7 @@ package com.example.pocket_chef_application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -12,10 +13,14 @@ import com.example.pocket_chef_application.GroceryList.GroceryList;
 import com.example.pocket_chef_application.Pantry_utils.AddItemsToPantry;
 import com.example.pocket_chef_application.util.MasterPageAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.pocket_chef_application.util.LogIn;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.NonNull;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -30,8 +35,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -42,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private ViewPager viewPager;
     private int lastFragment;
+    private Button logout;
+    private FirebaseAuth mFirebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +60,23 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager = (ViewPager)findViewById(R.id.viewpager);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
+        logout = (Button) findViewById(R.id.signOut);
+        mFirebaseAuth = FirebaseAuth.getInstance();
+
+        logout.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("remember", "false");
+                editor.apply();
+
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(MainActivity.this, LogIn.class));
+            }
+        });
+
 
         ArrayList<Fragment> fragmentsArray = new ArrayList<>();
         fragmentsArray.add(new AddItemsToPantry());
@@ -131,6 +157,29 @@ public class MainActivity extends AppCompatActivity {
     };
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        if(mFirebaseUser!=null){
+            //logged in
+            SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+            String check_value = preferences.getString("remember", "");
+            //check point for when the checkbox is true
+            if(check_value.equals("true")){
+                return;
+            }
+            //add check point for when the checkbox is false
+            else{
+                FirebaseAuth.getInstance().signOut();
+            }
+        }else{
+            //not logged in
+            startActivity(new Intent(this, LogIn.class));
+            finish();
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         viewPager.setCurrentItem(lastFragment);
@@ -142,6 +191,8 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(v.getContext(), UploadActivity.class);
         startActivity(i);
     }
+
+
 
 
 }
