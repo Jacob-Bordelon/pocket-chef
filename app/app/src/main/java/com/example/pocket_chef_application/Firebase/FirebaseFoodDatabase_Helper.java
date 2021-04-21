@@ -290,11 +290,8 @@ public class FirebaseFoodDatabase_Helper {
                 TextView closebtn = mDialog.findViewById(R.id.closebtn);
                 TextView exp_label = mDialog.findViewById(R.id.exp_label);
                 EditText amount = mDialog.findViewById(R.id.edititem_amount);
-                //DatePicker expdate = mDialog.findViewById(R.id.edititem_exp);
                 TextView submit = mDialog.findViewById(R.id.submitbtn);
                 TextView exp_preview = mDialog.findViewById(R.id.exp_preview);
-                ImageButton calendar_btn = mDialog.findViewById(R.id.calendar_btn);
-                ConstraintLayout otherItems = mDialog.findViewById(R.id.otheritems_layout);
 
                 Calendar mCalender = Calendar.getInstance();
                 int year = mCalender.get(Calendar.YEAR);
@@ -307,7 +304,6 @@ public class FirebaseFoodDatabase_Helper {
                     String date = month1+"/"+dayOfMonth1+"/"+year1;
                     exp_preview.setText(date);
                     }, year, month, dayOfMonth);
-
 
 
                 ImageView img = mDialog.findViewById(R.id.imageView);

@@ -19,57 +19,9 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 @RunWith(AndroidJUnit4.class)
 public class EspressoTests {
     @Rule
-    public ActivityScenarioRule<MainActivity> activityRule
-            = new ActivityScenarioRule<>(MainActivity.class);
+    public ActivityScenarioRule<MainActivity> activityRule = new ActivityScenarioRule<>(MainActivity.class);
 
-    // Test FAB
-    @Test
-    public void test_fab(){
-        onView(withId(R.id.fab))
-                .perform(click())
-                .check(matches(isDisplayed()));
-    }
 
-    // test generate fragment is displayed
-    @Test
-    public void test_goto_generate(){
-        onView(withId(R.id.fab)).perform(click());
-        onView(withId(R.id.fab_generate_recipes_btn)).perform(click());
-        onView(withId(R.id.generateFragment)).check(matches(isDisplayed()));
-        onView(withId(R.id.fab)).check(matches(isDisplayed()));
-    }
-
-    // test pantry fragment is displayed
-    @Test
-    public void test_goto_pantry(){
-        onView(withId(R.id.fab)).perform(click());
-        onView(withId(R.id.fab_pantry_btn)).perform(click());
-        onView(withId(R.id.pantryFragment)).check(matches(isDisplayed()));
-        onView(withId(R.id.fab)).check(matches(isDisplayed()));
-    }
-
-    // test upload fragment is displayed
-    @Test
-    public void test_goto_upload(){
-        onView(withId(R.id.fab)).perform(click());
-        onView(withId(R.id.fab_upload_recipe_btn)).perform(click());
-        onView(withId(R.id.upload_fragment)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void test_camerax(){
-        onView(withId(R.id.expand_menu_btn)).perform(click());
-        onView(withId(R.id.camerabtn)).perform(click());
-        onView(isRoot()).perform(ViewActions.pressBack());
-        onView(withId(R.id.camerabtn)).perform(click());
-
-    }
-
-    @Test
-    public void test_addItem(){
-        onView(withId(R.id.expand_menu_btn)).perform(click());
-        onView(withId(R.id.addItem)).check(matches(isDisplayed()));
-    }
 
 
 }

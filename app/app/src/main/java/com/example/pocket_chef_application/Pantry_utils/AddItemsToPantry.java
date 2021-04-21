@@ -115,6 +115,7 @@ public class AddItemsToPantry extends Fragment {
                 mRecyclerView.addOnScrollListener(scrollListner);
             }
         });
+
         camerabtn.setOnClickListener(v -> {
             Log.d(TAG, "onCreateView: ");
             image_recog();

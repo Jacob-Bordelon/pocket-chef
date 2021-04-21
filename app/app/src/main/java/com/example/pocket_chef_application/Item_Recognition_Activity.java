@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import android.util.TypedValue;
 import android.view.OrientationEventListener;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -56,6 +58,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -76,10 +79,11 @@ public class Item_Recognition_Activity extends AppCompatActivity {
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private ProcessCameraProvider cameraProvider;
     private List<Food> foodList;
+    private DatePickerDialog expdate;
 
     private Dialog mDialog2;
     private EditText amount, exp;
-    private Button submit;
+    private TextView submit;
     private TextView name;
     private ImageView img;
 
@@ -198,7 +202,6 @@ public class Item_Recognition_Activity extends AppCompatActivity {
             this.context = context;
             this.output = output;
             mDialog= new Dialog(this.context);
-            setupDialog();
 
             this.model = new LocalModel.Builder()
                     .setAssetFilePath("FoodModel.tflite")
@@ -216,6 +219,7 @@ public class Item_Recognition_Activity extends AppCompatActivity {
 
         }
 
+
         @SuppressLint("SetTextI18n")
         @Override
         public void analyze(@NonNull ImageProxy imageProxy) {
@@ -225,31 +229,27 @@ public class Item_Recognition_Activity extends AppCompatActivity {
 
 
                 objectDetector.process(inputImage)
-                        .addOnFailureListener( e -> Log.e(TAG, "analyze: Failed"+e))
                         .addOnSuccessListener(detectedObjects -> {
                             for(DetectedObject obj : detectedObjects){
                                 if(!obj.getLabels().isEmpty() && !mDialog.isShowing()){
-                                    Log.d(TAG, "analyze: "+obj.getTrackingId());
-
-
-
                                     output.setText(Integer.toString(obj.getLabels().size()));
-
                                     mDialog.setContentView(R.layout.pantry_imgrec_dialog);
                                     LinearLayout ll = (LinearLayout)mDialog.findViewById(R.id.btn_layout);
-                                    Button option1, option2, option3, option4, option5;
+
 
                                     int highest = 0;
                                     List<Food> matches =  new ArrayList<>();
                                     for(int i = 0; i<obj.getLabels().size(); i++) {
                                         String currOption = obj.getLabels().get(i).getText();
+
                                         int indexOfDash = currOption.indexOf("-");
                                         if (indexOfDash != -1) {
                                             currOption = currOption.substring(0, indexOfDash - 1).replace(",", "");
                                         }
+
                                         String[] keywords = currOption.split(" ");
-                                        for (Food food : foodList
-                                        ) {
+
+                                        for (Food food : foodList) {
                                             int iTemp = searchWords(keywords, food.getName());
                                             if (highest < iTemp) {
                                                 highest = iTemp;
@@ -262,23 +262,20 @@ public class Item_Recognition_Activity extends AppCompatActivity {
                                             }
                                         }
                                     }
+
                                     if(highest > 0) {
                                         for (int i = 0; i<matches.size(); i++) {
                                             Button currentButton = new Button(mDialog.getContext());
-                                            currentButton = new Button(mDialog.getContext());
                                             currentButton.setTextColor(Color.WHITE);
                                             currentButton.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
                                             currentButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
                                             currentButton.setText(matches.get(i).getName());
                                             ll.addView(currentButton);
-                                            //currentButton = buttons.get(i);
-                                            //currentButton.setText(matches.get(i).getName());
+
                                             int finalI = i;
-                                            currentButton.setOnClickListener(new View.OnClickListener() {
-                                                public void onClick(View v) {
-                                                    EditOperation(matches.get(finalI));
-                                                    objectDetector.close();
-                                                }
+                                            currentButton.setOnClickListener(v -> {
+                                                EditOperation(matches.get(finalI));
+                                                objectDetector.close();
                                             });
                                         }
 
@@ -287,15 +284,10 @@ public class Item_Recognition_Activity extends AppCompatActivity {
                                         mDialog.show();
 
                                     }
-                                      
-
-
 
 
 
                                 }
-
-
                             }
                         })
                         .addOnCompleteListener(task -> imageProxy.close());
@@ -310,18 +302,64 @@ public class Item_Recognition_Activity extends AppCompatActivity {
     public void setupDialog() {
         mDialog2 = new Dialog(this);
         mDialog2.setContentView(R.layout.dialog_add_new_item);
+
         amount = mDialog2.findViewById(R.id.edititem_amount);
         exp = mDialog2.findViewById(R.id.edititem_exp);
         name = mDialog2.findViewById(R.id.item_name);
         submit = mDialog2.findViewById(R.id.submitbtn);
-        img = mDialog2.findViewById(R.id.item_image);
-        TextView cancel = mDialog2.findViewById(R.id.closebtn);
+        img = mDialog2.findViewById(R.id.imageView);
+        TextView exp_preview = mDialog2.findViewById(R.id.exp_preview);
+        TextView exp_label = mDialog2.findViewById(R.id.exp_label);
 
+
+        TextView cancel = mDialog2.findViewById(R.id.closebtn);
         cancel.setOnClickListener(n-> mDialog2.onBackPressed());
+        Calendar mCalender = Calendar.getInstance();
+        int year = mCalender.get(Calendar.YEAR);
+        int month = mCalender.get(Calendar.MONTH);
+        int dayOfMonth = mCalender.get(Calendar.DAY_OF_MONTH);
+
+        exp_label.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_edit_calendar_24, 0, 0, 0);
+
+        DatePickerDialog expdate = new DatePickerDialog(Item_Recognition_Activity.this, (view, year1, month1, dayOfMonth1) -> {
+            String date = month1+"/"+dayOfMonth1+"/"+year1;
+            exp_preview.setText(date);
+        }, year, month, dayOfMonth);
+
+        exp_label.setOnClickListener(v -> expdate.show());
 
     }
 
     private void EditOperation(Food i){
+
+        mDialog2 = new Dialog(this);
+        mDialog2.setContentView(R.layout.dialog_add_new_item);
+
+        amount = mDialog2.findViewById(R.id.edititem_amount);
+        exp = mDialog2.findViewById(R.id.edititem_exp);
+        name = mDialog2.findViewById(R.id.item_name);
+        submit = mDialog2.findViewById(R.id.submitbtn);
+        img = mDialog2.findViewById(R.id.imageView);
+        TextView exp_preview = mDialog2.findViewById(R.id.exp_preview);
+        TextView exp_label = mDialog2.findViewById(R.id.exp_label);
+
+
+        TextView cancel = mDialog2.findViewById(R.id.closebtn);
+        cancel.setOnClickListener(n-> mDialog2.onBackPressed());
+        Calendar mCalender = Calendar.getInstance();
+        int year = mCalender.get(Calendar.YEAR);
+        int month = mCalender.get(Calendar.MONTH);
+        int dayOfMonth = mCalender.get(Calendar.DAY_OF_MONTH);
+
+        exp_label.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_edit_calendar_24, 0, 0, 0);
+
+        DatePickerDialog expdate = new DatePickerDialog(Item_Recognition_Activity.this, (view, year1, month1, dayOfMonth1) -> {
+            String date = month1+"/"+dayOfMonth1+"/"+year1;
+            exp_preview.setText(date);
+        }, year, month, dayOfMonth);
+
+        exp_label.setOnClickListener(v -> expdate.show());
+
         name.setText(i.getName());
         if(i.getImage() != null && !i.getImage().equals("")){
             Picasso.get()
@@ -332,8 +370,9 @@ public class Item_Recognition_Activity extends AppCompatActivity {
         }
 
         submit.setOnClickListener(v -> {
-
-            Pantry.AddItem(i, exp.getText().toString(), Integer.parseInt(amount.getText().toString()));
+            DatePicker picker = expdate.getDatePicker();
+            String date = picker.getMonth()+"/"+picker.getDayOfMonth()+"/"+picker.getYear();
+            Pantry.AddItem(i, date, Integer.parseInt(amount.getText().toString()));
             mDialog2.dismiss();
             onBackPressed();
         });
@@ -354,12 +393,7 @@ public class Item_Recognition_Activity extends AppCompatActivity {
 
     public void fetchFood() {
         FirebaseFoodDatabase_Helper helper = new FirebaseFoodDatabase_Helper();
-        helper.readFood(new FirebaseFoodDatabase_Helper.Container() {
-            @Override
-            public void returnData(List<Food> foods) {
-                foodList = foods;
-            }
-        });
+        helper.readFood(foods -> foodList = foods);
 
 
     }
