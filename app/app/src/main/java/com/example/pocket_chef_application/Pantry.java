@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.example.pocket_chef_application.Firebase.FirebaseFoodDatabase_Helper;
 import com.example.pocket_chef_application.Model.Food;
-import com.example.pocket_chef_application.Pantry_utils.FoodItemAdapter;
 import com.example.pocket_chef_application.Pantry_utils.Pantry_Adapter;
 import com.example.pocket_chef_application.Pantry_utils.Pantry_Item;
 import com.example.pocket_chef_application.Pantry_utils.AddItemsToPantry;
@@ -41,14 +40,12 @@ public class Pantry extends Fragment {
     private TextView statusVal;
 
     private static Pantry_Adapter Padapter;
-    private FoodItemAdapter Sadapter;
     private static Context context;
 
     private static List<Pantry_Item> pantry_items;
     private ConstraintLayout exanded_menu;
     private View rootView;
     private RecyclerView mRecyclerview, suggestionsView;
-    private FirebaseFoodDatabase_Helper.DataStatus dataStatus;
     private FirebaseFoodDatabase_Helper helper;
 
 
@@ -66,6 +63,7 @@ public class Pantry extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TransitionInflater inflater = TransitionInflater.from(requireContext());
+        setEnterTransition(inflater.inflateTransition(R.transition.fade));
         setExitTransition(inflater.inflateTransition(R.transition.fade));
         context = this.getContext();
     }
@@ -77,11 +75,9 @@ public class Pantry extends Fragment {
         View view = inflater.inflate(R.layout.pantry, container, false);
         getViews(view);
 
-
         LocalDB db = LocalDB.getDBInstance(this.getContext());
         List<DBItem> dbitems = db.itemDAO().getAllItems();
         pantry_items = dbitems.stream().map(Pantry_Item::new).collect(Collectors.toList());
-
 
         initRecyclerView(view);
         initSearchView(view);
@@ -91,28 +87,6 @@ public class Pantry extends Fragment {
 
     private void initSearchView(View view) {
         suggestionsView = view.findViewById(R.id.pantry_suggestions);
-        Sadapter = new FoodItemAdapter();
-        dataStatus = new FirebaseFoodDatabase_Helper.DataStatus() {
-            @Override
-            public void DataIsLoaded(List<Food> foods, List<String> keys) {
-                Sadapter.setConfig(suggestionsView, getContext(), foods, keys);
-            }
-
-            @Override
-            public void DataIsInserted() {
-
-            }
-
-            @Override
-            public void DataIsUpdated() {
-
-            }
-
-            @Override
-            public void DataIsDeleted() {
-
-            }
-        };
         helper = new FirebaseFoodDatabase_Helper();
     }
 
@@ -143,69 +117,6 @@ public class Pantry extends Fragment {
             }
         });
         searchView.clearFocus();
-        /*expand_menu_btn.setOnClickListener(v -> {
-            if(exanded_menu.getVisibility() == View.GONE){
-                exanded_menu.setVisibility(View.VISIBLE);
-                expand_menu_btn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_up_24);
-                camerabtn.setVisibility(View.VISIBLE);
-                suggestionsView.setVisibility(View.VISIBLE);
-                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-
-                        helper.getFood(dataStatus, newText);
-
-                        //Sadapter.filter(newText);
-                        return false;
-                    }
-                });
-            }else {
-                exanded_menu.setVisibility(View.GONE);
-                expand_menu_btn.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
-                camerabtn.setVisibility(View.GONE);
-                suggestionsView.setVisibility(View.GONE);
-                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-                        Padapter.filter(newText);
-                        return false;
-                    }
-                });
-            }
-        });
-
-        DatabaseReference connectedRef = helper.mDatabase.getInstance().getReference(".info/connected");
-        connectedRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    statusVal.setTextColor(getContext().getColor(R.color.fresh));
-                    statusVal.setText("connected");
-                } else {
-                    statusVal.setTextColor(getContext().getColor(R.color.expired));
-                    statusVal.setText("not connected");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Listener was cancelled");
-            }
-        });*/
-        expand_menu_btn.setOnClickListener(v -> {
-            MainActivity.switch_fragment(new AddItemsToPantry());
-        });
     }
 
     public void setupUI(View view) {

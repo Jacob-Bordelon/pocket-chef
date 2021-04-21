@@ -1,0 +1,25 @@
+var before = {
+  "author":"test",
+  "description":"amazing recipe",
+  "ingredients":{"000001":{"name":"test"}},
+  "instructions":{"step1":"do this","step2":"do that"},
+  "prep_time":2,
+  "cook_time":3,
+  "difficulty":"easy",
+  "serving_size":4,
+  "sanitized":false
+}
+
+var after = {
+  "author":"test",
+  "description":"fucking amazing recipe",
+  "ingredients":{"000001":{"name":"test"}},
+  "instructions":{"step1":"do this","step2":"do that"},
+  "prep_time":2,
+  "cook_time":3,
+  "difficulty":"easy",
+  "serving_size":4,
+  "sanitized":false
+}
+
+descriptionModerator({before:before, after:after});

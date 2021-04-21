@@ -3,13 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.pocket_chef_application">
 
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <uses-feature android:name="android.hardware.type.watch" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.camera.any" />
 
@@ -22,14 +19,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pocket_Chef_Application.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".util.ForgotPassword"/>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
+        <activity android:name=".util.ForgotPassword" />
         <activity android:name=".util.Register" />
         <activity android:name=".util.LogIn" />
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
         -->
-
+        <activity
+            android:name=".Pantry_utils.AddItemsToPantry"
+            android:label="@string/title_activity_add_items_to_pantry"
+            android:screenOrientation="portrait"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Item_Recognition_Activity"
             android:screenOrientation="portrait" />
@@ -42,13 +46,16 @@
             android:name=".Pantry_utils.PantryItem_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Popup" />
-        <activity android:name=".UploadActivity" />
+        <activity
+            android:name=".UploadActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Pocket_Chef_Application.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

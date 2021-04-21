@@ -40,8 +40,6 @@ import android.widget.Toast;
 import com.example.pocket_chef_application.Firebase.FirebaseFoodDatabase_Helper;
 import com.example.pocket_chef_application.Model.Food;
 import com.example.pocket_chef_application.Pantry_utils.AddItemsToPantry;
-import com.example.pocket_chef_application.Pantry_utils.ItemsRecyclerView;
-import com.example.pocket_chef_application.Pantry_utils.PantryTextWatcher;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.mlkit.common.model.LocalModel;
 import com.google.mlkit.vision.common.InputImage;
@@ -69,7 +67,7 @@ import java.util.concurrent.Executors;
 public class Item_Recognition_Activity extends AppCompatActivity {
     private final int REQUEST_CODE_PERMISSIONS = 10;
     private final String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.CAMERA};
-    private final String TAG = "ImageActivity";
+    private static final String TAG = "Image_Item_Rec";
 
     private PreviewView previewView;
     private TextView output;
@@ -84,7 +82,6 @@ public class Item_Recognition_Activity extends AppCompatActivity {
     private Button submit;
     private TextView name;
     private ImageView img;
-    private PantryTextWatcher tw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,12 +216,12 @@ public class Item_Recognition_Activity extends AppCompatActivity {
 
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void analyze(@NonNull ImageProxy imageProxy) {
             @SuppressLint("UnsafeExperimentalUsageError") Image image = imageProxy.getImage();
             if(image != null){
-                InputImage inputImage = InputImage.fromMediaImage(image,
-                        imageProxy.getImageInfo().getRotationDegrees());
+                InputImage inputImage = InputImage.fromMediaImage(image, imageProxy.getImageInfo().getRotationDegrees());
 
 
                 objectDetector.process(inputImage)
@@ -232,7 +229,10 @@ public class Item_Recognition_Activity extends AppCompatActivity {
                         .addOnSuccessListener(detectedObjects -> {
                             for(DetectedObject obj : detectedObjects){
                                 if(!obj.getLabels().isEmpty() && !mDialog.isShowing()){
-                                    Log.d(TAG, "onSuccess: "+obj.getLabels().get(0).getText());
+                                    Log.d(TAG, "analyze: "+obj.getTrackingId());
+
+
+
                                     output.setText(Integer.toString(obj.getLabels().size()));
 
                                     mDialog.setContentView(R.layout.pantry_imgrec_dialog);
@@ -318,8 +318,6 @@ public class Item_Recognition_Activity extends AppCompatActivity {
         TextView cancel = mDialog2.findViewById(R.id.closebtn);
 
         cancel.setOnClickListener(n-> mDialog2.onBackPressed());
-        tw = new PantryTextWatcher(exp);
-        exp.addTextChangedListener(tw);
 
     }
 
@@ -356,26 +354,10 @@ public class Item_Recognition_Activity extends AppCompatActivity {
 
     public void fetchFood() {
         FirebaseFoodDatabase_Helper helper = new FirebaseFoodDatabase_Helper();
-        helper.readFood(new FirebaseFoodDatabase_Helper.DataStatus() {
+        helper.readFood(new FirebaseFoodDatabase_Helper.Container() {
             @Override
-            public void DataIsLoaded(List<Food> foods, List<String> keys) {
+            public void returnData(List<Food> foods) {
                 foodList = foods;
-
-            }
-
-            @Override
-            public void DataIsInserted() {
-
-            }
-
-            @Override
-            public void DataIsUpdated() {
-
-            }
-
-            @Override
-            public void DataIsDeleted() {
-
             }
         });
 

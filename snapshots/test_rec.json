@@ -1,0 +1,22 @@
+{
+  "author" : "Anonymous",
+  "cook_time" : 5,
+  "description" : "fgtgf",
+  "difficulty" : "Beginner",
+  "id" : "54adf596-bb07-45b1-ae5a-00279365858c",
+  "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/recipes%2F54adf596-bb07-45b1-ae5a-00279365858c.jpg?alt=media&token=53734507-e3f9-44a7-aaee-84a001b6c8bb",
+  "ingredients" : {
+    "1000" : {
+      "amount" : 8,
+      "measurement" : "cups",
+      "name" : "vcgvcd"
+    }
+  },
+  "instructions" : {
+    "Step1" : "cgftft"
+  },
+  "prep_time" : 5,
+  "rating" : 0,
+  "status" : 0,
+  "title" : "test"
+}

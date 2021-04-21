@@ -3,18 +3,13 @@ package com.example.pocket_chef_application.Gen_Recipes;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.Resources;
-import android.media.Image;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -22,42 +17,38 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
+import com.example.pocket_chef_application.Model.Ingredient;
 import com.example.pocket_chef_application.Model.Recipe;
 import com.example.pocket_chef_application.R;
 import com.example.pocket_chef_application.data.DBItem;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
 
 public class RecipeAdapter {
     private static final String TAG = RecipeAdapter.class.getSimpleName();
     private static Context context;
     public Adapter recipeAdapter;
 
-    public void setConfig(RecyclerView recyclerView, Context context, List<Recipe> recipes, List<String> keys)
+    public void setConfig(RecyclerView recyclerView, Context context, List<Recipe> recipes)
     {
         this.context = context;
-        recipeAdapter = new Adapter(recipes, keys);
+        recipeAdapter = new Adapter(recipes);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(recipeAdapter);
+    }
+
+    public void refresh(){
+        recipeAdapter.notifyDataSetChanged();
     }
 
 
@@ -65,13 +56,12 @@ public class RecipeAdapter {
         private TextView titleView, prepView, cookView, totalView, diffView, authorView, descView;
         private ConstraintLayout hiddenView;
         private ImageView imageView;
-        private String key;
         private CardView cardView;
         private RatingBar ratingBar;
         private ChipGroup filterView;
 
         public RecipeItemView(ViewGroup parent){
-            super(LayoutInflater.from(context).inflate(R.layout.item, parent, false));
+            super(LayoutInflater.from(context).inflate(R.layout.recipe_layout, parent, false));
             cardView = itemView.findViewById(R.id.card_base);
             hiddenView = itemView.findViewById(R.id.hidden_view);
 
@@ -93,7 +83,8 @@ public class RecipeAdapter {
 
         // using the same names from the constructor, set the values per each unique item here
         @SuppressLint("SetTextI18n")
-        public void bind(Recipe recipe, String key){
+        public void bind(Recipe recipe){
+            Log.d(TAG, "bind: "+recipe.getTitle());
             titleView.setText(recipe.getTitle());
             prepView.setText(Integer.toString(recipe.getPrep_time()));
             cookView.setText(Integer.toString(recipe.getCook_time()));
@@ -105,19 +96,15 @@ public class RecipeAdapter {
             addChips(new ArrayList<>(recipe.getIngredients().values()));
 
 
-            if(recipe.getImage() != null){
+            if((recipe.getImage() != null ) && recipe.getImage().contains("https://firebasestorage.googleapis.com")){
                 Picasso.get()
                         .load(recipe.getImage())
                         .fit()
                         .centerCrop()
                         .into(imageView);
-                Log.i(TAG, "bind: Load image into adapter for- "+recipe.getTitle());
-            }
-            else{
-                Log.i(TAG, "bind: No image found for: "+recipe.getTitle());
+            } else{
                 imageView.setImageResource(R.drawable.no_image_found);
             }
-            this.key = key;
         }
 
 
@@ -148,12 +135,10 @@ public class RecipeAdapter {
 
     static class Adapter extends RecyclerView.Adapter<RecipeItemView>{
         public static List<Recipe> recipeList;
-        private List<String> keysList;
         private ArrayList<Recipe> backups;
 
-        public Adapter(List<Recipe> recipeList, List<String> keysList) {
-            this.recipeList = recipeList;
-            this.keysList = keysList;
+        public Adapter(List<Recipe> recipeList) {
+            Adapter.recipeList = recipeList;
             backups=new ArrayList<>();
             backups.addAll(recipeList);
         }
@@ -166,7 +151,7 @@ public class RecipeAdapter {
 
         @Override
         public void onBindViewHolder(@NonNull RecipeItemView holder, int position) {
-            holder.bind(recipeList.get(position), keysList.get(position));
+            holder.bind(recipeList.get(position));
         }
 
         @Override
@@ -176,11 +161,6 @@ public class RecipeAdapter {
 
 
     }
-
-
-
-
-
 
     public void addfilter(List<DBItem> items){
         Adapter.recipeList.clear();

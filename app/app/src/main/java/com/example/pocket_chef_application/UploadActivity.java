@@ -1,251 +1,523 @@
 package com.example.pocket_chef_application;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.util.Pair;
+import android.view.GestureDetector;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pocket_chef_application.Gen_Recipes.Ingredient;
-import com.example.pocket_chef_application.Model.Camera;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+
+import com.example.pocket_chef_application.Firebase.SuggestionAdapter;
+import com.example.pocket_chef_application.Model.Ingredient;
 import com.example.pocket_chef_application.Model.Recipe;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
+import java.util.function.Function;
 
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-public class UploadActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class UploadActivity extends Activity implements View.OnClickListener {
 
-    private static ConstraintLayout layout;
-    private static FragmentManager manager;
-    private String record;
     final static String TAG = UploadActivity.class.getSimpleName();
+    private static final int PICK_IMAGE = 100;
+    private Uri imageUri;
+    private TextView cancel, save, upload, doubletapclue1,doubletapclue2;
+    private EditText name, prep_time, cook_time, desc;
+    private ImageView image;
+    private LinearLayout ingredientsLayout, instructionsLayout;
+    private Spinner diff;
 
+    private HashMap<String,Ingredient> ingredientsList;
+    private HashMap<String,String> instructionsList;
+    private String[] unitsList;
+
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload);
-        Context context = getApplicationContext();
-        layout = findViewById(R.id.upload_fragment);
+        setContentView(R.layout.upload_layout);
+        setupViews();
+        setupOnClickListeners();
 
-        Spinner measurement = findViewById(R.id.measure);
-        ArrayAdapter<CharSequence> measurementAdapter = ArrayAdapter.createFromResource(this, R.array.measurement, android.R.layout.simple_spinner_item);
-        measurementAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        measurement.setAdapter(measurementAdapter);
-        measurement.setSelection(11);
-        measurement.setOnItemSelectedListener(this);
-
-        EditText ingredientName = findViewById(R.id.ingredient);
-        EditText amount = findViewById(R.id.amount);
-        EditText recipeName = findViewById(R.id.recipeName);
-        EditText descriptions = findViewById(R.id.description);
-        EditText instructions = findViewById(R.id.instructions);
-        EditText prepTime = findViewById(R.id.prepTime);
-        EditText cookTime = findViewById(R.id.cookTime);
-        HashMap<String, Ingredient> ingredientsList = new HashMap<>();
+    }
 
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.nothing, R.anim.slide_out_top);
+    }
 
-        Button cameraButton = findViewById(R.id.cameraButton);
-        cameraButton.setOnClickListener(v -> {
-            testUpload();
-        });
-
-        Button addButton = findViewById(R.id.add);
-        addButton.setOnClickListener(v -> {
-            if (record.equals("None")){
-                Toast.makeText(context, "Measurement can't be blank", Toast.LENGTH_SHORT).show();
-            }
-            else {
-
-                Ingredient ingredient = new Ingredient();
-                ingredient.setName(ingredientName.getText().toString());
-                ingredient.setAmount(Integer.parseInt(amount.getText().toString()));
-                ingredient.setMeasurement(record);
-
-                ingredientsList.put("325871", ingredient);
-                ingredientName.getText().clear();
-                amount.getText().clear();
-                measurement.setSelection(11);
-
+    @SuppressLint("ClickableViewAccessibility")
+    private void setupViews(){
+        name = findViewById(R.id.rec_name);
+        prep_time = findViewById(R.id.rec_prep);
+        cook_time = findViewById(R.id.rec_cook);
+        desc = findViewById(R.id.rec_desc);
+        ingredientsLayout = findViewById(R.id.rec_ingredients);
+        image = findViewById(R.id.imageView);
+        diff =  findViewById(R.id.rec_difficulty);
+        cancel = findViewById(R.id.cancel);
+        save =  findViewById(R.id.savebtn);
+        upload = findViewById(R.id.uploadbtn);
+        instructionsLayout = findViewById(R.id.rec_instructions);
+        doubletapclue1 = findViewById(R.id.double_tap_clue1);
+        doubletapclue2 = findViewById(R.id.double_tap_clue2);
 
 
-            }
-        });
+        name.setOnKeyListener(moveFocusTo(prep_time));
+        prep_time.setOnKeyListener(moveFocusTo(cook_time));
+        cook_time.setOnKeyListener(moveFocusTo(desc));
 
-
-        // Lambda handler of fab.
-        Button saveButton = findViewById(R.id.save);
-        saveButton.setOnClickListener(v -> {
-
-            boolean valuesHere = true;
-
-            // check if any values are empty
-            if (recipeName.getText().toString().equals("")){
-                Toast.makeText(context, "Missing Recipe Name", Toast.LENGTH_SHORT).show();
-                valuesHere = false;
-            }
-
-            if (ingredientsList.size() ==0){
-                Toast.makeText(context, "Missing Ingredients", Toast.LENGTH_SHORT).show();
-                valuesHere = false;
-            }
-
-            if (instructions.getText().toString().equals("")){
-                Toast.makeText(context, "Missing Instructions", Toast.LENGTH_SHORT).show();
-                valuesHere = false;
-            }
-
-            if(valuesHere){
-                Recipe recipe = new Recipe();
-                recipe.setTitle(recipeName.getText().toString());
-                recipe.setDescription(descriptions.getText().toString());
-                recipe.setPrep_time(Integer.parseInt(prepTime.getText().toString()));
-                recipe.setCook_time(Integer.parseInt(cookTime.getText().toString()));
-                recipe.setIngredients(ingredientsList);
-
-                HashMap<String, String> instruct = new HashMap<>();
-                String[] steps = instructions.getText().toString().split("\n");
-
-                for(int i = 0; i < steps.length; i++){
-                    instruct.put("step"+i,steps[i]);
+        desc.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN)
+            {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    newIngredient();
+                    return true;
                 }
-                recipe.setInstructions(instruct);
-                recipe.setAuthor("jacob bordelon");
-                recipe.setId(10001010);
-                recipe.setImage("null");
-                recipe.setDifficulty("easy");
-
-
-                uploadRecipe(recipe);
-                Toast.makeText(context, "Recipe Saved", Toast.LENGTH_LONG).show();
             }
+            return false;
+        });
 
+        GestureDetector ingredientGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                newIngredient();
+                return super.onDoubleTap(e);
+            }
+        });
+
+        GestureDetector instructionGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                newStep();
+                return super.onDoubleTap(e);
+            }
+        });
+        
+        ingredientsLayout.setOnTouchListener((v, event) -> { ingredientGestureDetector.onTouchEvent(event);return true; });
+        instructionsLayout.setOnTouchListener((v, event) -> { instructionGestureDetector.onTouchEvent(event);return true; });
+
+
+        unitsList = this.getResources().getStringArray(R.array.units);
+        ingredientsList = new HashMap<>();
+        instructionsList =  new HashMap<>();
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+        database = MainActivity.realtimedb;
+        databaseReference = database.getReference("/recipeBook/");
+    }
+
+    private void setupOnClickListeners(){
+        cancel.setOnClickListener(this);
+        save.setOnClickListener(this);
+        upload.setOnClickListener(this);
+        image.setOnClickListener(this);
+
+
+    }
+
+    private View.OnKeyListener moveFocusTo(View toView){
+        return (v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN)
+            {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    toView.requestFocus();
+                    return true;
+                }
+            }
+            return false;
+        };
+    }
+
+
+    // --------------------- Ingredient Stuff ------------------------
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void newIngredient(){
+        @SuppressLint("InflateParams") View ingredientView = getLayoutInflater().inflate(R.layout.ingredient_view, null, false);
+        EditText amount =  ingredientView.findViewById(R.id.amount);
+        AutoCompleteTextView prompt =  ingredientView.findViewById(R.id.prompt);
+        Spinner units = ingredientView.findViewById(R.id.units);
+        Button add = ingredientView.findViewById(R.id.button5);
+
+        if(doubletapclue1.getVisibility() == View.VISIBLE){
+            doubletapclue1.setVisibility(View.GONE);
+        }
+
+
+        List<String> keyList = new ArrayList<>();
+        SuggestionAdapter promptAdapter = new SuggestionAdapter(this,android.R.layout.simple_dropdown_item_1line, keyList);
+        prompt.setAdapter(promptAdapter);
+
+        add.setOnClickListener(v -> removeIngredient(ingredientView));
+        amount.setOnKeyListener(moveFocusTo(prompt));
+        prompt.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN)
+            {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    newIngredient();
+                    return true;
+                }
+            }
+            return false;
+        });
+        ingredientsLayout.addView(ingredientView);
+        amount.requestFocus();
+    }
+
+
+    private void removeIngredient(View view){
+        ingredientsLayout.removeView(view);
+        if(ingredientsLayout.getChildCount()==0){
+            doubletapclue1.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+    //TODO - Compare these ingredients to the food database and obtain their collective FDCId values for accurate food results
+    private Pair<String, Ingredient> getIngredientValues(View view){
+        EditText amount =  view.findViewById(R.id.amount);
+        AutoCompleteTextView prompt =  view.findViewById(R.id.prompt);
+        Spinner units = view.findViewById(R.id.units);
+
+        int amnt = Integer.parseInt(amount.getText().toString());
+        String item = prompt.getText().toString();
+        String unit = units.getSelectedItem().toString();
+
+        Ingredient ingredient = new Ingredient(amnt,item, unit);
+        String itemLoc = Integer.toBinaryString(amnt);
+
+        return new Pair<>(itemLoc, ingredient);
+
+    }
+
+    private HashMap<String,Ingredient> getAllIngredients(){
+        HashMap<String,Ingredient> returnVal = new HashMap<>();
+        for(int i = 0; i< ingredientsLayout.getChildCount(); i++){
+            Pair<String, Ingredient> entry = getIngredientValues(ingredientsLayout.getChildAt(i));
+            returnVal.put(entry.first,entry.second);
+        }
+        return returnVal;
+    }
+
+    // ------------------ Steps Stuff ----------------------------
+    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
+    private void newStep(){
+        @SuppressLint("InflateParams") View instructionView = getLayoutInflater().inflate(R.layout.instruction_view, null, false);
+        TextView steptext = instructionView.findViewById(R.id.steptext);
+        EditText instruct = instructionView.findViewById(R.id.instruction);
+        Button addButton = instructionView.findViewById(R.id.addbtn);
+
+        if(doubletapclue2.getVisibility() == View.VISIBLE){
+            doubletapclue2.setVisibility(View.GONE);
+        }
+
+        int stepInt = instructionsLayout.getChildCount()+1;
+        steptext.setText("Step "+stepInt+": ");
+
+        addButton.setOnClickListener(v->removeStep(instructionView));
+
+
+        instruct.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN)
+            {
+                switch (keyCode)
+                {
+                    case KeyEvent.KEYCODE_DPAD_CENTER:
+                    case KeyEvent.KEYCODE_ENTER:
+                        newStep();
+                        return true;
+                    default:
+                        break;
+                }
+            }
+            return false;
+        });
+        instructionsLayout.addView(instructionView);
+        instruct.requestFocus();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void removeStep(View view){
+        int start = instructionsLayout.indexOfChild(view);
+        instructionsLayout.removeView(view);
+        for(int i = start; i< instructionsLayout.getChildCount(); i++){
+            View v = instructionsLayout.getChildAt(i);
+            TextView stepText = v.findViewById(R.id.steptext);
+            stepText.setText("Step "+(i+1)+": ");
+        }
+        if(instructionsLayout.getChildCount()==0){
+            doubletapclue2.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private Pair<String, String> getInstructionValues(View view){
+        TextView steptext = view.findViewById(R.id.steptext);
+        EditText instruct = view.findViewById(R.id.instruction);
+        String stepNum = steptext.getText().toString();
+        stepNum = stepNum.replace(" ","");
+        stepNum = stepNum.replace(":","");
+
+        String action = instruct.getText().toString();
+
+        return new Pair<>(stepNum, action);
+
+    }
+
+    private HashMap<String,String> getAllInstructions(){
+        HashMap<String,String> returnVal = new HashMap<>();
+        for (int i = 0; i< instructionsLayout.getChildCount(); i++){
+            Pair<String, String> entry = getInstructionValues(instructionsLayout.getChildAt(i));
+            System.out.println(entry.first+" "+entry.second);
+            returnVal.put(entry.first, entry.second);
+        }
+        return returnVal;
+    }
+
+    // ---------------- Recipe Related stuff ----------------------
+
+    private boolean checkAllViews(){
+        List<View> views = Arrays.asList(name,desc,cook_time,prep_time, diff);
+
+        for(View v:views){
+            if(v instanceof EditText){
+                if(((EditText) v).getText().toString().matches("")){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private Recipe formatDataToRecipe(String uniqueID){
+
+        String title        = name.getText().toString();
+        String author       = "Anonymous";
+        String description  = desc.getText().toString();
+        String id           = uniqueID;
+        int cook            = Integer.parseInt(cook_time.getText().toString());
+        int prep            = Integer.parseInt(prep_time.getText().toString());
+        int rating          = 0;
+        String difficulty   = diff.getSelectedItem().toString();
+        ingredientsList     = getAllIngredients();
+        instructionsList    = getAllInstructions();
+        String image        = "recipes/"+uniqueID;
+
+
+        return new Recipe(
+                title,
+                id,
+                author,
+                description,
+                cook,
+                prep,
+                rating,
+                difficulty,
+                image,
+                instructionsList,
+                ingredientsList
+        );
+
+
+    }
+
+    private Recipe testRecipe(String id){
+        StorageReference ref = storageReference.child("/recipes/" + "blah");
+
+        Log.d(TAG, "uploadImageToFirebase: "+ref);
+
+        instructionsList.put("step1","blah blah blah");
+        ingredientsList.put("0000101",new Ingredient(2,"blah","cups"));
+        return new Recipe(
+                "My Recipe",
+                id,
+                "Test Approval",
+                "Test",
+                4,
+                4,
+                0,
+                "Beginner",
+                " ",
+                instructionsList,
+                ingredientsList
+        );
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.cancel:
+                finish();
+                break;
+            case R.id.savebtn:
+                //TODO - grab all values from each pane
+                //TODO - save those values to a json file type structure
+                //TODO - convert json file to a pretty print file type
+                //TODO - store that file locally on the device
+                break;
+            case R.id.uploadbtn:
+                String uniqueID = UUID.randomUUID().toString();
+                if(checkAllViews()){
+                    Recipe recipe = formatDataToRecipe(uniqueID);
+                    uploadImageToFirebase(uniqueID, recipe);
+                }
+                break;
+            case R.id.imageView:
+                openGallery();
+                break;
+        }
+    }
+
+    private void uploadRecipeToFirebase(Recipe recipe){
+        databaseReference.child(recipe.getId()).setValue(recipe)
+        .addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                Toast.makeText(UploadActivity.this, "Recipe Was Uploaded", Toast.LENGTH_SHORT).show();
+                finish();
+            }else{
+                Toast.makeText(UploadActivity.this, "There was an error during upload", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void uploadImageToFirebase(String name, Recipe recipe){
+        if(imageUri != null){
+            ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading Image...");
+            progressDialog.show();
+
+            String filePath = "/recipes/" + name +".jpg";
+            StorageReference ref = storageReference.child(filePath);
+
+            Log.d(TAG, "uploadImageToFirebase: "+ref);
+
+            UploadTask uploadTask = ref.putFile(imageUri);
+
+            uploadTask.addOnProgressListener(taskSnapshot -> {
+                double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                progressDialog.setMessage("Uploaded " + (int)progress + "%");
             });
-    }
 
-    private void testUpload(){
-        Recipe recipe = new Recipe();
-        recipe.setTitle("pancakes");
-        recipe.setDescription("Fluffy delicous pancakes");
-        recipe.setAuthor("jacob bordelon");
-        recipe.setImage("null");
-        recipe.setId(100010);
 
-        String[] steps = {"mix the ingredients together", "pour batter on hot plate", "flip after 1 minute", "serve immediately"};
-        HashMap<String, String> instruct = new HashMap<>();
-        for(int i = 0; i < steps.length; i++){
-            instruct.put("step"+i,steps[i]);
+            uploadTask.addOnCompleteListener(UploadActivity.this, task -> {
+                progressDialog.dismiss();
+                Toast.makeText(UploadActivity.this, "Task has been completed", Toast.LENGTH_SHORT).show();
+            });
+
+
+            Task<Uri> getDownloadUriTask = uploadTask.continueWithTask(task -> {
+                if(!task.isSuccessful()){
+                    throw task.getException();
+                }
+                return ref.getDownloadUrl();
+            });
+
+            getDownloadUriTask.addOnCompleteListener(UploadActivity.this, task -> {
+                if (task.isSuccessful()) {
+                    Uri downloadedUri = task.getResult();
+
+
+                    recipe.setImage(downloadedUri.toString());
+                    uploadRecipeToFirebase(recipe);
+                }else{
+                    Toast.makeText(UploadActivity.this, "Activity failed to upload image", Toast.LENGTH_SHORT ).show();
+                }
+            });
+                     /*
+                    .addOnSuccessListener(taskSnapshot -> {
+                                progressDialog.dismiss();
+                                Toast.makeText(UploadActivity.this, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
+                            })
+                    .addOnFailureListener(e -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(UploadActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnProgressListener(taskSnapshot -> {
+                                double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                                progressDialog.setMessage("Uploaded " + (int)progress + "%");
+                            });
+*/
+
+        }
+        else {
+            new AlertDialog.Builder(UploadActivity.this)
+                    .setTitle("Warning")
+                    .setMessage("You have not selected an Image for this Recipe. No image will be displayed when other users view your content. \n Is this okay?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        recipe.setImage("none");
+                        uploadRecipeToFirebase(recipe);
+                    })
+
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton("No", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         }
 
-        recipe.setInstructions(instruct);
-
-        HashMap<String, Ingredient> ingredientsList = new HashMap<>();
-        Ingredient ingredient = new Ingredient();
-        ingredient.setName("pancake miz");
-        ingredient.setAmount(2);
-        ingredient.setMeasurement("Cup");
-
-        ingredientsList.put("325871", ingredient);
-        ingredientsList.put("325871", ingredient);
-        ingredientsList.put("325871", ingredient);
-
-
-        recipe.setIngredients(ingredientsList);
-
-        recipe.setRating(3);
-        recipe.setDifficulty("easy");
-        Log.d(TAG, "testUpload: ");
-
-
-        uploadRecipe(recipe);
-
     }
 
-    private void uploadRecipe(Recipe recipe) {
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("recipeBook/"+recipe.getTitle());
-        mDatabase.child("author").setValue(recipe.getAuthor());
-        mDatabase.child("prep_time").setValue(recipe.getPrep_time());
-        mDatabase.child("cook_time").setValue(recipe.getCook_time());
-        mDatabase.child("difficulty").setValue(recipe.getDifficulty());
-        mDatabase.child("id").setValue(recipe.getId());
-        mDatabase.child("image").setValue(recipe.getImage());
-        mDatabase.child("rating").setValue(recipe.getRating());
-        mDatabase.child("description").setValue(recipe.getDescription());
-        mDatabase.child("ingredients").setValue(recipe.getIngredients());
-        mDatabase.child("instructions").setValue(recipe.getInstructions());
-        mDatabase.child("serving_size").setValue("1");
+    private void openGallery() {
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, PICK_IMAGE);
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        switch (position) {
-            case 0:
-                record = "Tablespoon";
-                break;
-            case 1:
-                record = "Cup";
-                break;
-            case 2:
-                record = "Teaspoon";
-                break;
-            case 3:
-                record = "Liter";
-                break;
-            case 4:
-                record = "Gram";
-                break;
-            case 5:
-                record = "Ounce";
-                break;
-            case 6:
-                record = "Pound";
-                break;
-            case 7:
-                record = "Pint";
-                break;
-            case 8:
-                record = "Quart";
-                break;
-            case 9:
-                record = "Gallon";
-                break;
-            case 10:
-                record = "Fluid Ounce";
-                break;
-            case 11:
-                record = "None";
-                break;
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE && data != null && data.getData() != null){
+            imageUri = data.getData();
+            image.setImageURI(imageUri);
         }
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-    }}
+
+}
 

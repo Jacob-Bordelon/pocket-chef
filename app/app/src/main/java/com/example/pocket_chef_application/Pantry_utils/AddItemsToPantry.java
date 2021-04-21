@@ -1,13 +1,16 @@
 package com.example.pocket_chef_application.Pantry_utils;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,9 +31,10 @@ import java.util.stream.Collectors;
 public class AddItemsToPantry extends Fragment {
 
     private RecyclerView mRecyclerView;
-    private ItemsRecyclerView adapter;
-    private ImageButton back_btn, camerabtn;
+    private SearchView searchView;
+    private ImageButton camerabtn;
     private final String TAG = "AddItemsToPantry";
+    private FirebaseFoodDatabase_Helper helper;
 
 
     @Override
@@ -46,36 +50,71 @@ public class AddItemsToPantry extends Fragment {
         View view = inflater.inflate(R.layout.activity_add_items_to_pantry, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.item_list);
-        back_btn = (ImageButton) view.findViewById(R.id.back_btn);
         camerabtn  = (ImageButton) view.findViewById(R.id.camerabtn);
-        FirebaseFoodDatabase_Helper helper = new FirebaseFoodDatabase_Helper();
-        helper.readFood(new FirebaseFoodDatabase_Helper.DataStatus() {
-            @Override
-            public void DataIsLoaded(List<Food> foods, List<String> keys) {
-                adapter = new ItemsRecyclerView(foods,getContext());
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                mRecyclerView.setHasFixedSize(true);
-                mRecyclerView.setAdapter(adapter);
+        searchView = (SearchView) view.findViewById(R.id.searchView3);
 
+        helper = new FirebaseFoodDatabase_Helper();
+        helper.setConfig(mRecyclerView,getContext());
+        helper.defaultPage();
+
+        RecyclerView.OnScrollListener scrollListner = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
             }
 
             @Override
-            public void DataIsInserted() {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
 
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+
+                if (linearLayoutManager != null &&
+                        linearLayoutManager.findLastCompletelyVisibleItemPosition() ==
+                                helper.getAdapterSize() - 1) {
+                    //bottom of list!
+                    helper.nextPage();
+
+                }
+
+
+            }
+        };
+        mRecyclerView.addOnScrollListener(scrollListner);
+        setupUI(view);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
             }
 
             @Override
-            public void DataIsUpdated() {
+            public boolean onQueryTextChange(String newText) {
 
-            }
+                if(newText.length() > 0){
+                    helper.clearAdapterItems();
+                    helper.searchFor(newText, foods -> {
+                        helper.adapter.updateList(foods);
+                    });
+                }
 
-            @Override
-            public void DataIsDeleted() {
 
+
+                return true;
             }
         });
-
-        back_btn.setOnClickListener(v-> getActivity().onBackPressed());
+        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus){
+                mRecyclerView.removeOnScrollListener(scrollListner);
+                helper.clearAdapterItems();
+            }else{
+                helper.clearAdapterItems();
+                helper.restoreAdapterItems();
+                mRecyclerView.addOnScrollListener(scrollListner);
+            }
+        });
         camerabtn.setOnClickListener(v -> {
             Log.d(TAG, "onCreateView: ");
             image_recog();
@@ -83,15 +122,34 @@ public class AddItemsToPantry extends Fragment {
 
 
         return view;
-
-
     }
+
+
 
     private void image_recog(){
         Intent i = new Intent(this.getContext(), Item_Recognition_Activity.class);
         startActivity(i);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    public void setupUI(View view) {
+        if(!(view instanceof SearchView)) {
+            view.setOnTouchListener((v, event) -> {
+                searchView.clearFocus();
+                return false;
+            });
+        }
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
 
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        helper.removeListener();
+    }
 }

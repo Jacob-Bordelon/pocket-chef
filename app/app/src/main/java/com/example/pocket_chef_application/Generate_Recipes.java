@@ -1,11 +1,17 @@
 package com.example.pocket_chef_application;
 
+import android.app.ActivityOptions;
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
@@ -14,7 +20,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocket_chef_application.Firebase.FirebaseRecipeDatabase_Helper;
@@ -26,55 +35,44 @@ import com.example.pocket_chef_application.data.LocalDB;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Generate_Recipes extends Fragment {
     // Textview variables
-    private TextView filterButton, calCount;
+    final static String TAG = Generate_Recipes.class.getSimpleName();
+    private TextView filterButton, calCount, new_rec;
     private SeekBar calBar;
-    private SearchView searchView;
-    private ListView listView;
     private CheckBox usePantry;
     private ConstraintLayout filterMenu;
     private RecyclerView mRecyclerView;
+    public static FirebaseRecipeDatabase_Helper helper;
     private static final String TEXT = "text";
     private int min=10, max=100, current=10;
+    private LocalDB db;
 
-    public static Generate_Recipes newInstance(String text){
+    public static Generate_Recipes newInstance(){
         Generate_Recipes fragment = new Generate_Recipes();
         Bundle args = new Bundle();
-        args.putString(TEXT,text);
         fragment.setArguments(args);
         return fragment;
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Initializes the view and the status bar on create for non null reference
+        Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.generate_recipes, container, false);
         filterMenu = (ConstraintLayout) view.findViewById(R.id.filterMenu);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cookbook_recyclerview);
-        RecipeAdapter adapter= new  RecipeAdapter();
-        new FirebaseRecipeDatabase_Helper().readRecipes(new FirebaseRecipeDatabase_Helper.DataStatus() {
-            @Override
-            public void DataIsLoaded(List<Recipe> recipes, List<String> keys) {
-                adapter.setConfig(mRecyclerView, getContext(), recipes, keys);
-            }
+        db = LocalDB.getDBInstance(getContext());
+        helper = new FirebaseRecipeDatabase_Helper(mRecyclerView, getContext());
 
-            @Override
-            public void DataIsInserted() {
-
-            }
-
-            @Override
-            public void DataIsUpdated() {
-
-            }
-
-            @Override
-            public void DataIsDeleted() {
-
-            }
+        new_rec = view.findViewById(R.id.new_rec);
+        new_rec.setOnClickListener(v ->{
+            Intent i = new Intent(this.getContext(), UploadActivity.class);
+            startActivity(i);
+            requireActivity().overridePendingTransition(R.anim.slide_in_top, R.anim.nothing);
         });
 
         filterButton = view.findViewById(R.id.filterbtn);
@@ -116,26 +114,30 @@ public class Generate_Recipes extends Fragment {
         });
 
         usePantry = (CheckBox) view.findViewById(R.id.usepantry_checkBox);
-        usePantry.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    LocalDB db = LocalDB.getDBInstance(getContext());
-                    List<DBItem> dbitems = db.itemDAO().getAllItems();
-                    adapter.addfilter(dbitems);
+        usePantry.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+                List<DBItem> dbitems = db.itemDAO().getAllItems();
+                helper.addFilter(dbitems);
 
-                }else{
-                    adapter.clearAllFilters();
-                }
+            }else{
+                helper.clearFilters();
             }
         });
 
-
-
-
-
-
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        helper.populate();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        helper.removeListeners();
+
     }
 
 

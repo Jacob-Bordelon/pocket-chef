@@ -1,27 +1,19 @@
 package com.example.pocket_chef_application.Model;
 
-import android.util.Log;
-
-import com.example.pocket_chef_application.Gen_Recipes.Ingredient;
-import com.example.pocket_chef_application.MainActivity;
-
-import org.json.JSONArray;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
+
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class Recipe {
 
     private String title;
+    private String id;
     private String author;
     private String description;
-    private int id;
     private int cook_time;
     private int prep_time;
     private int rating;
@@ -30,26 +22,14 @@ public class Recipe {
     private HashMap<String, String> instructions;
     private HashMap<String, Ingredient> ingredients;
 
-
-
     public Recipe() {
     }
 
-    public Recipe(String title, String author, String description, int id, int cook_time, int prep_time, int rating, String difficulty) {
+    public Recipe(String title, String id, String author, String description, int cook_time, int prep_time, int rating, String difficulty, String image, HashMap<String, String> instructions, HashMap<String, Ingredient> ingredients) {
         this.title = title;
+        this.id = id;
         this.author = author;
         this.description = description;
-        this.id = id;
-        this.cook_time = cook_time;
-        this.prep_time = prep_time;
-        this.rating = rating;
-        this.difficulty = difficulty;
-    }
-
-    public Recipe(String author, String description, int id, int cook_time, int prep_time, int rating, String difficulty, String image, HashMap<String, String> instructions, HashMap<String, Ingredient> ingredients) {
-        this.author = author;
-        this.description = description;
-        this.id = id;
         this.cook_time = cook_time;
         this.prep_time = prep_time;
         this.rating = rating;
@@ -57,38 +37,6 @@ public class Recipe {
         this.image = image;
         this.instructions = instructions;
         this.ingredients = ingredients;
-    }
-
-    public HashMap<String, Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(HashMap<String, Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public Set<String> getIngredientsId(){
-        if(ingredients != null){
-            return ingredients.keySet();
-        }
-
-        return Collections.emptySet();
-    }
-
-    public HashMap<String, String> getInstructions() {
-        return instructions;
-    }
-
-    public void setInstructions(HashMap<String, String> instructions) {
-        this.instructions = instructions;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getTitle() {
@@ -99,15 +47,13 @@ public class Recipe {
         this.title = title;
     }
 
-
-    public String getDescription() {
-        return description;
+    public String getId() {
+        return id;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setId(String id) {
+        this.id = id;
     }
-
 
     public String getAuthor() {
         return author;
@@ -117,12 +63,12 @@ public class Recipe {
         this.author = author;
     }
 
-    public int getId() {
-        return id;
+    public String getDescription() {
+        return description;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getCook_time() {
@@ -155,5 +101,37 @@ public class Recipe {
 
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public HashMap<String, String> getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(HashMap<String, String> instructions) {
+        this.instructions = instructions;
+    }
+
+    public HashMap<String, Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(HashMap<String, Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    @Exclude
+    public Set<String> getIngredientsId(){
+        if(ingredients != null){
+            return ingredients.keySet();
+        }
+        return Collections.emptySet();
     }
 }
