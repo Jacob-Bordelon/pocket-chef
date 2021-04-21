@@ -199,6 +199,7 @@
                 android:text="Calories"/>
 
             <TextView
+                android:id="@+id/calories"
                 style="@style/PantryItemText"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -225,7 +226,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:textSize="14dp"
-                android:text="__"
+                android:text="100g"
                 android:layout_alignParentEnd="true"/>
         </RelativeLayout>
 

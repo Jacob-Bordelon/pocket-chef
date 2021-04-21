@@ -310,7 +310,7 @@ public class FirebaseFoodDatabase_Helper {
 
 
 
-                ImageView img = mDialog.findViewById(R.id.item_image);
+                ImageView img = mDialog.findViewById(R.id.imageView);
                 if(food.getImage() != null && !food.getImage().equals("")){
                     Picasso.get()
                             .load(food.getImage())

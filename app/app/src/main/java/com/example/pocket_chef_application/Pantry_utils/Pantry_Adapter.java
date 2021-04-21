@@ -77,7 +77,7 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         closebtn = (TextView) mDialog.findViewById(R.id.closebtn);
         optionsbtn = (ImageButton) mDialog.findViewById(R.id.optionsbtn);
         deletebtn = (ImageButton) mDialog.findViewById(R.id.deletebtn);
-
+        
         // set values and listeners in views
         name.setText(i.getTitle());
         exp_date.setText(i.getExp_date());
