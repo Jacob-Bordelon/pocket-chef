@@ -101,6 +101,7 @@ dependencies {
     // Tensorflow
     implementation 'org.tensorflow:tensorflow-lite-support:0.1.0-rc1'
     implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0-rc1'
+
     
     // Aho Corasick
     implementation 'org.ahocorasick:ahocorasick:0.6.3'
