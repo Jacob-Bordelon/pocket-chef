@@ -3,12 +3,17 @@ package com.example.pocket_chef_application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import com.example.pocket_chef_application.util.LogIn;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -21,20 +26,41 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static FragmentManager manager;
     private static Dialog panel_switch;
+    private Button logout;
+    private FirebaseAuth mFirebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        logout = (Button) findViewById(R.id.signOut);
+        mFirebaseAuth = FirebaseAuth.getInstance();
+
+        logout.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("remember", "false");
+                editor.apply();
+
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(MainActivity.this, LogIn.class));
+            }
+        });
 
         manager = getSupportFragmentManager();
 
@@ -87,6 +113,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        if(mFirebaseUser!=null){
+            //logged in
+            SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+            String check_value = preferences.getString("remember", "");
+            //check point for when the checkbox is true
+            if(check_value.equals("true")){
+                return;
+            }
+            //add check point for when the checkbox is false
+            else{
+                FirebaseAuth.getInstance().signOut();
+            }
+        }else{
+            //not logged in
+            startActivity(new Intent(this, LogIn.class));
+            finish();
+        }
+    }
 
     public static void switch_fragment(Fragment fragment){
         manager.beginTransaction()
