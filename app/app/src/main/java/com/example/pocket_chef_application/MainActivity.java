@@ -12,6 +12,7 @@ import android.os.Bundle;
 import com.example.pocket_chef_application.GroceryList.GroceryList;
 import com.example.pocket_chef_application.Pantry_utils.AddItemsToPantry;
 import com.example.pocket_chef_application.util.MasterPageAdapter;
+import com.example.pocket_chef_application.util.ProfilesPage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.pocket_chef_application.util.LogIn;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -60,22 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager = (ViewPager)findViewById(R.id.viewpager);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
-        logout = (Button) findViewById(R.id.signOut);
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        logout.setOnClickListener(new View.OnClickListener(){
 
-            @Override
-            public void onClick(View v) {
-                SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("remember", "false");
-                editor.apply();
-
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this, LogIn.class));
-            }
-        });
 
 
         ArrayList<Fragment> fragmentsArray = new ArrayList<>();
@@ -83,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentsArray.add(new Generate_Recipes());
         fragmentsArray.add(new Pantry());
         fragmentsArray.add(new GroceryList());
+        fragmentsArray.add(new ProfilesPage());
 
 
 
@@ -118,6 +107,9 @@ public class MainActivity extends AppCompatActivity {
                 case 3:
                     bottomNavigationView.setSelectedItemId(R.id.groceryList);
                     break;
+                case 4:
+                    bottomNavigationView.setSelectedItemId(R.id.settings);
+                    break;
             }
             lastFragment=position;
 
@@ -146,6 +138,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.groceryList:
                     viewPager.setCurrentItem(3);
+                    break;
+                case R.id.settings:
+                    viewPager.setCurrentItem(4);
                     break;
                 default: return false;
 

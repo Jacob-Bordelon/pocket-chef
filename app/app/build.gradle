@@ -47,6 +47,7 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-firestore:22.1.2'
+    implementation 'androidx.preference:preference:1.1.1'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
