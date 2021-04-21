@@ -26,11 +26,13 @@ import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Size;
+import android.util.TypedValue;
 import android.view.OrientationEventListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -233,17 +235,9 @@ public class Item_Recognition_Activity extends AppCompatActivity {
                                     Log.d(TAG, "onSuccess: "+obj.getLabels().get(0).getText());
                                     output.setText(Integer.toString(obj.getLabels().size()));
 
-
                                     mDialog.setContentView(R.layout.pantry_imgrec_dialog);
+                                    LinearLayout ll = (LinearLayout)mDialog.findViewById(R.id.btn_layout);
                                     Button option1, option2, option3, option4, option5;
-                                    option1 = mDialog.findViewById(R.id.option1);
-                                    option2 = mDialog.findViewById(R.id.option2);
-                                    option3 = mDialog.findViewById(R.id.option3);
-                                    option4 = mDialog.findViewById(R.id.option4);
-                                    option5 = mDialog.findViewById(R.id.option5);
-
-                                    List<Button> buttons = Arrays.asList(option1,option2,option3,option4,option5);
-                                    Button currentButton;
 
                                     int highest = 0;
                                     List<Food> matches =  new ArrayList<>();
@@ -270,8 +264,15 @@ public class Item_Recognition_Activity extends AppCompatActivity {
                                     }
                                     if(highest > 0) {
                                         for (int i = 0; i<matches.size(); i++) {
-                                            currentButton = buttons.get(i);
+                                            Button currentButton = new Button(mDialog.getContext());
+                                            currentButton = new Button(mDialog.getContext());
+                                            currentButton.setTextColor(Color.WHITE);
+                                            currentButton.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
+                                            currentButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
                                             currentButton.setText(matches.get(i).getName());
+                                            ll.addView(currentButton);
+                                            //currentButton = buttons.get(i);
+                                            //currentButton.setText(matches.get(i).getName());
                                             int finalI = i;
                                             currentButton.setOnClickListener(new View.OnClickListener() {
                                                 public void onClick(View v) {
@@ -280,12 +281,15 @@ public class Item_Recognition_Activity extends AppCompatActivity {
                                                 }
                                             });
                                         }
+
+                                        mDialog.findViewById(R.id.closebtn).setOnClickListener(v -> mDialog.dismiss());
+                                        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                        mDialog.show();
+
                                     }
                                       
 
-                                    mDialog.findViewById(R.id.closebtn).setOnClickListener(v -> mDialog.dismiss());
-                                    mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                    mDialog.show();
+
 
 
 
