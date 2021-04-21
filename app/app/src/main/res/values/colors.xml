@@ -22,6 +22,7 @@
     <color name="good">#fece00</color>
     <color name="safe">#FF8E15</color>
     <color name="expired">#c3000d</color>
+    <color name="grabbed">#55000000</color>
 
 
 </resources>

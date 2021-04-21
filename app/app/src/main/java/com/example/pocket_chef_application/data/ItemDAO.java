@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -35,5 +36,10 @@ public interface ItemDAO {
 
     @Query("SELECT COUNT(item_name) FROM GLItem")
     int getGLCount();
+
+    @Update(entity = GLItem.class)
+    public void updateGLItem(GLItem item);
+
+
 
 }

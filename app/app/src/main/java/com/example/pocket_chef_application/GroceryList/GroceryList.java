@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,9 +18,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.example.pocket_chef_application.Pantry_utils.AddItemsToPantry;
 import com.example.pocket_chef_application.R;
 import com.example.pocket_chef_application.data.GLItem;
 import com.example.pocket_chef_application.data.LocalDB;
@@ -33,8 +37,11 @@ import java.util.stream.Collectors;
 public class GroceryList extends Fragment {
     private static final String TAG = GroceryList.class.getSimpleName();
     private RecyclerView list;
-    private LocalDB db;
-    private List<GLItem> items;
+    public static LocalDB db;
+    private List<GroceryItem> items;
+    public static ConstraintLayout add_menu, edit_menu;
+    private Button done, cancel, add;
+    private EditText edit_amount, edit_title;
     CustomListAdapter adapter;
 
     public GroceryList() {
@@ -59,70 +66,46 @@ public class GroceryList extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_grocery_list, container, false);
 
-        items = db.itemDAO().getAllGLItems();
+        items = db.itemDAO().getAllGLItems().stream().map(GroceryItem::new).collect(Collectors.toList());
 
         adapter = new CustomListAdapter(requireContext(), items);
+
         list = (RecyclerView) view.findViewById(R.id.listView);
         list.setLayoutManager(new LinearLayoutManager(getContext()));
+        list.setItemAnimator(new DefaultItemAnimator());
+        list.setHasFixedSize(true);
         list.setAdapter(adapter);
+        edit_title = view.findViewById(R.id.title);
+        edit_amount = view.findViewById(R.id.editText);
+        add = view.findViewById(R.id.addGLItem);
+        add.setOnClickListener(v -> NewGLItem());
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                // Remove item from backing list here
-                int position = viewHolder.getBindingAdapterPosition();
-                removeGLItem(position);
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-        //itemTouchHelper.attachToRecyclerView(list);
-
-        GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onDoubleTap(MotionEvent e) {
-                NewGLItem();
-                return super.onDoubleTap(e);
-            }
-        });
-
-        LinearLayout layout = view.findViewById(R.id.linearLayout);
-        View rowView = inflater.inflate(R.layout.new_list_item, null,true);
-        layout.addView(rowView);
-
-        layout.setOnTouchListener((v, event) -> { gestureDetector.onTouchEvent(event);return true; });
-
-        view.findViewById(R.id.addGLItem).setOnClickListener(v -> NewGLItem());
         return view;
     }
 
     public void AddGLItem(String name, int amount){
-        GLItem glItem = new GLItem();
-        glItem.item_Name = name;
-        glItem.amount = amount;
-        glItem.item_id = UUID.randomUUID().toString();
+        GroceryItem glItem = new GroceryItem(name, amount);
 
-        db.itemDAO().insertGLItem(glItem);
+        items.add(glItem);
+        db.itemDAO().insertGLItem(glItem.getItem());
     }
 
-    public void removeGLItem(int position){
-        GLItem item = items.get(position);
+    public void removeGLItem(GroceryItem item){
         items.remove(item);
-
+        db.itemDAO().removeGLItem(item.getItem());
     }
 
     public void NewGLItem(){
-        GLItem glItem = new GLItem();
-        glItem.item_Name = "New Item "+(items.size()+1);
-        glItem.amount = 2;
+        if(!(edit_title.getText().toString().matches("") || edit_amount.getText().toString().matches(""))){
+            String name = edit_title.getText().toString();
+            int amount = Integer.parseInt(edit_amount.getText().toString());
+            AddGLItem(name,amount);
+            adapter.notifyDataSetChanged();
+            edit_title.setText(null);
+            edit_amount.setText(null);
+        }
 
-        items.add(glItem);
-        adapter.notifyDataSetChanged();
+
     }
 
 

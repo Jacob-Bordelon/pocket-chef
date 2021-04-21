@@ -1,117 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350dp"
-    android:layout_height="475dp"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimaryDark"
     android:padding="5dp"
+    android:gravity="center"
     android:layout_gravity="center">
 
-    <TextView
-        android:id="@+id/closebtn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:textColor="@color/white"
-        android:text="X"
-        android:textStyle="bold"
-        android:layout_gravity="end"
-        android:gravity="center"
-        android:background="@drawable/circle_bg"/>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/otheritems_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+
+
         <ImageView
-            android:id="@+id/item_image"
-            android:layout_width="100dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="15dp"/>
+            android:id="@+id/imageView"
+            android:layout_width="80dp"
+            android:layout_height="100sp"
+            android:background="@drawable/no_image_found"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/item_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
             android:text="Item Name"
             android:textColor="@color/white"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
+            app:layout_constraintEnd_toStartOf="@+id/closebtn"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/amount_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Amount"
             android:gravity="center"
-            android:background="@color/orange">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Amount"
-                android:textSize="18sp"
-                android:textStyle="bold"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            android:background="@color/orange"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/edititem_amount"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/item_name" />
 
-                android:textColor="@color/white"/>
-            <EditText
-                android:id="@+id/edititem_amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:textSize="18sp"
-                android:textColor="@color/white"/>
+        <EditText
+            android:id="@+id/edititem_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColorHint="@color/white"
+            android:inputType="number"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/exp_label"
+            app:layout_constraintStart_toEndOf="@+id/amount_label"
+            app:layout_constraintTop_toBottomOf="@+id/item_name" />
 
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
+        <TextView
+            android:id="@+id/exp_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Exp."
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:gravity="center"
-            android:background="@color/green">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Experation"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/white"/>
-            <EditText
-                android:id="@+id/edititem_exp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:textSize="18sp"
-                android:textColor="@color/white"/>
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp"
+            android:background="@color/green"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView" />
 
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="40dp">
-        <Button
-            android:clickable="true"
+        <TextView
+            android:id="@+id/exp_preview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/exp_label"
+            app:layout_constraintTop_toTopOf="@+id/exp_label" />
+
+
+        <ImageButton
+            android:visibility="gone"
+            android:id="@+id/calendar_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@drawable/ic_baseline_edit_calendar_24"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/exp_label"
+            app:layout_constraintStart_toEndOf="@+id/exp_preview"
+            app:layout_constraintTop_toTopOf="@+id/exp_label" />
+
+        <TextView
+            android:id="@+id/closebtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/circle_bg"
+            android:gravity="center"
+            android:text="X"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/submitbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/button_style"
-            android:textColor="@color/white"/>
+            android:gravity="center"
+            android:text="Add"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</LinearLayout>
+
+</RelativeLayout>

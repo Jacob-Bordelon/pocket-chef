@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         android:hint="Amount"
         android:gravity="right|center_vertical"
+        android:inputType="number"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,6 +34,7 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical|right"
         android:hint="Item"
+        android:inputType="text"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView"

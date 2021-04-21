@@ -2,8 +2,12 @@ package com.example.pocket_chef_application.data;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
+import androidx.room.Dao;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.Update;
+
+
 
 @Entity
 public class GLItem {
@@ -22,4 +26,5 @@ public class GLItem {
     @ColumnInfo(name = "image_url")
     public String image_url;
 }
+
 

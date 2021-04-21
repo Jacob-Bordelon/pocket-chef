@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.example.pocket_chef_application.Firebase.FirebaseFoodDatabase_Helper;
 import com.example.pocket_chef_application.Model.Food;
-import com.example.pocket_chef_application.Pantry_utils.FoodItemAdapter;
 import com.example.pocket_chef_application.Pantry_utils.Pantry_Adapter;
 import com.example.pocket_chef_application.Pantry_utils.Pantry_Item;
 import com.example.pocket_chef_application.Pantry_utils.AddItemsToPantry;
@@ -41,7 +40,6 @@ public class Pantry extends Fragment {
     private TextView statusVal;
 
     private static Pantry_Adapter Padapter;
-    private FoodItemAdapter Sadapter;
     private static Context context;
 
     private static List<Pantry_Item> pantry_items;
@@ -77,11 +75,9 @@ public class Pantry extends Fragment {
         View view = inflater.inflate(R.layout.pantry, container, false);
         getViews(view);
 
-
         LocalDB db = LocalDB.getDBInstance(this.getContext());
         List<DBItem> dbitems = db.itemDAO().getAllItems();
         pantry_items = dbitems.stream().map(Pantry_Item::new).collect(Collectors.toList());
-
 
         initRecyclerView(view);
         initSearchView(view);
@@ -91,7 +87,6 @@ public class Pantry extends Fragment {
 
     private void initSearchView(View view) {
         suggestionsView = view.findViewById(R.id.pantry_suggestions);
-        Sadapter = new FoodItemAdapter();
         helper = new FirebaseFoodDatabase_Helper();
     }
 
