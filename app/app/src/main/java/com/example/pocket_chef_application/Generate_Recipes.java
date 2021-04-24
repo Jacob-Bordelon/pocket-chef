@@ -19,6 +19,7 @@ import android.widget.SearchView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
@@ -32,6 +33,10 @@ import com.example.pocket_chef_application.Model.Recipe;
 import com.example.pocket_chef_application.Pantry_utils.Pantry_Item;
 import com.example.pocket_chef_application.data.DBItem;
 import com.example.pocket_chef_application.data.LocalDB;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +72,7 @@ public class Generate_Recipes extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.cookbook_recyclerview);
         db = LocalDB.getDBInstance(getContext());
         helper = new FirebaseRecipeDatabase_Helper(mRecyclerView, getContext());
+
 
         new_rec = view.findViewById(R.id.new_rec);
         new_rec.setOnClickListener(v ->{
@@ -136,7 +142,7 @@ public class Generate_Recipes extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        helper.removeListeners();
+        //helper.removeListeners();
 
     }
 

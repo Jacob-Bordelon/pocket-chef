@@ -1,0 +1,36 @@
+{  "Good Recipe":{
+      "author" : "ricardo aranaga",
+      "cook_time" : 10,
+      "description" : "boiling an egg perfectly",
+      "difficulty" : "easy",
+      "id" : "1618697392886",
+      "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/recipes%2Fboiled_egg.jpg?alt=media&token=79547c92-5480-4c98-86f8-4099203d3363",
+      "ingredients" : {
+        "746775" : {
+          "amount" : 0.5,
+          "measurement" : "tspn",
+          "name" : "Salt, table, iodized"
+        },
+        "748967" : {
+          "amount" : 1,
+          "measurement" : "unit",
+          "name" : "Eggs, Grade A, Large, egg whole"
+        }
+      },
+      "instructions" : {
+        "step1" : "take egg out of fridge",
+        "step2" : "pour water into a deep pan",
+        "step3" : "place egg into the pan",
+        "step4" : "let water start to boil",
+        "step5" : "lower flame to a minimum",
+        "step6" : "cook for 15 minutes",
+        "step7" : "add salt"
+      },
+      "prep_time" : 5,
+      "rating" : 0,
+      "serving_size" : 1,
+      "image_status":0,
+      "text_status":0,
+      "title" : "boiled egg"}
+}
+ 

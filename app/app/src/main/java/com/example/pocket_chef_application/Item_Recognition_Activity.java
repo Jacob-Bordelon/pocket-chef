@@ -181,8 +181,6 @@ public class Item_Recognition_Activity extends AppCompatActivity {
 
     }
 
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();

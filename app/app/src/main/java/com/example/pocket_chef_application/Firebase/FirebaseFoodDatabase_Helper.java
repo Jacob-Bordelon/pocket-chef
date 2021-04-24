@@ -43,6 +43,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toSet;
@@ -54,11 +57,11 @@ public class FirebaseFoodDatabase_Helper {
     private static DatabaseReference mReference;
     private Context context;
     private RecyclerView recyclerView;
-    private List<Food> foodList = new ArrayList<>();
+    private static List<Food> foodList;
     public String gotoNextPage = "";
     public FoodItemView adapter;
     private int limitAmount = 10;
-    private ValueEventListener listener;
+    private static ValueEventListener listener;
 
     public static String key;
 
@@ -76,6 +79,7 @@ public class FirebaseFoodDatabase_Helper {
 
         mDatabase = FirebaseDatabase.getInstance();
         mReference = mDatabase.getReference("food");
+        foodList =  new ArrayList<>();
         listener=voidListener();
 
     }
@@ -98,7 +102,6 @@ public class FirebaseFoodDatabase_Helper {
         };
     }
 
-
     public void searchFor(String queryText, final Container container){
         mReference.removeEventListener(listener);
         listener = new ValueEventListener() {
@@ -118,12 +121,13 @@ public class FirebaseFoodDatabase_Helper {
 
             }
         };
-        mReference.orderByChild("fullName")
+        mReference.orderByChild("name")
                 .startAt(queryText)
                 .endAt(queryText+"\uf8ff")
                 .addListenerForSingleValueEvent(listener);
 
     }
+
 
     public void paginate(String i, final Data data){
         mReference.removeEventListener(listener);
@@ -159,11 +163,9 @@ public class FirebaseFoodDatabase_Helper {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 foodList.clear();
-                String nextpage = "";
                 for(DataSnapshot keyNode : snapshot.getChildren()){
                     Food food = keyNode.getValue(Food.class);
                     foodList.add(food);
-                    nextpage = keyNode.getKey();
                 }
 
                 data.returnData(foodList);
@@ -179,7 +181,6 @@ public class FirebaseFoodDatabase_Helper {
                 .orderByKey()
                 .addListenerForSingleValueEvent(listener);
     }
-
 
     public void defaultPage(){
         paginate(DEFAULT_PAGE_INDEX, (foods, nextPage) -> {

@@ -67,9 +67,14 @@ exports.blurOffensiveImages = functions.storage.object().onFinalize(async (objec
     let name = object.name;
     name = name.replace("recipes/", "");
     name = name.replace(".jpg", "");
-    admin.database().ref("recipeBook/"+name).update({status:1});
+    admin.database().ref("bufferLayer/"+name).update({image_status:1});
 
     return null;//blurImage(object.name, object.bucket, object.metadata);
+  }else{
+    let name = object.name;
+    name = name.replace("recipes/", "");
+    name = name.replace(".jpg", "");
+    admin.database().ref("bufferLayer/"+name).update({image_status:0});
   }
 
   return null;

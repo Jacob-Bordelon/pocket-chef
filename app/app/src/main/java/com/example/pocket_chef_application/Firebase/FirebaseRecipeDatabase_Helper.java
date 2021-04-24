@@ -80,8 +80,10 @@ public class FirebaseRecipeDatabase_Helper {
     }
 
     public void populate(){
+        Log.d(TAG, "populate: ");
         readRecipes(recipes -> {
             adapter.setConfig(recyclerView, context, recipes);
+            Log.d(TAG, "populate: "+recipes.size());
             adapter.refresh();
         });
     }
@@ -123,6 +125,7 @@ public class FirebaseRecipeDatabase_Helper {
                     Recipe recipe = keyNode.getValue(Recipe.class);
                     recipes.add(recipe);
                 }
+
 
                 dataStatus.DataIsLoaded(recipes);
             }

@@ -3,10 +3,9 @@ package com.example.pocket_chef_application;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -15,44 +14,41 @@ import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
-import com.example.pocket_chef_application.Firebase.SuggestionAdapter;
+import com.example.pocket_chef_application.Firebase.FirebaseFoodDatabase_Helper;
+import com.example.pocket_chef_application.Model.Food;
 import com.example.pocket_chef_application.Model.Ingredient;
 import com.example.pocket_chef_application.Model.Recipe;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
-import java.util.function.Function;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static java.util.concurrent.CompletableFuture.completedFuture;
 
 
 public class UploadActivity extends Activity implements View.OnClickListener {
@@ -65,14 +61,15 @@ public class UploadActivity extends Activity implements View.OnClickListener {
     private ImageView image;
     private LinearLayout ingredientsLayout, instructionsLayout;
     private Spinner diff;
+    private FirebaseFoodDatabase_Helper helper = new FirebaseFoodDatabase_Helper();
+
+
+    private static List<Food> foodsList;
 
     private HashMap<String,Ingredient> ingredientsList;
     private HashMap<String,String> instructionsList;
-    private String[] unitsList;
 
-    private FirebaseDatabase database;
     private DatabaseReference databaseReference;
-    private FirebaseStorage storage;
     private StorageReference storageReference;
 
     @Override
@@ -83,7 +80,6 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         setupOnClickListeners();
 
     }
-
 
     @Override
     public void finish() {
@@ -143,15 +139,12 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         instructionsLayout.setOnTouchListener((v, event) -> { instructionGestureDetector.onTouchEvent(event);return true; });
 
 
-        unitsList = this.getResources().getStringArray(R.array.units);
+        String[] unitsList = this.getResources().getStringArray(R.array.units);
         ingredientsList = new HashMap<>();
         instructionsList =  new HashMap<>();
 
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-
-        database = MainActivity.realtimedb;
-        databaseReference = database.getReference("/recipeBook/");
+        storageReference = MainActivity.firebaseStorage.getReference();
+        databaseReference = MainActivity.realtimedb.getReference("/bufferLayer/");
     }
 
     private void setupOnClickListeners(){
@@ -183,7 +176,7 @@ public class UploadActivity extends Activity implements View.OnClickListener {
     private void newIngredient(){
         @SuppressLint("InflateParams") View ingredientView = getLayoutInflater().inflate(R.layout.ingredient_view, null, false);
         EditText amount =  ingredientView.findViewById(R.id.amount);
-        AutoCompleteTextView prompt =  ingredientView.findViewById(R.id.prompt);
+        TextInputLayout prompt =  ingredientView.findViewById(R.id.prompt);
         Spinner units = ingredientView.findViewById(R.id.units);
         Button add = ingredientView.findViewById(R.id.button5);
 
@@ -192,13 +185,10 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         }
 
 
-        List<String> keyList = new ArrayList<>();
-        SuggestionAdapter promptAdapter = new SuggestionAdapter(this,android.R.layout.simple_dropdown_item_1line, keyList);
-        prompt.setAdapter(promptAdapter);
-
         add.setOnClickListener(v -> removeIngredient(ingredientView));
-        amount.setOnKeyListener(moveFocusTo(prompt));
-        prompt.setOnKeyListener((v, keyCode, event) -> {
+
+
+        ingredientView.findViewById(R.id.prompt_in).setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN)
             {
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
@@ -212,7 +202,6 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         amount.requestFocus();
     }
 
-
     private void removeIngredient(View view){
         ingredientsLayout.removeView(view);
         if(ingredientsLayout.getChildCount()==0){
@@ -222,26 +211,50 @@ public class UploadActivity extends Activity implements View.OnClickListener {
 
 
     //TODO - Compare these ingredients to the food database and obtain their collective FDCId values for accurate food results
-    private Pair<String, Ingredient> getIngredientValues(View view){
+    private Pair<TextInputLayout, Ingredient> getIngredientValues(View view){
         EditText amount =  view.findViewById(R.id.amount);
-        AutoCompleteTextView prompt =  view.findViewById(R.id.prompt);
+        TextInputLayout prompt = view.findViewById(R.id.prompt);
         Spinner units = view.findViewById(R.id.units);
 
         int amnt = Integer.parseInt(amount.getText().toString());
-        String item = prompt.getText().toString();
+        String item = prompt.getEditText().getText().toString();
         String unit = units.getSelectedItem().toString();
+        Log.d(TAG, "getIngredientValues: "+item);
+
+        if(item.isEmpty()){
+            prompt.setError("No Value Specified");
+        }
 
         Ingredient ingredient = new Ingredient(amnt,item, unit);
-        String itemLoc = Integer.toBinaryString(amnt);
-
-        return new Pair<>(itemLoc, ingredient);
+        return new Pair<>(prompt, ingredient);
 
     }
 
+
+
+
     private HashMap<String,Ingredient> getAllIngredients(){
+
         HashMap<String,Ingredient> returnVal = new HashMap<>();
         for(int i = 0; i< ingredientsLayout.getChildCount(); i++){
-            Pair<String, Ingredient> entry = getIngredientValues(ingredientsLayout.getChildAt(i));
+            Pair<TextInputLayout, Ingredient> entry = getIngredientValues(ingredientsLayout.getChildAt(i));
+            helper.searchFor(entry.second.getName(), (FirebaseFoodDatabase_Helper.Container) foods -> {
+                if(foods.size() < 1){
+                    entry.first.setError("Value not recignized");
+                }else if(foods.size() == 1){
+                    returnVal.put(Integer.toString(foods.get(0).getFdcId()),entry.second);
+                }else{
+                    Toast.makeText(this, "Multiple entries found", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        return returnVal;
+    }
+
+    private HashMap<String,Ingredient> testIngredients(){
+        HashMap<String,Ingredient> returnVal = new HashMap<>();
+        for(int i = 0; i< 5; i++){
+            Pair<String, Ingredient> entry = new Pair<>(Integer.toBinaryString(i), new Ingredient(1,"test ingredient","cups"));
             returnVal.put(entry.first,entry.second);
         }
         return returnVal;
@@ -263,19 +276,12 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         steptext.setText("Step "+stepInt+": ");
 
         addButton.setOnClickListener(v->removeStep(instructionView));
-
-
         instruct.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN)
             {
-                switch (keyCode)
-                {
-                    case KeyEvent.KEYCODE_DPAD_CENTER:
-                    case KeyEvent.KEYCODE_ENTER:
-                        newStep();
-                        return true;
-                    default:
-                        break;
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    newStep();
+                    return true;
                 }
             }
             return false;
@@ -315,7 +321,15 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         HashMap<String,String> returnVal = new HashMap<>();
         for (int i = 0; i< instructionsLayout.getChildCount(); i++){
             Pair<String, String> entry = getInstructionValues(instructionsLayout.getChildAt(i));
-            System.out.println(entry.first+" "+entry.second);
+            returnVal.put(entry.first, entry.second);
+        }
+        return returnVal;
+    }
+
+    private HashMap<String,String> testInstructions(){
+        HashMap<String,String> returnVal = new HashMap<>();
+        for (int i = 0; i< 5; i++){
+            Pair<String, String> entry = new Pair<>("Step"+(i+1), "Test step "+(i+1));
             returnVal.put(entry.first, entry.second);
         }
         return returnVal;
@@ -337,9 +351,8 @@ public class UploadActivity extends Activity implements View.OnClickListener {
     }
 
     private Recipe formatDataToRecipe(String uniqueID){
-
         String title        = name.getText().toString();
-        String author       = "Anonymous";
+        String author       = Objects.requireNonNull(MainActivity.firebaseAuth.getCurrentUser()).getDisplayName();
         String description  = desc.getText().toString();
         String id           = uniqueID;
         int cook            = Integer.parseInt(cook_time.getText().toString());
@@ -349,7 +362,6 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         ingredientsList     = getAllIngredients();
         instructionsList    = getAllInstructions();
         String image        = "recipes/"+uniqueID;
-
 
         return new Recipe(
                 title,
@@ -364,31 +376,37 @@ public class UploadActivity extends Activity implements View.OnClickListener {
                 instructionsList,
                 ingredientsList
         );
-
-
     }
 
-    private Recipe testRecipe(String id){
-        StorageReference ref = storageReference.child("/recipes/" + "blah");
+    private Recipe testRecipe(String uniqueID){
+        String title        = "Test";
+        String author       = "Author";
+        String description  = "Test";
+        String id           = uniqueID;
+        int cook            = 15;
+        int prep            = 15;
+        int rating          = 0;
+        String difficulty   = "Master";
+        ingredientsList     = getAllIngredients();
+        instructionsList    = testInstructions();
+        String image        = "recipes/"+uniqueID;
 
-        Log.d(TAG, "uploadImageToFirebase: "+ref);
-
-        instructionsList.put("step1","blah blah blah");
-        ingredientsList.put("0000101",new Ingredient(2,"blah","cups"));
         return new Recipe(
-                "My Recipe",
+                title,
                 id,
-                "Test Approval",
-                "Test",
-                4,
-                4,
-                0,
-                "Beginner",
-                " ",
+                author,
+                description,
+                cook,
+                prep,
+                rating,
+                difficulty,
+                image,
                 instructionsList,
                 ingredientsList
         );
     }
+
+
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -405,10 +423,12 @@ public class UploadActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.uploadbtn:
                 String uniqueID = UUID.randomUUID().toString();
-                if(checkAllViews()){
-                    Recipe recipe = formatDataToRecipe(uniqueID);
+                Recipe recipe = testRecipe(uniqueID);
+                //uploadImageToFirebase(uniqueID, recipe);
+                /*if(checkAllViews()){
+                    Recipe recipe = testRecipe(uniqueID);
                     uploadImageToFirebase(uniqueID, recipe);
-                }
+                }*/
                 break;
             case R.id.imageView:
                 openGallery();
@@ -416,9 +436,12 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    // Image related functions
     private void uploadRecipeToFirebase(Recipe recipe){
+        Log.d(TAG, "uploadRecipeToFirebase: ");
         databaseReference.child(recipe.getId()).setValue(recipe)
         .addOnCompleteListener(task -> {
+            Log.d(TAG, "Process to complete");
             if(task.isSuccessful()){
                 Toast.makeText(UploadActivity.this, "Recipe Was Uploaded", Toast.LENGTH_SHORT).show();
                 finish();
@@ -433,59 +456,32 @@ public class UploadActivity extends Activity implements View.OnClickListener {
             ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading Image...");
             progressDialog.show();
-
             String filePath = "/recipes/" + name +".jpg";
             StorageReference ref = storageReference.child(filePath);
-
-            Log.d(TAG, "uploadImageToFirebase: "+ref);
-
             UploadTask uploadTask = ref.putFile(imageUri);
-
             uploadTask.addOnProgressListener(taskSnapshot -> {
                 double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                 progressDialog.setMessage("Uploaded " + (int)progress + "%");
             });
-
-
             uploadTask.addOnCompleteListener(UploadActivity.this, task -> {
                 progressDialog.dismiss();
                 Toast.makeText(UploadActivity.this, "Task has been completed", Toast.LENGTH_SHORT).show();
             });
-
-
             Task<Uri> getDownloadUriTask = uploadTask.continueWithTask(task -> {
                 if(!task.isSuccessful()){
                     throw task.getException();
                 }
                 return ref.getDownloadUrl();
             });
-
             getDownloadUriTask.addOnCompleteListener(UploadActivity.this, task -> {
                 if (task.isSuccessful()) {
                     Uri downloadedUri = task.getResult();
-
-
                     recipe.setImage(downloadedUri.toString());
                     uploadRecipeToFirebase(recipe);
                 }else{
                     Toast.makeText(UploadActivity.this, "Activity failed to upload image", Toast.LENGTH_SHORT ).show();
                 }
             });
-                     /*
-                    .addOnSuccessListener(taskSnapshot -> {
-                                progressDialog.dismiss();
-                                Toast.makeText(UploadActivity.this, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
-                            })
-                    .addOnFailureListener(e -> {
-                        progressDialog.dismiss();
-                        Toast.makeText(UploadActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    })
-                    .addOnProgressListener(taskSnapshot -> {
-                                double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                                progressDialog.setMessage("Uploaded " + (int)progress + "%");
-                            });
-*/
-
         }
         else {
             new AlertDialog.Builder(UploadActivity.this)
