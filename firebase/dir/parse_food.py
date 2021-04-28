@@ -116,13 +116,13 @@ def generate_name(name):
 
 # Mapping tree
 def toDict(L):
-    if(L==[]):
-        return {}
+    if(len(L)==1):
+        return {"fdcID":L[0]}
     head = L.pop()
     return {head:toDict(L)}
 
 def mapToJSON(L,D):
-    if(L==[]):
+    if(len(L)==1):
         return D
     head = L.pop()
     if(head in D):
@@ -133,7 +133,7 @@ def mapToJSON(L,D):
 
 def makeTree(file):
     with open(file,'r') as file:
-        data = file.readlines()[2:3]
+        data = file.readlines()
         tree = {}
         for i in data:
             i = i.lower()
@@ -141,13 +141,10 @@ def makeTree(file):
             i=i.replace(", ",",")
             if("(" in i):
                 i = re.sub(r'\([^)]*\)', '',i)
-            print(i)    
-            # i = i.replace(", ",",")
-            # split = i.split(',')   
-            # print(split)
+            split = [a for a in i.split(',') if a != ""]
                    
-        #     tree = mapToJSON(split[::-1],tree)
-        # print(json.dumps(tree,indent=2))
+            tree = mapToJSON(split[::-1],tree)
+        print(json.dumps(tree,indent=2))
 
 
 
@@ -155,7 +152,7 @@ def getCategoryTree():
     with open("new_foods.json","r") as jsonFile:
         data = json.load(jsonFile)
         for i in data:
-            print(data[i]["fullName"])
+            print(data[i]["fullName"]+","+str(data[i]["fdcId"]))
 
 
 #getCategoryTree()
