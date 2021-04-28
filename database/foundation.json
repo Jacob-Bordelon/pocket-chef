@@ -1,0 +1,2967 @@
+{ "food": {
+"1105897": {
+"fdcId": 1105897,
+"image":"",
+"fullName":"Apples, fuji, with skin, raw",
+"name":"fuji Apples",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 58.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 1.00,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 0.150,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 15.7,
+"unitName": "G"
+}
+}
+},
+"1105781": {
+"fdcId": 1105781,
+"image":"",
+"fullName":"Apples, gala, with skin, raw",
+"name":"gala Apples",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 55.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 0E-8,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 0.130,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 14.8,
+"unitName": "G"
+}
+}
+},
+"1105664": {
+"fdcId": 1105664,
+"image":"",
+"fullName":"Apples, granny smith, with skin, raw",
+"name":"granny smith Apples",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 53.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 0E-8,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 0.270,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 14.2,
+"unitName": "G"
+}
+}
+},
+"1105547": {
+"fdcId": 1105547,
+"image":"",
+"fullName":"Apples, honeycrisp, with skin, raw",
+"name":"honeycrisp Apples",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 54.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 0E-8,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 0.100,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 14.7,
+"unitName": "G"
+}
+}
+},
+"1105430": {
+"fdcId": 1105430,
+"image":"",
+"fullName":"Apples, red delicious, with skin, raw",
+"name":"red delicious Apples",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 56.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 0E-8,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 0.190,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 14.8,
+"unitName": "G"
+}
+}
+},
+"1105073": {
+"fdcId": 1105073,
+"image":"",
+"fullName":"Bananas, overripe, raw",
+"name":"overripe Bananas",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 77.0,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 0.730,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 20.1,
+"unitName": "G"
+}
+}
+},
+"1105314": {
+"fdcId": 1105314,
+"image":"",
+"fullName":"Bananas, ripe and slightly ripe, raw",
+"name":"ripe and slightly ripe Bananas",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 88.0,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 23.0,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 0E-8,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 0.740,
+"unitName": "G"
+}
+}
+},
+"747444": {
+"fdcId": 747444,
+"image":"",
+"fullName":"Beans, Dry, Black (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 24.4,
+"unitName": "G"
+}
+}
+},
+"747433": {
+"fdcId": 747433,
+"image":"",
+"fullName":"Beans, Dry, Brown (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 25.6,
+"unitName": "G"
+}
+}
+},
+"747436": {
+"fdcId": 747436,
+"image":"",
+"fullName":"Beans, Dry, Carioca (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 25.2,
+"unitName": "G"
+}
+}
+},
+"747437": {
+"fdcId": 747437,
+"image":"",
+"fullName":"Beans, Dry, Cranberry (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 24.4,
+"unitName": "G"
+}
+}
+},
+"747440": {
+"fdcId": 747440,
+"image":"",
+"fullName":"Beans, Dry, Dark Red Kidney (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 25.9,
+"unitName": "G"
+}
+}
+},
+"747432": {
+"fdcId": 747432,
+"image":"",
+"fullName":"Beans, Dry, Flor de Mayo (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 23.3,
+"unitName": "G"
+}
+}
+},
+"747446": {
+"fdcId": 747446,
+"image":"",
+"fullName":"Beans, Dry, Great Northern (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 24.7,
+"unitName": "G"
+}
+}
+},
+"747438": {
+"fdcId": 747438,
+"image":"",
+"fullName":"Beans, Dry, Light Red Kidney (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 25.0,
+"unitName": "G"
+}
+}
+},
+"747435": {
+"fdcId": 747435,
+"image":"",
+"fullName":"Beans, Dry, Light Tan (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 24.6,
+"unitName": "G"
+}
+}
+},
+"747430": {
+"fdcId": 747430,
+"image":"",
+"fullName":"Beans, Dry, Medium Red (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 25.5,
+"unitName": "G"
+}
+}
+},
+"747441": {
+"fdcId": 747441,
+"image":"",
+"fullName":"Beans, Dry, Navy (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 24.1,
+"unitName": "G"
+}
+}
+},
+"747439": {
+"fdcId": 747439,
+"image":"",
+"fullName":"Beans, Dry, Pink (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 23.4,
+"unitName": "G"
+}
+}
+},
+"747445": {
+"fdcId": 747445,
+"image":"",
+"fullName":"Beans, Dry, Pinto (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 23.7,
+"unitName": "G"
+}
+}
+},
+"747431": {
+"fdcId": 747431,
+"image":"",
+"fullName":"Beans, Dry, Red (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 21.3,
+"unitName": "G"
+}
+}
+},
+"747443": {
+"fdcId": 747443,
+"image":"",
+"fullName":"Beans, Dry, Small Red (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 23.5,
+"unitName": "G"
+}
+}
+},
+"747442": {
+"fdcId": 747442,
+"image":"",
+"fullName":"Beans, Dry, Small White (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 24.5,
+"unitName": "G"
+}
+}
+},
+"747434": {
+"fdcId": 747434,
+"image":"",
+"fullName":"Beans, Dry, Tan (0% moisture)",
+"name":"Dry Beans",
+"foodNutrients": {
+"Protein": {
+"amount": 26.8,
+"unitName": "G"
+}
+}
+},
+"321611": {
+"fdcId": 321611,
+"image":"",
+"fullName":"Beans, snap, green, canned, regular pack, drained solids",
+"name":"snap Beans",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 20.0,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 4.11,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 282,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 1.04,
+"unitName": "G"
+}
+}
+},
+"746758": {
+"fdcId": 746758,
+"image":"",
+"fullName":"Beef, loin, tenderloin roast, separable lean only, boneless, trimmed to 0\" fat, select, cooked, roasted",
+"name":"loin Beef",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 176,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 0E-8,
+"unitName": "G"
+},
+"Protein": {
+"amount": 27.7,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 54.0,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 5.56,
+"unitName": "G"
+}
+}
+},
+"746759": {
+"fdcId": 746759,
+"image":"",
+"fullName":"Beef, loin, top loin steak, boneless, lip-on, separable lean only, trimmed to 1 or 8\" fat, choice, raw",
+"name":"loin Beef",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 155,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 0E-8,
+"unitName": "G"
+},
+"Protein": {
+"amount": 22.8,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 45.0,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 5.93,
+"unitName": "G"
+}
+}
+},
+"746760": {
+"fdcId": 746760,
+"image":"",
+"fullName":"Beef, round, eye of round roast, boneless, separable lean only, trimmed to 0\" fat, select, raw",
+"name":"round Beef",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 122,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 23.4,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 50.0,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 0E-8,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 2.23,
+"unitName": "G"
+}
+}
+},
+"746761": {
+"fdcId": 746761,
+"image":"",
+"fullName":"Beef, round, top round roast, boneless, separable lean only, trimmed to 0\" fat, select, raw",
+"name":"round Beef",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 123,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 0E-8,
+"unitName": "G"
+},
+"Protein": {
+"amount": 23.7,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 55.0,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 2.14,
+"unitName": "G"
+}
+}
+},
+"746762": {
+"fdcId": 746762,
+"image":"",
+"fullName":"Beef, short loin, porterhouse steak, separable lean only, trimmed to 1 or 8\" fat, select, raw",
+"name":"short loin Beef",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 145,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 22.7,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 43.0,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 0E-8,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 4.50,
+"unitName": "G"
+}
+}
+},
+"746763": {
+"fdcId": 746763,
+"image":"",
+"fullName":"Beef, short loin, t-bone steak, bone-in, separable lean only, trimmed to 1 or 8\" fat, choice, cooked, grilled",
+"name":"short loin Beef",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 219,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 27.3,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 67.0,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 0E-8,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 10.5,
+"unitName": "G"
+}
+}
+},
+"325871": {
+"fdcId": 325871,
+"image":"",
+"fullName":"Bread, white, commercially prepared",
+"name":"white Bread",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 270,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 49.2,
+"unitName": "G"
+},
+"Protein": {
+"amount": 9.43,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 477,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 3.45,
+"unitName": "G"
+}
+}
+},
+"335240": {
+"fdcId": 335240,
+"image":"",
+"fullName":"Bread, whole-wheat, commercially prepared",
+"name":"whole-wheat Bread",
+"foodNutrients": {
+"Carbohydrate, by difference": {
+"amount": 43.1,
+"unitName": "G"
+},
+"Protein": {
+"amount": 12.3,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 450,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 2.98,
+"unitName": "G"
+}
+}
+},
+"747447": {
+"fdcId": 747447,
+"image":"",
+"fullName":"Broccoli, raw",
+"name":"raw Broccoli",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 32.0,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 6.27,
+"unitName": "G"
+},
+"Protein": {
+"amount": 2.57,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 36.0,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 0.0700,
+"unitName": "G"
+}
+}
+},
+"790508": {
+"fdcId": 790508,
+"image":"",
+"fullName":"Butter, stick, salted",
+"name":"stick Butter",
+"foodNutrients": {
+"Sodium, Na": {
+"amount": 524,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 65.0,
+"unitName": "G"
+}
+}
+},
+"789828": {
+"fdcId": 789828,
+"image":"",
+"fullName":"Butter, stick, unsalted",
+"name":"stick Butter",
+"foodNutrients": {
+"Sodium, Na": {
+"amount": 10.0,
+"unitName": "MG"
+}
+}
+},
+"746764": {
+"fdcId": 746764,
+"image":"",
+"fullName":"Carrots, frozen, unprepared",
+"name":"frozen Carrots",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 37.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 66.0,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 0.810,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 7.92,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 0.330,
+"unitName": "G"
+}
+}
+},
+"747429": {
+"fdcId": 747429,
+"image":"",
+"fullName":"Cheese, American, restaurant",
+"name":"American Cheese",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 373,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 1.60E+3,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 17.5,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 26.6,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 6.35,
+"unitName": "G"
+}
+}
+},
+"328637": {
+"fdcId": 328637,
+"image":"",
+"fullName":"Cheese, cheddar",
+"name":"cheddar Cheese",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 408,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 2.44,
+"unitName": "G"
+},
+"Protein": {
+"amount": 23.3,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 654,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 29.0,
+"unitName": "G"
+}
+}
+},
+"328841": {
+"fdcId": 328841,
+"image":"",
+"fullName":"Cheese, cottage, lowfat, 2% milkfat",
+"name":"cottage Cheese",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 84.0,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 4.31,
+"unitName": "G"
+},
+"Protein": {
+"amount": 11.0,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 321,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 1.87,
+"unitName": "G"
+}
+}
+},
+"746765": {
+"fdcId": 746765,
+"image":"",
+"fullName":"Cheese, dry white, queso seco",
+"name":"dry white Cheese",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 326,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 24.5,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 1.81E+3,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 2.07,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 21.4,
+"unitName": "G"
+}
+}
+},
+"329370": {
+"fdcId": 329370,
+"image":"",
+"fullName":"Cheese, mozzarella, low moisture, part-skim",
+"name":"mozzarella Cheese",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 298,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 699,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 23.7,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 4.44,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 17.8,
+"unitName": "G"
+}
+}
+},
+"325036": {
+"fdcId": 325036,
+"image":"",
+"fullName":"Cheese, parmesan, grated",
+"name":"parmesan Cheese",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 420,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 12.4,
+"unitName": "G"
+},
+"Protein": {
+"amount": 29.6,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 1.75E+3,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 24.0,
+"unitName": "G"
+}
+}
+},
+"325198": {
+"fdcId": 325198,
+"image":"",
+"fullName":"Cheese, pasteurized process, American, vitamin D fortified",
+"name":"pasteurized process Cheese",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 366,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 18.0,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 1.66E+3,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 5.27,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 27.6,
+"unitName": "G"
+}
+}
+},
+"746766": {
+"fdcId": 746766,
+"image":"",
+"fullName":"Cheese, ricotta, whole milk",
+"name":"ricotta Cheese",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 157,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 7.81,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 105,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 6.86,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 10.3,
+"unitName": "G"
+}
+}
+},
+"746767": {
+"fdcId": 746767,
+"image":"",
+"fullName":"Cheese, swiss",
+"name":"swiss Cheese",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 393,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 1.44,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 185,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 27.0,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 27.6,
+"unitName": "G"
+}
+}
+},
+"331960": {
+"fdcId": 331960,
+"image":"",
+"fullName":"Chicken, broiler or fryers, breast, skinless, boneless, meat only, cooked, braised",
+"name":"broiler or fryers Chicken",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 166,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 0E-8,
+"unitName": "G"
+},
+"Protein": {
+"amount": 32.1,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 47.0,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 3.05,
+"unitName": "G"
+}
+}
+},
+"331897": {
+"fdcId": 331897,
+"image":"",
+"fullName":"Chicken, broilers or fryers, drumstick, meat only, cooked, braised",
+"name":"broilers or fryers Chicken",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 156,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 23.9,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 117,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 0E-8,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 5.23,
+"unitName": "G"
+}
+}
+},
+"333008": {
+"fdcId": 333008,
+"image":"",
+"fullName":"Cookies, oatmeal, soft, with raisins",
+"name":"oatmeal Cookies",
+"foodNutrients": {
+"Sodium, Na": {
+"amount": 314,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 5.79,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 13.7,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 69.6,
+"unitName": "G"
+}
+}
+},
+"323793": {
+"fdcId": 323793,
+"image":"",
+"fullName":"Egg, white, dried",
+"name":"white Egg",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 376,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 79.9,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 1.25E+3,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 6.02,
+"unitName": "G"
+}
+}
+},
+"323697": {
+"fdcId": 323697,
+"image":"",
+"fullName":"Egg, white, raw, frozen, pasteurized",
+"name":"white Egg",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 48.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 144,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 0.740,
+"unitName": "G"
+},
+"Protein": {
+"amount": 10.1,
+"unitName": "G"
+}
+}
+},
+"329490": {
+"fdcId": 329490,
+"image":"",
+"fullName":"Egg, whole, dried",
+"name":"whole Egg",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 576,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 48.1,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 485,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 1.87,
+"unitName": "G"
+}
+}
+},
+"323604": {
+"fdcId": 323604,
+"image":"",
+"fullName":"Egg, whole, raw, frozen, pasteurized",
+"name":"whole Egg",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 150,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 121,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 12.3,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 0.910,
+"unitName": "G"
+}
+}
+},
+"329716": {
+"fdcId": 329716,
+"image":"",
+"fullName":"Egg, yolk, dried",
+"name":"yolk Egg",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 654,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 1.07,
+"unitName": "G"
+},
+"Protein": {
+"amount": 34.2,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 149,
+"unitName": "MG"
+}
+}
+},
+"329596": {
+"fdcId": 329596,
+"image":"",
+"fullName":"Egg, yolk, raw, frozen, pasteurized",
+"name":"yolk Egg",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 297,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 0.590,
+"unitName": "G"
+},
+"Protein": {
+"amount": 15.6,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 66.0,
+"unitName": "MG"
+}
+}
+},
+"747997": {
+"fdcId": 747997,
+"image":"",
+"fullName":"Eggs, Grade A, Large, egg white",
+"name":"Grade A Eggs",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 55.0,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 10.7,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 2.36,
+"unitName": "G"
+}
+}
+},
+"748967": {
+"fdcId": 748967,
+"image":"",
+"fullName":"Eggs, Grade A, Large, egg whole",
+"name":"Grade A Eggs",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 147,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 12.4,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 129,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 0.960,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 8.65,
+"unitName": "G"
+}
+}
+},
+"748236": {
+"fdcId": 748236,
+"image":"",
+"fullName":"Eggs, Grade A, Large, egg yolk",
+"name":"Grade A Eggs",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 334,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 16.2,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 1.02,
+"unitName": "G"
+}
+}
+},
+"746768": {
+"fdcId": 746768,
+"image":"",
+"fullName":"Figs, dried, uncooked",
+"name":"dried Figs",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 249,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 63.9,
+"unitName": "G"
+},
+"Protein": {
+"amount": 3.30,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 10.0,
+"unitName": "MG"
+}
+}
+},
+"333374": {
+"fdcId": 333374,
+"image":"",
+"fullName":"Fish, haddock, raw",
+"name":"haddock Fish",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 74.0,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 16.3,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 213,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 0E-8,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 0.320,
+"unitName": "G"
+}
+}
+},
+"333476": {
+"fdcId": 333476,
+"image":"",
+"fullName":"Fish, pollock, raw",
+"name":"pollock Fish",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 56.0,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 12.3,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 333,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 0E-8,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 0.400,
+"unitName": "G"
+}
+}
+},
+"334194": {
+"fdcId": 334194,
+"image":"",
+"fullName":"Fish, tuna, light, canned in water, drained solids",
+"name":"tuna Fish",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 90.0,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 19.0,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 219,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 0.0800,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 0.600,
+"unitName": "G"
+}
+}
+},
+"790146": {
+"fdcId": 790146,
+"image":"",
+"fullName":"Flour, bread, white, enriched, unbleached",
+"name":"bread Flour",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 372,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 14.3,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 3.00,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 72.8,
+"unitName": "G"
+}
+}
+},
+"790276": {
+"fdcId": 790276,
+"image":"",
+"fullName":"Flour, corn, yellow, fine meal, enriched",
+"name":"corn Flour",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 372,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 0E-8,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 6.20,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 80.8,
+"unitName": "G"
+}
+}
+},
+"1104913": {
+"fdcId": 1104913,
+"image":"",
+"fullName":"Flour, pastry, unenriched, unbleached",
+"name":"pastry Flour",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 367,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 1.00,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 8.75,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 77.2,
+"unitName": "G"
+}
+}
+},
+"1104812": {
+"fdcId": 1104812,
+"image":"",
+"fullName":"Flour, rice, brown",
+"name":"rice Flour",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 368,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 1.00,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 7.19,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 75.5,
+"unitName": "G"
+}
+}
+},
+"1104867": {
+"fdcId": 1104867,
+"image":"",
+"fullName":"Flour, rice, glutinous",
+"name":"rice Flour",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 368,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 6.00,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 6.69,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 80.1,
+"unitName": "G"
+}
+}
+},
+"790214": {
+"fdcId": 790214,
+"image":"",
+"fullName":"Flour, rice, white, unenriched",
+"name":"rice Flour",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 369,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 79.8,
+"unitName": "G"
+},
+"Protein": {
+"amount": 6.94,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 5.00,
+"unitName": "MG"
+}
+}
+},
+"1104705": {
+"fdcId": 1104705,
+"image":"",
+"fullName":"Flour, soy, defatted",
+"name":"soy Flour",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 339,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 32.9,
+"unitName": "G"
+},
+"Protein": {
+"amount": 51.1,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 2.00,
+"unitName": "MG"
+}
+}
+},
+"1104766": {
+"fdcId": 1104766,
+"image":"",
+"fullName":"Flour, soy, full-fat",
+"name":"soy Flour",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 421,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 27.9,
+"unitName": "G"
+},
+"Protein": {
+"amount": 38.6,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 2.00,
+"unitName": "MG"
+}
+}
+},
+"789890": {
+"fdcId": 789890,
+"image":"",
+"fullName":"Flour, wheat, all-purpose, enriched, bleached",
+"name":"wheat Flour",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 375,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 2.00,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 10.9,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 77.3,
+"unitName": "G"
+}
+}
+},
+"789951": {
+"fdcId": 789951,
+"image":"",
+"fullName":"Flour, wheat, all-purpose, enriched, unbleached",
+"name":"wheat Flour",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 367,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 73.2,
+"unitName": "G"
+},
+"Protein": {
+"amount": 13.1,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 4.00,
+"unitName": "MG"
+}
+}
+},
+"790018": {
+"fdcId": 790018,
+"image":"",
+"fullName":"Flour, wheat, all-purpose, unenriched, unbleached",
+"name":"wheat Flour",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 370,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 74.6,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 2.00,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 12.0,
+"unitName": "G"
+}
+}
+},
+"790085": {
+"fdcId": 790085,
+"image":"",
+"fullName":"Flour, whole wheat, unenriched",
+"name":"whole wheat Flour",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 346,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 71.2,
+"unitName": "G"
+},
+"Protein": {
+"amount": 15.1,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 3.00,
+"unitName": "MG"
+}
+}
+},
+"323121": {
+"fdcId": 323121,
+"image":"",
+"fullName":"Frankfurter, beef, unheated",
+"name":"beef Frankfurter",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 314,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 2.89,
+"unitName": "G"
+},
+"Protein": {
+"amount": 11.7,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 872,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 26.0,
+"unitName": "G"
+}
+}
+},
+"1104647": {
+"fdcId": 1104647,
+"image":"",
+"fullName":"Garlic, raw",
+"name":"raw Garlic",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 130,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 6.62,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 28.2,
+"unitName": "G"
+}
+}
+},
+"325287": {
+"fdcId": 325287,
+"image":"",
+"fullName":"Grapefruit juice, white, canned or bottled, unsweetened",
+"name":"white Grapefruit juice",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 37.0,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 0.550,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 1.00,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 7.59,
+"unitName": "G"
+}
+}
+},
+"332397": {
+"fdcId": 332397,
+"image":"",
+"fullName":"Ham, sliced, pre-packaged, deli meat (96%fat free, water added)",
+"name":"sliced Ham",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 106,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 1.04E+3,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 16.7,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 0.270,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 3.15,
+"unitName": "G"
+}
+}
+},
+"746952": {
+"fdcId": 746952,
+"image":"",
+"fullName":"Ham, sliced, restaurant",
+"name":"sliced Ham",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 126,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 1.03E+3,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 19.6,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 3.54,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 2.36,
+"unitName": "G"
+}
+}
+},
+"321358": {
+"fdcId": 321358,
+"image":"",
+"fullName":"Hummus, commercial",
+"name":"commercial Hummus",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 229,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 7.35,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 438,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 14.9,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 16.1,
+"unitName": "G"
+}
+}
+},
+"326196": {
+"fdcId": 326196,
+"image":"",
+"fullName":"Kale, frozen, cooked, boiled, drained, without salt",
+"name":"frozen Kale",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 36.0,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 5.30,
+"unitName": "G"
+},
+"Protein": {
+"amount": 2.94,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 16.0,
+"unitName": "MG"
+}
+}
+},
+"323505": {
+"fdcId": 323505,
+"image":"",
+"fullName":"Kale, raw",
+"name":"raw Kale",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 35.0,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 2.92,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 53.0,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 4.42,
+"unitName": "G"
+}
+}
+},
+"747693": {
+"fdcId": 747693,
+"image":"",
+"fullName":"Ketchup, restaurant",
+"name":"restaurant Ketchup",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 103,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 949,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 1.11,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 26.8,
+"unitName": "G"
+}
+}
+},
+"327046": {
+"fdcId": 327046,
+"image":"",
+"fullName":"Kiwifruit, green, raw",
+"name":"green Kiwifruit",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 58.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 5.00,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 1.06,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 14.0,
+"unitName": "G"
+}
+}
+},
+"746769": {
+"fdcId": 746769,
+"image":"",
+"fullName":"Lettuce, cos or romaine, raw",
+"name":"cos or romaine Lettuce",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 17.0,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 3.24,
+"unitName": "G"
+},
+"Protein": {
+"amount": 1.24,
+"unitName": "G"
+}
+}
+},
+"746770": {
+"fdcId": 746770,
+"image":"",
+"fullName":"Melons, cantaloupe, raw",
+"name":"cantaloupe Melons",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 34.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 30.0,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 8.16,
+"unitName": "G"
+},
+"Protein": {
+"amount": 0.820,
+"unitName": "G"
+}
+}
+},
+"746772": {
+"fdcId": 746772,
+"image":"",
+"fullName":"Milk, lowfat, fluid, 1% milkfat, with added vitamin A and vitamin D",
+"name":"lowfat Milk",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 43.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 39.0,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 3.38,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 5.18,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 0.850,
+"unitName": "G"
+}
+}
+},
+"746776": {
+"fdcId": 746776,
+"image":"",
+"fullName":"Milk, nonfat, fluid, with added vitamin A and vitamin D (fat free or skim)",
+"name":"nonfat Milk",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 34.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 41.0,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 3.43,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 4.92,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 0.0700,
+"unitName": "G"
+}
+}
+},
+"746778": {
+"fdcId": 746778,
+"image":"",
+"fullName":"Milk, reduced fat, fluid, 2% milkfat, with added vitamin A and vitamin D",
+"name":"reduced fat Milk",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 50.0,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 3.36,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 4.90,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 39.0,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 1.64,
+"unitName": "G"
+}
+}
+},
+"746782": {
+"fdcId": 746782,
+"image":"",
+"fullName":"Milk, whole, 3 25% milkfat, with added vitamin D",
+"name":"whole Milk",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 60.0,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 4.63,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 38.0,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 3.27,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 2.77,
+"unitName": "G"
+}
+}
+},
+"326698": {
+"fdcId": 326698,
+"image":"",
+"fullName":"Mustard, prepared, yellow",
+"name":"prepared Mustard",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 61.0,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 4.25,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 1.10E+3,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 5.30,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 3.76,
+"unitName": "G"
+}
+}
+},
+"327357": {
+"fdcId": 327357,
+"image":"",
+"fullName":"Nectarines, raw",
+"name":"raw Nectarines",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 39.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 13.0,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 9.18,
+"unitName": "G"
+},
+"Protein": {
+"amount": 1.06,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 0.130,
+"unitName": "G"
+}
+}
+},
+"323294": {
+"fdcId": 323294,
+"image":"",
+"fullName":"Nuts, almonds, dry roasted, with salt added",
+"name":"almonds Nuts",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 621,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 16.2,
+"unitName": "G"
+},
+"Protein": {
+"amount": 20.4,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 256,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 53.4,
+"unitName": "G"
+}
+}
+},
+"748278": {
+"fdcId": 748278,
+"image":"",
+"fullName":"Oil, canola",
+"name":"canola Oil",
+"foodNutrients": {
+"Total fat (NLEA)": {
+"amount": 94.5,
+"unitName": "G"
+}
+}
+},
+"330458": {
+"fdcId": 330458,
+"image":"",
+"fullName":"Oil, coconut",
+"name":"coconut Oil",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 833,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 0E-8,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 0.840,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 0E-8,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 90.5,
+"unitName": "G"
+}
+}
+},
+"748323": {
+"fdcId": 748323,
+"image":"",
+"fullName":"Oil, corn",
+"name":"corn Oil",
+"foodNutrients": {
+"Total fat (NLEA)": {
+"amount": 94.0,
+"unitName": "G"
+}
+}
+},
+"748608": {
+"fdcId": 748608,
+"image":"",
+"fullName":"Oil, olive, extra virgin",
+"name":"olive Oil",
+"foodNutrients": {
+"Total fat (NLEA)": {
+"amount": 93.7,
+"unitName": "G"
+}
+}
+},
+"748366": {
+"fdcId": 748366,
+"image":"",
+"fullName":"Oil, soybean",
+"name":"soybean Oil",
+"foodNutrients": {
+"Total fat (NLEA)": {
+"amount": 94.6,
+"unitName": "G"
+}
+}
+},
+"332791": {
+"fdcId": 332791,
+"image":"",
+"fullName":"Olives, green, Manzanilla, stuffed with pimiento",
+"name":"green Olives",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 130,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 1.62E+3,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 1.15,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 11.8,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 4.96,
+"unitName": "G"
+}
+}
+},
+"324317": {
+"fdcId": 324317,
+"image":"",
+"fullName":"Onion rings, breaded, par fried, frozen, prepared, heated in oven",
+"name":"breaded Onion rings",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 289,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 36.3,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 374,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 4.52,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 12.6,
+"unitName": "G"
+}
+}
+},
+"790577": {
+"fdcId": 790577,
+"image":"",
+"fullName":"Onions, red, raw",
+"name":"red Onions",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 42.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 1.00,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 0.940,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 9.93,
+"unitName": "G"
+}
+}
+},
+"1104962": {
+"fdcId": 1104962,
+"image":"",
+"fullName":"Onions, white, raw",
+"name":"white Onions",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 33.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 2.00,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 0.890,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 7.68,
+"unitName": "G"
+}
+}
+},
+"790646": {
+"fdcId": 790646,
+"image":"",
+"fullName":"Onions, yellow, raw",
+"name":"yellow Onions",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 36.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 1.00,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 0.830,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 8.61,
+"unitName": "G"
+}
+}
+},
+"746771": {
+"fdcId": 746771,
+"image":"",
+"fullName":"Oranges, raw, navels",
+"name":"raw Oranges",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 47.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 9.00,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 0.910,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 11.8,
+"unitName": "G"
+}
+}
+},
+"325430": {
+"fdcId": 325430,
+"image":"",
+"fullName":"Peaches, yellow, raw",
+"name":"yellow Peaches",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 42.0,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 10.1,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 13.0,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 0.910,
+"unitName": "G"
+}
+}
+},
+"324860": {
+"fdcId": 324860,
+"image":"",
+"fullName":"Peanut butter, smooth style, with salt",
+"name":"smooth style Peanut butter",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 597,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 429,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 22.5,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 22.3,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 47.9,
+"unitName": "G"
+}
+}
+},
+"746773": {
+"fdcId": 746773,
+"image":"",
+"fullName":"Pears, raw, bartlett",
+"name":"raw Pears",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 57.0,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 0.380,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 7.00,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 15.1,
+"unitName": "G"
+}
+}
+},
+"324653": {
+"fdcId": 324653,
+"image":"",
+"fullName":"Pickles, cucumber, dill or kosher dill",
+"name":"cucumber Pickles",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 12.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 808,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 1.99,
+"unitName": "G"
+},
+"Protein": {
+"amount": 0.480,
+"unitName": "G"
+}
+}
+},
+"749420": {
+"fdcId": 749420,
+"image":"",
+"fullName":"Pork, cured, bacon, cooked, restaurant",
+"name":"cured Pork",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 512,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 1.83E+3,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 40.9,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 34.6,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 2.10,
+"unitName": "G"
+}
+}
+},
+"334536": {
+"fdcId": 334536,
+"image":"",
+"fullName":"Restaurant, Chinese, fried rice, without meat",
+"name":"Chinese Restaurant",
+"foodNutrients": {
+"Carbohydrate, by difference": {
+"amount": 32.5,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 361,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 3.84,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 2.22,
+"unitName": "G"
+}
+}
+},
+"746774": {
+"fdcId": 746774,
+"image":"",
+"fullName":"Restaurant, Chinese, sweet and sour pork",
+"name":"Chinese Restaurant",
+"foodNutrients": {
+"Protein": {
+"amount": 8.88,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 304,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 25.5,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 13.3,
+"unitName": "G"
+}
+}
+},
+"334720": {
+"fdcId": 334720,
+"image":"",
+"fullName":"Restaurant, Latino, pupusas con frijoles (pupusas, bean)",
+"name":"Latino Restaurant",
+"foodNutrients": {
+"Protein": {
+"amount": 5.59,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 305,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 31.5,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 8.08,
+"unitName": "G"
+}
+}
+},
+"334628": {
+"fdcId": 334628,
+"image":"",
+"fullName":"Restaurant, Latino, tamale, pork",
+"name":"Latino Restaurant",
+"foodNutrients": {
+"Protein": {
+"amount": 7.38,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 473,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 15.8,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 7.98,
+"unitName": "G"
+}
+}
+},
+"746775": {
+"fdcId": 746775,
+"image":"",
+"fullName":"Salt, table, iodized",
+"name":"table Salt",
+"foodNutrients": {
+"Sodium, Na": {
+"amount": 3.87E+4,
+"unitName": "MG"
+}
+}
+},
+"332282": {
+"fdcId": 332282,
+"image":"",
+"fullName":"Sauce, pasta, spaghetti or marinara, ready-to-serve",
+"name":"pasta Sauce",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 45.0,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 8.05,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 419,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 1.41,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 1.05,
+"unitName": "G"
+}
+}
+},
+"746777": {
+"fdcId": 746777,
+"image":"",
+"fullName":"Sauce, salsa, ready-to-serve",
+"name":"salsa Sauce",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 29.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 656,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 1.44,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 6.74,
+"unitName": "G"
+}
+}
+},
+"746779": {
+"fdcId": 746779,
+"image":"",
+"fullName":"Sausage, breakfast sausage, beef, pre-cooked, unprepared",
+"name":"breakfast sausage Sausage",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 346,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 3.37,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 866,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 13.3,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 27.1,
+"unitName": "G"
+}
+}
+},
+"746780": {
+"fdcId": 746780,
+"image":"",
+"fullName":"Sausage, Italian, pork, mild, cooked, pan-fried",
+"name":"Italian Sausage",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 322,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 2.15,
+"unitName": "G"
+},
+"Protein": {
+"amount": 18.2,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 766,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 25.8,
+"unitName": "G"
+}
+}
+},
+"746781": {
+"fdcId": 746781,
+"image":"",
+"fullName":"Sausage, pork, chorizo, link or ground, cooked, pan-fried",
+"name":"pork Sausage",
+"foodNutrients": {
+"Sodium, Na": {
+"amount": 983,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 19.3,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 26.0,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 2.63,
+"unitName": "G"
+}
+}
+},
+"746783": {
+"fdcId": 746783,
+"image":"",
+"fullName":"Sausage, turkey, breakfast links, mild, raw",
+"name":"turkey Sausage",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 169,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 16.7,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 599,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 0.930,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 8.86,
+"unitName": "G"
+}
+}
+},
+"325524": {
+"fdcId": 325524,
+"image":"",
+"fullName":"Seeds, sunflower seed kernels, dry roasted, with salt added",
+"name":"sunflower seed kernels Seeds",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 612,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 532,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 17.1,
+"unitName": "G"
+},
+"Protein": {
+"amount": 21.0,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 52.1,
+"unitName": "G"
+}
+}
+},
+"747448": {
+"fdcId": 747448,
+"image":"",
+"fullName":"Strawberries, raw",
+"name":"raw Strawberries",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 31.0,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 0.640,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 10.0,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 7.63,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 0.170,
+"unitName": "G"
+}
+}
+},
+"746784": {
+"fdcId": 746784,
+"image":"",
+"fullName":"Sugars, granulated",
+"name":"granulated Sugars",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 385,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 0E-8,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 1.00,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 99.6,
+"unitName": "G"
+}
+}
+},
+"333281": {
+"fdcId": 333281,
+"image":"",
+"fullName":"Tomatoes, canned, red, ripe, diced",
+"name":"canned Tomatoes",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 18.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 125,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 0.840,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 3.32,
+"unitName": "G"
+}
+}
+},
+"321360": {
+"fdcId": 321360,
+"image":"",
+"fullName":"Tomatoes, grape, raw",
+"name":"grape Tomatoes",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 27.0,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 6.00,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 0.830,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 5.51,
+"unitName": "G"
+}
+}
+},
+"746785": {
+"fdcId": 746785,
+"image":"",
+"fullName":"Turkey, ground, 93% lean, 7% fat, pan-broiled crumbles",
+"name":"ground Turkey",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 220,
+"unitName": "KCAL"
+},
+"Sodium, Na": {
+"amount": 90.0,
+"unitName": "MG"
+},
+"Protein": {
+"amount": 27.1,
+"unitName": "G"
+},
+"Carbohydrate, by difference": {
+"amount": 0E-8,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 10.4,
+"unitName": "G"
+}
+}
+},
+"330137": {
+"fdcId": 330137,
+"image":"",
+"fullName":"Yogurt, Greek, plain, nonfat",
+"name":"Greek Yogurt",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 61.0,
+"unitName": "KCAL"
+},
+"Protein": {
+"amount": 10.3,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 36.0,
+"unitName": "MG"
+},
+"Carbohydrate, by difference": {
+"amount": 3.64,
+"unitName": "G"
+},
+"Total fat (NLEA)": {
+"amount": 0.170,
+"unitName": "G"
+}
+}
+},
+"330415": {
+"fdcId": 330415,
+"image":"",
+"fullName":"Yogurt, Greek, strawberry, nonfat",
+"name":"Greek Yogurt",
+"foodNutrients": {
+"Energy (Atwater Specific Factors)": {
+"amount": 83.0,
+"unitName": "KCAL"
+},
+"Carbohydrate, by difference": {
+"amount": 12.2,
+"unitName": "G"
+},
+"Protein": {
+"amount": 8.06,
+"unitName": "G"
+},
+"Sodium, Na": {
+"amount": 32.0,
+"unitName": "MG"
+},
+"Total fat (NLEA)": {
+"amount": 0.150,
+"unitName": "G"
+}
+}
+}
+}
+}

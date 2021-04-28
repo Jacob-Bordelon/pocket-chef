@@ -1,0 +1,393 @@
+{
+  "food" : {
+    "325871" : {
+      "fdcId" : 325871,
+      "foodNutrients" : {
+        "Carbohydrate, by difference" : {
+          "amount" : 49.2,
+          "unitName" : "G"
+        },
+        "Energy (Atwater Specific Factors)" : {
+          "amount" : 270,
+          "unitName" : "KCAL"
+        },
+        "Protein" : {
+          "amount" : 9.43,
+          "unitName" : "G"
+        },
+        "Sodium, Na" : {
+          "amount" : 477,
+          "unitName" : "MG"
+        },
+        "Total fat (NLEA)" : {
+          "amount" : 3.45,
+          "unitName" : "G"
+        }
+      },
+      "fullName" : "Bread, white, commercially prepared",
+      "image" : "",
+      "name" : "White Bread"
+    },
+    "331960" : {
+      "fdcId" : 331960,
+      "foodNutrients" : {
+        "Carbohydrate, by difference" : {
+          "amount" : 0.0,
+          "unitName" : "G"
+        },
+        "Cholesterol" : {
+          "amount" : 116,
+          "unitName" : "MG"
+        },
+        "Energy (Atwater Specific Factors)" : {
+          "amount" : 166,
+          "unitName" : "KCAL"
+        },
+        "Protein" : {
+          "amount" : 32.1,
+          "unitName" : "G"
+        },
+        "Sodium, Na" : {
+          "amount" : 47.0,
+          "unitName" : "MG"
+        },
+        "Total fat (NLEA)" : {
+          "amount" : 3.05,
+          "unitName" : "G"
+        }
+      },
+      "fullName" : "Chicken, broiler or fryers, breast, skinless, boneless, meat only, cooked, braised",
+      "image" : "",
+      "name" : "Chicken Breast"
+    },
+    "746763" : {
+      "fdcId" : 746763,
+      "foodNutrients" : {
+        "Carbohydrate, by difference" : {
+          "amount" : 0.0,
+          "unitName" : "G"
+        },
+        "Cholesterol" : {
+          "amount" : 80.0,
+          "unitName" : "MG"
+        },
+        "Energy (Atwater Specific Factors)" : {
+          "amount" : 219,
+          "unitName" : "KCAL"
+        },
+        "Protein" : {
+          "amount" : 27.3,
+          "unitName" : "G"
+        },
+        "Sodium, Na" : {
+          "amount" : 67.0,
+          "unitName" : "MG"
+        },
+        "Total fat (NLEA)" : {
+          "amount" : 10.5,
+          "unitName" : "G"
+        }
+      },
+      "fullName" : "Beef, short loin, t-bone steak, bone-in, separable lean only, trimmed to 1 or 8\" fat, choice, cooked, grilled",
+      "image" : "",
+      "name" : "T-Bone Steak"
+    },
+    "746764" : {
+      "fdcId" : 746764,
+      "foodNutrients" : {
+        "Carbohydrate, by difference" : {
+          "amount" : 7.92,
+          "unitName" : "G"
+        },
+        "Energy (Atwater Specific Factors)" : {
+          "amount" : 37.0,
+          "unitName" : "KCAL"
+        },
+        "Protein" : {
+          "amount" : 0.81,
+          "unitName" : "G"
+        },
+        "Sodium, Na" : {
+          "amount" : 66.0,
+          "unitName" : "MG"
+        },
+        "Total fat (NLEA)" : {
+          "amount" : 0.33,
+          "unitName" : "G"
+        }
+      },
+      "fullName" : "Carrots, frozen, unprepared",
+      "image" : "",
+      "name" : "Carrots (frozen)"
+    },
+    "747429" : {
+      "fdcId" : 747429,
+      "foodNutrients" : {
+        "Carbohydrate, by difference" : {
+          "amount" : 6.35,
+          "unitName" : "G"
+        },
+        "Energy (Atwater Specific Factors)" : {
+          "amount" : 373,
+          "unitName" : "KCAL"
+        },
+        "Protein" : {
+          "amount" : 17.5,
+          "unitName" : "G"
+        },
+        "Sodium, Na" : {
+          "amount" : 1600.0,
+          "unitName" : "MG"
+        },
+        "Total fat (NLEA)" : {
+          "amount" : 26.6,
+          "unitName" : "G"
+        }
+      },
+      "fullName" : "Cheese, American, restaurant",
+      "image" : "",
+      "name" : "American Cheese"
+    },
+    "747431" : {
+      "fdcId" : 747431,
+      "foodNutrients" : {
+        "Protein" : {
+          "amount" : 21.3,
+          "unitName" : "G"
+        }
+      },
+      "fullName" : "Beans, Dry, Red (0% moisture)",
+      "image" : "",
+      "name" : "Red Beans"
+    },
+    "747447" : {
+      "fdcId" : 747447,
+      "foodNutrients" : {
+        "Carbohydrate, by difference" : {
+          "amount" : 6.27,
+          "unitName" : "G"
+        },
+        "Energy (Atwater Specific Factors)" : {
+          "amount" : 32.0,
+          "unitName" : "KCAL"
+        },
+        "Protein" : {
+          "amount" : 2.57,
+          "unitName" : "G"
+        },
+        "Sodium, Na" : {
+          "amount" : 36.0,
+          "unitName" : "MG"
+        },
+        "Total fat (NLEA)" : {
+          "amount" : 0.07,
+          "unitName" : "G"
+        }
+      },
+      "fullName" : "Broccoli, raw",
+      "image" : "",
+      "name" : "Broccoli"
+    },
+    "748967" : {
+      "fdcId" : 748967,
+      "foodNutrients" : {
+        "Energy (Atwater Specific Factors)" : {
+          "amount" : 372,
+          "unitName" : "KCAL"
+        }
+      },
+      "fullName" : "Eggs, Grade A, Large, egg whole",
+      "image" : "",
+      "name" : "Eggs"
+    },
+    "790146" : {
+      "fdcId" : 790146,
+      "fullName" : "Flour, bread, white, enriched, unbleached",
+      "name" : "Flour"
+    },
+    "790508" : {
+      "fdcId" : 790508,
+      "foodNutrients" : {
+        "Cholesterol" : {
+          "amount" : 235,
+          "unitName" : "MG"
+        },
+        "Sodium, Na" : {
+          "amount" : 524,
+          "unitName" : "MG"
+        },
+        "Total fat (NLEA)" : {
+          "amount" : 65.0,
+          "unitName" : "G"
+        }
+      },
+      "fullName" : "Butter, stick, salted",
+      "image" : "",
+      "name" : "Salted Butter"
+    },
+    "1105073" : {
+      "fdcId" : 1105073,
+      "foodNutrients" : {
+        "Carbohydrate, by difference" : {
+          "amount" : 20.1,
+          "unitName" : "G"
+        },
+        "Energy (Atwater Specific Factors)" : {
+          "amount" : 77.0,
+          "unitName" : "KCAL"
+        },
+        "Protein" : {
+          "amount" : 0.73,
+          "unitName" : "G"
+        }
+      },
+      "fullName" : "Bananas, overripe, raw",
+      "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/fruits%2Fbanana.jpg?alt=media&token=12d092f0-baa6-491e-b0fb-4f31bc39b2d4",
+      "name" : "Banana"
+    },
+    "1105897" : {
+      "fdcId" : 1105897,
+      "foodNutrients" : {
+        "Carbohydrate, by difference" : {
+          "amount" : 15.7,
+          "unitName" : "G"
+        },
+        "Energy (Atwater Specific Factors)" : {
+          "amount" : 58.0,
+          "unitName" : "KCAL"
+        },
+        "Protein" : {
+          "amount" : 0.15,
+          "unitName" : "G"
+        },
+        "Sodium, Na" : {
+          "amount" : 1.0,
+          "unitName" : "MG"
+        }
+      },
+      "fullName" : "Apples, fuji, with skin, raw",
+      "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/fruits%2Fapple.jpg?alt=media&token=3a61637b-1099-412d-acf9-73fb12525f85",
+      "name" : "Fuji Apples"
+    },
+    "168201" : {
+      "fdcId" : 168201,
+      "foodNutrients" : {
+        "Carbohydrate, by difference" : {
+          "amount" : 14.1,
+          "unitName" : "G"
+        },
+        "Energy (Atwater Specific Factors)" : {
+          "amount" : 59.0,
+          "unitName" : "KCAL"
+        },
+        "Protein" : {
+          "amount" : 0.27,
+          "unitName" : "G"
+        },
+        "Sodium, Na" : {
+          "amount" : 1.0,
+          "unitName" : "MG"
+        }
+      },
+      "fullName" : "Apples, raw, red delicious, with skin",
+      "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/fruits%2Fapple.jpg?alt=media&token=3a61637b-1099-412d-acf9-73fb12525f85",
+      "name" : "Red delicious Apples"
+    }
+
+  },
+  "recipeBook" : {
+    "boiled egg" : {
+      "author" : "ricardo aranaga",
+      "cook_time" : 10,
+      "description" : "boiling an egg perfectly",
+      "difficulty" : "easy",
+      "id" : "1618697392886",
+      "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/recipes%2Fboiled_egg.jpg?alt=media&token=79547c92-5480-4c98-86f8-4099203d3363",
+      "ingredients" : {
+        "746775" : {
+          "amount" : 0.5,
+          "measurement" : "tspn",
+          "name" : "Salt, table, iodized"
+        },
+        "748967" : {
+          "amount" : 1,
+          "measurement" : "unit",
+          "name" : "Eggs, Grade A, Large, egg whole"
+        }
+      },
+      "instructions" : {
+        "step1" : "take egg out of fridge",
+        "step2" : "pour water into a deep pan",
+        "step3" : "place egg into the pan",
+        "step4" : "let water start to boil",
+        "step5" : "lower flame to a minimum",
+        "step6" : "cook for 15 minutes",
+        "step7" : "add salt"
+      },
+      "prep_time" : 5,
+      "rating" : 0,
+      "serving_size" : 1,
+      "status" : 0,
+      "title" : "boiled egg"
+    },
+    "chocolate cake" : {
+      "author" : "ricardo aranaga",
+      "cook_time" : 30,
+      "description" : "Simple chocolate cake recipe",
+      "difficulty" : "easy",
+      "id" : "1618697392505",
+      "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/recipes%2Fchocolate_cake.jpg?alt=media&token=a48853f2-048b-4573-bb7c-1e4d3e08953b",
+      "ingredients" : {
+        "167568" : {
+          "amount" : 0.75,
+          "measurement" : "cup",
+          "name" : "Baking chocolate, unsweetened, squares"
+        },
+        "172805" : {
+          "amount" : 2,
+          "measurement" : "tspn",
+          "name" : "Leavening agents, baking powder, low-sodium"
+        },
+        "746775" : {
+          "amount" : 1,
+          "measurement" : "tspn",
+          "name" : "Salt, table, iodized"
+        },
+        "746784" : {
+          "amount" : 2,
+          "measurement" : "cup",
+          "name" : "Sugars, granulated"
+        },
+        "748278" : {
+          "amount" : 1,
+          "measurement" : "cup",
+          "name" : "Oil, canola"
+        },
+        "748967" : {
+          "amount" : 2,
+          "measurement" : "unit",
+          "name" : "Eggs, Grade A, Large, egg whole"
+        },
+        "790146" : {
+          "amount" : 2,
+          "measurement" : "cup",
+          "name" : "Flour, bread, white, enriched, unbleached"
+        }
+      },
+      "instructions" : {
+        "step1" : "mix all",
+        "step2" : "preheat oven",
+        "step3" : "place in oven",
+        "step4" : "cook for 30 mins"
+      },
+      "prep_time" : 40,
+      "rating" : 0,
+      "serving_size" : 4,
+      "status" : 0,
+      "title" : "chocolate cake"
+    },
+    "linh_nguyen" : {
+      "status" : 1
+    }
+  }
+}
