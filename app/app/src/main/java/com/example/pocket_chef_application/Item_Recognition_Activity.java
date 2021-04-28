@@ -369,8 +369,7 @@ public class Item_Recognition_Activity extends AppCompatActivity {
 
         submit.setOnClickListener(v -> {
             DatePicker picker = expdate.getDatePicker();
-            String date = picker.getMonth()+"/"+picker.getDayOfMonth()+"/"+picker.getYear();
-            Pantry.AddItem(i, date, Integer.parseInt(amount.getText().toString()));
+            Pantry.AddItem(i, getDateFromDatePicker(picker), Integer.parseInt(amount.getText().toString()));
             mDialog2.dismiss();
             onBackPressed();
         });
@@ -379,6 +378,17 @@ public class Item_Recognition_Activity extends AppCompatActivity {
         mDialog2.show();
 
 
+    }
+
+    public java.util.Date getDateFromDatePicker(DatePicker datePicker){
+        int day = datePicker.getDayOfMonth();
+        int month = datePicker.getMonth();
+        int year =  datePicker.getYear();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+
+        return calendar.getTime();
     }
 
     public int searchWords(String[] keywords, String lin2) {

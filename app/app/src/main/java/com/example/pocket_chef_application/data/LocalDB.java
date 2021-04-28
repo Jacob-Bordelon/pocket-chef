@@ -15,6 +15,8 @@ public abstract class LocalDB extends RoomDatabase {
 
     public abstract ItemDAO itemDAO();
 
+    public abstract GLItemDAO GlDAO();
+
     private static LocalDB INSTANCE;
 
     public static LocalDB getDBInstance(Context context) {

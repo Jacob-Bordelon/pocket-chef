@@ -25,7 +25,7 @@ exports.text_moderator = functions.database.ref('/bufferLayer/{recipeId}')
   .onWrite((change) => {
   const message = change.after.val();
 
-  if (message && !message.sanitized) {
+  if (message) {
 
 
     const mod_dec = moderateMessage(message.description) !== message.description;

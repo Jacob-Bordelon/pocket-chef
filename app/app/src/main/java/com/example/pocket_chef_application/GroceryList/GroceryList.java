@@ -66,7 +66,7 @@ public class GroceryList extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_grocery_list, container, false);
 
-        items = db.itemDAO().getAllGLItems().stream().map(GroceryItem::new).collect(Collectors.toList());
+        items = db.GlDAO().getAllGLItems().stream().map(GroceryItem::new).collect(Collectors.toList());
 
         adapter = new CustomListAdapter(requireContext(), items);
 
@@ -87,12 +87,12 @@ public class GroceryList extends Fragment {
         GroceryItem glItem = new GroceryItem(name, amount);
 
         items.add(glItem);
-        db.itemDAO().insertGLItem(glItem.getItem());
+        db.GlDAO().insertItem(glItem.getItem());
     }
 
     public void removeGLItem(GroceryItem item){
         items.remove(item);
-        db.itemDAO().removeGLItem(item.getItem());
+        db.GlDAO().deleteItem(item.getItem());
     }
 
     public void NewGLItem(){

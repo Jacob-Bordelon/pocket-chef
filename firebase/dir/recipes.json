@@ -99,7 +99,7 @@
       "description" : "fuck",
       "difficulty" : "easy",
       "id" : "1618697392886",
-      "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/recipes%2Fboiled_egg.jpg?alt=media&token=79547c92-5480-4c98-86f8-4099203d3363",
+      "image" : "",
       "ingredients" : {
         "746775" : {
           "amount" : 0.5,
@@ -124,8 +124,6 @@
       "prep_time" : 5,
       "rating" : 0,
       "serving_size" : 1,
-      "image_status":0,
-      "text_status":1,
       "title" : "fucking boiled egg"
     
     }

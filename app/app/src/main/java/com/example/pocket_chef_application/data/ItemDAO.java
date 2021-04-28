@@ -3,42 +3,33 @@ package com.example.pocket_chef_application.data;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.example.pocket_chef_application.Model.Food;
 
 import java.util.List;
 
 @Dao
 public interface ItemDAO {
-    @Query("SELECT * FROM DBItem")
+    @Query("SELECT * FROM PantryItems")
     List<DBItem> getAllItems();
 
-    @Query("SELECT * FROM GLItem")
-    List<GLItem> getAllGLItems();
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(DBItem... items);
 
-    @Insert
-    void insertItem(DBItem... items);
 
-    @Insert
-    void insertGLItem(GLItem... items);
-
-    @Query("DELETE FROM DBItem")
+    @Query("DELETE FROM PantryItems")
     public void nukeTable();
 
     @Delete
     public void delete(DBItem item);
 
-    @Delete
-    public void removeGLItem(GLItem item);
-
-    @Query("SELECT COUNT(item_name) FROM DBItem")
+    @Query("SELECT COUNT(item_name) FROM PantryItems")
     int getCount();
 
-    @Query("SELECT COUNT(item_name) FROM GLItem")
-    int getGLCount();
 
-    @Update(entity = GLItem.class)
-    public void updateGLItem(GLItem item);
 
 
 

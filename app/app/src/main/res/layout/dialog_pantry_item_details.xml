@@ -412,13 +412,7 @@
                         android:text="__"/>
                 </LinearLayout>
 
-                <TextView
-                    style="@style/PantryItemText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:id="@+id/protein_perc"
-                    android:text="__"/>
+
             </RelativeLayout>
 
         </TableLayout>

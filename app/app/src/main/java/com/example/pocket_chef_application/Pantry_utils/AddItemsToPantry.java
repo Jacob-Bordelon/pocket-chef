@@ -105,6 +105,7 @@ public class AddItemsToPantry extends Fragment {
                 return true;
             }
         });
+
         searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
             if(hasFocus){
                 mRecyclerView.removeOnScrollListener(scrollListner);

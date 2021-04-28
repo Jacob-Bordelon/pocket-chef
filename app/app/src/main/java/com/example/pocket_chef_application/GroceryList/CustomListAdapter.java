@@ -185,7 +185,7 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Cu
                     item.setName(edit_title.getText().toString());
                 }
 
-                GroceryList.db.itemDAO().updateGLItem(item.getItem());
+                GroceryList.db.GlDAO().updateItem(item.getItem());
                 notifyItemChanged(getBindingAdapterPosition());
                 dialog.dismiss();
 
@@ -193,7 +193,7 @@ public class CustomListAdapter extends RecyclerView.Adapter<CustomListAdapter.Cu
 
             remove_btn.setOnClickListener(v -> {
                 GroceryItem item = itemList.get(getBindingAdapterPosition());
-                GroceryList.db.itemDAO().removeGLItem(item.getItem());
+                GroceryList.db.GlDAO().deleteItem(item.getItem());
                 itemList.remove(item);
                 notifyDataSetChanged();
                 dialog.dismiss();

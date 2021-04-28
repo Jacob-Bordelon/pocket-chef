@@ -9,44 +9,31 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocket_chef_application.Model.Food;
-import com.example.pocket_chef_application.Model.Recipe;
 import com.example.pocket_chef_application.Pantry;
 import com.example.pocket_chef_application.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.stream.Collectors;
+
 
 import static java.util.stream.Collectors.toSet;
 
@@ -62,9 +49,6 @@ public class FirebaseFoodDatabase_Helper {
     public FoodItemView adapter;
     private int limitAmount = 10;
     private static ValueEventListener listener;
-
-    public static String key;
-
 
 
     public interface Data{
@@ -128,7 +112,6 @@ public class FirebaseFoodDatabase_Helper {
 
     }
 
-
     public void paginate(String i, final Data data){
         mReference.removeEventListener(listener);
         listener = new ValueEventListener() {
@@ -159,6 +142,7 @@ public class FirebaseFoodDatabase_Helper {
     }
 
     public void readFood(final Container data){
+        mReference.removeEventListener(listener);
         listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -305,6 +289,7 @@ public class FirebaseFoodDatabase_Helper {
                     String date = month1+"/"+dayOfMonth1+"/"+year1;
                     exp_preview.setText(date);
                     }, year, month, dayOfMonth);
+                expdate.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 
 
                 ImageView img = mDialog.findViewById(R.id.imageView);
@@ -320,9 +305,7 @@ public class FirebaseFoodDatabase_Helper {
 
                 submit.setOnClickListener(v -> {
                     DatePicker picker = expdate.getDatePicker();
-                    String experation = picker.getMonth()+"/"+picker.getDayOfMonth()+"/"+picker.getYear();
-                    Log.d(TAG, "showDialog: "+experation);
-                    Pantry.AddItem(food, experation, Integer.parseInt(amount.getText().toString()));
+                    Pantry.AddItem(food, getDateFromDatePicker(picker), Integer.parseInt(amount.getText().toString()));
                     Toast.makeText(context,"Item added to Pantry", Toast.LENGTH_LONG).show();
                     mDialog.dismiss();
                 });
@@ -336,8 +319,21 @@ public class FirebaseFoodDatabase_Helper {
 
             @Override
             public void onClick(View v) {
-                showDialog(items.get(getAdapterPosition()));
+                showDialog(items.get(getBindingAdapterPosition()));
             }
+
+
+        }
+
+        public java.util.Date getDateFromDatePicker(DatePicker datePicker){
+            int day = datePicker.getDayOfMonth();
+            int month = datePicker.getMonth();
+            int year =  datePicker.getYear();
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, day);
+
+            return calendar.getTime();
         }
 
 

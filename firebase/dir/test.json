@@ -1,0 +1,38 @@
+{
+  "167782": {
+    "fdcId": 167782,
+    "fullName": "Abiyuch, raw",
+    "name": "raw Abiyuch",
+    "foodNutrients": {
+      "calories": 69.0,
+      "carbs": 17.6,
+      "total_fat": 0,
+      "trans_fat": 0.0,
+      "sat_fat": 0.014,
+      "protein": 1.5,
+      "sodium": 20.0,
+      "chloesterol": 0,
+      "fiber": 5.3,
+      "sugars": 8.55
+    },
+    "image": ""
+  },
+  "171687": {
+    "fdcId": 171687,
+    "fullName": "Acerola juice, raw",
+    "name": "raw Acerola juice",
+    "foodNutrients": {
+      "calories": 23.0,
+      "carbs": 4.8,
+      "total_fat": 0,
+      "trans_fat": 0.0,
+      "sat_fat": 0.068,
+      "protein": 0.4,
+      "sodium": 3.0,
+      "chloesterol": 0.0,
+      "fiber": 0.3,
+      "sugars": 4.5
+    },
+    "image": ""
+  }
+}
