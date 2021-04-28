@@ -114,15 +114,49 @@ def generate_name(name):
 
 
 
+# Mapping tree
+def toDict(L):
+    if(L==[]):
+        return {}
+    head = L.pop()
+    return {head:toDict(L)}
 
-        
+def mapToJSON(L,D):
+    if(L==[]):
+        return D
+    head = L.pop()
+    if(head in D):
+        D.update({head:mapToJSON(L,D[head])})
+    else:
+        D.update({head:toDict(L)})
+    return D
 
-generate_food_list()
+def makeTree(file):
+    with open(file,'r') as file:
+        data = file.readlines()[2:3]
+        tree = {}
+        for i in data:
+            i = i.lower()
+            i = i.rstrip("\n")
+            i=i.replace(", ",",")
+            if("(" in i):
+                i = re.sub(r'\([^)]*\)', '',i)
+            print(i)    
+            # i = i.replace(", ",",")
+            # split = i.split(',')   
+            # print(split)
+                   
+        #     tree = mapToJSON(split[::-1],tree)
+        # print(json.dumps(tree,indent=2))
 
 
 
+def getCategoryTree():
+    with open("new_foods.json","r") as jsonFile:
+        data = json.load(jsonFile)
+        for i in data:
+            print(data[i]["fullName"])
 
 
-
-
-
+#getCategoryTree()
+makeTree("categoryTree")

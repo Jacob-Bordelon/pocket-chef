@@ -8,57 +8,22 @@
     android:id="@+id/addItem"
     tools:context=".Pantry_utils.AddItemsToPantry">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/expanded_menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <TextView
-            android:id="@+id/signal_lbl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Status:"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/signal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:textSize="18sp"
-            android:layout_marginStart="1dp"
-            android:text="Checking Connection"
-            app:layout_constraintStart_toEndOf="@+id/signal_lbl"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <SearchView
-        android:id="@+id/searchView3"
+        android:id="@+id/searchbar"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/filter_search_menu"
         android:clickable="true"
+        android:elevation="10dp"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:iconifiedByDefault="false"
-        android:layout_marginStart="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/camerabtn"
         app:layout_constraintBottom_toBottomOf="@+id/camerabtn"
+        app:layout_constraintEnd_toStartOf="@+id/camerabtn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expanded_menu"
-        android:background="@drawable/filter_search_menu"
-        android:elevation="10dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/camerabtn"
@@ -71,29 +36,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:focusable="true" />
 
-
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroup"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView3" />
+        app:layout_constraintTop_toBottomOf="@+id/searchbar">
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chipGroup" />
 
-    <androidx.recyclerview.widget.RecyclerView
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    <!--<androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -101,7 +61,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintTop_toBottomOf="@+id/divider" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
