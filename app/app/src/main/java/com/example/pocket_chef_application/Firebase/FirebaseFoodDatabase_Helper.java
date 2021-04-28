@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pocket_chef_application.MainActivity;
 import com.example.pocket_chef_application.Model.Food;
 import com.example.pocket_chef_application.Pantry;
 import com.example.pocket_chef_application.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +36,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -41,10 +47,11 @@ public class FirebaseFoodDatabase_Helper {
     private static final String TAG = "FirebaseFoodDatabase_Helper";
     public FirebaseDatabase mDatabase;
     public static String DEFAULT_PAGE_INDEX = "325871";
-    private static DatabaseReference mReference;
+    private static DatabaseReference mReference, mCategores, mNames;
     private Context context;
     private RecyclerView recyclerView;
     private static List<Food> foodList;
+    private HashMap<String,String> names;
     public String gotoNextPage = "";
     public FoodItemView adapter;
     private int limitAmount = 10;
@@ -59,10 +66,20 @@ public class FirebaseFoodDatabase_Helper {
         void returnData(List<Food> foods);
     }
 
+    public interface StringContainer{
+        void returnData(HashMap<String,String> names);
+    }
+
+    public interface DirectData{
+        void returnData(Food food);
+    }
+
     public FirebaseFoodDatabase_Helper() {
 
-        mDatabase = FirebaseDatabase.getInstance();
-        mReference = mDatabase.getReference("food");
+        mDatabase = MainActivity.fooddb;
+        mReference = mDatabase.getReference("items");
+        mCategores = mDatabase.getReference("categories");
+        mNames = mDatabase.getReference("search_names");
         foodList =  new ArrayList<>();
         listener=voidListener();
 
@@ -86,6 +103,7 @@ public class FirebaseFoodDatabase_Helper {
         };
     }
 
+    //TODO - incorporate trie into this function
     public void searchFor(String queryText, final Container container){
         mReference.removeEventListener(listener);
         listener = new ValueEventListener() {
@@ -141,18 +159,18 @@ public class FirebaseFoodDatabase_Helper {
                 .addListenerForSingleValueEvent(listener);
     }
 
-    public void readFood(final Container data){
-        mReference.removeEventListener(listener);
+    public void readFood(final StringContainer data){
+        mNames.removeEventListener(listener);
         listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                foodList.clear();
+                names.clear();
                 for(DataSnapshot keyNode : snapshot.getChildren()){
-                    Food food = keyNode.getValue(Food.class);
-                    foodList.add(food);
+                    String value = keyNode.getValue(String.class);
+                    names.put(keyNode.getKey(),value);
                 }
 
-                data.returnData(foodList);
+                data.returnData(names);
 
             }
 
@@ -161,10 +179,15 @@ public class FirebaseFoodDatabase_Helper {
 
             }
         };
-        mReference
-                .orderByKey()
-                .addListenerForSingleValueEvent(listener);
+        mNames.orderByKey().addListenerForSingleValueEvent(listener);
     }
+
+    public void getFoodItem(String food, final DirectData data){
+        Task<DataSnapshot> snap = mReference.child(food).get();
+        snap.addOnSuccessListener(dataSnapshot -> data.returnData(dataSnapshot.getValue(Food.class)));
+
+    }
+
 
     public void defaultPage(){
         paginate(DEFAULT_PAGE_INDEX, (foods, nextPage) -> {
@@ -252,6 +275,8 @@ public class FirebaseFoodDatabase_Helper {
         public int getItemCount() {
             return items.size();
         }
+
+
 
 
 

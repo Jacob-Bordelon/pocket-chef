@@ -51,39 +51,27 @@ exports.checkFlags = functions.database
     .ref("bufferLayer/{recipeId}")
     .onUpdate(async (change) => {
       const data = change.after.val();
-      const before = change.before;
-      const after = change.after;
-
-      if(data){
-        if(!data.image_status){
-            if(data.image == "" || data.image == "none") {
-                data.image_status=-1;
-            } 
-            
-        }
-
-        if(data.image_status == 0 && data.text_status == 0){
-            console.log("send to recipeBook")
-        }
-
-        if(data.image_status > 0 || data.text_status > 0){
-            console.log("send to review layer")
-        }
-
-
+      if(data.image == "none"){
+        image_status = 0;
       }
-      return null;
-      
+
+      text_status = checkText(data);
+
+      if(image_status == 0 && text_status == 0){
+            data.text_status = null;
+            data.image_status = null;
+            data.status = 0;
+            return admin.database().ref("recipeBook").child(data.id).set(data)
+            .then(() => change.after.ref.set(null));
+      }else{
+            data.status = 1;
+            return admin.database().ref("reviewLayer").child(data.id).set(data)
+            .then(() => change.after.ref.set(null));
+      }
     });
 
-            // data.text_status = null;
-            // data.image_status = null;
-            // data.status = 0;
-            // return admin.database().ref("recipeBook").child(data.id).set(data)
-            // .then(() => change.after.ref.set(null));
-            // data.status = 1;
-            // return admin.database().ref("reviewLayer").child(data.id).set(data)
-            // .then(() => change.after.ref.set(null));
+
+
 
 exports.recipeReported = functions.database
     .ref("recipeBook/{recipeId}")
@@ -141,13 +129,7 @@ exports.recipeReviewed = functions.database
  const badWordsFilter = new Filter();
  
  // Moderates messages by lowering all uppercase messages and removing swearwords.
- exports.moderateText = functions.database.ref('bufferLayer/{recipeId}')
-   .onCreate((snap) => {
-   const message = snap.val();
- 
-   if (message) {
- 
- 
+function checkText(message){
      const mod_dec = moderateMessage(message.description) !== message.description;
      const mod_title = moderateMessage(message.title) !== message.title;
  
@@ -162,19 +144,11 @@ exports.recipeReviewed = functions.database
      } 
  
      if(mod_dec || mod_title || mod_steps){
-       return snap.ref.update({
-         text_status : 1
-       });
+       return 1;
      }
  
-     return snap.ref.update({
-       text_status : 0
-     });
-     
-   }
- 
-   return null;
- });
+     return 0;
+ };
  
  // Moderates the given message if appropriate.
  function moderateMessage(message) {
@@ -236,12 +210,7 @@ const BLURRED_FOLDER = 'blurred';
  * API and if it is we blur it using ImageMagick.
  */
 exports.moderateImages = functions.storage.object().onFinalize(async (object) => {
-  // Ignore things we've already blurred
-  if (object.name.startsWith(`${BLURRED_FOLDER}/`)) {
-    functions.logger.log(`Ignoring upload "${object.name}" because it was already blurred.`);
-    return null;
-  }
-  
+
   // Check the image content using the Cloud Vision API.
   const visionClient = new vision.ImageAnnotatorClient();
   const data = await visionClient.safeSearchDetection(

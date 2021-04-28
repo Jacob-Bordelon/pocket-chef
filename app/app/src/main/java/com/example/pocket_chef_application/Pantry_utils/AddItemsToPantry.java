@@ -51,7 +51,7 @@ public class AddItemsToPantry extends Fragment {
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.item_list);
         camerabtn  = (ImageButton) view.findViewById(R.id.camerabtn);
-        searchView = (SearchView) view.findViewById(R.id.searchView3);
+        searchView = (SearchView) view.findViewById(R.id.searchbar);
 
         helper = new FirebaseFoodDatabase_Helper();
         helper.setConfig(mRecyclerView,getContext());

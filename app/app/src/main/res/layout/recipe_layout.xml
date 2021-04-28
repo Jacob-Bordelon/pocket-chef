@@ -10,6 +10,7 @@
     android:layout_marginTop="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
+    android:animateLayoutChanges="true"
     android:background="@drawable/recipe_card_background"
     app:cardElevation="5dp">
 
@@ -135,27 +136,24 @@
                 android:id="@+id/rec_desc"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginEnd="10dp"
-                android:padding="2dp"
                 android:background="@drawable/recipe_info_boarder"
+                android:padding="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/time_container"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/desc_label" />
 
-
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/time_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/recipe_info_boarder"
-                app:layout_constraintEnd_toEndOf="@+id/button2"
-                app:layout_constraintStart_toStartOf="@+id/button2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <!--Time Labels -->
@@ -225,9 +223,9 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
                     android:gravity="end"
                     android:textSize="10sp"
-                    android:layout_marginEnd="2dp"
                     app:layout_constraintBottom_toBottomOf="@+id/rec_totalLabel"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/rec_totalLabel"
@@ -235,81 +233,47 @@
                     tools:ignore="SmallSp" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/recipe_info_boarder"
-                app:layout_constraintEnd_toEndOf="@+id/button2"
-                app:layout_constraintStart_toStartOf="@+id/button2"
-                app:layout_constraintTop_toBottomOf="@id/time_container">
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="@+id/rec_desc"
+                app:layout_constraintEnd_toEndOf="@+id/time_container"
+                app:layout_constraintStart_toStartOf="@+id/time_container"
+                app:layout_constraintTop_toBottomOf="@+id/time_container">
+
+                <ImageButton
+                    android:id="@+id/report"
+                    android:background="@drawable/ic_baseline_report_24"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_weight="1"/>
+
+                <ImageButton
+                    android:id="@+id/like"
+                    android:background="@drawable/ic_baseline_thumb_up_24"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_weight="1"/>
+
+                <ImageButton
+                    android:id="@+id/make"
+                    android:background="@drawable/ic_baseline_arrow_forward_24"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_weight="1"/>
 
 
-                <!--Nutrition Labels-->
-                <TextView
-                    android:id="@+id/rec_servLabel"
-                    style="@style/RecipeLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="2dp"
-                    android:text="Serving Size:"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/rec_calLabel"
-                    style="@style/RecipeLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="2dp"
-                    android:text="Cal per serving:"
-                    android:textSize="8sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rec_servLabel" />
-
-                <!--Nutrition Values-->
-                <TextView
-                    android:id="@+id/rec_servingSize"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="2dp"
-                    android:gravity="end"
-                    android:textSize="10sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/rec_servLabel"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/rec_servLabel"
-                    app:layout_constraintTop_toTopOf="@+id/rec_servLabel"
-                    tools:ignore="SmallSp" />
-
-                <TextView
-                    android:id="@+id/rec_calperServ"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="2dp"
-                    android:gravity="end"
-                    android:textSize="8sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/rec_calLabel"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/rec_calLabel"
-                    app:layout_constraintTop_toTopOf="@+id/rec_calLabel"
-                    tools:ignore="SmallSp" />
+            </LinearLayout>
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="Make Me"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -7,11 +7,16 @@ import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -20,6 +25,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pocket_chef_application.Firebase.FirebaseRecipeDatabase_Helper;
+import com.example.pocket_chef_application.MainActivity;
 import com.example.pocket_chef_application.Model.Ingredient;
 import com.example.pocket_chef_application.Model.Recipe;
 import com.example.pocket_chef_application.R;
@@ -59,6 +66,7 @@ public class RecipeAdapter {
         private CardView cardView;
         private RatingBar ratingBar;
         private ChipGroup filterView;
+        private ImageButton report;
 
         public RecipeItemView(ViewGroup parent){
             super(LayoutInflater.from(context).inflate(R.layout.recipe_layout, parent, false));
@@ -76,13 +84,14 @@ public class RecipeAdapter {
             ratingBar = (RatingBar) itemView.findViewById(R.id.rec_rating);
             filterView = (ChipGroup) itemView.findViewById(R.id.filterChipGroup);
             imageView = (ImageView) itemView.findViewById(R.id.rec_img);
+            report = (ImageButton) itemView.findViewById(R.id.report);
 
             itemView.setOnClickListener(this);
 
         }
 
         // using the same names from the constructor, set the values per each unique item here
-        @SuppressLint("SetTextI18n")
+        @SuppressLint({"SetTextI18n", "NonConstantResourceId"})
         public void bind(Recipe recipe){
             Log.d(TAG, "bind: "+recipe.getTitle());
             titleView.setText(recipe.getTitle());
@@ -105,7 +114,27 @@ public class RecipeAdapter {
             } else{
                 imageView.setImageResource(R.drawable.no_image_found);
             }
+
+            report.setOnClickListener(v -> {
+                PopupMenu popupMenu = new PopupMenu(context, itemView);
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()){
+                        case R.id.elicit_image:
+                        case R.id.elicit_text:
+                        case R.id.irrelevant:
+                            FirebaseRecipeDatabase_Helper.reportRecipe(recipe);
+                            return true;
+                        default:
+                            return false;
+                    }
+                });
+                MenuInflater inflater = popupMenu.getMenuInflater();
+                inflater.inflate(R.menu.report_menu, popupMenu.getMenu());
+                popupMenu.show();
+            });
         }
+
+
 
 
         private void addChips(List<Ingredient> ingredients){
@@ -130,6 +159,7 @@ public class RecipeAdapter {
             }
             TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
         }
+
     }
 
 

@@ -33,7 +33,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
-    public static FirebaseDatabase realtimedb = FirebaseDatabase.getInstance();
+    public static FirebaseDatabase realtimedb = FirebaseDatabase.getInstance("https://pocketchef-be978-default-rtdb.firebaseio.com/");
+    public static FirebaseDatabase fooddb = FirebaseDatabase.getInstance("https://pocketchef-be978-food-rtdb.firebaseio.com/");
     public static final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     public static final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     private BottomNavigationView bottomNavigationView;

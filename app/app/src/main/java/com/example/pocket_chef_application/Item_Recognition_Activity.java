@@ -60,11 +60,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
+import java.util.stream.Collectors;
 
 
 public class Item_Recognition_Activity extends AppCompatActivity {
@@ -77,8 +78,10 @@ public class Item_Recognition_Activity extends AppCompatActivity {
     private Button scan_button;
     private ExecutorService cameraExecutor;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+    private FirebaseFoodDatabase_Helper helper = new FirebaseFoodDatabase_Helper();
     private ProcessCameraProvider cameraProvider;
     private List<Food> foodList;
+    private HashMap<String,String> namesMap;
     private DatePickerDialog expdate;
 
     private Dialog mDialog2;
@@ -234,59 +237,105 @@ public class Item_Recognition_Activity extends AppCompatActivity {
                                     mDialog.setContentView(R.layout.pantry_imgrec_dialog);
                                     LinearLayout ll = (LinearLayout)mDialog.findViewById(R.id.btn_layout);
 
-
                                     int highest = 0;
-                                    List<Food> matches =  new ArrayList<>();
-                                    for(int i = 0; i<obj.getLabels().size(); i++) {
-                                        String currOption = obj.getLabels().get(i).getText();
-
-                                        int indexOfDash = currOption.indexOf("-");
+                                    List<String> labels = obj.getLabels().stream().map(p->p.getText().toString()).collect(Collectors.toList());
+                                    List<String> matches =  new ArrayList<>();
+                                    for(String label:labels){
+                                        Log.d(TAG, "analyze: "+label);
+                                        int indexOfDash = label.indexOf("-");
                                         if (indexOfDash != -1) {
-                                            currOption = currOption.substring(0, indexOfDash - 1).replace(",", "");
+                                            label = label.substring(0, indexOfDash - 1).replace(",", "");
                                         }
 
-                                        String[] keywords = currOption.split(" ");
+                                        String[] keywords = label.split(" ");
+                                        for(String key : namesMap.keySet()){
+                                            int iTemp = searchWords(keywords, key);
 
-                                        for (Food food : foodList) {
-                                            int iTemp = searchWords(keywords, food.getName());
                                             if (highest < iTemp) {
                                                 highest = iTemp;
                                                 matches.clear();
-                                                matches.add(food);
-                                            } else if (highest == iTemp) {
-                                                if(!matches.contains(food)){
-                                                    matches.add(food);
-                                                }
+                                                matches.add(key);
+                                            } else if (highest == iTemp && !matches.contains(key)) {
+                                                matches.add(key);
                                             }
                                         }
-                                    }
 
-                                    if(highest > 0) {
-                                        for (int i = 0; i<matches.size(); i++) {
-                                            Button currentButton = new Button(mDialog.getContext());
-                                            currentButton.setTextColor(Color.WHITE);
-                                            currentButton.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
-                                            currentButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-                                            currentButton.setText(matches.get(i).getName());
-                                            ll.addView(currentButton);
+                                        if(highest > 0) {
+                                            for(String match : matches){
+                                                Button currentButton = new Button(mDialog.getContext());
+                                                currentButton.setTextColor(Color.WHITE);
+                                                currentButton.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
+                                                currentButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+                                                currentButton.setText(namesMap.get(match));
+                                                ll.addView(currentButton);
 
-                                            int finalI = i;
-                                            currentButton.setOnClickListener(v -> {
-                                                EditOperation(matches.get(finalI));
-                                                objectDetector.close();
-                                            });
+                                                currentButton.setOnClickListener(v -> {
+
+                                                    helper.getFoodItem(namesMap.get(match), Item_Recognition_Activity.this::EditOperation);
+
+                                                    objectDetector.close();
+                                                });
+                                            }
+
+                                            mDialog.findViewById(R.id.closebtn).setOnClickListener(v -> mDialog.dismiss());
+                                            mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                            mDialog.show();
+                                            }
+
                                         }
 
-                                        mDialog.findViewById(R.id.closebtn).setOnClickListener(v -> mDialog.dismiss());
-                                        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                        mDialog.show();
 
                                     }
 
+//                                    List<String> matches =  new ArrayList<>();
+//                                    for(int i = 0; i<obj.getLabels().size(); i++) {
+//                                        String currOption = obj.getLabels().get(i).getText();
+//
+//                                        int indexOfDash = currOption.indexOf("-");
+//                                        if (indexOfDash != -1) {
+//                                            currOption = currOption.substring(0, indexOfDash - 1).replace(",", "");
+//                                        }
+//
+//                                        String[] keywords = currOption.split(" ");
+//
+//                                        for (String key:namesMap.keySet()) {
+//                                            int iTemp = searchWords(keywords, key);
+//
+//                                            if (highest < iTemp) {
+//                                                highest = iTemp;
+//                                                matches.clear();
+//                                                matches.add(key);
+//                                            } else if (highest == iTemp) {
+//                                                if(!matches.contains(food)){
+//                                                    matches.add(food);
+//                                                }
+//                                            }
+//                                        }
+//                                    }
 
-
+//                                    if(highest > 0) {
+//                                        for (int i = 0; i<matches.size(); i++) {
+//                                            Button currentButton = new Button(mDialog.getContext());
+//                                            currentButton.setTextColor(Color.WHITE);
+//                                            currentButton.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
+//                                            currentButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+//                                            currentButton.setText(matches.get(i).getName());
+//                                            ll.addView(currentButton);
+//
+//                                            int finalI = i;
+//                                            currentButton.setOnClickListener(v -> {
+//                                                EditOperation(matches.get(finalI));
+//                                                objectDetector.close();
+//                                            });
+//                                        }
+//
+//                                        mDialog.findViewById(R.id.closebtn).setOnClickListener(v -> mDialog.dismiss());
+//                                        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                                        mDialog.show();
+//
+//
                                 }
-                            }
+
                         })
                         .addOnCompleteListener(task -> imageProxy.close());
 
@@ -400,8 +449,7 @@ public class Item_Recognition_Activity extends AppCompatActivity {
     }
 
     public void fetchFood() {
-        FirebaseFoodDatabase_Helper helper = new FirebaseFoodDatabase_Helper();
-        helper.readFood(foods -> foodList = foods);
+        helper.readFood(names -> namesMap=names);
 
 
     }
