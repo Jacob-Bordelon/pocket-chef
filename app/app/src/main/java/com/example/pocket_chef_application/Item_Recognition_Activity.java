@@ -1,25 +1,10 @@
 package com.example.pocket_chef_application;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageAnalysis;
-import androidx.camera.core.ImageCapture;
-import androidx.camera.core.ImageProxy;
-import androidx.camera.core.Preview;
-import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.camera.view.PreviewView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -29,7 +14,6 @@ import android.util.Log;
 import android.util.Size;
 import android.util.TypedValue;
 import android.view.OrientationEventListener;
-import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -38,10 +22,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageAnalysis;
+import androidx.camera.core.ImageProxy;
+import androidx.camera.core.Preview;
+import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.camera.view.PreviewView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.example.pocket_chef_application.Firebase.FirebaseFoodDatabase_Helper;
 import com.example.pocket_chef_application.Model.Food;
-import com.example.pocket_chef_application.Pantry_utils.AddItemsToPantry;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.mlkit.common.model.LocalModel;
 import com.google.mlkit.vision.common.InputImage;
@@ -51,13 +45,10 @@ import com.google.mlkit.vision.objects.ObjectDetector;
 import com.google.mlkit.vision.objects.custom.CustomObjectDetectorOptions;
 import com.squareup.picasso.Picasso;
 
-
 import org.ahocorasick.trie.Emit;
 import org.ahocorasick.trie.Trie;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
@@ -213,7 +204,7 @@ public class Item_Recognition_Activity extends AppCompatActivity {
                     .setDetectorMode(CustomObjectDetectorOptions.STREAM_MODE)
                     .enableClassification()
                     .setClassificationConfidenceThreshold(0.7f)
-                    .setMaxPerObjectLabelCount(5)
+                    .setMaxPerObjectLabelCount(3)
                     .build();
 
             objectDetector = ObjectDetection.getClient(customObjectDetectorOptions);
@@ -237,7 +228,7 @@ public class Item_Recognition_Activity extends AppCompatActivity {
                                     mDialog.setContentView(R.layout.pantry_imgrec_dialog);
                                     LinearLayout ll = (LinearLayout)mDialog.findViewById(R.id.btn_layout);
 
-                                    int highest = 0;
+                                    int highestOccurrence = 0;
                                     List<String> labels = obj.getLabels().stream().map(p->p.getText().toString()).collect(Collectors.toList());
                                     List<String> matches =  new ArrayList<>();
                                     for(String label:labels){
@@ -249,92 +240,42 @@ public class Item_Recognition_Activity extends AppCompatActivity {
 
                                         String[] keywords = label.split(" ");
                                         for(String key : namesMap.keySet()){
-                                            int iTemp = searchWords(keywords, key);
+                                            int occurrences = searchWords(keywords, key);
 
-                                            if (highest < iTemp) {
-                                                highest = iTemp;
+                                            if (highestOccurrence < occurrences) {
+                                                highestOccurrence = occurrences;
                                                 matches.clear();
                                                 matches.add(key);
-                                            } else if (highest == iTemp && !matches.contains(key)) {
+                                                Log.d(TAG, "key: "+key+" Occurrences: "+occurrences+" sizeOfList: "+matches.size());
+                                            } else if (highestOccurrence == occurrences && highestOccurrence != 0 && !matches.contains(key)) {
                                                 matches.add(key);
+                                                Log.d(TAG, "ADDED key: "+key+" Occurrences: "+occurrences+" sizeOfList: "+matches.size());
                                             }
                                         }
-
-                                        if(highest > 0) {
-                                            for(String match : matches){
-                                                Button currentButton = new Button(mDialog.getContext());
-                                                currentButton.setTextColor(Color.WHITE);
-                                                currentButton.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
-                                                currentButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-                                                currentButton.setText(namesMap.get(match));
-                                                ll.addView(currentButton);
-
-                                                currentButton.setOnClickListener(v -> {
-
-                                                    helper.getFoodItem(namesMap.get(match), Item_Recognition_Activity.this::EditOperation);
-
-                                                    objectDetector.close();
-                                                });
-                                            }
-
-                                            mDialog.findViewById(R.id.closebtn).setOnClickListener(v -> mDialog.dismiss());
-                                            mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                            mDialog.show();
-                                            }
-
-                                        }
-
-
                                     }
 
-//                                    List<String> matches =  new ArrayList<>();
-//                                    for(int i = 0; i<obj.getLabels().size(); i++) {
-//                                        String currOption = obj.getLabels().get(i).getText();
-//
-//                                        int indexOfDash = currOption.indexOf("-");
-//                                        if (indexOfDash != -1) {
-//                                            currOption = currOption.substring(0, indexOfDash - 1).replace(",", "");
-//                                        }
-//
-//                                        String[] keywords = currOption.split(" ");
-//
-//                                        for (String key:namesMap.keySet()) {
-//                                            int iTemp = searchWords(keywords, key);
-//
-//                                            if (highest < iTemp) {
-//                                                highest = iTemp;
-//                                                matches.clear();
-//                                                matches.add(key);
-//                                            } else if (highest == iTemp) {
-//                                                if(!matches.contains(food)){
-//                                                    matches.add(food);
-//                                                }
-//                                            }
-//                                        }
-//                                    }
+                                    for(String match : matches){
+                                        Log.d(TAG, "CREATING button for: "+match+" sizeOfList: "+matches.size());
+                                        Button currentButton = new Button(mDialog.getContext());
+                                        currentButton.setTextColor(Color.WHITE);
+                                        currentButton.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
+                                        currentButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+                                        currentButton.setText(match);
+                                        ll.addView(currentButton);
 
-//                                    if(highest > 0) {
-//                                        for (int i = 0; i<matches.size(); i++) {
-//                                            Button currentButton = new Button(mDialog.getContext());
-//                                            currentButton.setTextColor(Color.WHITE);
-//                                            currentButton.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
-//                                            currentButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-//                                            currentButton.setText(matches.get(i).getName());
-//                                            ll.addView(currentButton);
-//
-//                                            int finalI = i;
-//                                            currentButton.setOnClickListener(v -> {
-//                                                EditOperation(matches.get(finalI));
-//                                                objectDetector.close();
-//                                            });
-//                                        }
-//
-//                                        mDialog.findViewById(R.id.closebtn).setOnClickListener(v -> mDialog.dismiss());
-//                                        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                                        mDialog.show();
-//
-//
+                                        currentButton.setOnClickListener(v -> {
+
+                                            helper.getFoodItem(namesMap.get(match), Item_Recognition_Activity.this::EditOperation);
+
+                                            objectDetector.close();
+                                        });
+                                    }
+
+                                    mDialog.findViewById(R.id.closebtn).setOnClickListener(v -> mDialog.dismiss());
+                                    mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    mDialog.show();
                                 }
+                            }
 
                         })
                         .addOnCompleteListener(task -> imageProxy.close());
@@ -442,7 +383,7 @@ public class Item_Recognition_Activity extends AppCompatActivity {
 
     public int searchWords(String[] keywords, String lin2) {
 
-        Trie trie = Trie.builder().ignoreCase().addKeywords(keywords).build();
+        Trie trie = Trie.builder().ignoreCase().addKeywords(keywords).onlyWholeWords().build();
         Collection<Emit> emits = trie.parseText(lin2);
 
         return emits.size();
