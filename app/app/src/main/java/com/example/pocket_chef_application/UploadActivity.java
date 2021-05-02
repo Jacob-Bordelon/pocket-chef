@@ -230,9 +230,6 @@ public class UploadActivity extends Activity implements View.OnClickListener {
 
     }
 
-
-
-
     private HashMap<String,Ingredient> getAllIngredients(){
 
         HashMap<String,Ingredient> returnVal = new HashMap<>();
