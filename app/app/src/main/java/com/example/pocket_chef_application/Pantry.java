@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocket_chef_application.Firebase.FirebaseFoodDatabase_Helper;
 import com.example.pocket_chef_application.Model.Food;
-import com.example.pocket_chef_application.Pantry_utils.AddItemsToPantry;
 import com.example.pocket_chef_application.Pantry_utils.Pantry_Adapter;
 import com.example.pocket_chef_application.Pantry_utils.Pantry_Item;
 import com.example.pocket_chef_application.data.DBItem;
@@ -117,12 +116,8 @@ public class Pantry extends Fragment {
         });
 
         expand_menu_btn.setOnClickListener(v -> {
-            AddItemsToPantry nextFrag= new AddItemsToPantry();
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(getId(), nextFrag, "findThisFragment")
-                    .addToBackStack(null)
-                    .commit();
-            Log.d(TAG, "switch_fragment: "+nextFrag.getClass().getName());
+            Intent i = new Intent(this.getContext(), Item_Recognition_Activity.class);
+            startActivity(i);
         });
 
         searchView.clearFocus();
