@@ -73,6 +73,7 @@ public class FirebaseRecipeDatabase_Helper {
     public FirebaseRecipeDatabase_Helper(RecyclerView recyclerView, Context context) {
         mDatabase = MainActivity.realtimedb;
         mReference = mDatabase.getReference("recipeBook/");
+        Log.d(TAG, "FirebaseRecipeDatabase_Helper: "+mReference);
         listener = nullValueEventListener();
         this.context = context;
         this.recyclerView = recyclerView;
@@ -124,6 +125,7 @@ public class FirebaseRecipeDatabase_Helper {
                 for(DataSnapshot keyNode : snapshot.getChildren()){
                     Recipe recipe = keyNode.getValue(Recipe.class);
                     recipes.add(recipe);
+                    Log.d(TAG, "onDataChange: "+recipe.getTitle());
                 }
 
 

@@ -1,24 +1,17 @@
 package com.example.pocket_chef_application;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import com.example.pocket_chef_application.GroceryList.GroceryList;
-import com.example.pocket_chef_application.Pantry_utils.AddItemsToPantry;
+import com.example.pocket_chef_application.Pantry_utils.SearchFoodDB;
 import com.example.pocket_chef_application.util.MasterPageAdapter;
 import com.example.pocket_chef_application.util.ProfilesPage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.example.pocket_chef_application.util.LogIn;
 import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.NonNull;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public static FirebaseDatabase realtimedb = FirebaseDatabase.getInstance("https://pocketchef-be978-default-rtdb.firebaseio.com/");
     public static FirebaseDatabase fooddb = FirebaseDatabase.getInstance("https://pocketchef-be978-food-rtdb.firebaseio.com/");
     public static final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    public static final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+    public static final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance("gs://pocketchef-be978-recipes");
     private BottomNavigationView bottomNavigationView;
     private ViewPager viewPager;
     private int lastFragment;
@@ -48,13 +41,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
         viewPager = (ViewPager)findViewById(R.id.viewpager);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
 
 
 
         ArrayList<Fragment> fragmentsArray = new ArrayList<>();
-        fragmentsArray.add(new AddItemsToPantry());
+        fragmentsArray.add(new SearchFoodDB());
         fragmentsArray.add(new Generate_Recipes());
         fragmentsArray.add(new Pantry());
         fragmentsArray.add(new GroceryList());

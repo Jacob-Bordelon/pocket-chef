@@ -238,7 +238,9 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         HashMap<String,Ingredient> returnVal = new HashMap<>();
         for(int i = 0; i< ingredientsLayout.getChildCount(); i++){
             Pair<TextInputLayout, Ingredient> entry = getIngredientValues(ingredientsLayout.getChildAt(i));
-            helper.searchFor(entry.second.getName(), (FirebaseFoodDatabase_Helper.Container) foods -> {
+            returnVal.put("00001",entry.second);
+            /*returnVal.put(Integer.toString("00001",new Ingredient());*/
+            /*helper.searchFor(entry.second.getName(), (FirebaseFoodDatabase_Helper.Container) foods -> {
                 if(foods.size() < 1){
                     entry.first.setError("Value not recignized");
                 }else if(foods.size() == 1){
@@ -246,7 +248,7 @@ public class UploadActivity extends Activity implements View.OnClickListener {
                 }else{
                     Toast.makeText(this, "Multiple entries found", Toast.LENGTH_SHORT).show();
                 }
-            });
+            });*/
         }
         return returnVal;
     }
@@ -424,7 +426,7 @@ public class UploadActivity extends Activity implements View.OnClickListener {
             case R.id.uploadbtn:
                 String uniqueID = UUID.randomUUID().toString();
                 Recipe recipe = testRecipe(uniqueID);
-                //uploadImageToFirebase(uniqueID, recipe);
+                uploadImageToFirebase(uniqueID, recipe);
                 /*if(checkAllViews()){
                     Recipe recipe = testRecipe(uniqueID);
                     uploadImageToFirebase(uniqueID, recipe);
@@ -457,16 +459,26 @@ public class UploadActivity extends Activity implements View.OnClickListener {
             progressDialog.setTitle("Uploading Image...");
             progressDialog.show();
             String filePath = "/recipes/" + name +".jpg";
+
             StorageReference ref = storageReference.child(filePath);
             UploadTask uploadTask = ref.putFile(imageUri);
             uploadTask.addOnProgressListener(taskSnapshot -> {
                 double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                 progressDialog.setMessage("Uploaded " + (int)progress + "%");
             });
+
             uploadTask.addOnCompleteListener(UploadActivity.this, task -> {
                 progressDialog.dismiss();
-                Toast.makeText(UploadActivity.this, "Task has been completed", Toast.LENGTH_SHORT).show();
+                if(!task.isSuccessful()){
+                    Toast.makeText(UploadActivity.this, "Error Occurred during upload", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "uploadImageToFirebase: "+task.getException().toString());
+                }else{
+                    Toast.makeText(UploadActivity.this, "Image was successfully uploaded", Toast.LENGTH_SHORT).show();
+
+                }
             });
+
+
             Task<Uri> getDownloadUriTask = uploadTask.continueWithTask(task -> {
                 if(!task.isSuccessful()){
                     throw task.getException();
@@ -476,6 +488,7 @@ public class UploadActivity extends Activity implements View.OnClickListener {
             getDownloadUriTask.addOnCompleteListener(UploadActivity.this, task -> {
                 if (task.isSuccessful()) {
                     Uri downloadedUri = task.getResult();
+                    Log.d(TAG, "uploadImageToFirebase: "+downloadedUri.toString());
                     recipe.setImage(downloadedUri.toString());
                     uploadRecipeToFirebase(recipe);
                 }else{
