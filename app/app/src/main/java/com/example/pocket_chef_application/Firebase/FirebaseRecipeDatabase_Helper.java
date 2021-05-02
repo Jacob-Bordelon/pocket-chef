@@ -51,7 +51,7 @@ import static java.util.stream.Collectors.toSet;
 
 public class FirebaseRecipeDatabase_Helper {
     protected FirebaseDatabase mDatabase;
-    private DatabaseReference mReference;
+    private static DatabaseReference mReference;
     private List<Recipe> recipes = new ArrayList<>();
     private final String TAG = "FirebaseRecipeHelper";
     private ValueEventListener listener;
@@ -80,8 +80,10 @@ public class FirebaseRecipeDatabase_Helper {
     }
 
     public void populate(){
+        Log.d(TAG, "populate: ");
         readRecipes(recipes -> {
             adapter.setConfig(recyclerView, context, recipes);
+            Log.d(TAG, "populate: "+recipes.size());
             adapter.refresh();
         });
     }
@@ -124,6 +126,7 @@ public class FirebaseRecipeDatabase_Helper {
                     recipes.add(recipe);
                 }
 
+
                 dataStatus.DataIsLoaded(recipes);
             }
 
@@ -138,6 +141,10 @@ public class FirebaseRecipeDatabase_Helper {
                 .equalTo(0)
                 .limitToFirst(limitAmount)
                 .addValueEventListener(listener);
+    }
+
+    public static void reportRecipe(Recipe recipe){
+        mReference.child(recipe.getId()).child("status").setValue(1);
     }
 
     public void paginate(String page, final FirebaseRecipeDatabase_Helper.Data data){

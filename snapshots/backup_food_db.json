@@ -1,0 +1,301 @@
+{
+  "168201" : {
+    "fdcId" : 168201,
+    "foodNutrients" : {
+      "Carbohydrate, by difference" : {
+        "amount" : 14.1,
+        "unitName" : "G"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 59.0,
+        "unitName" : "KCAL"
+      },
+      "Protein" : {
+        "amount" : 0.27,
+        "unitName" : "G"
+      },
+      "Sodium, Na" : {
+        "amount" : 1.0,
+        "unitName" : "MG"
+      }
+    },
+    "fullName" : "Apples, raw, red delicious, with skin",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/fruits%2Fred_apple.jpg?alt=media&token=03b63a07-d1b8-4ea8-83a1-4b3bc37d3d46",
+    "name" : "Red delicious Apples"
+  },
+  "325871" : {
+    "fdcId" : 325871,
+    "foodNutrients" : {
+      "Carbohydrate, by difference" : {
+        "amount" : 49.2,
+        "unitName" : "G"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 270,
+        "unitName" : "KCAL"
+      },
+      "Protein" : {
+        "amount" : 9.43,
+        "unitName" : "G"
+      },
+      "Sodium, Na" : {
+        "amount" : 477,
+        "unitName" : "MG"
+      },
+      "Total fat (NLEA)" : {
+        "amount" : 3.45,
+        "unitName" : "G"
+      }
+    },
+    "fullName" : "Bread, white, commercially prepared",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/wheat%2Fmilk-bread.jpg?alt=media&token=f15afe25-9dd2-48bc-9a43-5f2c46bc378d",
+    "name" : "White Bread"
+  },
+  "331960" : {
+    "fdcId" : 331960,
+    "foodNutrients" : {
+      "Carbohydrate, by difference" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Cholesterol" : {
+        "amount" : 116,
+        "unitName" : "MG"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 166,
+        "unitName" : "KCAL"
+      },
+      "Protein" : {
+        "amount" : 32.1,
+        "unitName" : "G"
+      },
+      "Sodium, Na" : {
+        "amount" : 47.0,
+        "unitName" : "MG"
+      },
+      "Total fat (NLEA)" : {
+        "amount" : 3.05,
+        "unitName" : "G"
+      }
+    },
+    "fullName" : "Chicken, broiler or fryers, breast, skinless, boneless, meat only, cooked, braised",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/Meats%2Fchicken%20breast.jpg?alt=media&token=725203e3-61db-4ac3-8dae-798e8beae8b8",
+    "name" : "Chicken Breast"
+  },
+  "746763" : {
+    "fdcId" : 746763,
+    "foodNutrients" : {
+      "Carbohydrate, by difference" : {
+        "amount" : 0.0,
+        "unitName" : "G"
+      },
+      "Cholesterol" : {
+        "amount" : 80.0,
+        "unitName" : "MG"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 219,
+        "unitName" : "KCAL"
+      },
+      "Protein" : {
+        "amount" : 27.3,
+        "unitName" : "G"
+      },
+      "Sodium, Na" : {
+        "amount" : 67.0,
+        "unitName" : "MG"
+      },
+      "Total fat (NLEA)" : {
+        "amount" : 10.5,
+        "unitName" : "G"
+      }
+    },
+    "fullName" : "Beef, short loin, t-bone steak, bone-in, separable lean only, trimmed to 1 or 8\" fat, choice, cooked, grilled",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/Meats%2Fsteak.jpg?alt=media&token=c7635028-ba99-4274-b2e6-8628b71a556e",
+    "name" : "T-Bone Steak"
+  },
+  "746764" : {
+    "fdcId" : 746764,
+    "foodNutrients" : {
+      "Carbohydrate, by difference" : {
+        "amount" : 7.92,
+        "unitName" : "G"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 37.0,
+        "unitName" : "KCAL"
+      },
+      "Protein" : {
+        "amount" : 0.81,
+        "unitName" : "G"
+      },
+      "Sodium, Na" : {
+        "amount" : 66.0,
+        "unitName" : "MG"
+      },
+      "Total fat (NLEA)" : {
+        "amount" : 0.33,
+        "unitName" : "G"
+      }
+    },
+    "fullName" : "Carrots, frozen, unprepared",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/veggies%2Fcarrot.jpg?alt=media&token=867af1aa-2fa6-4a1e-b57b-9995f92982f5",
+    "name" : "Carrots (frozen)"
+  },
+  "747429" : {
+    "fdcId" : 747429,
+    "foodNutrients" : {
+      "Carbohydrate, by difference" : {
+        "amount" : 6.35,
+        "unitName" : "G"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 373,
+        "unitName" : "KCAL"
+      },
+      "Protein" : {
+        "amount" : 17.5,
+        "unitName" : "G"
+      },
+      "Sodium, Na" : {
+        "amount" : 1600.0,
+        "unitName" : "MG"
+      },
+      "Total fat (NLEA)" : {
+        "amount" : 26.6,
+        "unitName" : "G"
+      }
+    },
+    "fullName" : "Cheese, American, restaurant",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/dairy%2Fcheese.jpg?alt=media&token=b4d4c2a3-1d25-4937-9b74-48d497cbfb0b",
+    "name" : "American Cheese"
+  },
+  "747431" : {
+    "fdcId" : 747431,
+    "foodNutrients" : {
+      "Protein" : {
+        "amount" : 21.3,
+        "unitName" : "G"
+      }
+    },
+    "fullName" : "Beans, Dry, Red (0% moisture)",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/veggies%2Fred%20beans.jpg?alt=media&token=3b53e9ab-28c7-4b5e-a549-00d9c5305d07",
+    "name" : "Red Beans"
+  },
+  "747447" : {
+    "fdcId" : 747447,
+    "foodNutrients" : {
+      "Carbohydrate, by difference" : {
+        "amount" : 6.27,
+        "unitName" : "G"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 32.0,
+        "unitName" : "KCAL"
+      },
+      "Protein" : {
+        "amount" : 2.57,
+        "unitName" : "G"
+      },
+      "Sodium, Na" : {
+        "amount" : 36.0,
+        "unitName" : "MG"
+      },
+      "Total fat (NLEA)" : {
+        "amount" : 0.07,
+        "unitName" : "G"
+      }
+    },
+    "fullName" : "Broccoli, raw",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/veggies%2Fbroccoli.jpg?alt=media&token=5ca39289-6c16-46af-91c2-aff03d27e6d8",
+    "name" : "Broccoli"
+  },
+  "748967" : {
+    "fdcId" : 748967,
+    "foodNutrients" : {
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 372,
+        "unitName" : "KCAL"
+      }
+    },
+    "fullName" : "Eggs, Grade A, Large, egg whole",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/dairy%2Feggs%20whole.jpg?alt=media&token=48543439-82ba-4843-999f-31e2d9b08f9e",
+    "name" : "Eggs"
+  },
+  "790146" : {
+    "fdcId" : 790146,
+    "foodNutrients" : {
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 2,
+        "unitName" : "KCAL"
+      }
+    },
+    "fullName" : "Flour, bread, white, enriched, unbleached",
+    "name" : "Flour"
+  },
+  "790508" : {
+    "fdcId" : 790508,
+    "foodNutrients" : {
+      "Cholesterol" : {
+        "amount" : 235,
+        "unitName" : "MG"
+      },
+      "Sodium, Na" : {
+        "amount" : 524,
+        "unitName" : "MG"
+      },
+      "Total fat (NLEA)" : {
+        "amount" : 65.0,
+        "unitName" : "G"
+      }
+    },
+    "fullName" : "Butter, stick, salted",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/dairy%2Fbutter.jpg?alt=media&token=ddf0ed2c-1ec8-4000-b851-9b3dcb8517d8",
+    "name" : "Salted Butter"
+  },
+  "1105073" : {
+    "fdcId" : 1105073,
+    "foodNutrients" : {
+      "Carbohydrate, by difference" : {
+        "amount" : 20.1,
+        "unitName" : "G"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 77.0,
+        "unitName" : "KCAL"
+      },
+      "Protein" : {
+        "amount" : 0.73,
+        "unitName" : "G"
+      }
+    },
+    "fullName" : "Bananas, overripe, raw",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/fruits%2Fbanana.jpg?alt=media&token=12d092f0-baa6-491e-b0fb-4f31bc39b2d4",
+    "name" : "Banana"
+  },
+  "1105897" : {
+    "fdcId" : 1105897,
+    "foodNutrients" : {
+      "Carbohydrate, by difference" : {
+        "amount" : 15.7,
+        "unitName" : "G"
+      },
+      "Energy (Atwater Specific Factors)" : {
+        "amount" : 58.0,
+        "unitName" : "KCAL"
+      },
+      "Protein" : {
+        "amount" : 0.15,
+        "unitName" : "G"
+      },
+      "Sodium, Na" : {
+        "amount" : 1.0,
+        "unitName" : "MG"
+      }
+    },
+    "fullName" : "Apples, fuji, with skin, raw",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/pocketchef-9fb14.appspot.com/o/fruits%2Ffuji_apple.jpg?alt=media&token=7e3ae253-a96a-40d9-8087-4fe909794127",
+    "name" : "Fuji Apples"
+  }
+}

@@ -4,13 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,19 +15,25 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.pocket_chef_application.Firebase.FirebaseFoodDatabase_Helper;
 import com.example.pocket_chef_application.Model.Food;
 import com.example.pocket_chef_application.Pantry_utils.Pantry_Adapter;
 import com.example.pocket_chef_application.Pantry_utils.Pantry_Item;
-import com.example.pocket_chef_application.Pantry_utils.AddItemsToPantry;
 import com.example.pocket_chef_application.data.DBItem;
 import com.example.pocket_chef_application.data.LocalDB;
 
-
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Pantry extends Fragment {
+    private static final String TAG = Pantry.class.getSimpleName();
     private ImageButton  camerabtn, expand_menu_btn;
     private SearchView searchView;
     private TextView statusVal;
@@ -50,7 +49,6 @@ public class Pantry extends Fragment {
 
 
 
-    private final String TAG = "PANTRY";
     public static Pantry newInstance() {
         Pantry fragment = new Pantry();
         Bundle args = new Bundle();
@@ -116,6 +114,12 @@ public class Pantry extends Fragment {
                 return false;
             }
         });
+
+        expand_menu_btn.setOnClickListener(v -> {
+            Intent i = new Intent(this.getContext(), Item_Recognition_Activity.class);
+            startActivity(i);
+        });
+
         searchView.clearFocus();
     }
 
@@ -145,19 +149,12 @@ public class Pantry extends Fragment {
         mRecyclerview.setAdapter(Padapter);
     }
 
-    public static void AddItem(Food food, String exp_date, int amount){
+    public static void AddItem(Food food, Date exp_date, int amount){
         LocalDB db = LocalDB.getDBInstance(context);
         try {
-            DBItem item = new DBItem();
-
-            item.item_Name = food.getName().toLowerCase();
-            item.exp_date = exp_date.toLowerCase();
-            item.amount = amount;
-            item.item_id = Integer.toString(food.getFdcId());
-            item.image_url = food.getImage();
+            DBItem item = new DBItem(food, amount, exp_date);
             int position = pantry_items.size();
-
-            db.itemDAO().insertItem(item);
+            db.itemDAO().insert(item);
             pantry_items.add(position,new Pantry_Item(item));
             Padapter.notifyItemInserted(position);
 

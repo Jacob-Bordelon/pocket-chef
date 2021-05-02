@@ -21,22 +21,38 @@ const Filter = require('bad-words');
 const badWordsFilter = new Filter();
 
 // Moderates messages by lowering all uppercase messages and removing swearwords.
-exports.descriptionModerator = functions.database.ref('/recipeBook/{recipeId}/')
+exports.text_moderator = functions.database.ref('/bufferLayer/{recipeId}')
   .onWrite((change) => {
   const message = change.after.val();
 
-  if (message && !message.sanitized) {
+  if (message) {
 
-    // Run moderation checks on on the message and moderate if needed.
-    const moderatedDescription = moderateMessage(message.description);
-    
+
+    const mod_dec = moderateMessage(message.description) !== message.description;
+    const mod_title = moderateMessage(message.title) !== message.title;
+
+    var mod_steps = false;
+    console.log(mod_title);
+    const steps = Object.values(message.instructions);
+    for(const step of steps){
+      if(moderateMessage(step) !== step){
+        mod_steps = true;
+        break;
+      }
+    } 
+
+    if(mod_dec || mod_title || mod_steps){
+      return change.after.ref.update({
+        text_status : 1
+      });
+    }
+
     return change.after.ref.update({
-      description: moderatedDescription,
-      sanitized: true,
-      moderated: message.text !== moderatedDescription,
+      text_status : 0
     });
+    
   }
-  console.log("not checked"+message);
+
   return null;
 });
 

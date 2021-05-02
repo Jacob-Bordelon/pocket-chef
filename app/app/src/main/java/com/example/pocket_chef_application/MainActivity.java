@@ -1,12 +1,11 @@
 package com.example.pocket_chef_application;
 
-import android.app.Dialog;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import com.example.pocket_chef_application.GroceryList.GroceryList;
@@ -15,43 +14,33 @@ import com.example.pocket_chef_application.util.MasterPageAdapter;
 import com.example.pocket_chef_application.util.ProfilesPage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.pocket_chef_application.util.LogIn;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.NonNull;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.SearchView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
-    public static final FirebaseDatabase realtimedb = FirebaseDatabase.getInstance();
+    public static FirebaseDatabase realtimedb = FirebaseDatabase.getInstance("https://pocketchef-be978-default-rtdb.firebaseio.com/");
+    public static FirebaseDatabase fooddb = FirebaseDatabase.getInstance("https://pocketchef-be978-food-rtdb.firebaseio.com/");
+    public static final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    public static final FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     private BottomNavigationView bottomNavigationView;
     private ViewPager viewPager;
     private int lastFragment;
-    private Button logout;
-    private FirebaseAuth mFirebaseAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager = (ViewPager)findViewById(R.id.viewpager);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
-        mFirebaseAuth = FirebaseAuth.getInstance();
-
 
 
 
@@ -72,9 +59,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentsArray.add(new Pantry());
         fragmentsArray.add(new GroceryList());
         fragmentsArray.add(new ProfilesPage());
-
-
-
 
         MasterPageAdapter adapter = new MasterPageAdapter(getSupportFragmentManager(),fragmentsArray);
 
@@ -86,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
     }
 
-    private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+    private final ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -122,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private final BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @SuppressLint("NonConstantResourceId")
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
@@ -154,38 +138,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        /*FirebaseUser mFirebaseUser = firebaseAuth.getCurrentUser();
         if(mFirebaseUser!=null){
-            //logged in
             SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
             String check_value = preferences.getString("remember", "");
-            //check point for when the checkbox is true
-            if(check_value.equals("true")){
-                return;
-            }
-            //add check point for when the checkbox is false
-            else{
+            if(!check_value.equals("true")){
+                Log.d(TAG, "User signed out");
                 FirebaseAuth.getInstance().signOut();
             }
         }else{
-            //not logged in
+            Log.d(TAG, "User logged in");
             startActivity(new Intent(this, LogIn.class));
             finish();
-        }
+        }*/
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Log.d(TAG, "onBackPressed: ");
         viewPager.setCurrentItem(lastFragment);
     }
 
-    public void launchUpload(View v){
-        //launch a new activity for uploading
 
-        Intent i = new Intent(v.getContext(), UploadActivity.class);
-        startActivity(i);
-    }
+
+
 
 
 

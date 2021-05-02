@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/elicit_image"
+        android:icon="@drawable/ic_baseline_hide_image_24"
+        android:title="Inappropriate Image" />
+    <item android:id="@+id/elicit_text"
+        android:icon="@drawable/ic_baseline_language_24"
+        android:title="Inappropriate Language"
+        app:showAsAction="ifRoom" />
+    <item android:id="@+id/irrelevant"
+        android:icon="@drawable/ic_baseline_search_off_24"
+        android:title="Content is not relevant" />
+</menu>

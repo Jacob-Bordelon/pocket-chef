@@ -12,11 +12,7 @@ public class GroceryItem {
     public GroceryItem(String name, int amount) {
         this.name = name;
         this.amount = amount;
-        GLItem glItem = new GLItem();
-        glItem.item_Name = name;
-        glItem.amount = amount;
-        glItem.item_id = UUID.randomUUID().toString();
-        this.item = glItem;
+        this.item = new GLItem(name, amount);
     }
 
     public GroceryItem(GLItem item) {

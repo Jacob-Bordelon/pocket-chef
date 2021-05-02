@@ -5,45 +5,40 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pocket_chef_application.MainActivity;
 import com.example.pocket_chef_application.Model.Food;
-import com.example.pocket_chef_application.Model.Recipe;
 import com.example.pocket_chef_application.Pantry;
 import com.example.pocket_chef_application.R;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import org.ahocorasick.trie.Emit;
+import org.ahocorasick.trie.Trie;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toSet;
 
@@ -51,17 +46,15 @@ public class FirebaseFoodDatabase_Helper {
     private static final String TAG = "FirebaseFoodDatabase_Helper";
     public FirebaseDatabase mDatabase;
     public static String DEFAULT_PAGE_INDEX = "325871";
-    private static DatabaseReference mReference;
+    private static DatabaseReference mReference, mCategores, mNames;
     private Context context;
     private RecyclerView recyclerView;
-    private List<Food> foodList = new ArrayList<>();
+    private static List<Food> foodList;
+    private HashMap<String,String> names;
     public String gotoNextPage = "";
     public FoodItemView adapter;
     private int limitAmount = 10;
-    private ValueEventListener listener;
-
-    public static String key;
-
+    private static ValueEventListener listener;
 
 
     public interface Data{
@@ -72,10 +65,22 @@ public class FirebaseFoodDatabase_Helper {
         void returnData(List<Food> foods);
     }
 
+    public interface StringContainer{
+        void returnData(HashMap<String,String> names);
+    }
+
+    public interface DirectData{
+        void returnData(Food food);
+    }
+
     public FirebaseFoodDatabase_Helper() {
 
-        mDatabase = FirebaseDatabase.getInstance();
-        mReference = mDatabase.getReference("food");
+        mDatabase = MainActivity.fooddb;
+        mReference = mDatabase.getReference("items");
+        mCategores = mDatabase.getReference("categories");
+        mNames = mDatabase.getReference("search_names");
+        foodList =  new ArrayList<>();
+        names = new HashMap<>();
         listener=voidListener();
 
     }
@@ -98,7 +103,6 @@ public class FirebaseFoodDatabase_Helper {
         };
     }
 
-
     public void searchFor(String queryText, final Container container){
         mReference.removeEventListener(listener);
         listener = new ValueEventListener() {
@@ -107,7 +111,11 @@ public class FirebaseFoodDatabase_Helper {
                 foodList.clear();
                 for(DataSnapshot keyNode : snapshot.getChildren()){
                     Food food = keyNode.getValue(Food.class);
-                    foodList.add(food);
+                    String[] multipleKeywords = queryText.split(" ");
+                    int occurrences = searchWords(multipleKeywords,food.getName());
+                    if (occurrences >= multipleKeywords.length){
+                        foodList.add(food);
+                    }
                 }
                 container.returnData(foodList);
 
@@ -118,11 +126,14 @@ public class FirebaseFoodDatabase_Helper {
 
             }
         };
-        mReference.orderByChild("fullName")
-                .startAt(queryText)
-                .endAt(queryText+"\uf8ff")
-                .addListenerForSingleValueEvent(listener);
+        mReference.addListenerForSingleValueEvent(listener);
 
+    }
+
+    public int searchWords(String[] keywords, String lin2) {
+        Trie trie = Trie.builder().ignoreCase().addKeywords(keywords).build();
+        Collection<Emit> emits = trie.parseText(lin2);
+        return emits.size();
     }
 
     public void paginate(String i, final Data data){
@@ -154,19 +165,18 @@ public class FirebaseFoodDatabase_Helper {
                 .addListenerForSingleValueEvent(listener);
     }
 
-    public void readFood(final Container data){
+    public void readFood(final StringContainer data){
+        mNames.removeEventListener(listener);
         listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                foodList.clear();
-                String nextpage = "";
+                names.clear();
                 for(DataSnapshot keyNode : snapshot.getChildren()){
-                    Food food = keyNode.getValue(Food.class);
-                    foodList.add(food);
-                    nextpage = keyNode.getKey();
+                    int value = keyNode.getValue(Integer.class);
+                    names.put(keyNode.getKey(),Integer.toString(value));
                 }
 
-                data.returnData(foodList);
+                data.returnData(names);
 
             }
 
@@ -175,9 +185,13 @@ public class FirebaseFoodDatabase_Helper {
 
             }
         };
-        mReference
-                .orderByKey()
-                .addListenerForSingleValueEvent(listener);
+        mNames.orderByKey().addListenerForSingleValueEvent(listener);
+    }
+
+    public void getFoodItem(String food, final DirectData data){
+        Task<DataSnapshot> snap = mReference.child(food).get();
+        snap.addOnSuccessListener(dataSnapshot -> data.returnData(dataSnapshot.getValue(Food.class)));
+
     }
 
 
@@ -202,6 +216,7 @@ public class FirebaseFoodDatabase_Helper {
         adapter = new FoodItemView();
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
+
     }
 
     public int getAdapterSize(){
@@ -270,6 +285,8 @@ public class FirebaseFoodDatabase_Helper {
 
 
 
+
+
         class FoodItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             private TextView name;
 
@@ -304,6 +321,7 @@ public class FirebaseFoodDatabase_Helper {
                     String date = month1+"/"+dayOfMonth1+"/"+year1;
                     exp_preview.setText(date);
                     }, year, month, dayOfMonth);
+                expdate.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 
 
                 ImageView img = mDialog.findViewById(R.id.imageView);
@@ -319,9 +337,7 @@ public class FirebaseFoodDatabase_Helper {
 
                 submit.setOnClickListener(v -> {
                     DatePicker picker = expdate.getDatePicker();
-                    String experation = picker.getMonth()+"/"+picker.getDayOfMonth()+"/"+picker.getYear();
-                    Log.d(TAG, "showDialog: "+experation);
-                    Pantry.AddItem(food, experation, Integer.parseInt(amount.getText().toString()));
+                    Pantry.AddItem(food, getDateFromDatePicker(picker), Integer.parseInt(amount.getText().toString()));
                     Toast.makeText(context,"Item added to Pantry", Toast.LENGTH_LONG).show();
                     mDialog.dismiss();
                 });
@@ -335,8 +351,21 @@ public class FirebaseFoodDatabase_Helper {
 
             @Override
             public void onClick(View v) {
-                showDialog(items.get(getAdapterPosition()));
+                showDialog(items.get(getBindingAdapterPosition()));
             }
+
+
+        }
+
+        public java.util.Date getDateFromDatePicker(DatePicker datePicker){
+            int day = datePicker.getDayOfMonth();
+            int month = datePicker.getMonth();
+            int year =  datePicker.getYear();
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, day);
+
+            return calendar.getTime();
         }
 
 
