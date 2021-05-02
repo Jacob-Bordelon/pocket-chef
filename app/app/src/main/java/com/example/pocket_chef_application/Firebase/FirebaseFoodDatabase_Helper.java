@@ -5,8 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +22,6 @@ import com.example.pocket_chef_application.MainActivity;
 import com.example.pocket_chef_application.Model.Food;
 import com.example.pocket_chef_application.Pantry;
 import com.example.pocket_chef_application.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,12 +30,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import org.ahocorasick.trie.Emit;
+import org.ahocorasick.trie.Trie;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-
 
 import static java.util.stream.Collectors.toSet;
 
@@ -81,6 +80,7 @@ public class FirebaseFoodDatabase_Helper {
         mCategores = mDatabase.getReference("categories");
         mNames = mDatabase.getReference("search_names");
         foodList =  new ArrayList<>();
+        names = new HashMap<>();
         listener=voidListener();
 
     }
@@ -103,7 +103,6 @@ public class FirebaseFoodDatabase_Helper {
         };
     }
 
-    //TODO - incorporate trie into this function
     public void searchFor(String queryText, final Container container){
         mReference.removeEventListener(listener);
         listener = new ValueEventListener() {
@@ -112,7 +111,11 @@ public class FirebaseFoodDatabase_Helper {
                 foodList.clear();
                 for(DataSnapshot keyNode : snapshot.getChildren()){
                     Food food = keyNode.getValue(Food.class);
-                    foodList.add(food);
+                    String[] multipleKeywords = queryText.split(" ");
+                    int occurrences = searchWords(multipleKeywords,food.getName());
+                    if (occurrences >= multipleKeywords.length){
+                        foodList.add(food);
+                    }
                 }
                 container.returnData(foodList);
 
@@ -123,11 +126,14 @@ public class FirebaseFoodDatabase_Helper {
 
             }
         };
-        mReference.orderByChild("name")
-                .startAt(queryText)
-                .endAt(queryText+"\uf8ff")
-                .addListenerForSingleValueEvent(listener);
+        mReference.addListenerForSingleValueEvent(listener);
 
+    }
+
+    public int searchWords(String[] keywords, String lin2) {
+        Trie trie = Trie.builder().ignoreCase().addKeywords(keywords).build();
+        Collection<Emit> emits = trie.parseText(lin2);
+        return emits.size();
     }
 
     public void paginate(String i, final Data data){
@@ -166,8 +172,8 @@ public class FirebaseFoodDatabase_Helper {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 names.clear();
                 for(DataSnapshot keyNode : snapshot.getChildren()){
-                    String value = keyNode.getValue(String.class);
-                    names.put(keyNode.getKey(),value);
+                    int value = keyNode.getValue(Integer.class);
+                    names.put(keyNode.getKey(),Integer.toString(value));
                 }
 
                 data.returnData(names);
@@ -210,6 +216,7 @@ public class FirebaseFoodDatabase_Helper {
         adapter = new FoodItemView();
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);
+
     }
 
     public int getAdapterSize(){
