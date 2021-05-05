@@ -1,13 +1,17 @@
 package com.example.pocket_chef_application;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.pocket_chef_application.GroceryList.GroceryList;
 import com.example.pocket_chef_application.Pantry_utils.SearchFoodDB;
+import com.example.pocket_chef_application.util.LogIn;
 import com.example.pocket_chef_application.util.MasterPageAdapter;
 import com.example.pocket_chef_application.util.ProfilesPage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.annotation.NonNull;
@@ -134,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        /*FirebaseUser mFirebaseUser = firebaseAuth.getCurrentUser();
+        FirebaseUser mFirebaseUser = firebaseAuth.getCurrentUser();
         if(mFirebaseUser!=null){
             SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
             String check_value = preferences.getString("remember", "");
@@ -146,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "User logged in");
             startActivity(new Intent(this, LogIn.class));
             finish();
-        }*/
+        }
     }
 
     @Override

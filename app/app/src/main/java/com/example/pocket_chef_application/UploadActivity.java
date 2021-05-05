@@ -2,39 +2,65 @@ package com.example.pocket_chef_application;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Pair;
-import android.view.GestureDetector;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.BlendModeColorFilterCompat;
+import androidx.core.graphics.BlendModeCompat;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.example.pocket_chef_application.Firebase.FirebaseFoodDatabase_Helper;
+import com.example.pocket_chef_application.Gen_Recipes.IngredientChip;
 import com.example.pocket_chef_application.Model.Food;
 import com.example.pocket_chef_application.Model.Ingredient;
 import com.example.pocket_chef_application.Model.Recipe;
+import com.example.pocket_chef_application.util.BackgroundThread;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,49 +68,76 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.atomic.AtomicReference;
-
-import static java.util.concurrent.CompletableFuture.completedFuture;
+import java.util.concurrent.RunnableFuture;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class UploadActivity extends Activity implements View.OnClickListener {
 
-    final static String TAG = UploadActivity.class.getSimpleName();
+    final static String TAG = "UploadFragment";
+    private volatile boolean stopThread = false;
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
-    private TextView cancel, save, upload, doubletapclue1,doubletapclue2;
-    private EditText name, prep_time, cook_time, desc;
+    private TextView cancel, save, upload;
+    private EditText name, prep_time, cook_time;
     private ImageView image;
-    private LinearLayout ingredientsLayout, instructionsLayout;
-    private Spinner diff;
+    private LinearLayout instructionsLayout;
+    private AutoCompleteTextView diff;
+    private MaterialAutoCompleteTextView units;
+    public static TextView helper_text;
+
     private FirebaseFoodDatabase_Helper helper = new FirebaseFoodDatabase_Helper();
+    private static Dialog mDialog;
+    private ImageButton addIngredientbtn;
+    private TextInputLayout name_layout,amount_layout, unit_layout, desc;
+    private ChipGroup chipGroup;
+
+    public static HashMap<String,Ingredient> ingredientsList= new HashMap<>();
+    private HashMap<String,String> instructionsList= new HashMap<>();
+
+    private DatabaseReference databaseReference = MainActivity.realtimedb.getReference("/bufferLayer/");
+    private StorageReference storageReference = MainActivity.firebaseStorage.getReference();
+    private BackgroundThread handlerThread = new BackgroundThread();
 
 
-    private static List<Food> foodsList;
 
-    private HashMap<String,Ingredient> ingredientsList;
-    private HashMap<String,String> instructionsList;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handlerThread.quit();
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        handlerThread.quit();
+        overridePendingTransition(R.anim.nothing, R.anim.slide_out_top);
+    }
 
-    private DatabaseReference databaseReference;
-    private StorageReference storageReference;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String[] difficultyList = this.getResources().getStringArray(R.array.difficulties);
+        ArrayAdapter<String> diffAdapter = new ArrayAdapter<String>(this,android.R.layout.select_dialog_item, difficultyList);
+        diff.setAdapter(diffAdapter);
 
+        String[] unitsList = this.getResources().getStringArray(R.array.units);
+        ArrayAdapter<String> unitsAdapter = new ArrayAdapter<String>(this,android.R.layout.select_dialog_item, unitsList);
+        units.setAdapter(unitsAdapter);
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upload_layout);
         setupViews();
         setupOnClickListeners();
+        handlerThread.start();
 
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.nothing, R.anim.slide_out_top);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -93,58 +146,22 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         prep_time = findViewById(R.id.rec_prep);
         cook_time = findViewById(R.id.rec_cook);
         desc = findViewById(R.id.rec_desc);
-        ingredientsLayout = findViewById(R.id.rec_ingredients);
         image = findViewById(R.id.imageView);
         diff =  findViewById(R.id.rec_difficulty);
         cancel = findViewById(R.id.cancel);
         save =  findViewById(R.id.savebtn);
         upload = findViewById(R.id.uploadbtn);
         instructionsLayout = findViewById(R.id.rec_instructions);
-        doubletapclue1 = findViewById(R.id.double_tap_clue1);
-        doubletapclue2 = findViewById(R.id.double_tap_clue2);
+        name_layout = findViewById(R.id.name_layout);
+        amount_layout = findViewById(R.id.amount_layout);
+        unit_layout = findViewById(R.id.units_layout);
+        units = findViewById(R.id.units);
+        chipGroup = findViewById(R.id.rec_ingredients);
+        addIngredientbtn = findViewById(R.id.imageButton);
+        helper_text = findViewById(R.id.helper_text);
+        mDialog = new Dialog(this);
+        newStep();
 
-
-        name.setOnKeyListener(moveFocusTo(prep_time));
-        prep_time.setOnKeyListener(moveFocusTo(cook_time));
-        cook_time.setOnKeyListener(moveFocusTo(desc));
-
-        desc.setOnKeyListener((v, keyCode, event) -> {
-            if (event.getAction() == KeyEvent.ACTION_DOWN)
-            {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    newIngredient();
-                    return true;
-                }
-            }
-            return false;
-        });
-
-        GestureDetector ingredientGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onDoubleTap(MotionEvent e) {
-                newIngredient();
-                return super.onDoubleTap(e);
-            }
-        });
-
-        GestureDetector instructionGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public boolean onDoubleTap(MotionEvent e) {
-                newStep();
-                return super.onDoubleTap(e);
-            }
-        });
-        
-        ingredientsLayout.setOnTouchListener((v, event) -> { ingredientGestureDetector.onTouchEvent(event);return true; });
-        instructionsLayout.setOnTouchListener((v, event) -> { instructionGestureDetector.onTouchEvent(event);return true; });
-
-
-        String[] unitsList = this.getResources().getStringArray(R.array.units);
-        ingredientsList = new HashMap<>();
-        instructionsList =  new HashMap<>();
-
-        storageReference = MainActivity.firebaseStorage.getReference();
-        databaseReference = MainActivity.realtimedb.getReference("/bufferLayer/");
     }
 
     private void setupOnClickListeners(){
@@ -153,113 +170,99 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         upload.setOnClickListener(this);
         image.setOnClickListener(this);
 
+        addIngredientbtn.setOnClickListener(v -> {
+            String textInput = name_layout.getEditText().getText().toString();
+            String amountInput = amount_layout.getEditText().getText().toString();
+            String unitInput = units.getText().toString();
+            boolean isBlank = false;
 
-    }
-
-    private View.OnKeyListener moveFocusTo(View toView){
-        return (v, keyCode, event) -> {
-            if (event.getAction() == KeyEvent.ACTION_DOWN)
-            {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    toView.requestFocus();
-                    return true;
-                }
+            if(textInput.isEmpty()){
+                name_layout.setError("Value needed");
+                isBlank=true;
+            }else{
+                name_layout.setError(null);
             }
-            return false;
-        };
-    }
 
+            if(amountInput.isEmpty()){
+                amount_layout.setError("Value needed");
+                isBlank=true;
+            }else{
+                amount_layout.setError(null);
+            }
+
+            if(unitInput.isEmpty()){
+                unit_layout.setError("Value needed");
+                isBlank=true;
+            }else{
+                unit_layout.setError(null);
+            }
+
+            if(!isBlank){
+                addIngredient(textInput,Integer.parseInt(amountInput),unitInput);
+
+                name_layout.getEditText().setText(null);
+                amount_layout.getEditText().setText(null);
+            }
+        });
+    }
 
     // --------------------- Ingredient Stuff ------------------------
 
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private void newIngredient(){
-        @SuppressLint("InflateParams") View ingredientView = getLayoutInflater().inflate(R.layout.ingredient_view, null, false);
-        EditText amount =  ingredientView.findViewById(R.id.amount);
-        TextInputLayout prompt =  ingredientView.findViewById(R.id.prompt);
-        Spinner units = ingredientView.findViewById(R.id.units);
-        Button add = ingredientView.findViewById(R.id.button5);
+    @SuppressLint({"UseCompatLoadingForDrawables", "ResourceType"})
+    private void addIngredient(String name, int amount, String units){
+        // make ingredient object
+        // search database for food item
+        // add entry to list of ingredients
+        IngredientChip chip = new IngredientChip(this,name,amount, units);
 
-        if(doubletapclue1.getVisibility() == View.VISIBLE){
-            doubletapclue1.setVisibility(View.GONE);
-        }
-
-
-        add.setOnClickListener(v -> removeIngredient(ingredientView));
-
-
-        ingredientView.findViewById(R.id.prompt_in).setOnKeyListener((v, keyCode, event) -> {
-            if (event.getAction() == KeyEvent.ACTION_DOWN)
-            {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    newIngredient();
-                    return true;
-                }
-            }
-            return false;
+        chip.setOnCloseIconClickListener(v -> {
+            chipGroup.removeView(chip);
+            helper_text.setText(null);
+            helper_text.setVisibility(View.GONE);
         });
-        ingredientsLayout.addView(ingredientView);
-        amount.requestFocus();
+
+        chip.setOnLongClickListener(v -> {
+            chip.toggleDelete();
+            return true;
+        });
+
+        searchItem(chip);
+        chipGroup.addView(chip);
+
     }
 
-    private void removeIngredient(View view){
-        ingredientsLayout.removeView(view);
-        if(ingredientsLayout.getChildCount()==0){
-            doubletapclue1.setVisibility(View.VISIBLE);
-        }
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void searchItem(IngredientChip chip) {
+        Runnable run = new SearchRunnable(chip);
+        handlerThread.getHandler().post(run);
     }
 
+    static class SearchRunnable implements Runnable {
+        private static final String TAG = "SearchRunnable";
+        private FirebaseFoodDatabase_Helper helper = new FirebaseFoodDatabase_Helper();
+        private IngredientChip chip;
 
-    //TODO - Compare these ingredients to the food database and obtain their collective FDCId values for accurate food results
-    private Pair<TextInputLayout, Ingredient> getIngredientValues(View view){
-        EditText amount =  view.findViewById(R.id.amount);
-        TextInputLayout prompt = view.findViewById(R.id.prompt);
-        Spinner units = view.findViewById(R.id.units);
 
-        int amnt = Integer.parseInt(amount.getText().toString());
-        String item = prompt.getEditText().getText().toString();
-        String unit = units.getSelectedItem().toString();
-        Log.d(TAG, "getIngredientValues: "+item);
-
-        if(item.isEmpty()){
-            prompt.setError("No Value Specified");
+        SearchRunnable(final IngredientChip chip) {
+            this.chip = chip;
         }
 
-        Ingredient ingredient = new Ingredient(amnt,item, unit);
-        return new Pair<>(prompt, ingredient);
-
+        @Override
+        public void run() {
+            helper.searchFor(chip.getName(), foods -> chip.setFoodList(foods));
+        }
     }
 
     private HashMap<String,Ingredient> getAllIngredients(){
-
         HashMap<String,Ingredient> returnVal = new HashMap<>();
-        for(int i = 0; i< ingredientsLayout.getChildCount(); i++){
-            Pair<TextInputLayout, Ingredient> entry = getIngredientValues(ingredientsLayout.getChildAt(i));
-            returnVal.put("00001",entry.second);
-            /*returnVal.put(Integer.toString("00001",new Ingredient());*/
-            /*helper.searchFor(entry.second.getName(), (FirebaseFoodDatabase_Helper.Container) foods -> {
-                if(foods.size() < 1){
-                    entry.first.setError("Value not recignized");
-                }else if(foods.size() == 1){
-                    returnVal.put(Integer.toString(foods.get(0).getFdcId()),entry.second);
-                }else{
-                    Toast.makeText(this, "Multiple entries found", Toast.LENGTH_SHORT).show();
-                }
-            });*/
+
+        for(IngredientChip chip:IngredientChip.chips){
+            returnVal.put(chip.getFoodId(),chip.getIngredient());
         }
         return returnVal;
     }
 
-    private HashMap<String,Ingredient> testIngredients(){
-        HashMap<String,Ingredient> returnVal = new HashMap<>();
-        for(int i = 0; i< 5; i++){
-            Pair<String, Ingredient> entry = new Pair<>(Integer.toBinaryString(i), new Ingredient(1,"test ingredient","cups"));
-            returnVal.put(entry.first,entry.second);
-        }
-        return returnVal;
-    }
-
-    // ------------------ Steps Stuff ----------------------------
+    // ------------------ Steps Stuff ----------------------------------------------------------------------
     @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     private void newStep(){
         @SuppressLint("InflateParams") View instructionView = getLayoutInflater().inflate(R.layout.instruction_view, null, false);
@@ -267,9 +270,6 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         EditText instruct = instructionView.findViewById(R.id.instruction);
         Button addButton = instructionView.findViewById(R.id.addbtn);
 
-        if(doubletapclue2.getVisibility() == View.VISIBLE){
-            doubletapclue2.setVisibility(View.GONE);
-        }
 
         int stepInt = instructionsLayout.getChildCount()+1;
         steptext.setText("Step "+stepInt+": ");
@@ -286,7 +286,10 @@ public class UploadActivity extends Activity implements View.OnClickListener {
             return false;
         });
         instructionsLayout.addView(instructionView);
-        instruct.requestFocus();
+        if (instructionsLayout.getChildCount()>1){
+            instruct.requestFocus();
+        }
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -297,9 +300,6 @@ public class UploadActivity extends Activity implements View.OnClickListener {
             View v = instructionsLayout.getChildAt(i);
             TextView stepText = v.findViewById(R.id.steptext);
             stepText.setText("Step "+(i+1)+": ");
-        }
-        if(instructionsLayout.getChildCount()==0){
-            doubletapclue2.setVisibility(View.VISIBLE);
         }
     }
 
@@ -352,12 +352,12 @@ public class UploadActivity extends Activity implements View.OnClickListener {
     private Recipe formatDataToRecipe(String uniqueID){
         String title        = name.getText().toString();
         String author       = Objects.requireNonNull(MainActivity.firebaseAuth.getCurrentUser()).getDisplayName();
-        String description  = desc.getText().toString();
+        String description  = desc.getEditText().getText().toString();
         String id           = uniqueID;
         int cook            = Integer.parseInt(cook_time.getText().toString());
         int prep            = Integer.parseInt(prep_time.getText().toString());
         int rating          = 0;
-        String difficulty   = diff.getSelectedItem().toString();
+        String difficulty   = diff.getText().toString();
         ingredientsList     = getAllIngredients();
         instructionsList    = getAllInstructions();
         String image        = "recipes/"+uniqueID;
@@ -405,8 +405,36 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         );
     }
 
+    private boolean validate(){
+        boolean allGood=true;
+        if(name.getText().toString().isEmpty()){
+            allGood=false;
+        }
 
+        if(prep_time.getText().toString().isEmpty()){
+            allGood=false;
+        }
 
+        if(cook_time.getText().toString().isEmpty()){
+            allGood=false;
+        }
+
+        if(diff.getText().toString().isEmpty()){
+            allGood=false;
+        }
+
+        if(IngredientChip.chips.size() < 1){
+            allGood = false;
+        }
+
+        if(instructionsLayout.getChildCount()<1){
+            allGood = false;
+        }
+
+        return allGood;
+    }
+
+    /*----------------- On Click -------------------------*/
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
@@ -422,18 +450,18 @@ public class UploadActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.uploadbtn:
                 String uniqueID = UUID.randomUUID().toString();
-                Recipe recipe = testRecipe(uniqueID);
-                uploadImageToFirebase(uniqueID, recipe);
-                /*if(checkAllViews()){
-                    Recipe recipe = testRecipe(uniqueID);
+                if(validate()){
+                    Recipe recipe = formatDataToRecipe(uniqueID);
                     uploadImageToFirebase(uniqueID, recipe);
-                }*/
+                }
                 break;
             case R.id.imageView:
                 openGallery();
                 break;
         }
     }
+
+
 
     // Image related functions
     private void uploadRecipeToFirebase(Recipe recipe){

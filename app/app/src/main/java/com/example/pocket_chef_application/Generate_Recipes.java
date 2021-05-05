@@ -81,44 +81,6 @@ public class Generate_Recipes extends Fragment {
             requireActivity().overridePendingTransition(R.anim.slide_in_top, R.anim.nothing);
         });
 
-        filterButton = view.findViewById(R.id.filterbtn);
-        filterButton.setOnClickListener(v -> {
-            if(filterMenu.getVisibility() == View.VISIBLE){
-                TransitionManager.beginDelayedTransition(filterMenu, new AutoTransition());
-                filterMenu.setVisibility(View.GONE);
-            }
-            else {
-                TransitionManager.beginDelayedTransition(filterMenu, new AutoTransition());
-                filterMenu.setVisibility(View.VISIBLE);
-
-            }
-        });
-
-        calBar = (SeekBar) view.findViewById(R.id.seekBar);
-        calCount = (TextView) view.findViewById(R.id.calories_count);
-
-
-        calBar.setMax(max-min);
-        calBar.setProgress(current-min);
-        calCount.setText(""+current);
-        calBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                current=progress+min;
-                calCount.setText(""+current);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
         usePantry = (CheckBox) view.findViewById(R.id.usepantry_checkBox);
         usePantry.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked){

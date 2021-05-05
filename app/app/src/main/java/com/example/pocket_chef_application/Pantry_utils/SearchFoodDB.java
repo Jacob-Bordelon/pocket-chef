@@ -24,6 +24,7 @@ import com.example.pocket_chef_application.Item_Recognition_Activity;
 import com.example.pocket_chef_application.Model.Food;
 import com.example.pocket_chef_application.R;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

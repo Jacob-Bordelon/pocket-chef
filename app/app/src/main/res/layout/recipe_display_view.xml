@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/rec_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="110dp"
+        app:layout_constraintHeight_min="130dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/rec_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="20dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/rec_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--Author Stuff-->
+    <TextView
+        android:id="@+id/author_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Author: "
+        android:textSize="18sp"
+        android:layout_marginStart="5dp"
+
+        app:layout_constraintStart_toEndOf="@+id/rec_image"
+        app:layout_constraintTop_toBottomOf="@+id/rec_name" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/author_label"
+        app:layout_constraintTop_toTopOf="@+id/author_label" />
+
+    <!--Difficulty-->
+    <TextView
+        android:id="@+id/diff_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Difficulty: "
+        android:textSize="18sp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@+id/rec_image"
+        app:layout_constraintTop_toBottomOf="@+id/author_label" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/diff_label"
+        app:layout_constraintTop_toTopOf="@+id/diff_label" />
+
+    <!--Prep Time-->
+    <TextView
+        android:id="@+id/prep_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prep Time: "
+        android:layout_marginStart="5dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/rec_image"
+        app:layout_constraintTop_toBottomOf="@+id/diff_label" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/prep_label"
+        app:layout_constraintTop_toTopOf="@+id/prep_label" />
+
+    <!--Cook Time-->
+    <TextView
+        android:id="@+id/cook_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cook Time: "
+        android:layout_marginStart="5dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/rec_image"
+        app:layout_constraintTop_toBottomOf="@+id/prep_label" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/cook_label"
+        app:layout_constraintTop_toTopOf="@+id/cook_label" />
+
+    <!--Description-->
+    <TextView
+        android:id="@+id/rec_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_min="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rec_image" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rec_desc">
+
+        <!--Ingredients-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="50dp"
+            android:layout_weight="1"
+            android:layout_marginStart="5dp"
+            android:orientation="vertical" />
+
+        <!--Instructions-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="50dp"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            android:orientation="vertical" />
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PocketChef.Inc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

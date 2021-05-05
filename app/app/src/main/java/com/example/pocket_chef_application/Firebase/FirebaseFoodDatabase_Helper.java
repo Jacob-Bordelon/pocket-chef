@@ -50,6 +50,7 @@ public class FirebaseFoodDatabase_Helper {
     private Context context;
     private RecyclerView recyclerView;
     private static List<Food> foodList;
+    private static HashMap<Food,Integer> foodMap;
     private HashMap<String,String> names;
     public String gotoNextPage = "";
     public FoodItemView adapter;
@@ -80,6 +81,7 @@ public class FirebaseFoodDatabase_Helper {
         mCategores = mDatabase.getReference("categories");
         mNames = mDatabase.getReference("search_names");
         foodList =  new ArrayList<>();
+        foodMap = new HashMap<>();
         names = new HashMap<>();
         listener=voidListener();
 
@@ -113,9 +115,11 @@ public class FirebaseFoodDatabase_Helper {
                     Food food = keyNode.getValue(Food.class);
                     String[] multipleKeywords = queryText.split(" ");
                     int occurrences = searchWords(multipleKeywords,food.getName());
+
                     if (occurrences >= multipleKeywords.length){
                         foodList.add(food);
                     }
+
                 }
                 container.returnData(foodList);
 
@@ -193,7 +197,6 @@ public class FirebaseFoodDatabase_Helper {
         snap.addOnSuccessListener(dataSnapshot -> data.returnData(dataSnapshot.getValue(Food.class)));
 
     }
-
 
     public void defaultPage(){
         paginate(DEFAULT_PAGE_INDEX, (foods, nextPage) -> {
