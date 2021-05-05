@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +23,14 @@ import com.example.pocket_chef_application.MainActivity;
 import com.example.pocket_chef_application.Model.Food;
 import com.example.pocket_chef_application.Pantry;
 import com.example.pocket_chef_application.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -36,9 +40,12 @@ import org.ahocorasick.trie.Trie;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.Stack;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toSet;
 
@@ -46,15 +53,16 @@ public class FirebaseFoodDatabase_Helper {
     private static final String TAG = "FirebaseFoodDatabase_Helper";
     public FirebaseDatabase mDatabase;
     public static String DEFAULT_PAGE_INDEX = "325871";
-    private static DatabaseReference mReference, mCategores, mNames;
+    private static DatabaseReference mReference, mNames;
     private Context context;
     private RecyclerView recyclerView;
     private static List<Food> foodList;
     private static HashMap<Food,Integer> foodMap;
     private HashMap<String,String> names;
     public String gotoNextPage = "";
+    public Stack<String> gotoLastPage = new Stack<>();
     public FoodItemView adapter;
-    private int limitAmount = 10;
+    private int limitAmount = 30;
     private static ValueEventListener listener;
 
 
@@ -78,13 +86,16 @@ public class FirebaseFoodDatabase_Helper {
 
         mDatabase = MainActivity.fooddb;
         mReference = mDatabase.getReference("items");
-        mCategores = mDatabase.getReference("categories");
         mNames = mDatabase.getReference("search_names");
         foodList =  new ArrayList<>();
         foodMap = new HashMap<>();
         names = new HashMap<>();
         listener=voidListener();
 
+    }
+
+    public int getLimitAmount(){
+        return limitAmount;
     }
 
     public void removeListener(){
@@ -140,35 +151,6 @@ public class FirebaseFoodDatabase_Helper {
         return emits.size();
     }
 
-    public void paginate(String i, final Data data){
-        mReference.removeEventListener(listener);
-        listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                foodList.clear();
-                String nextpage = "";
-                for(DataSnapshot keyNode : snapshot.getChildren()){
-                    Food food = keyNode.getValue(Food.class);
-                    foodList.add(food);
-                    nextpage = keyNode.getKey();
-                }
-
-                data.RetrievedData(foodList, nextpage);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-        mReference
-                .orderByKey()
-                .startAt(i)
-                .limitToFirst(limitAmount)
-                .addListenerForSingleValueEvent(listener);
-    }
-
     public void readFood(final StringContainer data){
         mNames.removeEventListener(listener);
         listener = new ValueEventListener() {
@@ -198,6 +180,42 @@ public class FirebaseFoodDatabase_Helper {
 
     }
 
+    public void paginate(String i, final Data data){
+        mReference.removeEventListener(listener);
+        listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                foodList.clear();
+                String nextpage = "";
+                for(DataSnapshot keyNode : snapshot.getChildren()){
+                    Food food = keyNode.getValue(Food.class);
+                    foodList.add(food);
+                    if(foodList.size()>(limitAmount-1)){
+                        foodList.remove(food);
+                        nextpage = keyNode.getKey();
+                    }
+                }
+
+
+                Log.d(TAG, "onDataChange: "+gotoLastPage.size());
+
+                gotoLastPage.stream().forEach(p-> Log.d(TAG, "onDataChange: "+p));
+                data.RetrievedData(foodList, nextpage);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        mReference
+                .orderByKey()
+                .startAt(i)
+                .limitToFirst((limitAmount+1))
+                .addListenerForSingleValueEvent(listener);
+    }
+
     public void defaultPage(){
         paginate(DEFAULT_PAGE_INDEX, (foods, nextPage) -> {
             adapter.updateList(foods);
@@ -207,9 +225,25 @@ public class FirebaseFoodDatabase_Helper {
 
     public void nextPage(){
         paginate(gotoNextPage, (foods, nextPage) -> {
+            gotoLastPage.push(gotoNextPage);
             adapter.updateList(foods);
             gotoNextPage = nextPage;
         });
+    }
+
+    public void previousPage(){
+        if(!gotoLastPage.empty()){
+            if(gotoLastPage.size()>1){
+                String lastPage = gotoLastPage.pop();
+                paginate(lastPage,(foods, nextPage) -> adapter.loadFront(foods));
+                Log.d(TAG, "previousPage: pop"+gotoLastPage.size());
+            }
+        }
+
+    }
+
+    public int getStackCount(){
+        return gotoLastPage.size();
     }
 
     // Custom Firebase Specific Recycler View Class
@@ -248,6 +282,7 @@ public class FirebaseFoodDatabase_Helper {
         }
 
         public void updateList(List<Food> foods){
+
             Set<Integer> itemsIDs = items.stream()
                     .map(Food::getFdcId)
                     .collect(toSet());
@@ -256,6 +291,31 @@ public class FirebaseFoodDatabase_Helper {
                     .filter(food -> !itemsIDs.contains(food.getFdcId()))
                     .forEach(items::add);
 
+            notifyDataSetChanged();
+        }
+
+        public void loadFront(List<Food> foods){
+            int i = 0;
+            if((items.size()+foods.size())>(limitAmount*3)){
+                int subStart = items.size()-limitAmount;
+                if(subStart>=0){
+                    items.subList(subStart,(limitAmount+subStart)).clear();
+                }
+
+            }
+
+            Collections.reverse(foods);
+            for(Food food:foods ){
+                items.add(0,food);
+            }
+            notifyDataSetChanged();
+        }
+
+        public void loadEnd(List<Food> foods){
+            if((items.size()+foods.size())>limitAmount*3){
+                items.subList(0,limitAmount).clear();
+            }
+            items.addAll(foods);
             notifyDataSetChanged();
         }
 

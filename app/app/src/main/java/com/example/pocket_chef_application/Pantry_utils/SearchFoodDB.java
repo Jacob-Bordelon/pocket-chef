@@ -20,9 +20,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocket_chef_application.Firebase.FirebaseFoodDatabase_Helper;
+import com.example.pocket_chef_application.Gen_Recipes.IngredientChip;
 import com.example.pocket_chef_application.Item_Recognition_Activity;
 import com.example.pocket_chef_application.Model.Food;
 import com.example.pocket_chef_application.R;
+import com.example.pocket_chef_application.UploadActivity;
+import com.example.pocket_chef_application.util.BackgroundThread;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +39,16 @@ public class SearchFoodDB extends Fragment {
     private ImageButton camerabtn;
     private final String TAG = "AddItemsToPantry";
     private FirebaseFoodDatabase_Helper helper;
+    private BackgroundThread handlerThread = new BackgroundThread();
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        handlerThread.quit();
+
+
+
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +66,9 @@ public class SearchFoodDB extends Fragment {
         camerabtn  = (ImageButton) view.findViewById(R.id.camerabtn);
         searchView = (SearchView) view.findViewById(R.id.searchbar);
 
+        camerabtn.setOnClickListener(v -> {
+            image_recog();
+        });
         helper = new FirebaseFoodDatabase_Helper();
         helper.setConfig(mRecyclerView,getContext());
         helper.defaultPage();
@@ -71,11 +86,15 @@ public class SearchFoodDB extends Fragment {
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
 
-                if (linearLayoutManager != null &&
-                        linearLayoutManager.findLastCompletelyVisibleItemPosition() ==
-                                helper.getAdapterSize() - 1) {
-                    //bottom of list!
-                    helper.nextPage();
+                if (linearLayoutManager != null){
+                    if(linearLayoutManager.findLastCompletelyVisibleItemPosition() == helper.getAdapterSize() - 1) {
+                        helper.nextPage();
+                    }
+
+                    if(linearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0 ){
+                        //helper.previousPage();
+                    }
+
 
                 }
 
@@ -88,7 +107,9 @@ public class SearchFoodDB extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                Runnable run = new SearchRunnable(query, helper.adapter);
+                handlerThread.getHandler().post(run);
+                return true;
             }
 
             @Override
@@ -96,34 +117,45 @@ public class SearchFoodDB extends Fragment {
 
                 if(newText.length() > 0){
                     helper.clearAdapterItems();
-                    helper.searchFor(newText, foods -> {
-                        helper.adapter.updateList(foods);
-                    });
                 }
-
-
-
                 return true;
             }
         });
-
         searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
             if(hasFocus){
                 mRecyclerView.removeOnScrollListener(scrollListner);
                 helper.clearAdapterItems();
+                if(!handlerThread.isAlive()){
+                    handlerThread.start();
+                }
+
             }else{
-                helper.clearAdapterItems();
-                helper.restoreAdapterItems();
-                mRecyclerView.addOnScrollListener(scrollListner);
+                if(searchView.getQuery().toString().isEmpty()){
+                    helper.clearAdapterItems();
+                    helper.defaultPage();
+                    mRecyclerView.addOnScrollListener(scrollListner);
+                }
+
             }
         });
-
-        camerabtn.setOnClickListener(v -> {
-            image_recog();
-        });
-
-
         return view;
+    }
+
+    static class SearchRunnable implements Runnable {
+        private static final String TAG = "SearchRunnable";
+        private FirebaseFoodDatabase_Helper helper = new FirebaseFoodDatabase_Helper();
+        private String query;
+        private FirebaseFoodDatabase_Helper.FoodItemView adapter;
+
+        SearchRunnable(final String query, final FirebaseFoodDatabase_Helper.FoodItemView adapter) {
+            this.query = query;
+            this.adapter = adapter;
+        }
+
+        @Override
+        public void run() {
+            helper.searchFor(query, foods -> adapter.updateList(foods));
+        }
     }
 
 

@@ -58,7 +58,6 @@ public class RecipeAdapter {
         recipeAdapter.notifyDataSetChanged();
     }
 
-
     static class RecipeItemView extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView titleView, prepView, cookView, totalView, diffView, authorView, descView;
         private ConstraintLayout hiddenView;
@@ -161,7 +160,6 @@ public class RecipeAdapter {
         }
 
     }
-
 
     static class Adapter extends RecyclerView.Adapter<RecipeItemView>{
         public static List<Recipe> recipeList;
