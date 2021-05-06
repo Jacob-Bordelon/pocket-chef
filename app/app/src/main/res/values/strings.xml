@@ -140,10 +140,18 @@
         <item>December</item>
     </string-array>
     <string-array name="units">
-        <item>cups</item>
-        <item>Tbsp</item>
+        <item> </item>
+        <item>tsp</item>
+        <item>tbsp</item>
         <item>g</item>
-        <item>Gal</item>
+        <item>gal</item>
+        <item>oz</item>
+        <item>fl oz</item>
+        <item>cups</item>
+        <item>pint</item>
+        <item>quart</item>
+        <item>lb</item>
+        <item>pinch</item>
     </string-array>
 
     <string-array name="difficulties">
@@ -165,7 +173,7 @@
     <string name="title_activity_register">Register</string>
     <string name="grocery_list">List</string>
     <string name="ingredient">Ingredient</string>
-    <string name="of">of</string>
+    <string name="of">of </string>
     <string name="units">Units</string>
     <string name="number">#</string>
     <!-- Preference Titles -->
@@ -183,6 +191,7 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="units_label">Units</string>
 
 
 </resources>

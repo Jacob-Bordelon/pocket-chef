@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -43,22 +43,30 @@
         <item name="android:paddingEnd">2dp</item>
     </style>
 
-    <style name="ChipTextAppearance" parent="TextAppearance.MaterialComponents.Chip">
+    <!--<style name="ChipTextAppearance" parent="TextAppearance.MaterialComponents.Chip">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">10sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
         <item name="chipBackgroundColor">@color/colorAccent</item>
 
+    </style>-->
+
+
+    <!-- Base application theme. -->
+    <style name="Theme.Fab_Bottom_app_bar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#0F9D58</item>
+        <item name="colorPrimaryVariant">#0F9D58</item>
+        <item name="colorOnPrimary">#000</item>
+
+        <item name="CustomChipChoiceStyle">@style/ChipStyle</item>
     </style>
 
-
-        <!-- Base application theme. -->
-        <style name="Theme.Fab_Bottom_app_bar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-            <item name="colorPrimary">#0F9D58</item>
-            <item name="colorPrimaryVariant">#0F9D58</item>
-            <item name="colorOnPrimary">#000</item>
-        </style>
+    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipBackgroundColor">@color/colorAccent</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Chip</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 
 
 
