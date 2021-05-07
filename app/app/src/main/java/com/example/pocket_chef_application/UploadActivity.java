@@ -81,7 +81,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class UploadActivity extends Activity implements View.OnClickListener {
 
     final static String TAG = "UploadFragment";
-    private volatile boolean stopThread = false;
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
     private TextView cancel, save, upload;
@@ -89,13 +88,13 @@ public class UploadActivity extends Activity implements View.OnClickListener {
     private ImageView image;
     private LinearLayout instructionsLayout;
     private AutoCompleteTextView diff;
-    private MaterialAutoCompleteTextView units;
+    @SuppressLint("StaticFieldLeak")
     public static TextView helper_text;
 
-    private FirebaseFoodDatabase_Helper helper = new FirebaseFoodDatabase_Helper();
-    private static Dialog mDialog;
     private ImageButton addIngredientbtn;
-    private TextInputLayout name_layout,amount_layout, unit_layout, desc;
+    private TextInputLayout name_layout,amount_layout, unit_layout;
+    private MaterialAutoCompleteTextView units;
+    private TextInputLayout desc;
     private ChipGroup chipGroup;
 
     public static HashMap<String,Ingredient> ingredientsList= new HashMap<>();
@@ -104,8 +103,6 @@ public class UploadActivity extends Activity implements View.OnClickListener {
     private DatabaseReference databaseReference = MainActivity.realtimedb.getReference("/bufferLayer/");
     private StorageReference storageReference = MainActivity.firebaseStorage.getReference();
     private BackgroundThread handlerThread = new BackgroundThread();
-
-
 
     @Override
     protected void onDestroy() {
@@ -159,7 +156,7 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         chipGroup = findViewById(R.id.rec_ingredients);
         addIngredientbtn = findViewById(R.id.imageButton);
         helper_text = findViewById(R.id.helper_text);
-        mDialog = new Dialog(this);
+        Dialog mDialog = new Dialog(this);
         newStep();
 
     }
@@ -226,10 +223,12 @@ public class UploadActivity extends Activity implements View.OnClickListener {
             return true;
         });
 
+
         searchItem(chip);
         chipGroup.addView(chip);
 
     }
+
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void searchItem(IngredientChip chip) {
@@ -258,6 +257,15 @@ public class UploadActivity extends Activity implements View.OnClickListener {
 
         for(IngredientChip chip:IngredientChip.chips){
             returnVal.put(chip.getFoodId(),chip.getIngredient());
+        }
+        return returnVal;
+    }
+
+    private HashMap<String,Ingredient> testIngredients(){
+        HashMap<String,Ingredient> returnVal = new HashMap<>();
+
+        for(int i = 0; i<10;i++){
+            returnVal.put(Integer.toBinaryString(i),new Ingredient(2,"Name","cups"));
         }
         return returnVal;
     }
@@ -351,7 +359,7 @@ public class UploadActivity extends Activity implements View.OnClickListener {
 
     private Recipe formatDataToRecipe(String uniqueID){
         String title        = name.getText().toString();
-        String author       = Objects.requireNonNull(MainActivity.firebaseAuth.getCurrentUser()).getDisplayName();
+        String author       = "Ricardo Aranaga";
         String description  = desc.getEditText().getText().toString();
         String id           = uniqueID;
         int cook            = Integer.parseInt(cook_time.getText().toString());
@@ -386,9 +394,9 @@ public class UploadActivity extends Activity implements View.OnClickListener {
         int prep            = 15;
         int rating          = 0;
         String difficulty   = "Master";
-        ingredientsList     = getAllIngredients();
+        ingredientsList     = testIngredients();
         instructionsList    = testInstructions();
-        String image        = "recipes/"+uniqueID;
+        String image        = "none";
 
         return new Recipe(
                 title,
@@ -404,6 +412,45 @@ public class UploadActivity extends Activity implements View.OnClickListener {
                 ingredientsList
         );
     }
+
+    private Recipe testBadRecipe(String uniqueID){
+        String title        = "Test";
+        String author       = "Author";
+        String description  = "I AM SHOUTING";
+        String id           = uniqueID;
+        int cook            = 15;
+        int prep            = 15;
+        int rating          = 0;
+        String difficulty   = "Master";
+        ingredientsList     = testIngredients();
+        instructionsList    = testInstructions();
+        String image        = "none";
+
+        return new Recipe(
+                title,
+                id,
+                author,
+                description,
+                cook,
+                prep,
+                rating,
+                difficulty,
+                image,
+                instructionsList,
+                ingredientsList
+        );
+    }
+
+    public void sendGoodRecipe(Context context){
+        Recipe recipe = testRecipe(UUID.randomUUID().toString());
+        uploadRecipeToFirebaseFromActivity(context,recipe);
+    }
+
+    public void sendBadRecipe(Context context){
+        Recipe recipe = testBadRecipe(UUID.randomUUID().toString());
+        uploadRecipeToFirebaseFromActivity(context,recipe);
+    }
+
 
     private boolean validate(){
         boolean allGood=true;
@@ -462,6 +509,19 @@ public class UploadActivity extends Activity implements View.OnClickListener {
     }
 
 
+    private void uploadRecipeToFirebaseFromActivity(Context context, Recipe recipe){
+        Log.d(TAG, "uploadRecipeToFirebase: ");
+        databaseReference.child(recipe.getId()).setValue(recipe)
+                .addOnCompleteListener(task -> {
+                    Log.d(TAG, "Process to complete");
+                    if(task.isSuccessful()){
+                        Toast.makeText(context, "Recipe Was Uploaded", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }else{
+                        Toast.makeText(context, "There was an error during upload", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 
     // Image related functions
     private void uploadRecipeToFirebase(Recipe recipe){
