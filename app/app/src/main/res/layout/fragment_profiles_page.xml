@@ -8,7 +8,28 @@
     android:id="@+id/profile"
     tools:context=".util.ProfilesPage">
 
+    <Button
+        android:id="@+id/good_recipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Good Recipe to Firebase"
+        android:backgroundTint="@color/green"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintBottom_toTopOf="@+id/bad_recipe"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
+
+    <Button
+        android:id="@+id/bad_recipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Bad Recipe to Firebase"
+        android:backgroundTint="@color/darkred"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintBottom_toTopOf="@+id/settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/settings"

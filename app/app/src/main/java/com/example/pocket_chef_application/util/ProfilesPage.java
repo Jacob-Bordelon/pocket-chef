@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.pocket_chef_application.MainActivity;
@@ -19,9 +20,14 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import org.w3c.dom.Text;
 
+import java.util.UUID;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class ProfilesPage extends Fragment {
+
+    Button good, bad;
+
 
     public static ProfilesPage newInstance(String param1, String param2) {
         ProfilesPage fragment = new ProfilesPage();
@@ -61,6 +67,15 @@ public class ProfilesPage extends Fragment {
             startActivity(i);
             requireActivity().overridePendingTransition(R.anim.slide_in_top, R.anim.nothing);
         });
+
+        good = view.findViewById(R.id.good_recipe);
+        bad = view.findViewById(R.id.bad_recipe);
+
+        good.setOnClickListener(v -> new UploadActivity().sendGoodRecipe(getContext()));
+
+        bad.setOnClickListener(v -> new UploadActivity().sendBadRecipe(getContext()));
+
+
 
         return view;
     }

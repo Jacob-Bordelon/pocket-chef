@@ -1,8 +1,11 @@
 package com.example.pocket_chef_application;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import com.example.pocket_chef_application.GroceryList.GroceryList;
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private ViewPager viewPager;
     private int lastFragment;
+    public static boolean isConnected;
 
 
     @Override
@@ -135,22 +139,42 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    public static boolean isNetworkAvailable(Context con) {
+        try {
+            ConnectivityManager cm = (ConnectivityManager) con
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+
+            if (networkInfo != null && networkInfo.isConnected()) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser mFirebaseUser = firebaseAuth.getCurrentUser();
-        if(mFirebaseUser!=null){
-            SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-            String check_value = preferences.getString("remember", "");
-            if(!check_value.equals("true")){
-                Log.d(TAG, "User signed out");
-                FirebaseAuth.getInstance().signOut();
+        isConnected = isNetworkAvailable(this);
+
+        if(isConnected){
+            FirebaseUser mFirebaseUser = firebaseAuth.getCurrentUser();
+            if(mFirebaseUser!=null){
+                SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                String check_value = preferences.getString("remember", "");
+                if(!check_value.equals("true")){
+                    Log.d(TAG, "User signed out");
+                    FirebaseAuth.getInstance().signOut();
+                }
+            }else{
+                Log.d(TAG, "User logged in");
+                startActivity(new Intent(this, LogIn.class));
+                finish();
             }
-        }else{
-            Log.d(TAG, "User logged in");
-            startActivity(new Intent(this, LogIn.class));
-            finish();
         }
+
     }
 
     @Override

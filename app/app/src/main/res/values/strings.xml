@@ -140,7 +140,7 @@
         <item>December</item>
     </string-array>
     <string-array name="units">
-        <item> </item>
+        <item>units</item>
         <item>tsp</item>
         <item>tbsp</item>
         <item>g</item>

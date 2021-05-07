@@ -1,8 +1,10 @@
 package com.example.pocket_chef_application.Pantry_utils;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
@@ -13,12 +15,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -168,13 +172,36 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
 
         EditText amount = mDialog.findViewById(R.id.edititem_amount);
         amount.setHint(Integer.toString(i.getAmount()));
-        EditText exp = mDialog.findViewById(R.id.edititem_exp);
-        exp.setHint(i.getExp_date().toString());
+        TextView exp_btn = mDialog.findViewById(R.id.edititem_exp);
+        TextView exp_preview = mDialog.findViewById(R.id.exp_display);
+
+        Calendar mCalender = Calendar.getInstance();
+        int year = mCalender.get(Calendar.YEAR);
+        int month = mCalender.get(Calendar.MONTH);
+        int dayOfMonth = mCalender.get(Calendar.DAY_OF_MONTH);
+
+        exp_btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_edit_calendar_24, 0, 0, 0);
+
+        DatePickerDialog expdate = new DatePickerDialog(context, (view, year1, month1, dayOfMonth1) -> {
+            String date = month1+"/"+dayOfMonth1+"/"+year1;
+            exp_preview.setText(date);
+        }, year, month, dayOfMonth);
+        expdate.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
+        exp_btn.setOnClickListener(v -> {
+            expdate.show();
+        });
+
+        //EditText exp = mDialog.findViewById(R.id.edititem_exp);
+        //exp.setHint(i.getExp_date().toString());
 
         Button submit = mDialog.findViewById(R.id.submitbtn);
         TextView cancel = mDialog.findViewById(R.id.closebtn);
 
         cancel.setOnClickListener(n-> mDialog.onBackPressed());
+        DatePicker picker = expdate.getDatePicker();
+        Date new_date = getDateFromDatePicker(picker);
+        String exp = new_date.toString();
 
         submit.setOnClickListener(v -> {
             if(!amount.getText().toString().matches("")){
@@ -182,8 +209,13 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
                 i.getItem().amount = Integer.parseInt(amount.getText().toString());
             }
 
-            if(!exp.getText().toString().matches("")){
+            if(!exp.matches("")){
+
                 //TODO update exp date
+                /*Log.d(TAG, "EditOperation: Updated EXP");
+                i.setExp_date(new_date);
+                i.getItem().exp_date = new_date;*/
+
             }
 
             mDialog.dismiss();
@@ -192,13 +224,40 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
 
     }
 
+    public java.util.Date getDateFromDatePicker(DatePicker datePicker){
+        int day = datePicker.getDayOfMonth();
+        int month = datePicker.getMonth();
+        int year =  datePicker.getYear();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+
+        return calendar.getTime();
+    }
+
     private void RemoveItem(Pantry_Item i){
-        int pos = list.indexOf(i);
-        list.remove(i);
-        LocalDB db = LocalDB.getDBInstance(this.context);
-        db.itemDAO().delete(i.getItem());
-        mDialog.dismiss();
-        this.notifyItemRemoved(pos);
+        AlertDialog.Builder builder
+                = new AlertDialog
+                .Builder(context);
+
+        builder.setMessage("Do you want to delete this item?\nThis cannot be undone.");
+        builder.setTitle("Are you sure?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            int pos = list.indexOf(i);
+            list.remove(i);
+            LocalDB db = LocalDB.getDBInstance(this.context);
+            db.itemDAO().delete(i.getItem());
+            mDialog.dismiss();
+            this.notifyItemRemoved(pos);
+        });
+
+        builder.setNegativeButton("No", (dialog, which) -> dialog.cancel());
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+
     }
 
     @Override
@@ -225,8 +284,8 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
         LayerDrawable layers = (LayerDrawable) holder.expShape.getBackground();
         RotateDrawable rotate = (RotateDrawable) layers.findDrawableByLayerId(R.id.corner_mark);
         GradientDrawable shape = (GradientDrawable) rotate.getDrawable();
-        //int color = setExpFlag(list.get(position));
-        shape.setColor(context.getColor(R.color.fresh));
+        int color = setExpFlag(list.get(position));
+        shape.setColor(color);
     }
 
     public class PantryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -277,25 +336,19 @@ public class Pantry_Adapter extends RecyclerView.Adapter<Pantry_Adapter.PantryVi
     }
 
     private int setExpFlag(Pantry_Item item){
-        // Get current date and recipe_item expiration date
         Date currentTime = Calendar.getInstance().getTime();
-        String itemDate = item.getExp_date().toString();
-
-        // Cast string date to date object
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-        try {
-            Date item_expDate = sdf.parse(itemDate);
-
-            long diff = item_expDate.getTime() - currentTime.getTime();
-            int days = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        Date itemDate = item.getExp_date();
 
 
+        long diff = itemDate.getTime() - currentTime.getTime();
+        int days = (int) TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        Log.d(TAG, "setExpFlag: "+days);
 
-        }catch (ParseException e){
-            e.printStackTrace();
+        if(days < 0){
+            return context.getColor(R.color.expired);
         }
+        return context.getColor(R.color.fresh);
 
 
-        return 0;
     }
 }

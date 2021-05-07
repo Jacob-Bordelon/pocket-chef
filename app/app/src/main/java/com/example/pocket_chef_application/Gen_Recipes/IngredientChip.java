@@ -45,7 +45,6 @@ public class IngredientChip extends Chip {
     private int amount;
     private String unit;
     private Ingredient ingredient;
-    private String status;
     private String Foodid;
     private boolean del_tog;
 
@@ -74,7 +73,7 @@ public class IngredientChip extends Chip {
         if(foods.size()<1){
             error("No Values found");
         }else if(foods.size()>30){
-            error("Too many items found. Please be more specific.");
+            tooMany();
         }else{
             Log.d(TAG, "setFoodList: "+name);
             if(foods.size()==1){
@@ -84,10 +83,6 @@ public class IngredientChip extends Chip {
             }
 
         }
-    }
-
-    public String getStatus() {
-        return status;
     }
 
     public String getFoodId() {
@@ -129,10 +124,6 @@ public class IngredientChip extends Chip {
 
     }
 
-    public void makeDialogWork(List<Food> foodList){
-
-    }
-
     public void error(String error){
         setStatus("error");
         setOnClickListener(v -> {
@@ -144,6 +135,10 @@ public class IngredientChip extends Chip {
                 UploadActivity.helper_text.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    public void tooMany(){
+
     }
 
     public void accepted(Food food){
@@ -172,6 +167,10 @@ public class IngredientChip extends Chip {
                 setChipIcon(context.getDrawable(R.drawable.ic_error_arose));
                 setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(context ,R.color.darkred)));
                 break;
+            case "tooMany":
+                setChipIcon(context.getDrawable(R.drawable.ic_error_arose));
+                setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(context ,R.color.orange)));
+                break;
             case "accepted":
                 setChipIcon(context.getDrawable(R.drawable.ic_all_good));
                 setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(context ,R.color.green)));
@@ -181,7 +180,6 @@ public class IngredientChip extends Chip {
                 progressDrawable.start();
                 break;
         }
-        this.status = status;
     }
 
     public String getName() {
